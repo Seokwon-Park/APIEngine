@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{47e3aad8-cc6c-46c3-86c8-b7ca1a81da66}</ProjectGuid>
-    <RootNamespace>EngineBase</RootNamespace>
+    <ProjectGuid>{1C0C0E63-4A10-4264-9589-5B81F74EA098}</ProjectGuid>
+    <RootNamespace>EngineCore</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -143,14 +143,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EngineDebug.h" />
-    <ClInclude Include="EngineFile.h" />
-    <ClInclude Include="EngineMath.h" />
+    <ClInclude Include="Actor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EngineDebug.cpp" />
-    <ClCompile Include="EngineFile.cpp" />
-    <ClCompile Include="EngineMath.cpp" />
+    <ClCompile Include="Actor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
