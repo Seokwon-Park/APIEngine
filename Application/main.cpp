@@ -8,11 +8,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	// UGameEngine::Start(hInstance);
-
 	UEngineWindow::EngineWindowInit(hInstance);
 
 	UEngineWindow NewWindow;
+	NewWindow.Create("AA");
 	NewWindow.Open();
 
 	return UEngineWindow::WindowMessageLoop();

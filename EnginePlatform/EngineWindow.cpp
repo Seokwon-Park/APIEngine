@@ -1,11 +1,8 @@
 #include "EngineWindow.h"
+#include <EngineBase/EngineDebug.h>
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
-
-void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
-{
-	hInstance = _Instance;
-}
+std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasses;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -15,7 +12,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
-		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가
 		EndPaint(hWnd, &ps);
 	}
 	break;
@@ -28,68 +25,101 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-int UEngineWindow::WindowMessageLoop()
+void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
-	// 단축키 인데 게임
-// HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
-	MSG msg;
+	hInstance = _Instance;
 
-	// 기본 메시지 루프입니다:
-	while (GetMessage(&msg, nullptr, 0, 0))
-	{
-		// 단축키를 아예 안사용하므로 단축키를 처리한다는 일 자차게 없으므로 의미가 없는 코드가 되었다.
-		if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-	}
-
-	return (int)msg.wParam;
-}
-
-UEngineWindow::UEngineWindow()
-{
-	// 선생님은 다 멀티바이트 형태로 함수들을 사용하겠다고 했으므로 
-	// WNDCLASSEXW => WNDCLASSEXA 
 	WNDCLASSEXA wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
-
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = WndProc;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = hInstance;
-	// wcex.hInstance = nullptr;
 	wcex.hIcon = nullptr;
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	wcex.lpszMenuName = nullptr;
-	wcex.lpszClassName = "DefaultWindow";
+	wcex.lpszClassName = "Default";
 	wcex.hIconSm = nullptr;
-	// wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	CreateWindowClass(wcex);
 
-	RegisterClassExA(&wcex);
+}
 
-	WindowHandle = CreateWindowA("DefaultWindow", "MainWindow", WS_OVERLAPPEDWINDOW,
-		0, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-	if (!WindowHandle)
+void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
+{
+	if (WindowClasses.contains(_Class.lpszClassName))
 	{
+		MSGASSERT("같은 이름의 윈도우 클래스를 2번 등록했습니다." + std::string(_Class.lpszClassName));
 		return;
 	}
+
+	RegisterClassExA(&_Class);
+
+	WindowClasses.insert(std::make_pair(_Class.lpszClassName, _Class));
+}
+
+int UEngineWindow::WindowMessageLoop()
+{
+	MSG msg;
+
+	// 기본 메시지 루프
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+	}
+	return (int)msg.wParam;
+}
+
+
+
+UEngineWindow::UEngineWindow()
+	:WindowHandle(nullptr)
+{
+
 }
 
 UEngineWindow::~UEngineWindow()
 {
 }
 
-void UEngineWindow::Open()
+void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
 {
-	// 단순히 윈도창을 보여주는 것만이 아니라
-	ShowWindow(WindowHandle, SW_SHOW);
-	UpdateWindow(WindowHandle);
+	if (false == WindowClasses.contains(_ClassName.data()))
+	{
+		MSGASSERT(std::string(_ClassName) + "등록하지 않은 클래스로 윈도우창을 만들려고 했습니다");
+		return;
+	}
+
+	WindowHandle = CreateWindowA(_ClassName.data(), _TitleName.data(), WS_OVERLAPPEDWINDOW,
+		0, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+
+	if (nullptr == WindowHandle)
+	{
+		MSGASSERT("윈도우 생성에 실패했습니다." + std::string(_TitleName));
+		return;
+	}
+}
+
+
+void UEngineWindow::Open(std::string_view _TitleName)
+{
+	if (nullptr == WindowHandle)
+	{
+		Create(defaultTitleName);
+	}
+
+	if (nullptr != WindowHandle)
+	{
+		ShowWindow(WindowHandle, SW_SHOW);
+		UpdateWindow(WindowHandle);
+	}
 	// ShowWindow(WindowHandle, SW_HIDE);
 }
 
