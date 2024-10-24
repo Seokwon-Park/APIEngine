@@ -1,9 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="EngineAPICore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="aepch.cpp">
+      <Filter>PrecompiledHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Object\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
+    <ClInclude Include="EngineAPICore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="aepch.h">
+      <Filter>PrecompiledHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Object\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{5ed53de0-8aac-431b-8c7c-8495eede70fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{c75df3a6-c19d-4b1a-8c32-d75a3e73261e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PrecompiledHeader">
+      <UniqueIdentifier>{ba85a7d2-c4e6-4683-816d-a248e4633ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Level">
+      <UniqueIdentifier>{b8026643-6aad-4ced-83b8-ec3e789fe5ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor">
+      <UniqueIdentifier>{7e79f116-6575-4ab1-950b-64d4afef4f97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

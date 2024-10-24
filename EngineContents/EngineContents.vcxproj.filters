@@ -1,9 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Player.h" />
+    <Filter Include="ContentsObject">
+      <UniqueIdentifier>{a882c4f3-a469-43ce-afa6-c2b55712cf08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PrecompiledHeader">
+      <UniqueIdentifier>{560b7fab-8778-4377-98de-32fab1017867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{76bc92c4-50ef-4245-a5e6-c1533acf7f36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Player.cpp">
+      <Filter>ContentsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="aepch.cpp">
+      <Filter>PrecompiledHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameContentsCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h">
+      <Filter>ContentsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="aepch.h">
+      <Filter>PrecompiledHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContentsCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,8 +1,11 @@
+#include "aepch.h"
 #include "EngineWindow.h"
 #include <EngineBase/EngineDebug.h>
 
+
 HINSTANCE UEngineWindow::hInstance = nullptr;
 std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasses;
+int WindowCount = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -17,7 +20,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case WM_DESTROY:
-		PostQuitMessage(0);
+		--WindowCount;
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
@@ -60,20 +63,40 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 	WindowClasses.insert(std::make_pair(_Class.lpszClassName, _Class));
 }
 
-int UEngineWindow::WindowMessageLoop()
+int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction)
 {
-	MSG msg;
+	MSG msg = MSG();
 
-	// 기본 메시지 루프
-	while (GetMessage(&msg, nullptr, 0, 0))
+	// GetMessage
+	// 메세지가 없다 => 영원히 기다림
+	// 메세지가 있다 => 처리하고 리턴
+
+	// PeekMessage
+	// 처리하고 리턴
+	// 메세지가 없다 => 리턴
+	// 메세지가 있다 => 처리하고 리턴
+	_StartFunction();
+
+	while (WindowCount)
 	{
-		if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+		// if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))  
+		// => 윈도우 단축키 자체를 사용하지
+		// 않을 것이므로 그냥 무시
+
+		// PM_REMOVE == 내가 처리할때 지금까지 쌓인 메세지 다지우기
+		if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
 
+		// 메세지 처리하고 나서 게임엔진 루프.
+		if (true == _FrameFunction.IsBind())
+		{
+			_FrameFunction();
+		}
 	}
+
 	return (int)msg.wParam;
 }
 
@@ -102,7 +125,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
 	if (nullptr == WindowHandle)
 	{
-		MSGASSERT("윈도우 생성에 실패했습니다." + std::string(_TitleName));
+		MSGASSERT(std::string(_TitleName) + "윈도우 생성에 실패했습니다.");
 		return;
 	}
 }
@@ -115,11 +138,14 @@ void UEngineWindow::Open(std::string_view _TitleName)
 		Create(defaultTitleName);
 	}
 
-	if (nullptr != WindowHandle)
+	if (nullptr == WindowHandle)
 	{
-		ShowWindow(WindowHandle, SW_SHOW);
-		UpdateWindow(WindowHandle);
+		return;
 	}
+
+	ShowWindow(WindowHandle, SW_SHOW);
+	UpdateWindow(WindowHandle);
+	++WindowCount;
 	// ShowWindow(WindowHandle, SW_HIDE);
 }
 

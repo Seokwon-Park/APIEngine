@@ -2,5 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="aepch.cpp">
+      <Filter>PrecompiledHeader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PrecompiledHeader">
+      <UniqueIdentifier>{12bcdafa-4757-4864-8750-740a712733d0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="aepch.h">
+      <Filter>PrecompiledHeader</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

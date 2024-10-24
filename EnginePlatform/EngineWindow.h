@@ -1,19 +1,18 @@
 #pragma once
-#include <Windows.h>
-#include <string>
-#include <map>
+
+// user header
+#include <EngineBase/EngineDelegate.h>
 
 const std::string defaultClassName = "Default";
 const std::string defaultTitleName = "Window";
 
-// Ό³Έν :
 class UEngineWindow
 {
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
-	static bool IsWindowClass(const std::string_view _Text);
-	static int WindowMessageLoop();
+
+	static int WindowMessageLoop(EngineDelegate _StartFunction,EngineDelegate _FrameFunction);
 
 	// constructer destructer
 	UEngineWindow();

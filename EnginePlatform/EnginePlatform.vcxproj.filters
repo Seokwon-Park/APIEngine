@@ -1,9 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="EngineWindow.h" />
+    <Filter Include="Window">
+      <UniqueIdentifier>{e81574d9-dc79-462a-9a9c-05a613df4494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PrecompiledHeader">
+      <UniqueIdentifier>{c80fd59c-264b-40aa-9e5d-1d02621d32a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EngineWindow.cpp" />
+    <ClCompile Include="EngineWindow.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="aepch.cpp">
+      <Filter>PrecompiledHeader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineWindow.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="aepch.h">
+      <Filter>PrecompiledHeader</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
