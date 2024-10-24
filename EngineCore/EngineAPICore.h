@@ -45,24 +45,21 @@ public:
 		return EngineMainWindow;
 	}
 
-	void CreateLevel(std::string_view _LevelName)
+	template <typename GameModeType, typename MainPawnType>
+	ULevel* CreateLevel(std::string_view _LevelName)
 	{
 		ULevel* NewLevel = new ULevel();
 
-		Levels.insert(std::make_pair(_LevelName.data(), NewLevel));
+		// GameMode = 레벨의 특성을 설정하는 객체
+		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
+
+		std::string tmp = _LevelName.data();
+		Levels.insert(std::make_pair(tmp, NewLevel));
+
+		return NewLevel;
 	}
 
-	void OpenLevel(std::string_view _LevelName)
-	{
-		std::string LevelName = _LevelName.data();
-
-		if (false == Levels.contains(LevelName))
-		{
-			MSGASSERT(LevelName + "라는 이름의 레벨이 존재하지 않습니다.");
-		}
-
-		CurrentLevel = Levels[LevelName];
-	}
+	void OpenLevel(std::string_view _LevelName);
 
 protected:
 
@@ -77,9 +74,9 @@ private:
 	// 이녀석들이 돌아가야 게임이 돌아간다.
 	void Tick();
 
-	ULevel* CurrentLevel = nullptr;
+	class ULevel* CurrentLevel = nullptr;
 
-	std::map<std::string, ULevel*> Levels;
+	std::map<std::string, class ULevel*> Levels;
 };
 
 

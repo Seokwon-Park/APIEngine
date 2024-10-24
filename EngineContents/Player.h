@@ -1,5 +1,7 @@
 #pragma once
-class Player
+#include "EngineCore/Actor.h"
+
+class APlayer : public AActor
 {
 };
 

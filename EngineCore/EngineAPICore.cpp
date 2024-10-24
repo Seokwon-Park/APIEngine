@@ -11,7 +11,7 @@ UContentsCore* UEngineAPICore::UserCore = nullptr;
 
 UEngineAPICore::UEngineAPICore()
 {
-	MainCore = this;
+
 }
 
 UEngineAPICore::~UEngineAPICore()
@@ -24,8 +24,9 @@ UEngineAPICore::~UEngineAPICore()
 			Level.second = nullptr;
 		}
 	}
-}
 
+	Levels.clear();
+}
 
 int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 {
@@ -41,6 +42,18 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	EngineDelegate StartDelegate(std::bind(&EngineBeginPlay));
 	EngineDelegate FrameDelegate(std::bind(&EngineTick));
 	return UEngineWindow::WindowMessageLoop(StartDelegate, FrameDelegate);
+}
+
+void UEngineAPICore::OpenLevel(std::string_view _LevelName)
+{
+	std::string LevelName = _LevelName.data();
+
+	if (false == Levels.contains(LevelName))
+	{
+		MSGASSERT(LevelName + "라는 이름의 레벨이 존재하지 않습니다.");
+	}
+
+	CurrentLevel = Levels[LevelName];
 }
 
 void UEngineAPICore::EngineBeginPlay()
@@ -63,6 +76,7 @@ void UEngineAPICore::Tick()
 		return;
 	}
 	CurrentLevel->Tick();
+	CurrentLevel->Render();
 }
 
 

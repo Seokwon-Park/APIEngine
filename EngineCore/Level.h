@@ -1,9 +1,11 @@
 #pragma once
+#include "GameMode.h"
 
 // 설명 :
 class ULevel
 {
 public:
+	friend class UEngineAPICore;
 	// constrcuter destructer
 	ULevel();
 	~ULevel();
@@ -14,12 +16,46 @@ public:
 	ULevel& operator=(const ULevel& _Other) = delete;
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
-	void BeginPlay() {};
-	void Tick() {};
+	void Tick();
+	void Render();
+
+	template <typename ActorType>
+	ActorType* SpawnActor()
+	{
+		ActorType* NewActor = new ActorType();
+
+		AActor* ActorPtr = dynamic_cast<AActor*>(NewActor);
+		ActorPtr->World = this;
+
+		NewActor.BeginPlay();
+		AllActors.push_back(NewActor);
+		return NewActor;
+	}
 
 protected:
 
 private:
-	class AGameMode* GameMode = nullptr;
+	// 게임레벨과 메인폰을 만들어서 게임을 준비 시키는 함수
+	template <typename GameModeType, typename MainPawnType>
+	void CreateGameMode()
+	{
+		GameMode = new GameModeType();
+		MainPawn = new MainPawnType();
+
+		GameMode->World = this;
+		MainPawn->World = this;
+
+		//GameMode->GetWorld = this;
+		GameMode->BeginPlay();
+		MainPawn->BeginPlay();
+
+		AllActors.push_back(GameMode);
+		AllActors.push_back(MainPawn);
+	}
+
+	AGameMode* GameMode = nullptr;
+	AActor* MainPawn = nullptr;
+
+	std::list<AActor*> AllActors;
 };
 

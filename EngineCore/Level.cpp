@@ -5,6 +5,42 @@ ULevel::ULevel()
 {
 }
 
+//RAII - SpawnActor<>();
 ULevel::~ULevel()
 {
+	for (AActor* Actor : AllActors)
+	{
+		if (nullptr != Actor)
+		{
+			delete Actor;
+			Actor = nullptr;
+		}
+	}
+	if (nullptr != GameMode)
+	{
+		delete GameMode;
+		GameMode = nullptr;
+	}
+}
+
+void ULevel::Tick()
+{
+	for (AActor* Actor : AllActors)
+	{
+		if (nullptr != Actor)
+		{
+			Actor->Tick();
+		}
+	}
+}
+
+void ULevel::Render()
+{
+	for (AActor* Actor : AllActors)
+	{
+		if (nullptr != Actor)
+		{
+			Actor->Render();
+		}
+	}
 }

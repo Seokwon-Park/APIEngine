@@ -1,49 +1,49 @@
 #pragma once
 
-class FIntPoint
+class FVector
 {
 public:
-	int X = 0;
-	int Y = 0;
+	float X = 0.0f;
+	float Y = 0.0f;
 
-	static const FIntPoint LEFT;
-	static const FIntPoint RIGHT;
-	static const FIntPoint UP;
-	static const FIntPoint DOWN;
+	static const FVector LEFT;
+	static const FVector RIGHT;
+	static const FVector UP;
+	static const FVector DOWN;
 
-	FIntPoint()
+	FVector()
 	{
 
 	}
 
-	FIntPoint(int _X, int _Y) : X(_X), Y(_Y)
+	FVector(int _X, int _Y) : X(_X), Y(_Y)
 	{
 
 	}
 
-	FIntPoint operator+(FIntPoint _Other) const
+	FVector operator+(FVector _Other) const
 	{
-		FIntPoint Result; 
+		FVector Result; 
 		Result.X = X + _Other.X;
 		Result.Y = Y + _Other.Y;
 		return Result;
 	}
 
-	FIntPoint operator/(int _Value) const
+	FVector operator/(int _Value) const
 	{
-		FIntPoint Result;
+		FVector Result;
 		Result.X = X / _Value;
 		Result.Y = Y / _Value;
 		return Result;
 	}
 
 
-	bool operator==(FIntPoint _Other) const
+	bool operator==(FVector _Other) const
 	{
 		return X == _Other.X && Y == _Other.Y;
 	}
 
-	FIntPoint& operator+=(FIntPoint _Other)
+	FVector& operator+=(FVector _Other)
 	{
 		X += _Other.X;
 		Y += _Other.Y;
