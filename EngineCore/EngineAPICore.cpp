@@ -16,7 +16,7 @@ UEngineAPICore::UEngineAPICore()
 
 UEngineAPICore::~UEngineAPICore()
 {
-	for (auto& Level: Levels)
+	for (auto& Level : Levels)
 	{
 		if (nullptr != Level.second)
 		{
@@ -38,6 +38,7 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
+	MainCore = &Core;
 
 	EngineDelegate StartDelegate(std::bind(&EngineBeginPlay));
 	EngineDelegate FrameDelegate(std::bind(&EngineTick));

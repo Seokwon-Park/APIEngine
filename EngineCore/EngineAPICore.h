@@ -53,8 +53,7 @@ public:
 		// GameMode = 레벨의 특성을 설정하는 객체
 		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
 
-		std::string tmp = _LevelName.data();
-		Levels.insert(std::make_pair(tmp, NewLevel));
+		Levels.insert(std::make_pair(_LevelName.data(), NewLevel));
 
 		return NewLevel;
 	}

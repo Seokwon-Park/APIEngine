@@ -16,11 +16,6 @@ ULevel::~ULevel()
 			Actor = nullptr;
 		}
 	}
-	if (nullptr != GameMode)
-	{
-		delete GameMode;
-		GameMode = nullptr;
-	}
 }
 
 void ULevel::Tick()
