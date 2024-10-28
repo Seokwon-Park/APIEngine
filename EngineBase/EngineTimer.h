@@ -23,7 +23,7 @@ public:
 		return fDeltaTime;
 	}
 
-	float GetDoubleDeltaTime()
+	double GetDoubleDeltaTime()
 	{
 		return DeltaTime;
 	}
@@ -38,7 +38,7 @@ protected:
 
 private:
 	// 1초에 x번 센다.
-	LARGE_INTEGER Count;
+	LARGE_INTEGER Count; 
 	// 기준 시간으로부터 x초 지난시간
 	LARGE_INTEGER PrevTime;
 	// 기준 시간으로부터 현재 시간

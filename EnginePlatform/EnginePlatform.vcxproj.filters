@@ -7,6 +7,9 @@
     <Filter Include="PrecompiledHeader">
       <UniqueIdentifier>{c80fd59c-264b-40aa-9e5d-1d02621d32a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{a75b8525-c98e-41ae-9328-af3a0fc300ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -15,6 +18,9 @@
     <ClCompile Include="aepch.cpp">
       <Filter>PrecompiledHeader</Filter>
     </ClCompile>
+    <ClCompile Include="EngineInput.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineWindow.h">
@@ -22,6 +28,12 @@
     </ClInclude>
     <ClInclude Include="aepch.h">
       <Filter>PrecompiledHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInput.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCode.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

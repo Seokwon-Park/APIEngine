@@ -14,9 +14,12 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+
+	void MoveFunction(FVector2D _Dir);
 protected:
 
 private:
+	float Speed = 100.0f;
 
 
 

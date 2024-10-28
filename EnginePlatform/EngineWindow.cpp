@@ -122,7 +122,7 @@ void UEngineWindow::Open(std::string_view _TitleName)
 {
 	if (nullptr == WindowHandle)
 	{
-		Create(DefaultTitleName);
+		Create(_TitleName);
 	}
 
 	if (nullptr == WindowHandle)

@@ -13,11 +13,14 @@
     <Filter Include="ContentsObject\GameMode">
       <UniqueIdentifier>{640d94f4-d09c-416f-9b48-76f15a75181f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Global">
+      <UniqueIdentifier>{321e988c-73d9-46aa-a6a9-08748132e085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play">
+      <UniqueIdentifier>{2ad6b0cb-af63-4756-a36f-d70c0bcd3351}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject</Filter>
-    </ClCompile>
     <ClCompile Include="aepch.cpp">
       <Filter>PrecompiledHeader</Filter>
     </ClCompile>
@@ -27,11 +30,17 @@
     <ClCompile Include="PlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ContentsObject\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ContentsObject\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="APlayMap.cpp">
+      <Filter>ContentsObject\Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>ContentsObject</Filter>
-    </ClInclude>
     <ClInclude Include="aepch.h">
       <Filter>PrecompiledHeader</Filter>
     </ClInclude>
@@ -40,6 +49,15 @@
     </ClInclude>
     <ClInclude Include="PlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ContentsObject\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="APlayMap.h">
+      <Filter>ContentsObject\Play</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

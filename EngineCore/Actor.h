@@ -25,6 +25,10 @@ public:
 		return World;
 	}
 
+	FVector2D GetActorLocation()
+	{
+		return Location;
+	}
 	void SetActorLocation(FVector2D _Location)
 	{
 		Location = _Location;
