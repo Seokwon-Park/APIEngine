@@ -16,7 +16,7 @@ void APlayer::BeginPlay()
 
 }
 
-void APlayer::Tick()
+void APlayer::Tick(float _DeltaTime)
 {
-	AddActorLocation(FVector2D::RIGHT * 0.0001f);
+	AddActorLocation(FVector2D::RIGHT * _DeltaTime * 100.0f);
 }

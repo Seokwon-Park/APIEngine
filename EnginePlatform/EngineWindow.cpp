@@ -31,23 +31,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
 	hInstance = _Instance;
-
-	WNDCLASSEXA wcex;
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = nullptr;
-	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = nullptr;
-	wcex.lpszClassName = "Default";
-	wcex.hIconSm = nullptr;
+	WNDCLASSEXA wcex = CreateWNDCLASSEX();
 	CreateWindowClass(wcex);
-
 }
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
@@ -137,7 +122,7 @@ void UEngineWindow::Open(std::string_view _TitleName)
 {
 	if (nullptr == WindowHandle)
 	{
-		Create(defaultTitleName);
+		Create(DefaultTitleName);
 	}
 
 	if (nullptr == WindowHandle)
@@ -149,5 +134,25 @@ void UEngineWindow::Open(std::string_view _TitleName)
 	UpdateWindow(WindowHandle);
 	++WindowCount;
 	// ShowWindow(WindowHandle, SW_HIDE);
+}
+
+WNDCLASSEXA UEngineWindow::CreateWNDCLASSEX()
+{
+	WNDCLASSEXA Return;
+
+	Return.cbSize = sizeof(WNDCLASSEX);
+	Return.style = CS_HREDRAW | CS_VREDRAW;
+	Return.lpfnWndProc = WndProc;
+	Return.cbClsExtra = 0;
+	Return.cbWndExtra = 0;
+	Return.hInstance = hInstance;
+	Return.hIcon = nullptr;
+	Return.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	Return.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	Return.lpszMenuName = nullptr;
+	Return.lpszClassName = DefaultClassName.c_str();
+	Return.hIconSm = nullptr;
+
+	return Return;
 }
 

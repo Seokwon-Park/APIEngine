@@ -3,14 +3,15 @@
 // user header
 #include <EngineBase/EngineDelegate.h>
 
-const std::string defaultClassName = "Default";
-const std::string defaultTitleName = "Window";
+const std::string DefaultClassName = "Default";
+const std::string DefaultTitleName = "Window";
 
 class UEngineWindow
 {
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
+	static WNDCLASSEXA CreateWNDCLASSEX();
 
 	static int WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction);
 
@@ -24,8 +25,8 @@ public:
 	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
 	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
 
-	void Create(std::string_view _TitleName, std::string_view _ClassName = defaultClassName);
-	void Open(std::string_view _TitleName = defaultTitleName);
+	void Create(std::string_view _TitleName, std::string_view _ClassName = DefaultClassName);
+	void Open(std::string_view _TitleName = DefaultTitleName);
 
 	inline HDC GetBackBuffer()
 	{

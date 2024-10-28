@@ -21,7 +21,7 @@
     <ClCompile Include="aepch.cpp">
       <Filter>PrecompiledHeader</Filter>
     </ClCompile>
-    <ClCompile Include="GameContentsCore.cpp">
+    <ClCompile Include="PuyoPuyoContentsCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="PlayGameMode.cpp">
@@ -35,7 +35,7 @@
     <ClInclude Include="aepch.h">
       <Filter>PrecompiledHeader</Filter>
     </ClInclude>
-    <ClInclude Include="GameContentsCore.h">
+    <ClInclude Include="PuyoPuyoContentsCore.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="PlayGameMode.h">

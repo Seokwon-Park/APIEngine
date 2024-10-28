@@ -16,6 +16,9 @@
     <ClInclude Include="aepch.h">
       <Filter>PrecompiledHeader</Filter>
     </ClInclude>
+    <ClInclude Include="EngineTimer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineDebug.cpp">
@@ -33,6 +36,9 @@
     <ClCompile Include="aepch.cpp">
       <Filter>PrecompiledHeader</Filter>
     </ClCompile>
+    <ClCompile Include="EngineTimer.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -49,6 +55,9 @@
     </Filter>
     <Filter Include="PrecompiledHeader">
       <UniqueIdentifier>{72afe10c-d407-4c9b-9aa4-cada566c7567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{3e5b6b12-4e06-4e37-bfc3-79dce63bae53}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

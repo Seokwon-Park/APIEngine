@@ -10,6 +10,8 @@ UContentsCore* UEngineAPICore::UserCore = nullptr;
 
 
 UEngineAPICore::UEngineAPICore()
+	:CurLevel(nullptr), DeltaTimer(UEngineTimer()), EngineMainWindow(UEngineWindow())
+
 {
 
 }
@@ -54,7 +56,7 @@ void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 		MSGASSERT(LevelName + "라는 이름의 레벨이 존재하지 않습니다.");
 	}
 
-	CurrentLevel = Levels[LevelName];
+	CurLevel = Levels[LevelName];
 }
 
 void UEngineAPICore::EngineBeginPlay()
@@ -71,13 +73,16 @@ void UEngineAPICore::EngineTick()
 
 void UEngineAPICore::Tick()
 {
-	if (nullptr == CurrentLevel)
+	DeltaTimer.TimeCheck();
+	float DeltaTime = DeltaTimer.GetDeltaTime();
+
+	if (nullptr == CurLevel)
 	{
 		MSGASSERT("엔진 코어에 현재 레벨이 지정되지 않았습니다.");
 		return;
 	}
-	CurrentLevel->Tick();
-	CurrentLevel->Render();
+	CurLevel->Tick(DeltaTime);
+	CurLevel->Render();
 }
 
 

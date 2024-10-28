@@ -158,7 +158,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameContentsCore.h">
+    <ClInclude Include="PuyoPuyoContentsCore.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -173,7 +173,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameContentsCore.cpp">
+    <ClCompile Include="PuyoPuyoContentsCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>

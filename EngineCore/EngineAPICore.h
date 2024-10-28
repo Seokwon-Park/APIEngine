@@ -7,6 +7,7 @@
 // 컴파일 시간이 
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineDebug.h>
+#include <EngineBase/EngineTimer.h>
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
@@ -68,12 +69,13 @@ private:
 	static UEngineAPICore* MainCore;
 	static UContentsCore* UserCore;
 
-	UEngineWindow EngineMainWindow; // 엔진 메인 윈도우
-
 	// 이녀석들이 돌아가야 게임이 돌아간다.
 	void Tick();
+	
+	UEngineTimer DeltaTimer;
+	UEngineWindow EngineMainWindow; // 엔진 메인 윈도우
 
-	class ULevel* CurrentLevel = nullptr;
+	class ULevel* CurLevel;
 
 	std::map<std::string, class ULevel*> Levels;
 };

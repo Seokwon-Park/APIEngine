@@ -5,7 +5,7 @@
 //#pragma comment (lib, "EngineBase.lib")
 //#pragma comment (lib, "EnginePlatform.lib")
 #include "aepch.h"
-#include <EngineContents/GameContentsCore.h>
+#include <EngineContents/PuyoPuyoContentsCore.h>
 
 #include <EngineCore/EngineAPICore.h>
 
@@ -17,6 +17,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	UGameContentsCore User;
+	PuyoPuyoContentsCore User;
 	return UEngineAPICore::EngineStart(hInstance, &User);
 }

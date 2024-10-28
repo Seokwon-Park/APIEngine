@@ -18,13 +18,13 @@ ULevel::~ULevel()
 	}
 }
 
-void ULevel::Tick()
+void ULevel::Tick(float _DeltaTime)
 {
 	for (AActor* Actor : AllActors)
 	{
 		if (nullptr != Actor)
 		{
-			Actor->Tick();
+			Actor->Tick(_DeltaTime);
 		}
 	}
 }

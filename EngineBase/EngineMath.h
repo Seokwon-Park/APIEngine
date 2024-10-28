@@ -56,8 +56,6 @@ public:
 		return Result;
 	}
 
-
-
 	FVector2D operator+(FVector2D _Other) const
 	{
 		FVector2D Result;
