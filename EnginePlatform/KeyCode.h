@@ -198,6 +198,6 @@ public:
 		NONAME = 0xFC, // Reserved
 		PA1 = 0xFD, // PA1 key
 		OEM_CLEAR = 0xFE, // Clear key
-		Last = -1,
+		Last
 	};
 };

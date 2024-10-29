@@ -153,7 +153,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="APlayMap.h">
+    <ClInclude Include="PlayMap.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -173,7 +173,7 @@
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="APlayMap.cpp">
+    <ClCompile Include="PlayMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>

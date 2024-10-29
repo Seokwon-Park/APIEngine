@@ -52,7 +52,7 @@ void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 {
 	std::string LevelName = _LevelName.data();
 
-	if (false == Levels.contains(LevelName))
+ 	if (false == Levels.contains(LevelName))
 	{
 		MSGASSERT(LevelName + "라는 이름의 레벨이 존재하지 않습니다.");
 	}

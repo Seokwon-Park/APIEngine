@@ -1,6 +1,7 @@
 #pragma once
 
-// user header
+#include "EngineWinImage.h"
+#include <EngineBase/EngineMath.h>
 #include <EngineBase/EngineDelegate.h>
 
 const std::string DefaultClassName = "Default";
@@ -14,6 +15,7 @@ public:
 	static WNDCLASSEXA CreateWNDCLASSEX();
 
 	static int WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction);
+	void SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale);
 
 	// constructer destructer
 	UEngineWindow();
@@ -28,9 +30,19 @@ public:
 	void Create(std::string_view _TitleName, std::string_view _ClassName = DefaultClassName);
 	void Open(std::string_view _TitleName = DefaultTitleName);
 
-	inline HDC GetBackBuffer()
+	inline FVector2D GetWindowSize() const
 	{
-		return BackBuffer;
+		return WindowSize;
+	}
+
+	inline UEngineWinImage* GetBackBuffer() const
+	{
+		return BackBufferImage;
+	}
+
+	inline UEngineWinImage* GetWindowImage() const
+	{
+		return WindowImage;
 	}
 
 	inline void SetWindowTitle(std::string_view Text)
@@ -43,7 +55,10 @@ private:
 	static HINSTANCE hInstance;
 	static std::map<std::string, WNDCLASSEXA> WindowClasses;
 
-	HDC BackBuffer;
+	FVector2D WindowSize;
+
+	UEngineWinImage* BackBufferImage;
+	UEngineWinImage* WindowImage;
 	HWND WindowHandle;
 };
 

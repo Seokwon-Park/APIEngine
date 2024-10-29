@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineCore/GameMode.h"
 
-// 설명 :
+// 뿌요뿌요 플레이할 게임모드
 class APlayGameMode : public AGameMode
 {
 public:

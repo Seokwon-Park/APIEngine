@@ -27,21 +27,21 @@ public:
 
 	FVector2D GetActorLocation()
 	{
-		return Location;
+		return Transform.Location;
 	}
 	void SetActorLocation(FVector2D _Location)
 	{
-		Location = _Location;
+		Transform.Location = _Location;
 	}
 
 	void AddActorLocation(FVector2D _Direction)
 	{
-		Location += _Direction;
+		Transform.Location += _Direction;
 	}
 
 	void SetActorScale(FVector2D _Scale)
 	{
-		Scale = _Scale;
+		Transform.Scale = _Scale;
 	}
 
 protected:
@@ -49,8 +49,7 @@ protected:
 private:
 	class ULevel* World;
 
-	FVector2D Location = FVector2D::ZERO;
-	FVector2D Scale = FVector2D::ZERO;
+	FTransform Transform;
 
 };
 

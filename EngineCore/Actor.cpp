@@ -3,7 +3,7 @@
 #include <EngineCore/EngineAPICore.h>
 
 AActor::AActor()
-	:World(nullptr), Location(FVector2D::ZERO), Scale(FVector2D::ZERO)
+	:World(nullptr), Transform(FTransform())
 {
 }
 
@@ -14,13 +14,14 @@ AActor::~AActor()
 void AActor::Render()
 {
 	//                  100 100  - 50 50 => 50 50
-	FVector2D LeftTop = Location - Scale.Half();
+	FVector2D LeftTop = Transform.CenterLeftTop();
 	//                  100 100  + 50 50 => 150 150
-	FVector2D RightBot = Location + Scale.Half();
+	FVector2D RightBot = Transform.CenterRightBottom();
 
 
-	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
-	HDC BackHDC = MainWindow.GetBackBuffer();
+	UEngineWindow& MainWindow = UEngineAPICore::GetEngineWindow();
+	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+	HDC BackBufferDC = BackBufferImage->GetDC();
 
-	Rectangle(BackHDC, LeftTop.iX(), LeftTop.iY(), RightBot.iX(), RightBot.iY());
+	Rectangle(BackBufferDC, LeftTop.iX(), LeftTop.iY(), RightBot.iX(), RightBot.iY());
 }

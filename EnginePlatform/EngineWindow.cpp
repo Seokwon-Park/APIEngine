@@ -60,7 +60,10 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 	// 처리하고 리턴
 	// 메세지가 없다 => 리턴
 	// 메세지가 있다 => 처리하고 리턴
-	_StartFunction();
+	if (true == _StartFunction.IsBind())
+	{
+		_StartFunction();
+	}
 
 	while (WindowCount)
 	{
@@ -85,16 +88,52 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 	return (int)msg.wParam;
 }
 
+void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
+{
+	if (WindowSize != _Scale)
+	{
+		if (nullptr != BackBufferImage)
+		{
+			delete BackBufferImage;
+			BackBufferImage = nullptr;
+		}
+		BackBufferImage = new UEngineWinImage();
+		BackBufferImage->Create(WindowImage, _Scale);
+	}
+
+	WindowSize = _Scale;
+
+	RECT Rect = { 0,0,_Scale.iX(), _Scale.iY() };
+
+	AdjustWindowRect(&Rect, WS_OVERLAPPEDWINDOW, false);
+
+	::SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(),
+		Rect.right - Rect.left,
+		Rect.bottom - Rect.top,
+		SWP_NOZORDER);
+}
+
 
 
 UEngineWindow::UEngineWindow()
-	:BackBuffer(nullptr), WindowHandle(nullptr)
+	:BackBufferImage(nullptr), WindowImage(nullptr), WindowHandle(nullptr)
 {
 
 }
 
 UEngineWindow::~UEngineWindow()
 {
+	if (nullptr != WindowImage)
+	{
+		delete WindowImage;
+		WindowImage = nullptr;
+	}
+
+	if (nullptr != BackBufferImage)
+	{
+		delete BackBufferImage;
+		BackBufferImage = nullptr;
+	}
 }
 
 void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
@@ -114,7 +153,9 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 		return;
 	}
 
-	BackBuffer = GetDC(WindowHandle);
+	WindowImage = new UEngineWinImage();
+	WindowImage->Create(GetDC(WindowHandle));
+
 }
 
 

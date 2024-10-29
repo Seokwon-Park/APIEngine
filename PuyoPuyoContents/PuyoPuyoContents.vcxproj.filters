@@ -36,7 +36,7 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>ContentsObject\Play</Filter>
     </ClCompile>
-    <ClCompile Include="APlayMap.cpp">
+    <ClCompile Include="PlayMap.cpp">
       <Filter>ContentsObject\Play</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClInclude Include="Bullet.h">
       <Filter>ContentsObject\Play</Filter>
     </ClInclude>
-    <ClInclude Include="APlayMap.h">
+    <ClInclude Include="PlayMap.h">
       <Filter>ContentsObject\Play</Filter>
     </ClInclude>
   </ItemGroup>

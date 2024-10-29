@@ -27,7 +27,7 @@ public:
 		AActor* ActorPtr = dynamic_cast<AActor*>(NewActor);
 		ActorPtr->World = this;
 
-		NewActor.BeginPlay();
+		NewActor->BeginPlay();
 		AllActors.push_back(NewActor);
 		return NewActor;
 	}
@@ -35,6 +35,7 @@ public:
 protected:
 
 private:
+	void SwapBuffer();
 	// 게임레벨과 메인폰을 만들어서 게임을 준비 시키는 함수
 	template <typename GameModeType, typename MainPawnType>
 	void CreateGameMode()

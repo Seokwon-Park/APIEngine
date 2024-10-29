@@ -1,5 +1,6 @@
 #include "aepch.h"
 #include "Level.h"
+#include "EngineAPICore.h"
 
 ULevel::ULevel()
 {
@@ -38,4 +39,19 @@ void ULevel::Render()
 			Actor->Render();
 		}
 	}
+
+	SwapBuffer();
+}
+
+void ULevel::SwapBuffer()
+{
+	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
+	UEngineWinImage* WindowImage = MainWindow.GetWindowImage();
+	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+
+	FTransform Transform;
+	Transform.Location = MainWindow.GetWindowSize().Half();
+	Transform.Scale = MainWindow.GetWindowSize();
+
+	BackBufferImage->CopyToBit(WindowImage, Transform);
 }

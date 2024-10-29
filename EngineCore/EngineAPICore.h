@@ -34,6 +34,10 @@ public:
 	{
 		return MainCore;
 	}
+	static class UEngineWindow& GetEngineWindow()
+	{
+		return MainCore->EngineMainWindow;
+	}
 
 	UEngineWindow& GetMainWindow()
 	{

@@ -9,8 +9,8 @@
 class FVector2D
 {
 public:
-	float X = 0.0f;
-	float Y = 0;
+	float X;
+	float Y;
 
 	static const FVector2D ZERO;
 	static const FVector2D LEFT;
@@ -18,7 +18,7 @@ public:
 	static const FVector2D UP;
 	static const FVector2D DOWN;
 
-	FVector2D()
+	FVector2D() :X(0.0f), Y(0.0f)
 	{
 
 	}
@@ -33,20 +33,33 @@ public:
 
 	}
 
-	int iX()
+	int iX() const
 	{
 		return static_cast<int>(X);
 	}
 
-	int iY()
+	int iY() const
 	{
 		return static_cast<int>(Y);
 	}
 
-	FVector2D Half()
+	FVector2D Half()const
 	{
 		return { X * 0.5f, Y * 0.5f };
 	}
+
+
+	bool operator==(FVector2D _Other) const
+	{
+		return abs(X - _Other.X) < 1e-6f && abs(Y - _Other.Y) < 1e-6f;
+	}
+
+	bool operator!=(FVector2D _Other) const
+	{
+		return !(*this == _Other);
+	}
+
+
 
 	FVector2D operator*(float _Value) const
 	{
@@ -82,16 +95,36 @@ public:
 	}
 
 
-	bool operator==(FVector2D _Other) const
-	{
-		return X == _Other.X && Y == _Other.Y;
-	}
-
 	FVector2D& operator+=(FVector2D _Other)
 	{
 		X += _Other.X;
 		Y += _Other.Y;
 		return *this;
+	}
+
+	FVector2D& operator-=(FVector2D _Other)
+	{
+		X -= _Other.X;
+		Y -= _Other.Y;
+		return *this;
+	}
+};
+
+class FTransform
+{
+
+public:
+	FVector2D Location;
+	FVector2D Scale;
+
+	FVector2D CenterLeftTop() const
+	{
+		return Location - Scale.Half();
+	}
+
+	FVector2D CenterRightBottom() const
+	{
+		return Location + Scale.Half();
 	}
 };
 

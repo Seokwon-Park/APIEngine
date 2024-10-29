@@ -1,5 +1,6 @@
 #include "aepch.h"
 #include "PlayGameMode.h"
+#include "PlayMap.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -17,4 +18,6 @@ void APlayGameMode::BeginPlay()
 	// 점수텍스트(TextMesh?) 몇개?
 	// 솔로모드 << 상대방 이미지를 그리는 이미지?
 	// 
+
+	APlayMap* PMAP0 = GetWorld()->SpawnActor<APlayMap>();
 }
