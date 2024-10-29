@@ -1,19 +1,16 @@
 #pragma once
 #include <io.h>
+#include "EnginePath.h"
 
 const int MAXPATH = 256;
 
-class UEngineFile
+class UEngineFile : public UEnginePath
 {
 public:
 	UEngineFile();
+	UEngineFile(std::string_view _Path);
+	UEngineFile(std::filesystem::path _Path);
 	~UEngineFile();
-
-	//파일 경로를 설정
-	inline void SetPath(const char* _Path)
-	{
-		strcpy_s(Path, _Path);
-	}
 
 	//파일에 _Ptr 쓰기
 	void Write(const void* _Ptr, size_t _Size);

@@ -35,7 +35,7 @@ public:
 		return WindowSize;
 	}
 
-	inline UEngineWinImage* GetBackBuffer() const
+	inline UEngineWinImage* GetBackBufferImage() const
 	{
 		return BackBufferImage;
 	}

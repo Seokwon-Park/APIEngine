@@ -14,20 +14,14 @@ public:
 	UEngineWinImage& operator=(const UEngineWinImage& _Other) = delete;
 	UEngineWinImage& operator=(UEngineWinImage&& _Other) noexcept = delete;
 
-	HDC GetDC()
+	inline HDC GetDC() const
 	{
 		return ImageDC;
 	}
-	//void Create(std::string_view _Path);
-	void Create(HDC _DC)
-	{
-		ImageDC = _DC;
-	}
 
+	void Create(HDC _DC);
 	void Create(UEngineWinImage* _TargetImage, FVector2D _ScaleS);
-
 	void CopyToBit(UEngineWinImage* _Dst, const FTransform& _Transform);
-
 protected:
 
 private:

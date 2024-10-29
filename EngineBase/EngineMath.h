@@ -108,6 +108,13 @@ public:
 		Y -= _Other.Y;
 		return *this;
 	}
+
+	FVector2D& operator-=(float _Value)
+	{
+		X *= _Value;
+		Y *= _Value;
+		return *this;
+	}
 };
 
 class FTransform
@@ -116,6 +123,12 @@ class FTransform
 public:
 	FVector2D Location;
 	FVector2D Scale;
+
+	FTransform()
+		:Location(FVector2D()), Scale(FVector2D())
+	{
+
+	}
 
 	FVector2D CenterLeftTop() const
 	{

@@ -3,12 +3,17 @@
 
 
 UEngineWinImage::UEngineWinImage()
-	:/*Scale(FVector2D::ZERO),*/ ImageDC(nullptr), hBitmap(nullptr)
+	:/*Scale(FVector2D::ZERO),*/ ImageDC(nullptr), hBitmap(nullptr), Info(BITMAP())
 {
 }
 
 UEngineWinImage::~UEngineWinImage()
 {
+}
+
+void UEngineWinImage::Create(HDC _DC)
+{
+	ImageDC = _DC;
 }
 
 void UEngineWinImage::Create(UEngineWinImage* _TargetImage, FVector2D _Scale)

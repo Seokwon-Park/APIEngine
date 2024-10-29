@@ -38,13 +38,12 @@ void UEngineInput::UEngineKey::EventCheck()
 
 void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 {
-	// if (true == GetAsyncKeyState('B'))
 	if (0 != GetAsyncKeyState(Key))
 	{
-		// 게임엔진에서 시간재는법
+		// 게임엔진에서 시간재기
 		// 특정 float을 만들어 놓고 그 float 계속 델타타임을 더해주면
 		PressTime += _DeltaTime;
-		// 이전전까지 안눌려있어다면
+		// 이전에 안눌려있는 상태라면
 		if (true == IsFree)
 		{
 			IsDown = true;
@@ -52,6 +51,7 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 			IsFree = false;
 			IsUp = false;
 		}
+		// 그 다음 프레임에 왔을때 여전히 눌려있는 상태면
 		else if (true == IsDown)
 		{
 			IsDown = false;
@@ -59,13 +59,10 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 			IsFree = false;
 			IsUp = false;
 		}
-
-		// B키가 눌렸다면
 	}
 	else
 	{
 		PressTime = 0.0f;
-		// B키가 안눌렸다면
 		if (true == IsPress)
 		{
 			IsDown = false;

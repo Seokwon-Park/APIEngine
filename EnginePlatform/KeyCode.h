@@ -1,10 +1,10 @@
 #pragma once
 
-class KeyCode
+using KeyCode = unsigned short;
+class Key
 {
 public:
-	using Code = unsigned short;
-	enum : Code
+	enum : KeyCode
 	{
 		Mouseleft = 0x01, // Left mouse button
 		Mouseright = 0x02, // Right mouse button
@@ -50,7 +50,7 @@ public:
 		Select = 0x29, // SELECT key
 		Print = 0x2A, // PRINT key
 		Execute = 0x2B, // EXECUTE key
-		Snapshot = 0x2C, // PRINT SCREEN key
+		PrintScr = 0x2C, // PRINT SCREEN key
 		Insert = 0x2D, // INS key
 		Delete = 0x2E, // DEL key
 		Help = 0x2F, // HELP key
@@ -171,8 +171,8 @@ public:
 		Comma = 0xBC, // For any country/region, the ',' key
 		Minus = 0xBD, // For any country/region, the '-' key
 		Period = 0xBE, // For any country/region, the '.' key
-		OEM_2 = 0xBF, // Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '/?' key
-		OEM_3 = 0xC0, // Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '\`~' key
+		Slash = 0xBF, // Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '/?' key
+		Diacritic = 0xC0, // Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '\`~' key
 		// 0xC1-D7 Reserved
 		// 0xD8-DA Unassigned
 		LBracket = 0xDB, // Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '\[{' key

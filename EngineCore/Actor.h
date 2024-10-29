@@ -5,6 +5,8 @@
 class AActor
 {
 public:
+	using Super = AActor;
+
 	friend class ULevel;
 	// constrcuter destructer
 	AActor();

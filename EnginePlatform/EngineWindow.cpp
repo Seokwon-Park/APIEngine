@@ -19,6 +19,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 	}
 	break;
+	case WM_SIZE:
+	{
+
+	}
+	break;
 	case WM_DESTROY:
 		--WindowCount;
 		break;
@@ -85,7 +90,7 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 		}
 	}
 
-	return (int)msg.wParam;
+	return static_cast<int>(msg.wParam);
 }
 
 void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
@@ -144,8 +149,11 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 		return;
 	}
 
-	WindowHandle = CreateWindowA(_ClassName.data(), _TitleName.data(), WS_OVERLAPPEDWINDOW,
+	WindowHandle = CreateWindow(_ClassName.data(), _TitleName.data(), WS_OVERLAPPEDWINDOW,
 		0, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+
+	/*WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, _ClassName.data(), _TitleName.data(), WS_POPUP,
+		0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), nullptr, nullptr, hInstance, nullptr);*/
 
 	if (nullptr == WindowHandle)
 	{
@@ -153,9 +161,16 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 		return;
 	}
 
-	WindowImage = new UEngineWinImage();
-	WindowImage->Create(GetDC(WindowHandle));
+	HDC WindowDC = GetDC(WindowHandle);
 
+	if (nullptr == WindowDC)
+	{
+		MSGASSERT("윈도우 HDC가 nullptr이었습니다.");
+		return;
+	}
+
+	WindowImage = new UEngineWinImage();
+	WindowImage->Create(WindowDC);
 }
 
 

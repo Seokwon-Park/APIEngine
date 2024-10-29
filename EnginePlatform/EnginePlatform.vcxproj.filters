@@ -10,6 +10,9 @@
     <Filter Include="Input">
       <UniqueIdentifier>{a75b8525-c98e-41ae-9328-af3a0fc300ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{ed18bc95-48d4-4869-85b3-c01700ed2105}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -21,7 +24,9 @@
     <ClCompile Include="EngineInput.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="EngineWinImage.cpp" />
+    <ClCompile Include="EngineWinImage.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineWindow.h">
@@ -36,6 +41,8 @@
     <ClInclude Include="KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="EngineWinImage.h" />
+    <ClInclude Include="EngineWinImage.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

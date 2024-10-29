@@ -46,8 +46,8 @@ void ULevel::Render()
 void ULevel::SwapBuffer()
 {
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
-	UEngineWinImage* WindowImage = MainWindow.GetWindowImage();
-	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+	UEngineWinImage* WindowImage = UEngineAPICore::GetWindowBuffer();
+	UEngineWinImage* BackBufferImage = UEngineAPICore::GetBackBuffer();
 
 	FTransform Transform;
 	Transform.Location = MainWindow.GetWindowSize().Half();

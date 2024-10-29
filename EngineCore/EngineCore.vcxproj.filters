@@ -16,6 +16,9 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -33,6 +36,9 @@
     <ClInclude Include="Actor.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -49,6 +55,9 @@
     </Filter>
     <Filter Include="Object\Actor">
       <UniqueIdentifier>{7e79f116-6575-4ab1-950b-64d4afef4f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{cdf80cb4-4efb-4f30-86ee-9cb4e8b91976}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

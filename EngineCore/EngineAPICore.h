@@ -39,6 +39,16 @@ public:
 		return MainCore->EngineMainWindow;
 	}
 
+	static class UEngineWinImage* GetBackBuffer()
+	{
+		return MainCore->EngineMainWindow.GetBackBufferImage();
+	}
+
+	static class UEngineWinImage* GetWindowBuffer()
+	{
+		return MainCore->EngineMainWindow.GetWindowImage();
+	}
+
 	UEngineWindow& GetMainWindow()
 	{
 		return EngineMainWindow;
