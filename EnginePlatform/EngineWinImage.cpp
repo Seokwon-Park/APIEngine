@@ -148,7 +148,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	}
 	else if (BmpExt == Ext)
 	{
-		HANDLE ImageHandle = LoadImageA(nullptr, Path.ToString().c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		HANDLE ImageHandle = LoadImageA(nullptr, _Path.data(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		NewBitmap = reinterpret_cast<HBITMAP>(ImageHandle);
 	}
 	else
@@ -163,8 +163,8 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	}
 
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
-
 	HBITMAP OldBitmap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
+
 	DeleteObject(OldBitmap);
 
 	hBitmap = NewBitmap;

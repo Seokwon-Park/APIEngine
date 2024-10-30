@@ -10,7 +10,7 @@ UImageManager::UImageManager()
 
 UImageManager::~UImageManager()
 {
-	for (auto Image : Images)
+	for (auto& Image : Images)
 	{
 		UEngineWinImage* CurImage = Image.second;
 		if (nullptr != CurImage)
@@ -20,7 +20,7 @@ UImageManager::~UImageManager()
 		}
 	}
 
-	for (auto Sprite : Sprites)
+	for (auto& Sprite : Sprites)
 	{
 		UEngineSprite* CurSprite = Sprite.second;
 		if (nullptr != CurSprite)
