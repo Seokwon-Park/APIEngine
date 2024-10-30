@@ -33,6 +33,11 @@ public:
 
 	}
 
+	FVector2D(long _X, long _Y) : X(static_cast<float>(_X)), Y(static_cast<float>(_Y))
+	{
+
+	}
+
 	int iX() const
 	{
 		return static_cast<int>(X);
@@ -41,6 +46,11 @@ public:
 	int iY() const
 	{
 		return static_cast<int>(Y);
+	}
+
+	bool isZero() const
+	{
+		return X == 0.0f || Y == 0.0f;
 	}
 
 	FVector2D Half()const
@@ -190,8 +200,28 @@ public:
 		Y += _Other.Y;
 		return *this;
 	}
+};
 
+class UColor
+{
+public:
+	union
+	{
+		int Color;
+		struct
+		{
+			char R;
+			char G;
+			char B;
+			char A;
+		};
+	};
 
+	UColor(char _R, char _G, char _B, char _A)
+		:R(_R), G(_G), B(_B), A(_A)
+	{
+
+	}
 };
 
 class EngineMath

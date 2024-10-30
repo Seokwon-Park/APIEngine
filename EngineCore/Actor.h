@@ -1,8 +1,11 @@
 #pragma once
+#include <EngineBase/Object.h>
 #include <EngineBase/EngineMath.h>
 
+#include "EngineSprite.h"
+
 // Ό³Έν :
-class AActor
+class AActor : public UObject
 {
 public:
 	using Super = AActor;
@@ -46,11 +49,15 @@ public:
 		Transform.Scale = _Scale;
 	}
 
+	void SetSprite(std::string_view _Name, int _CurIndex = 0);
 protected:
 
 private:
 	class ULevel* World;
-
+	
+	class UEngineSprite* Sprite = nullptr;
+	int CurIndex = 0;
+	
 	FTransform Transform;
 
 };

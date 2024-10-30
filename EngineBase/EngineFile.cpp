@@ -80,10 +80,7 @@ void UEngineFile::Read(void* _Ptr, size_t _Size)
 
 bool UEngineFile::IsExist()
 {
-	int Result = _access(Path, 00);
-
-	// 0이면 있는것 0 이외의 값이면 없는 것
-	return 0 == Result;
+	return std::filesystem::exists(Path);
 }
 
 

@@ -32,6 +32,8 @@ public:
 		return NewActor;
 	}
 
+	void ScreenClear();
+
 protected:
 
 private:

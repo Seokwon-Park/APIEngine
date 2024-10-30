@@ -1,9 +1,7 @@
 #include "aepch.h"
 #include "EnginePath.h"
 
-#define _SOLUTIONDIR = R"($(SolutionDir))"
-
-UEnginePath::UEnginePath()
+UEnginePath::UEnginePath() 
 	:Path(std::filesystem::current_path())
 {
 
@@ -35,6 +33,21 @@ std::string UEnginePath::ToString()
 	return Path.string();
 }
 
+std::string UEnginePath::GetFileName()
+{
+	return Path.filename().string();
+}
+
+std::string UEnginePath::GetFileExtension()
+{
+	return Path.extension().string();
+}
+
+bool UEnginePath::IsFile()
+{
+	return false == IsDirectory();
+}
+
 bool UEnginePath::IsExists()
 {
 	return std::filesystem::exists(Path);
@@ -45,10 +58,7 @@ bool UEnginePath::IsDirectory()
 	return std::filesystem::is_directory(Path);
 }
 
-bool UEnginePath::IsFile()
-{
-	return false == IsDirectory();
-}
+
 
 void UEnginePath::MoveParent()
 {
@@ -62,7 +72,7 @@ bool UEnginePath::MoveParentToDirectory(std::string_view _Path)
 
 	if (false == DummyPath.IsDirectory())
 	{
-		MSGASSERT("");
+		MSGASSERT("설정된 경로가 폴더 경로가 아닙니다.");
 		return false;
 	}
 

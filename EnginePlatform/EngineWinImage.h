@@ -1,13 +1,14 @@
 #pragma once
+#include <EngineBase/Object.h>
 
 // Ό³Έν :
-class UEngineWinImage
+class UEngineWinImage : public UObject
 {
 public:
 	// constrcuter destructer
 	UEngineWinImage();
 	~UEngineWinImage();
-
+	
 	// delete Function
 	UEngineWinImage(const UEngineWinImage& _Other) = delete;
 	UEngineWinImage(UEngineWinImage&& _Other) noexcept = delete;
@@ -22,6 +23,14 @@ public:
 	void Create(HDC _DC);
 	void Create(UEngineWinImage* _TargetImage, FVector2D _ScaleS);
 	void CopyToBit(UEngineWinImage* _Dst, const FTransform& _Transform);
+	void CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _1,
+		const FTransform& _2, UColor _Color = UColor(255,0,255,0));
+	void Load(UEngineWinImage* _TargetImage, std::string_view _Path);
+
+	FVector2D GetImageSize()
+	{
+		return { Info.bmWidth, Info.bmHeight };
+	}
 protected:
 
 private:

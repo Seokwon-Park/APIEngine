@@ -18,9 +18,11 @@ public:
 	UEnginePath& operator=(UEnginePath&& _Other) noexcept = delete;
 
 	std::string ToString();
+	std::string GetFileName();
+	std::string GetFileExtension();
+	bool IsFile();
 	bool IsExists();
 	bool IsDirectory();
-	bool IsFile();
 	void MoveParent();
 
 	//특정 디렉토리가 나올때까지 상위폴더로 이동

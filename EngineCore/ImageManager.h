@@ -1,4 +1,5 @@
 #pragma once
+#include "EngineSprite.h"
 #include <EnginePlatform/EngineWinImage.h>
 
 // Ό³Έν :
@@ -21,6 +22,10 @@ public:
 	}
 
 	void Load(std::string_view _Path);
+	void Load(std::string_view _KeyName, std::string_view _Path);
+	void CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize);
+	bool IsLoadSprite(std::string_view _KeyName);
+	UEngineSprite* FindSprite(std::string_view _KeyName);
 
 protected:
 
@@ -28,5 +33,6 @@ private:
 	UImageManager();
 
 	std::map<std::string, UEngineWinImage*>Images;
+	std::map<std::string, UEngineSprite*>Sprites;
 };
 

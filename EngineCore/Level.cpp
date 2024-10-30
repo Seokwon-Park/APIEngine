@@ -32,6 +32,8 @@ void ULevel::Tick(float _DeltaTime)
 
 void ULevel::Render()
 {
+	ScreenClear();
+
 	for (AActor* Actor : AllActors)
 	{
 		if (nullptr != Actor)
@@ -41,6 +43,15 @@ void ULevel::Render()
 	}
 
 	SwapBuffer();
+}
+
+void ULevel::ScreenClear()
+{
+	UEngineWindow& MainWindow = UEngineAPICore::GetEngineWindow();
+	UEngineWinImage* BackBufferImage = UEngineAPICore::GetBackBuffer();
+	FVector2D Size = MainWindow.GetWindowSize();
+
+	Rectangle(BackBufferImage->GetDC(), -1, -1, Size.iX()+2, Size.iY() + 2);
 }
 
 void ULevel::SwapBuffer()

@@ -28,9 +28,11 @@ void PuyoPuyoContentsCore::BeginPlay()
 	for (size_t i = 0; i < ImageFiles.size(); i++)
 	{
 		std::string FilePath = ImageFiles[i].ToString();
-		DBGPRINT(FilePath);
 		UImageManager::GetInstance().Load(FilePath);
 	}
+
+	UImageManager::GetInstance().CuttingSprite("Test.png", {50, 50});
+	//UImageManager::GetInstance().CuttingSprite("PUYO_R.CNS.bmp", { 32, 32 });
 
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 
 	// 게임오버? , 게임엔딩?
