@@ -1,5 +1,7 @@
 #pragma once
 #include "EngineCore/Actor.h"
+#include "EngineCore/SpriteRendererComponent.h"
+
 
 class APlayer : public AActor
 {
@@ -22,6 +24,6 @@ private:
 	float Speed = 100.0f;
 	int MySpriteIndex = 0;
 
-
+	USpriteRendererComponent* Sr;
 };
 

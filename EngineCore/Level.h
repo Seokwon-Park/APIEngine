@@ -5,6 +5,7 @@
 class ULevel
 {
 public:
+	friend class USpriteRendererComponent;
 	friend class UEngineAPICore;
 	// constrcuter destructer
 	ULevel();
@@ -16,6 +17,7 @@ public:
 	ULevel& operator=(const ULevel& _Other) = delete;
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
+	void BeginPlay();
 	void Tick(float _DeltaTime);
 	void Render();
 
@@ -27,17 +29,18 @@ public:
 		AActor* ActorPtr = dynamic_cast<AActor*>(NewActor);
 		ActorPtr->World = this;
 
-		NewActor->BeginPlay();
+		//NewActor->BeginPlay();
 		AllActors.push_back(NewActor);
 		return NewActor;
 	}
-
-	void ScreenClear();
-
 protected:
 
 private:
 	void SwapBuffer();
+	void ScreenClear();
+	void PushRenderer(class USpriteRendererComponent* _Renderer);
+	void ChangeRenderOrder(class USpriteRendererComponent* _Renderer, int _PrevOrder);
+
 	// 게임레벨과 메인폰을 만들어서 게임을 준비 시키는 함수
 	template <typename GameModeType, typename MainPawnType>
 	void CreateGameMode()
@@ -49,8 +52,8 @@ private:
 		MainPawn->World = this;
 
 		//GameMode->GetWorld = this;
-		GameMode->BeginPlay();
-		MainPawn->BeginPlay();
+		//GameMode->BeginPlay();
+		//MainPawn->BeginPlay();
 
 		AllActors.push_back(GameMode);
 		AllActors.push_back(MainPawn);
@@ -60,5 +63,6 @@ private:
 	AActor* MainPawn = nullptr;
 
 	std::list<AActor*> AllActors;
+	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
 };
 

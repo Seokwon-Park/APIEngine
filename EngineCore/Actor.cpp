@@ -3,7 +3,7 @@
 #include "ImageManager.h"
  
 #include <EngineCore/EngineAPICore.h>
-
+#include "ActorComponent.h"
 
 AActor::AActor()
 	:World(nullptr), Transform(FTransform())
@@ -12,30 +12,29 @@ AActor::AActor()
 
 AActor::~AActor()
 {
-}
-
-void AActor::Render()
-{
-	if (nullptr == Sprite)
+	for (auto Component : Components)
 	{
-		MSGASSERT("NO Sprites");
+		if (nullptr != Component)
+		{
+			delete Component;
+			Component = nullptr;
+		}
 	}
 
-	UEngineWindow& MainWindow = UEngineAPICore::GetEngineWindow();
-	UEngineWinImage* BackBufferImage = UEngineAPICore::GetBackBuffer();
-
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	CurData.Image;
-	CurData.Transform;
-	CurData.Image->CopyToTransparent(BackBufferImage, Transform, CurData.Transform);
+	Components.clear();
 }
 
-void AActor::SetSprite(std::string_view _Name, int _CurIndex)
+void AActor::BeginPlay()
 {
-	Sprite = UImageManager::GetInstance().FindSprite(_Name);
-
-	if (nullptr == Sprite)
+	for (auto Component : Components)
 	{
-		return;
+		if (nullptr != Component)
+		{
+			Component->BeginPlay();
+		}
 	}
 }
+
+
+
+

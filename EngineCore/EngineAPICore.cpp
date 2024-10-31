@@ -61,6 +61,7 @@ void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 	}
 
 	CurLevel = Levels[LevelName];
+	CurLevel->BeginPlay();
 }
 
 // TODO : 나중에 시간날 때 수정

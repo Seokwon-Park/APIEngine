@@ -91,7 +91,7 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _Target, const FTransform& _Tra
 }
 
 void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _RenderTransform,
-	const FTransform& _2, UColor _Color)
+	const FTransform& _CopyTransform, UColor _Color)
 {
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
@@ -105,10 +105,10 @@ void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTr
 		_RenderTransform.Scale.iX(),
 		_RenderTransform.Scale.iY(),
 		CopyDC,
-		_2.Location.iX(),
-		_2.Location.iY(),
-		_2.Scale.iX(),
-		_2.Scale.iY(),
+		_CopyTransform.Location.iX(),
+		_CopyTransform.Location.iY(),
+		_CopyTransform.Scale.iX(),
+		_CopyTransform.Scale.iY(),
 		_Color.Color
 	);
 }

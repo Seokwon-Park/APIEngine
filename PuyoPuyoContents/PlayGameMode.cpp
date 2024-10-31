@@ -19,5 +19,5 @@ void APlayGameMode::BeginPlay()
 	// 솔로모드 << 상대방 이미지를 그리는 이미지?
 	// 
 
-	//APlayMap* PMAP0 = GetWorld()->SpawnActor<APlayMap>();
+	APlayMap* PMAP0 = GetWorld()->SpawnActor<APlayMap>();
 }

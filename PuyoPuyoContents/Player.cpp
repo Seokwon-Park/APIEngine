@@ -9,7 +9,10 @@ APlayer::APlayer()
 	SetActorLocation({ 100, 100 });
 	SetActorScale({ 32, 32 });
 
-	SetSprite("test.png");
+	Sr = CreateDefaultSubObject<USpriteRendererComponent>();
+	Sr->SetSprite("test.png", 0);
+	Sr->SetComponentScale({ 100, 100 });
+	//SetSprite("test.png");
 }
 
 APlayer::~APlayer()

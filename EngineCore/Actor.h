@@ -21,44 +21,39 @@ public:
 	AActor& operator=(const AActor& _Other) = delete;
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
-	virtual void BeginPlay() {}
+	// 이 객체가 처음 Tick을 돌리기 직전에 실행
+	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime) {}
-	virtual void Render();
 
-	class ULevel* GetWorld()
-	{
-		return World;
-	}
+	inline class ULevel* GetWorld() const { return World; }
+	inline FTransform GetTransform() const { return Transform; }
+	inline FVector2D GetActorLocation() const { return Transform.Location; }
 
-	FVector2D GetActorLocation()
-	{
-		return Transform.Location;
-	}
-	void SetActorLocation(FVector2D _Location)
-	{
-		Transform.Location = _Location;
-	}
+	inline void AddActorLocation(FVector2D _Direction) { Transform.Location += _Direction; }
+	inline void SetActorLocation(FVector2D _Location) { Transform.Location = _Location; }
+	inline void SetActorScale(FVector2D _Scale){Transform.Scale = _Scale;}
 
-	void AddActorLocation(FVector2D _Direction)
+	// 이 함수는 생성자에서만 호출해야 합니다.
+	template<typename UComponentType>
+	UComponentType* CreateDefaultSubObject()
 	{
-		Transform.Location += _Direction;
-	}
+		UComponentType* NewComponent = new UComponentType();
 
-	void SetActorScale(FVector2D _Scale)
-	{
-		Transform.Scale = _Scale;
-	}
+		UActorComponent* UComponentPtr = dynamic_cast<UActorComponent*>(NewComponent);
 
-	void SetSprite(std::string_view _Name, int _CurIndex = 0);
+		UComponentPtr->ParentActor = this;
+
+		// Actor의 생성자가 다 끝나고 나서 World가 결정됩니다.
+		//NewComponent->BeginPlay();
+		Components.push_back(NewComponent);
+		return NewComponent;
+	}
 protected:
 
 private:
 	class ULevel* World;
-	
-	class UEngineSprite* Sprite = nullptr;
-	int CurIndex = 0;
-	
 	FTransform Transform;
+	std::list<class UActorComponent*> Components;
 
 };
 

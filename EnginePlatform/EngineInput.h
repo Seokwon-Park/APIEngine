@@ -36,7 +36,7 @@ public:
 	void KeyCheck(float _DeltaTime);
 	void EventCheck();
 
-	bool IsUp(int _KeyIndex)
+	bool GetKeyUp(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
@@ -47,7 +47,7 @@ public:
 		return Keys[_KeyIndex].IsUp;
 	}
 
-	bool IsPress(int _KeyIndex)
+	bool GetKeyPress(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
@@ -58,7 +58,7 @@ public:
 		return Keys[_KeyIndex].IsPress;
 	}
 
-	float IsPreeTime(int _KeyIndex)
+	float GetKeyPressTime(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
@@ -70,7 +70,7 @@ public:
 	}
 
 
-	bool IsFree(int _KeyIndex)
+	bool GetKeyFree(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{

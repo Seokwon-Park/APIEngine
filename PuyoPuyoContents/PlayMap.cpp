@@ -4,10 +4,13 @@
 
 APlayMap::APlayMap()
 {
-	FVector2D WindowSize = UEngineAPICore::GetEngineWindow().GetWindowSize();
+	SetActorLocation({ 640, 360 });
+	SetActorScale({100,100});
 
-	SetActorScale(WindowSize);
-	SetActorLocation(WindowSize.Half());
+	Sr = CreateDefaultSubObject<USpriteRendererComponent>();
+	Sr->SetOrder(-1);
+	Sr->SetSprite("toko_bg2.cns.bmp", 0);
+	Sr->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 }
 
 APlayMap::~APlayMap()

@@ -157,10 +157,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="aepch.h" />
     <ClInclude Include="PlayGameMode.h">
       <SubType>
@@ -174,10 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayMap.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
       <SubType>
       </SubType>
     </ClCompile>

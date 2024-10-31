@@ -33,9 +33,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>ContentsObject\Global</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ContentsObject\Play</Filter>
-    </ClCompile>
     <ClCompile Include="PlayMap.cpp">
       <Filter>ContentsObject\Play</Filter>
     </ClCompile>
@@ -52,9 +49,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ContentsObject\Global</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ContentsObject\Play</Filter>
     </ClInclude>
     <ClInclude Include="PlayMap.h">
       <Filter>ContentsObject\Play</Filter>

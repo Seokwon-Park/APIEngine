@@ -31,6 +31,9 @@
     <ClCompile Include="SpriteRendererComponent.cpp">
       <Filter>Object\Actor\Component\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Collision2DComponent.cpp">
+      <Filter>Object\Actor\Component\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="SpriteRendererComponent.h">
       <Filter>Object\Actor\Component\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Collision2DComponent.h">
+      <Filter>Object\Actor\Component\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -88,6 +94,9 @@
     </Filter>
     <Filter Include="Object\Actor\Component\Rendering">
       <UniqueIdentifier>{d7f4eed3-2002-4f5b-b401-d84568bb92dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component\Collision">
+      <UniqueIdentifier>{a5025ddb-abcf-4460-a091-b831ca42396e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

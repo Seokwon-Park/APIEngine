@@ -2,6 +2,7 @@
 #include "ActorComponent.h"
 
 UActorComponent::UActorComponent()
+	:ParentActor(nullptr)
 {
 }
 

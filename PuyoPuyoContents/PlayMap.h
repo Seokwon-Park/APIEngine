@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineCore/SpriteRendererComponent.h>
 
 // Ό³Έν :
 class APlayMap : public AActor
@@ -17,6 +18,6 @@ public:
 protected:
 
 private:
-
+	USpriteRendererComponent* Sr;
 };
 
