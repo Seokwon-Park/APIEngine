@@ -35,7 +35,7 @@ void UImageManager::Load(std::string_view _Path)
 {
 	UEnginePath Path = UEnginePath(_Path);
 
-	std::string FileName = Path.GetFileName();
+	std::string FileName = Path.GetDirName();
 
 	Load(FileName, _Path);
 }
@@ -60,6 +60,12 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 
 	std::string UpperName = UEngineString::ToUpper(_KeyName);
 
+	if (Images.contains(UpperName))
+	{
+		DBGPRINT("이미 같은 이름의 이미지가 존재합니다. "+std::string(_Path));
+		return;
+	}
+
 	UEngineWinImage* NewImage = new UEngineWinImage();
 	NewImage->Load(WindowImage, _Path);
 
@@ -82,13 +88,13 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingS
 
 	if (false == Sprites.contains(UpperName))
 	{
-		MSGASSERT("");
+		MSGASSERT("Sprite를 찾을 수 없습니다.");
 		return;
 	}
 
 	if (false == Sprites.contains(UpperName))
 	{
-		MSGASSERT("");
+		MSGASSERT("Sprite를 찾을 수 없습니다.");
 		return;
 	}
 

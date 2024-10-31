@@ -33,7 +33,7 @@ std::string UEnginePath::ToString()
 	return Path.string();
 }
 
-std::string UEnginePath::GetFileName()
+std::string UEnginePath::GetDirName()
 {
 	return Path.filename().string();
 }
@@ -93,3 +93,9 @@ bool UEnginePath::MoveParentToDirectory(std::string_view _Path)
 
 	return Result;
 }
+
+void UEnginePath::AppendDirectory(std::string_view _AppendName)
+{
+	Path.append(_AppendName);
+}
+

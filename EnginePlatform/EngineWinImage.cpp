@@ -137,7 +137,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 		Gdiplus::Bitmap* GdiplusBitmap = reinterpret_cast<Gdiplus::Bitmap*>(GdiplusImage->Clone());
 		Gdiplus::Status Stat = GdiplusBitmap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &NewBitmap);
 
-		if(Gdiplus::Status::Ok != Stat)
+		if (Gdiplus::Status::Ok != Stat)
 		{
 			MSGASSERT(PngExt + " 이미지 로드에 실패했습니다." + std::string(_Path));
 			return;
@@ -148,8 +148,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	}
 	else if (BmpExt == Ext)
 	{
-		HANDLE ImageHandle = LoadImageA(nullptr, _Path.data(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		NewBitmap = reinterpret_cast<HBITMAP>(ImageHandle);
+		NewBitmap = reinterpret_cast<HBITMAP>(LoadImageA(nullptr, _Path.data(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 	}
 	else
 	{
@@ -165,7 +164,10 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 	HBITMAP OldBitmap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
 
-	DeleteObject(OldBitmap);
+	if (nullptr != OldBitmap)
+	{
+		DeleteObject(OldBitmap);
+	}
 
 	hBitmap = NewBitmap;
 	ImageDC = NewImageDC;

@@ -13,8 +13,9 @@ public:
 	UEngineString& operator=(const UEngineString& _Other) = delete;
 	UEngineString& operator=(UEngineString&& _Other) noexcept = delete;
 
-	static std::string ToUpper(std::string_view _string);
-	static std::wstring AnsiToUnicode(std::string_view _string);
+	static std::string ToUpper(std::string_view _String);
+	static std::wstring AnsiToUnicode(std::string_view _String);
+	static std::string UnicodeToAnsi(std::wstring_view _WString);
 	
 protected:
 

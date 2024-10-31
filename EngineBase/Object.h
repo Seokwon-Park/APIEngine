@@ -18,6 +18,11 @@ public:
 	{
 		Name = _Name.data();
 	}
+
+	inline virtual std::string GetName()
+	{
+		return Name;
+	}
 protected:
 
 private:

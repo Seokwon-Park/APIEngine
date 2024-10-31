@@ -155,6 +155,10 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="aepch.h" />
+    <ClInclude Include="ActorComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineAPICore.h">
       <SubType>
       </SubType>
@@ -175,12 +179,24 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SpriteRendererComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="aepch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="EngineAPICore.cpp">
       <SubType>
@@ -199,6 +215,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SpriteRendererComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>

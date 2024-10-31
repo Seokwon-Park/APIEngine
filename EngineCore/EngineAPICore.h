@@ -15,6 +15,10 @@ public:
 	virtual void Tick() = 0;
 };
 
+const std::string DefaultResourceFolder = "Resources";
+const std::string DefaultImageFolder = "Images";
+const std::string DefaultSoundFolder = "Sounds";
+
 class UEngineAPICore
 {
 public:
@@ -73,6 +77,10 @@ public:
 	}
 
 	void OpenLevel(std::string_view _LevelName);
+	void LoadResources(std::string_view _FolderName = DefaultResourceFolder);
+	void LoadImageResources(std::string_view _FolderName = DefaultResourceFolder,
+		std::string_view _ImageFolderName = DefaultImageFolder);
+	void LoadSoundResources(std::string_view _FolderName = DefaultSoundFolder);
 
 protected:
 
