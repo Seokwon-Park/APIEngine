@@ -10,7 +10,7 @@ APlayer::APlayer()
 	SetActorScale({ 32, 32 });
 
 	Sr = CreateDefaultSubObject<USpriteRendererComponent>();
-	Sr->SetSprite("test.png", 0);
+	Sr->SetSprite("test.png", 12);
 	Sr->SetComponentScale({ 100, 100 });
 	//SetSprite("test.png");
 }
@@ -24,16 +24,16 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	// 이벤트 방식으로 처리
-	UEngineInput::GetInst().BindAction(Key::Left, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::LEFT));
-	UEngineInput::GetInst().BindAction(Key::Right, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
-	UEngineInput::GetInst().BindAction(Key::Down, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
-	UEngineInput::GetInst().BindAction(Key::Up, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::UP));
+	UEngineInput::GetInstance().BindAction(Key::Left, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::LEFT));
+	UEngineInput::GetInstance().BindAction(Key::Right, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
+	UEngineInput::GetInstance().BindAction(Key::Down, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
+	UEngineInput::GetInstance().BindAction(Key::Up, KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::UP));
 }
 
 void APlayer::MoveFunction(FVector2D _Dir)
 {
 	float DeltaTime = UEngineAPICore::GetCore()->GetDeltaTime();
-
+	UEngineDebugHelper::PushString("MOVE");
 	AddActorLocation(_Dir * DeltaTime * Speed);
 }
 

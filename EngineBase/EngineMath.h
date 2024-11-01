@@ -139,6 +139,12 @@ public:
 		Y *= _Value;
 		return *this;
 	}
+
+	std::string ToString()
+	{
+		std::string Result = "";
+		Result = "X : [" + std::to_string(X) + "] Y : [" + std::to_string(Y) + "]";
+	}
 };
 
 class FTransform
@@ -231,7 +237,7 @@ public:
 		};
 	};
 
-	UColor(unsigned char _R,unsigned char _G,unsigned char _B,unsigned char _A)
+	UColor(unsigned char _R, unsigned char _G, unsigned char _B, unsigned char _A)
 		:R(_R), G(_G), B(_B), A(_A)
 	{
 

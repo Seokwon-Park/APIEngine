@@ -1,6 +1,5 @@
 #pragma once
 #include <EnginePlatform/EngineWindow.h>
-#include <EngineBase/EngineDebug.h>
 #include <EngineBase/EngineTimer.h>
 
 #pragma comment (lib, "EngineBase.lib")
@@ -92,11 +91,14 @@ private:
 
 	// 이녀석들이 돌아가야 게임이 돌아간다.
 	void Tick();
+
+	void CheckLevel();
 	
 	UEngineTimer DeltaTimer;
 	UEngineWindow EngineMainWindow; // 엔진 메인 윈도우
 
 	class ULevel* CurLevel;
+	class ULevel* NextLevel;
 
 	std::map<std::string, class ULevel*> Levels;
 };

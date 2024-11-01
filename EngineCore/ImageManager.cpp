@@ -62,7 +62,7 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 
 	if (Images.contains(UpperName))
 	{
-		DBGPRINT("이미 같은 이름의 이미지가 존재합니다. "+std::string(_Path));
+		DBGPRINT("이미 같은 이름의 이미지가 존재합니다. " + std::string(_Path));
 		return;
 	}
 
@@ -78,7 +78,7 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 	Transform.Scale = NewImage->GetImageSize();
 
 	NewSprite->PushData(NewImage, Transform);
-	
+
 	Sprites.insert({ UpperName, NewSprite });
 }
 
@@ -124,6 +124,48 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingS
 	}
 
 
+}
+
+void UImageManager::CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols)
+{
+	std::string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (false == Sprites.contains(UpperName))
+	{
+		MSGASSERT("Sprite를 찾을 수 없습니다.");
+		return;
+	}
+
+	if (false == Sprites.contains(UpperName))
+	{
+		MSGASSERT("Sprite를 찾을 수 없습니다.");
+		return;
+	}
+
+	UEngineSprite* Sprite = Sprites[UpperName];
+	UEngineWinImage* Image = Images[UpperName];
+
+	Sprite->ClearSpriteData();
+
+	float Height = Image->GetImageSize().X / _Cols;
+	float Width = Image->GetImageSize().Y / _Rows;
+
+	FTransform CuttingTransform;
+
+	CuttingTransform.Location = FVector2D::ZERO;
+	CuttingTransform.Scale = FVector2D(Width, Height);
+
+	for (size_t y = 0; y < _Rows; y++)
+	{
+		for (size_t x = 0; x < _Cols; x++)
+		{
+			Sprite->PushData(Image, CuttingTransform);
+			CuttingTransform.Location.X = Width * x;
+		}
+
+		CuttingTransform.Location.X = 0.0f;
+		CuttingTransform.Location.Y = Height * y;
+	}
 }
 
 bool UImageManager::IsLoadSprite(std::string_view _KeyName)

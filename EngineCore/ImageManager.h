@@ -26,6 +26,7 @@ public:
 	void LoadFolder(std::string_view _Path);
 	void LoadFolder(std::string_view _KeyName, std::string_view _Path);
 	void CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize);
+	void CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols);
 	bool IsLoadSprite(std::string_view _KeyName);
 	UEngineSprite* FindSprite(std::string_view _KeyName);
 

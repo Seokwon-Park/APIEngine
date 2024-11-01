@@ -18,6 +18,7 @@ public:
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
 	void BeginPlay();
+	void EndPlay();
 	void Tick(float _DeltaTime);
 	void Render();
 

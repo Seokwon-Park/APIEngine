@@ -8,6 +8,7 @@ APlayGameMode::APlayGameMode()
 
 APlayGameMode::~APlayGameMode()
 {
+	
 }
 
 void APlayGameMode::BeginPlay()

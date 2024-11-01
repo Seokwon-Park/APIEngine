@@ -31,6 +31,10 @@ void ULevel::BeginPlay()
 	}
 }
 
+void ULevel::EndPlay()
+{
+}
+
 void ULevel::Tick(float _DeltaTime)
 {
 	for (AActor* Actor : AllActors)
@@ -53,6 +57,8 @@ void ULevel::Render()
 			Renderer->Render();
 		}
 	}
+
+	UEngineDebugHelper::PrintEngineDebugText();
 
 	SwapBuffer();
 }

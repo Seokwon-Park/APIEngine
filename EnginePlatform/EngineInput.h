@@ -27,7 +27,7 @@ public:
 	UEngineInput& operator=(const UEngineInput& _Other) = delete;
 	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
 
-	static UEngineInput& GetInst()
+	static UEngineInput& GetInstance()
 	{
 		static UEngineInput Inst = UEngineInput();
 		return Inst;
