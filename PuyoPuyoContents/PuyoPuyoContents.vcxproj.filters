@@ -19,6 +19,9 @@
     <Filter Include="ContentsObject\Play">
       <UniqueIdentifier>{2ad6b0cb-af63-4756-a36f-d70c0bcd3351}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Actor">
+      <UniqueIdentifier>{07d994fd-2f3f-4c43-8682-1cf2addabfd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aepch.cpp">
@@ -36,8 +39,14 @@
     <ClCompile Include="PlayMap.cpp">
       <Filter>ContentsObject\Play</Filter>
     </ClCompile>
-    <ClCompile Include="TitleGameMode.cpp">
+    <ClCompile Include="IntroGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoBoard.cpp">
+      <Filter>ContentsObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Puyo.cpp">
+      <Filter>ContentsObject\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,8 +65,14 @@
     <ClInclude Include="PlayMap.h">
       <Filter>ContentsObject\Play</Filter>
     </ClInclude>
-    <ClInclude Include="TitleGameMode.h">
+    <ClInclude Include="IntroGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoBoard.h">
+      <Filter>ContentsObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Puyo.h">
+      <Filter>ContentsObject\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

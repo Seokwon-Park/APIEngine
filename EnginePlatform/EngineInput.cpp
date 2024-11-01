@@ -10,8 +10,7 @@ void UEngineInput::UEngineKey::EventCheck()
 			DownEvents[i]();
 		}
 	}
-
-	if (true == IsPress)
+	else if (true == IsPress)
 	{
 		for (size_t i = 0; i < PressEvents.size(); i++)
 		{

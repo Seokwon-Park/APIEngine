@@ -26,7 +26,7 @@ void ULevel::BeginPlay()
 	{
 		if (nullptr != Actor)
 		{
-			Actor->BeginPlay();
+  			Actor->BeginPlay();
 		}
 	}
 }

@@ -162,12 +162,20 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Puyo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PuyoBoard.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PuyoPuyoContentsCore.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Player.h" />
-    <ClInclude Include="TitleGameMode.h">
+    <ClInclude Include="IntroGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -185,12 +193,20 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Puyo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PuyoBoard.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PuyoPuyoContentsCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="TitleGameMode.cpp">
+    <ClCompile Include="IntroGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

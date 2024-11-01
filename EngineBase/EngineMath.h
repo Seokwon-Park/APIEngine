@@ -145,6 +145,12 @@ public:
 		std::string Result = "";
 		Result = "X : [" + std::to_string(X) + "] Y : [" + std::to_string(Y) + "]";
 	}
+
+	static FVector2D Lerp(FVector2D _A, FVector2D _B, float _T)
+	{
+		// (1-T)*A + T*B
+		return _A + (_B - _A) * _T;
+	}
 };
 
 class FTransform

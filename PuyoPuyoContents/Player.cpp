@@ -9,9 +9,9 @@ APlayer::APlayer()
 	SetActorLocation({ 100, 100 });
 	SetActorScale({ 32, 32 });
 
-	Sr = CreateDefaultSubObject<USpriteRendererComponent>();
-	Sr->SetSprite("test.png", 12);
-	Sr->SetComponentScale({ 100, 100 });
+	/*Sr = CreateDefaultSubObject<USpriteRendererComponent>();
+	Sr->SetSprite("Puyo_r.cns.bmp", 0);
+	Sr->SetComponentScale({ 100, 100 });*/
 	//SetSprite("test.png");
 }
 
@@ -33,7 +33,6 @@ void APlayer::BeginPlay()
 void APlayer::MoveFunction(FVector2D _Dir)
 {
 	float DeltaTime = UEngineAPICore::GetCore()->GetDeltaTime();
-	UEngineDebugHelper::PushString("MOVE");
 	AddActorLocation(_Dir * DeltaTime * Speed);
 }
 

@@ -51,6 +51,11 @@ public:
 	{
 		return MainCore->EngineMainWindow.GetWindowImage();
 	}
+	
+	static float GetEngineDeltaTime()
+	{
+		return MainCore->GetDeltaTime();
+	}
 
 	UEngineWindow& GetMainWindow()
 	{

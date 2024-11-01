@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "PlayGameMode.h"
 #include "PlayMap.h"
+#include "PuyoBoard.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -20,5 +21,6 @@ void APlayGameMode::BeginPlay()
 	// 솔로모드 << 상대방 이미지를 그리는 이미지?
 	// 
 
-	APlayMap* PMAP0 = GetWorld()->SpawnActor<APlayMap>();
+	APlayMap* BackGround = GetWorld()->SpawnActor<APlayMap>();
+	APuyoBoard* PMAP0 = GetWorld()->SpawnActor<APuyoBoard>();
 }
