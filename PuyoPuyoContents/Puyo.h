@@ -1,5 +1,14 @@
 #pragma once
 #include <EngineCore/SpriteRendererComponent.h>
+
+enum EColor
+{
+	Red,
+	Green,
+	Blue,
+	Yellow,
+	Purple
+};
 // Ό³Έν :
 class APuyo : public AActor
 {
@@ -20,5 +29,6 @@ protected:
 
 private:
 	USpriteRendererComponent* Sr;
+	EColor Color;
 };
 

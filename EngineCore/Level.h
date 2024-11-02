@@ -31,7 +31,8 @@ public:
 		ActorPtr->World = this;
 
 		//NewActor->BeginPlay();
-		AllActors.push_back(NewActor);
+		WaitForBeginPlay.push(NewActor);
+		
 		return NewActor;
 	}
 protected:
@@ -55,15 +56,15 @@ private:
 		//GameMode->GetWorld = this;
 		//GameMode->BeginPlay();
 		//MainPawn->BeginPlay();
-
-		AllActors.push_back(GameMode);
-		AllActors.push_back(MainPawn);
+		WaitForBeginPlay.push(GameMode);
+		WaitForBeginPlay.push(MainPawn);
 	}
 
 	AGameMode* GameMode = nullptr;
 	AActor* MainPawn = nullptr;
 
 	std::list<AActor*> AllActors;
+	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
 };
 

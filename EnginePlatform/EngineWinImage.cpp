@@ -42,8 +42,8 @@ void UEngineWinImage::Create(UEngineWinImage* _TargetImage, FVector2D _Scale)
 {
 	if (nullptr == _TargetImage)
 	{
-		MSGASSERT("_TargetImage가 nullptr입니다.")
-			return;
+		MSGASSERT("_TargetImage가 nullptr입니다.");
+		return;
 	}
 
 	HBITMAP NewBitmap = static_cast<HBITMAP>(CreateCompatibleBitmap(_TargetImage->GetDC(), _Scale.iX(), _Scale.iY()));

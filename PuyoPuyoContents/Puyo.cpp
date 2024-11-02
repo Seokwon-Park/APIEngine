@@ -2,6 +2,7 @@
 #include "Puyo.h"
 
 APuyo::APuyo()
+	:Color(Red)
 {
 	SetActorLocation({ 48, 48 });
 	SetActorScale({ 32, 32 });

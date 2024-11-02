@@ -22,5 +22,5 @@ void APlayGameMode::BeginPlay()
 	// 
 
 	APlayMap* BackGround = GetWorld()->SpawnActor<APlayMap>();
-	APuyoBoard* PMAP0 = GetWorld()->SpawnActor<APuyoBoard>();
+	APuyoBoard* PuyoBoard = GetWorld()->SpawnActor<APuyoBoard>();
 }

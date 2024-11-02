@@ -5,6 +5,7 @@
 
 // std
 #include <list>
+#include <queue>
 #include <vector>
 #include <map>
 #include <string>

@@ -22,13 +22,13 @@ ULevel::~ULevel()
 
 void ULevel::BeginPlay()
 {
-	for (AActor* Actor : AllActors)
-	{
-		if (nullptr != Actor)
-		{
-  			Actor->BeginPlay();
-		}
-	}
+	//for (AActor* Actor : AllActors)
+	//{
+	//	if (nullptr != Actor)
+	//	{
+ // 			Actor->BeginPlay();
+	//	}
+	//}
 }
 
 void ULevel::EndPlay()
@@ -37,6 +37,15 @@ void ULevel::EndPlay()
 
 void ULevel::Tick(float _DeltaTime)
 {
+	//새로 스폰되는 액터에 대해서도 확인해줘야 하므로
+	while(false == WaitForBeginPlay.empty())
+	{
+		AActor* SpawnedActor = WaitForBeginPlay.front();
+		WaitForBeginPlay.pop();
+		SpawnedActor->BeginPlay();
+		AllActors.push_back(SpawnedActor);
+	}
+
 	for (AActor* Actor : AllActors)
 	{
 		if (nullptr != Actor)
