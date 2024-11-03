@@ -18,7 +18,7 @@ public:
 	UEnginePath& operator=(UEnginePath&& _Other) noexcept = delete;
 
 	std::string ToString();
-	std::string GetDirName();
+	std::string GetPathName();
 	std::string GetFileExtension();
 	bool IsFile();
 	bool IsExists();

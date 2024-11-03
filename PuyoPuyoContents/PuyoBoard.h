@@ -3,7 +3,7 @@
 
 #include <EngineCore/Actor.h>
 
-enum EPuyoLogicStep
+enum class EPuyoLogicStep
 {
 	PuyoCreate, // 뿌요 블럭 생성
 	PuyoMove, // 뿌요 움직임
@@ -29,23 +29,30 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void SetupPuyoBoard(FVector2D _Offset, FVector2D _PuyoSize, FVector2D _BoardSize = FVector2D(6,13));
+
 	void PuyoCreateLogic();
 	void PuyoMoveLogic();
-	void PuyoBlockUpdateLogic();
+	void PuyoBlockUpdateLogic(float _DeltaTime);
 	void PuyoCheckLogic();
 	void PuyoDestroyLogic();
 	void PuyoUpdateLogic();
 
 	FVector2D GetPosByIndex(int _X, int _Y);
 	bool CanMoveDown();
+	bool CanMoveLR(FVector2D _Dir);
 
-	void Move(FVector2D _Dir);
+	void MoveLR(FVector2D _Dir);
 	void Rotate();
 	void PuyoForceDown();
 protected:
 
 private:
+	const int Dx[4] = { 0, 1, 0, -1 };
+	const int Dy[4] = { -1, 0, 1, 0 };
 	FVector2D Offset;
+	FVector2D PuyoSize;
+	FVector2D BoardSize;
 	float PuyoDropTimer;
 	float PuyoDropDelay;
 	int PuyoTick;

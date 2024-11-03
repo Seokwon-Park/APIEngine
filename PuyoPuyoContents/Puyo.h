@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/SpriteRendererComponent.h>
+#include <EngineCore/AnimatorComponent.h>
 
 enum EColor
 {
@@ -25,10 +26,24 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void SetupPuyo(FVector2D _Location, int _Color);
+	void PlayAnimation(std::string _Name);
+	void SetSprite(int _Index);
+	inline int GetColor() const { return Color; }
+	inline void AnimationEndTrigger() 
+	{
+		IsAnimationEnd = true; 
+	}
+
+	bool IsDropComplete;
+	bool IsAnimationEnd;
 protected:
 
 private:
 	USpriteRendererComponent* Sr;
-	EColor Color;
+	UAnimatorComponent* Animator;
+	int Color;
+	int SpriteIndex;
+	std::vector<std::string> ColorSprites;
 };
 

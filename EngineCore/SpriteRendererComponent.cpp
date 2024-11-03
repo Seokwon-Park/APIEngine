@@ -5,7 +5,7 @@
 #include <EngineCore/EngineAPICore.h>
 
 USpriteRendererComponent::USpriteRendererComponent()
-	:Order(0), Sprite(nullptr), CurIndex(0)
+	:Order(0), Sprite(nullptr), CurIndex(0), AnimatorComponent(nullptr)
 {
 }
 
@@ -33,6 +33,17 @@ void USpriteRendererComponent::BeginPlay()
 	AActor* Actor = GetOwner();
 	ULevel* Level = Actor->GetWorld();
 
+	for (UActorComponent* Component : Actor->GetComponents())
+	{
+		UAnimatorComponent* Animator = dynamic_cast<UAnimatorComponent*>(Component);
+		if (nullptr != Animator)
+		{
+			AnimatorComponent = Animator;
+			break;
+		}
+	}
+
+
 	Level->PushRenderer(this);
 }
 
@@ -43,6 +54,61 @@ void USpriteRendererComponent::TickComponent(float _DeltaTime)
 
 void USpriteRendererComponent::Render()
 {
+	// 만약 스프라이트에 연결된 애니메이터 컴포넌트가 있으면 
+	
+	if (AnimatorComponent != nullptr)
+	{
+		UEngineAnimation* CurAnimation = AnimatorComponent->CurAnimation;
+		// 현재 재생해야 하는 애니메이션이 있는지 체크한다.
+		if (nullptr != CurAnimation)
+		{
+			std::vector<int>& Indices = CurAnimation->FrameIndices;
+			std::vector<float>& Intervals = CurAnimation->FrameIntervals;
+
+			Sprite = CurAnimation->Sprite;
+
+			CurAnimation->CurTime += UEngineAPICore::GetEngineDeltaTime();
+
+			float CurFrameTime = Intervals[CurAnimation->CurIndex];
+
+			//                           0.1 0.1 0.1
+			if (CurAnimation->CurTime > CurFrameTime)
+			{
+				CurAnimation->CurTime -= CurFrameTime;
+				++CurAnimation->CurIndex;
+
+				if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+				{
+					CurAnimation->Events[CurAnimation->CurIndex]();
+				}
+
+				if (CurAnimation->CurIndex >= Indices.size())
+				{
+					if (true == CurAnimation->IsLoop)
+					{
+						CurAnimation->CurIndex = 0;
+
+						if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+						{
+							CurAnimation->Events[CurAnimation->CurIndex]();
+						}
+
+					}
+					else
+					{
+						--CurAnimation->CurIndex;
+					}
+				}
+
+			}
+
+
+			//         2 3 4           0
+			CurIndex = Indices[CurAnimation->CurIndex];
+			// ++CurAnimation->CurIndex;
+		}
+	}
+
 	if (nullptr == Sprite)
 	{
 		MSGASSERT("스프라이트가 세팅되지 않은 액터를 랜더링을 할수 없습니다.");
@@ -52,9 +118,14 @@ void USpriteRendererComponent::Render()
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
 	UEngineWinImage* BackBufferImage = UEngineAPICore::GetBackBuffer();
 
+	FTransform Transform = GetWorldTransform();
+
+	ULevel* Level = GetOwner()->GetWorld();
+
+	Transform.Location = Transform.Location - Level->CameraPos;
 
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	CurData.Image->CopyToTransparent(BackBufferImage, GetWorldTransform(), CurData.Transform);
+	CurData.Image->CopyToTransparent(BackBufferImage, Transform, CurData.Transform);
 }
 
 void USpriteRendererComponent::SetOrder(int _Order)
@@ -88,15 +159,4 @@ FVector2D USpriteRendererComponent::SetSpriteScale(float _Ratio, int _Index)
 	return Scale;
 }
 
-void UAnimatorComponent::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, 
-	std::vector<int> _FrameIndex, std::vector<int> _FrameInterval, bool _IsLoop)
-{
-	UEngineString::ToUpper(_AnimationName);
 
-	if (_FrameIndex.size() != _FrameInterval.size())
-	{
-		MSGASSERT("");
-		return;
-	}
-	USpriteRendererComponent::UFrameAnimation NewAnimation;
-}

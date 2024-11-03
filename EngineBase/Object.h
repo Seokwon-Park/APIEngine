@@ -23,6 +23,11 @@ public:
 	{
 		return Name;
 	}
+
+	inline virtual std::string_view GetNameView()
+	{
+		return Name.c_str();
+	}
 protected:
 
 private:

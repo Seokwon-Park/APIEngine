@@ -4,12 +4,24 @@
 #include "SpriteRendererComponent.h"
 
 ULevel::ULevel()
+	:GameMode(nullptr), MainPawn(nullptr)
 {
 }
 
 //RAII - SpawnActor<>();
 ULevel::~ULevel()
 {
+	while (false == WaitForBeginPlay.empty())
+	{
+		AActor* Actor = WaitForBeginPlay.front();
+		WaitForBeginPlay.pop();
+		if (nullptr != Actor)
+		{
+			delete Actor;
+			Actor = nullptr;
+		}
+	}
+
 	for (AActor* Actor : AllActors)
 	{
 		if (nullptr != Actor)
@@ -58,6 +70,11 @@ void ULevel::Tick(float _DeltaTime)
 void ULevel::Render()
 {
 	ScreenClear();
+
+	if (true == IsCameraToMainPawn)
+	{
+		CameraPos = MainPawn->GetTransform().Location + CameraPivot;
+	}
 
 	for (auto& RenderList : AllRenderers)
 	{

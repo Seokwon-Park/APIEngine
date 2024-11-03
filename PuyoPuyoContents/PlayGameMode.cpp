@@ -9,7 +9,7 @@ APlayGameMode::APlayGameMode()
 
 APlayGameMode::~APlayGameMode()
 {
-	
+
 }
 
 void APlayGameMode::BeginPlay()
@@ -23,4 +23,5 @@ void APlayGameMode::BeginPlay()
 
 	APlayMap* BackGround = GetWorld()->SpawnActor<APlayMap>();
 	APuyoBoard* PuyoBoard = GetWorld()->SpawnActor<APuyoBoard>();
+	PuyoBoard->SetupPuyoBoard({ 48,16 }, { 32,32 });
 }

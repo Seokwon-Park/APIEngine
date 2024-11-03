@@ -1,7 +1,7 @@
 #pragma once
 
 // 설명 :
-class UEngineSprite
+class UEngineSprite : public UObject
 {
 public:
 	class USpriteData
@@ -32,6 +32,10 @@ public:
 	}
 	inline USpriteData GetSpriteData(int _Index = 0)
 	{
+		if (_Index >= Data.size())
+		{
+			MSGASSERT("스프라이트의 인덱스를 초과했습니다.");
+		}
 		return Data[_Index];
 	}
 

@@ -35,6 +35,13 @@ public:
 		
 		return NewActor;
 	}
+
+	// Camera -> 컴포넌트로 따로 뺄까?
+	inline void SetCameraToMainPawn(bool _IsCameraToMainPawn){IsCameraToMainPawn = _IsCameraToMainPawn;}
+	inline void SetCameraPivot(FVector2D _Pivot){CameraPivot = _Pivot;}
+	inline void SetCameraPos(FVector2D _Pos){CameraPos = _Pos;}
+	inline FVector2D GetCameraPivot() const {return CameraPivot;}
+	inline FVector2D GetCameraPos() const {return CameraPos;}
 protected:
 
 private:
@@ -60,8 +67,13 @@ private:
 		WaitForBeginPlay.push(MainPawn);
 	}
 
-	AGameMode* GameMode = nullptr;
-	AActor* MainPawn = nullptr;
+	AGameMode* GameMode;
+	AActor* MainPawn;
+
+	bool IsCameraToMainPawn = true;
+	// 아래 포지션 2개가 카메라.
+	FVector2D CameraPos;
+	FVector2D CameraPivot;
 
 	std::list<AActor*> AllActors;
 	std::queue<AActor*> WaitForBeginPlay;

@@ -18,6 +18,9 @@ PuyoPuyoContentsCore::~PuyoPuyoContentsCore()
 
 void PuyoPuyoContentsCore::BeginPlay()
 {
+	
+	UEngineDebugHelper::SetShowFPS(true);
+
 	UEngineAPICore::GetCore()->LoadResources();
 
 	//Cut Puyo
@@ -30,7 +33,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CuttingSprite("L1_F.CNS.BMP", {640,480});
 	
 	//UImageManager::GetInstance().CuttingSprite("PUYO_R.CNS.bmp", { 32, 32 });
-	UEngineDebugHelper::SetShowFPS(true);
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 
 	// 게임오버? , 게임엔딩?
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Puyo Puyo Tsu");

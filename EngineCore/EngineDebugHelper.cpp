@@ -3,37 +3,55 @@
 
 #include <EnginePlatform/EngineWinDebug.h>
 
+UEngineDebugHelper UEngineDebugHelper::Instance;
+
 void UEngineDebugHelper::PushString(std::string_view _Text)
 {
-	GetInstance().DebugTexts.push_back({ _Text.data(), GetInstance().EngineTextPos });
-	GetInstance().EngineTextPos.Y += 20;
+	Instance.DebugTexts.push_back({ _Text.data(), Instance.DebugTextPos });
+	Instance.DebugTextPos.Y += 20;
 }
 
 void UEngineDebugHelper::PushString(std::string_view _Text, FVector2D _Pos)
 {
-	GetInstance().DebugTexts.push_back({_Text.data(), _Pos});
+	Instance.DebugTexts.push_back({_Text.data(), _Pos});
 }
 
 void UEngineDebugHelper::PrintEngineDebugText()
 {
-	UEngineWinImage* BackBuffer = UEngineAPICore::GetBackBuffer();
-	int PosOffset = 0;
-	if (true == GetInstance().ShowFPS)
+	if (false == Instance.UseDebugHelper)
 	{
-		GetInstance().PushString("FPS : "+std::to_string(1.0 / UEngineAPICore::GetCore()->GetDeltaTime()));
+		return;
 	}
 
-	for (size_t i = 0; i < GetInstance().DebugTexts.size(); i++)
+	UEngineWinImage* BackBuffer = UEngineAPICore::GetBackBuffer();
+	CheckFPSOption();
+
+	while(false == Instance.DebugOptions.empty())
 	{
-		DebugTextInfo& Debug = GetInstance().DebugTexts[i];
+		DebugTextInfo Debug = Instance.DebugOptions.front();
+		Instance.DebugOptions.pop();
 		UEngineDebug::WinAPIOutputString(BackBuffer, Debug.Text, Debug.Pos);
 	}
 
-	GetInstance().EngineTextPos = FVector2D::ZERO;
-	GetInstance().DebugTexts.clear();
+	for (size_t i = 0; i < Instance.DebugTexts.size(); i++)
+	{
+		DebugTextInfo& Debug = Instance.DebugTexts[i];
+		UEngineDebug::WinAPIOutputString(BackBuffer, Debug.Text, Debug.Pos+Instance.DebugOptionPos);
+	}
+
+	Instance.DebugTextPos = FVector2D::ZERO;
+	Instance.DebugOptionPos = FVector2D::ZERO;
+	Instance.DebugTexts.clear();
 }
 
-void UEngineDebugHelper::SetShowFPS(bool _ShowFPS)
+void UEngineDebugHelper::CheckFPSOption()
 {
-	GetInstance().ShowFPS = true;
+	if (true == Instance.ShowFPS)
+	{
+		std::string FPSText = "FPS : " + std::to_string(1.0 / UEngineAPICore::GetCore()->GetDeltaTime());
+		Instance.DebugOptions.push({ FPSText ,Instance.DebugOptionPos });
+		Instance.DebugOptionPos.Y += 20;
+	}
 }
+
+

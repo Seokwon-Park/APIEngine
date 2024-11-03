@@ -159,7 +159,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="AnimatorComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Collision2DComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineAnimation.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -206,7 +214,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="AnimatorComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Collision2DComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineAnimation.cpp">
       <SubType>
       </SubType>
     </ClCompile>

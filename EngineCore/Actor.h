@@ -28,6 +28,7 @@ public:
 	inline class ULevel* GetWorld() const { return World; }
 	inline FTransform GetTransform() const { return Transform; }
 	inline FVector2D GetActorLocation() const { return Transform.Location; }
+	inline std::list<class UActorComponent*> GetComponents() const { return Components; }
 
 	inline void AddActorLocation(FVector2D _Direction) { Transform.Location += _Direction; }
 	inline void SetActorLocation(FVector2D _Location) { Transform.Location = _Location; }

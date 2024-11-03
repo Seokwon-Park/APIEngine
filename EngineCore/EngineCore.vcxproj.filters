@@ -37,6 +37,12 @@
     <ClCompile Include="EngineDebugHelper.cpp">
       <Filter>Helper\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatorComponent.cpp">
+      <Filter>Object\Actor\Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineAnimation.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -74,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="EngineDebugHelper.h">
       <Filter>Helper\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatorComponent.h">
+      <Filter>Object\Actor\Component\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineAnimation.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

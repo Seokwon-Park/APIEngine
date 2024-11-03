@@ -1,7 +1,8 @@
 #include "aepch.h"
 #include "ImageManager.h"
-#include <EngineBase/EnginePath.h>
+#include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineString.h>
+#include <EngineBase/EngineDirectory.h>
 #include "EngineAPICore.h"
 
 UImageManager::UImageManager()
@@ -35,7 +36,7 @@ void UImageManager::Load(std::string_view _Path)
 {
 	UEnginePath Path = UEnginePath(_Path);
 
-	std::string FileName = Path.GetDirName();
+	std::string FileName = Path.GetPathName();
 
 	Load(FileName, _Path);
 }
@@ -67,11 +68,13 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 	}
 
 	UEngineWinImage* NewImage = new UEngineWinImage();
+	NewImage->SetName(UpperName);
 	NewImage->Load(WindowImage, _Path);
 
 	Images.insert({ UpperName, NewImage });
 
 	UEngineSprite* NewSprite = new UEngineSprite();
+	NewImage->SetName(UpperName);
 
 	FTransform Transform;
 	Transform.Location = { 0,0 };
@@ -80,6 +83,63 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 	NewSprite->PushData(NewImage, Transform);
 
 	Sprites.insert({ UpperName, NewSprite });
+}
+
+void UImageManager::LoadFolderToSprite(std::string_view _Path)
+{
+	UEnginePath EnginePath = UEnginePath(_Path);
+
+	std::string DirName = EnginePath.GetPathName();
+
+	LoadFolderToSprite(DirName, _Path);
+}
+
+void UImageManager::LoadFolderToSprite(std::string_view _KeyName, std::string_view _Path)
+{
+	UEnginePath EnginePath = UEnginePath(_Path);
+
+	if (false == EnginePath.IsExists())
+	{
+		MSGASSERT("유효하지 않은 파일 경로 입니다." + std::string(_Path));
+		return;
+	}
+
+	std::string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (true == Sprites.contains(UpperName))
+	{
+		MSGASSERT("동일한 이름의 스프라이트가 이미 존재합니다." + UpperName);
+		return;
+	}
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	NewSprite->SetName(UpperName);
+	Sprites.insert({ UpperName , NewSprite });
+
+	UEngineWinImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
+
+	UEngineDirectory Dir = _Path;
+	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+	for (size_t i = 0; i < ImageFiles.size(); i++)
+	{
+		std::string FilePath = ImageFiles[i].ToString();
+		std::string UpperFileName = UEngineString::ToUpper(ImageFiles[i].GetPathName());
+
+		UEngineWinImage* NewImage = FindImage(UpperFileName);
+		if (nullptr == NewImage)
+		{
+			NewImage = new UEngineWinImage();
+			NewImage->SetName(UpperFileName);
+			NewImage->Load(WindowImage, FilePath);
+		}
+		Images.insert({ UpperFileName,  NewImage });
+
+		FTransform Transform;
+		Transform.Location = { 0, 0 };
+		Transform.Scale = NewImage->GetImageSize();
+
+		NewSprite->PushData(NewImage, Transform);
+	}
 }
 
 void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize)
@@ -116,14 +176,12 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingS
 		for (size_t x = 0; x < SpriteX; x++)
 		{
 			Sprite->PushData(Image, CuttingTransform);
-			CuttingTransform.Location.X = _CuttingSize.X * x;
+			CuttingTransform.Location.X += _CuttingSize.X;
 		}
 
 		CuttingTransform.Location.X = 0.0f;
-		CuttingTransform.Location.Y = _CuttingSize.Y * y;
+		CuttingTransform.Location.Y += _CuttingSize.Y;
 	}
-
-
 }
 
 void UImageManager::CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols)
@@ -160,13 +218,14 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, int _Rows, int _Col
 		for (size_t x = 0; x < _Cols; x++)
 		{
 			Sprite->PushData(Image, CuttingTransform);
-			CuttingTransform.Location.X = Width * x;
+			CuttingTransform.Location.X += Width;
 		}
 
 		CuttingTransform.Location.X = 0.0f;
-		CuttingTransform.Location.Y = Height * y;
+		CuttingTransform.Location.Y += Height;
 	}
 }
+
 
 bool UImageManager::IsLoadSprite(std::string_view _KeyName)
 {
@@ -185,6 +244,20 @@ UEngineSprite* UImageManager::FindSprite(std::string_view _KeyName)
 	}
 
 	return Sprites[UpperName];
+}
+
+UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
+{
+	std::string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (false == Images.contains(UpperName))
+	{
+		MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_KeyName));
+		return nullptr;
+	}
+
+	// 이걸로 
+	return Images[UpperName];
 }
 
 

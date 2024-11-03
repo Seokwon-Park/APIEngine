@@ -23,12 +23,15 @@ public:
 
 	void Load(std::string_view _Path);
 	void Load(std::string_view _KeyName, std::string_view _Path);
-	void LoadFolder(std::string_view _Path);
-	void LoadFolder(std::string_view _KeyName, std::string_view _Path);
+
+	// 특정 폴더의 모든 이미지를 하나의 스프라이트로 만듭니다.
+	void LoadFolderToSprite(std::string_view _Path);
+	void LoadFolderToSprite(std::string_view _KeyName, std::string_view _Path);
 	void CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize);
 	void CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols);
 	bool IsLoadSprite(std::string_view _KeyName);
 	UEngineSprite* FindSprite(std::string_view _KeyName);
+	UEngineWinImage* FindImage(std::string_view _KeyName);
 
 protected:
 

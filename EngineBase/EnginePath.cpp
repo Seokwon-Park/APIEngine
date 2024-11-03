@@ -33,7 +33,7 @@ std::string UEnginePath::ToString()
 	return Path.string();
 }
 
-std::string UEnginePath::GetDirName()
+std::string UEnginePath::GetPathName()
 {
 	return Path.filename().string();
 }

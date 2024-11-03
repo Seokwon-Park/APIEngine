@@ -58,6 +58,11 @@ public:
 		return { X * 0.5f, Y * 0.5f };
 	}
 
+	float Dot(const FVector2D& _Other) const
+	{
+		return X * _Other.X + Y * _Other.Y;
+	}
+
 	float Length() const
 	{
 		return sqrtf(X * X + Y * Y);
@@ -71,6 +76,11 @@ public:
 			X = X / Len;
 			X = Y / Len;
 		}
+	}
+
+	float Distance(const FVector2D _Other)
+	{
+		return FVector2D::Distance(*this, _Other);
 	}
 
 	bool operator==(FVector2D _Other) const
@@ -150,6 +160,27 @@ public:
 	{
 		// (1-T)*A + T*B
 		return _A + (_B - _A) * _T;
+	}
+
+	static float Distance(const FVector2D& _A, const FVector2D& _B)
+	{
+		float X = _A.X - _B.X;
+		float Y = _A.Y - _B.Y;
+		return std::sqrt(X*X+Y*Y);
+	}
+
+
+	static FVector2D MoveTowards(FVector2D _Current, FVector2D _Target, float _MoveStep)
+	{
+		FVector2D Direction = _Target - _Current;     // 목표 지점으로 가는 방향 벡터
+		float Distance = Direction.Distance(_Target); // 현재와 목표 사이의 거리
+
+		// 목표 지점에 이미 도달했거나 maxDistanceDelta가 더 크다면 목표 위치 반환
+		if (Distance <= _MoveStep || Distance == 0.0f) {
+			return _Target;
+		}
+
+		return _Current + Direction * (_MoveStep / Distance);
 	}
 };
 
@@ -233,7 +264,7 @@ class UColor
 public:
 	union
 	{
-		int Color;
+		int Color = 0;
 		struct
 		{
 			unsigned char R;
