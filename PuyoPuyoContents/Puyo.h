@@ -37,13 +37,13 @@ public:
 
 	bool IsDropComplete;
 	bool IsAnimationEnd;
+	int SpriteIndex;
 protected:
 
 private:
 	USpriteRendererComponent* Sr;
 	UAnimatorComponent* Animator;
 	int Color;
-	int SpriteIndex;
 	std::vector<std::string> ColorSprites;
 };
 

@@ -152,8 +152,9 @@ void APuyoBoard::PuyoBlockUpdateLogic(float _DeltaTime)
 		{
 			if (false == Block[0]->IsDropComplete)
 			{
-				Block[0]->IsDropComplete = true;
 				Block[0]->PlayAnimation("DropComplete");
+				Block[0]->IsDropComplete = true;
+				Board[AxisPuyoY][AxisPuyoX] = Block[0];
 			}
 		}
 
@@ -161,28 +162,35 @@ void APuyoBoard::PuyoBlockUpdateLogic(float _DeltaTime)
 		{
 			if (false == Block[1]->IsDropComplete)
 			{
-				Block[1]->IsDropComplete = true;
 				Block[1]->PlayAnimation("DropComplete");
+				Block[1]->IsDropComplete = true;
+				Board[RotatePuyoY][RotatePuyoX] = Block[1];
 			}
 		}
 
 		if (false == Block[0]->IsDropComplete)
 		{
 			Block[0]->SetActorLocation(FVector2D::MoveTowards(Block[0]->GetActorLocation(), GetPosByIndex(AxisPuyoX, AxisPuyoY), 2.0f));
+			if (Block[0]->GetActorLocation().Distance(GetPosByIndex(AxisPuyoX, AxisPuyoY)) > 0.1f)
+			{
+				return;
+			}
+			Block[0]->PlayAnimation("DropComplete");
+			Block[0]->IsDropComplete = true;
+			Board[AxisPuyoY][AxisPuyoX] = Block[0];
 		}
 		if (false == Block[1]->IsDropComplete)
 		{
 			Block[1]->SetActorLocation(FVector2D::MoveTowards(Block[1]->GetActorLocation(), GetPosByIndex(RotatePuyoX, RotatePuyoY), 2.0f));
+			if (Block[1]->GetActorLocation().Distance(GetPosByIndex(RotatePuyoX, RotatePuyoY)) > 0.1f)
+			{
+				return;
+			}
+			Block[1]->PlayAnimation("DropComplete");
+			Block[1]->IsDropComplete = true;
+			Board[RotatePuyoY][RotatePuyoX] = Block[1];
 		}
 
-		if (Block[0]->GetActorLocation().Distance(GetPosByIndex(AxisPuyoX, AxisPuyoY)) > 0.1f ||
-			Block[1]->GetActorLocation().Distance(GetPosByIndex(RotatePuyoX, RotatePuyoY)) > 0.1f)
-		{
-			return;
-		}
-		Block[1]->PlayAnimation("DropComplete");
-		Board[AxisPuyoY][AxisPuyoX] = Block[0];
-		Board[RotatePuyoY][RotatePuyoX] = Block[1];
 	}
 	else
 	{
@@ -221,6 +229,26 @@ void APuyoBoard::PuyoBlockUpdateLogic(float _DeltaTime)
 		}
 		if (NearPuyo->GetColor() == Block[0]->GetColor())
 		{
+			int NearSpriteIndex = 0;
+			for (int j = 0; j < 4; j++)
+			{
+				int NearDir = (j * 3) % 4;
+				if (BlockY + Dy[Dir] + Dy[NearDir] < 0 || BlockX + Dx[Dir] + Dx[NearDir] < 0 ||
+					BlockY + Dy[Dir] + Dy[NearDir] >= BoardSize.iY() || BlockX + Dx[Dir] + Dx[NearDir] >= BoardSize.iX())
+				{
+					continue;
+				}
+				APuyo* NearNearPuyo = Board[BlockY + Dy[Dir] + Dy[NearDir]][BlockX + Dx[Dir]+ Dx[NearDir]];
+				if (NearNearPuyo == nullptr)
+				{
+					continue;
+				}
+				if (NearPuyo->GetColor() == NearNearPuyo->GetColor())
+				{
+					NearSpriteIndex |= 1 << j;
+				}
+			}
+			NearPuyo->SetSprite(NearSpriteIndex);
 			SpriteIndex |= 1 << i;
 		}
 	}

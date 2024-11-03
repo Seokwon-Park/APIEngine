@@ -55,7 +55,6 @@ void USpriteRendererComponent::TickComponent(float _DeltaTime)
 void USpriteRendererComponent::Render()
 {
 	// 만약 스프라이트에 연결된 애니메이터 컴포넌트가 있으면 
-	
 	if (AnimatorComponent != nullptr)
 	{
 		UEngineAnimation* CurAnimation = AnimatorComponent->CurAnimation;
@@ -101,8 +100,6 @@ void USpriteRendererComponent::Render()
 				}
 
 			}
-
-
 			//         2 3 4           0
 			CurIndex = Indices[CurAnimation->CurIndex];
 			// ++CurAnimation->CurIndex;
