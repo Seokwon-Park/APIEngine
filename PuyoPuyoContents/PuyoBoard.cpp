@@ -7,7 +7,7 @@
 
 APuyoBoard::APuyoBoard()
 	:Difficulty(3), Offset(FVector2D::ZERO), PuyoSize(FVector2D::ZERO), BoardSize(FIntPoint::ZERO),
-	MainPuyoCoord(FIntPoint::ZERO),	PuyoDropDelay(.1f), PuyoDropTimer(0.0f), PuyoTick(0), BlockDir(0),
+	MainPuyoCoord(FIntPoint::ZERO), PuyoDropDelay(.1f), PuyoDropTimer(0.0f), PuyoTick(0), BlockDir(0),
 	CurStep(EPuyoLogicStep::PuyoCreate), Block(std::vector<APuyo*>(2))
 	//,Board(std::vector<std::vector<APuyo*>>(13, std::vector<APuyo*>(6, nullptr)))
 {
@@ -82,7 +82,7 @@ void APuyoBoard::Tick(float _DeltaTime)
 	}
 }
 
-void APuyoBoard::SetupPuyoBoard(FVector2D _Offset, FVector2D _PuyoSize, int _Difficulty, FIntPoint _BoardSize )
+void APuyoBoard::SetupPuyoBoard(FVector2D _Offset, FVector2D _PuyoSize, int _Difficulty, FIntPoint _BoardSize)
 {
 	Difficulty = _Difficulty;
 	Offset = _Offset;
@@ -121,7 +121,6 @@ void APuyoBoard::PuyoCreateLogic()
 		Puyo->SetActorLocation(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i));
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[Dir] * i, MainPuyoCoord.Y + Dy[Dir] * i), 0);
 	}
-
 
 	// 이 과정에서 NextNextBlock이 NextBlock칸으로 부드럽게 이동해야 된다.
 	NextBlock = NextNextBlock;
@@ -169,8 +168,16 @@ void APuyoBoard::PuyoMoveLogic()
 				int X = MainPuyoCoord.X + Dx[BlockDir] * i;
 				int Y = MainPuyoCoord.Y + Dy[BlockDir] * i;
 				Block[i]->SetActorLocation(GetLocationByIndex(X, Y));
-				PlaceCheckList.push_back({ X, Y });
-				Board[Y][X] = Block[i];
+				PlaceCheckList.push_back(Block[i]);
+				Block[i]->SetCurXY({ X,Y });
+				Block[i]->SetTargetXY({ X,Y });
+				if (BlockDir % 2 == 1) // 가로로 누운 블럭인 경우
+				{
+					int PlaceY = Y;
+					while (PlaceY + 1 < BoardSize.Y && Board[PlaceY + 1][X] == nullptr) { PlaceY++; }
+					Block[i]->SetTargetXY({ X,PlaceY });
+				}
+				SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			}
 
 			CurStep = EPuyoLogicStep::PuyoPlace;
@@ -185,51 +192,49 @@ void APuyoBoard::PuyoPlaceLogic()
 {
 	if (!PlaceCheckList.empty())
 	{
-		sort(PlaceCheckList.begin(), PlaceCheckList.end(), [](auto _A, auto _B)
-			{
-				if (_A.Y == _B.Y)
-				{
-					return _A.X < _B.X;
-				}
-				return _A.Y > _B.Y;
-			}
-		);
+		//sort(PlaceCheckList.begin(), PlaceCheckList.end(), [](auto _A, auto _B)
+		//	{
+		//		if (_A.Y == _B.Y)
+		//		{
+		//			return _A.X < _B.X;
+		//		}
+		//		return _A.Y > _B.Y;
+		//	}
+		//);
 
 		// 보드에서 떨어져야 할 블럭이 있는지 체크해서 업데이트 하는 부분.
 		// 체크해야할 모든 블럭에 대해 돌리자.
 		// 블록은 반칸씩 떨어졌다면 여기서는 부드럽게 떨어지는 느낌임.(Lerp? MoveTowards?)
-		for (FIntPoint& Point : PlaceCheckList)
+		for (APuyo* CurPuyo : PlaceCheckList)
 		{
-			APuyo* CurPuyo = Board[Point.Y][Point.X];
-			int PlaceY = Point.Y;
-			while (PlaceY + 1 < BoardSize.Y && Board[PlaceY + 1][Point.X] == nullptr) { PlaceY++; }
-			if (false == CurPuyo->IsDropComplete)
+			if (false == CurPuyo->GetIsDropComplete())
 			{
-				if (PlaceY == Point.Y)
+				if (CurPuyo->GetTargetXY().Y == CurPuyo->GetCurXY().Y)
 				{
+					Board[CurPuyo->GetTargetXY().Y][CurPuyo->GetTargetXY().X] = CurPuyo;
 					CurPuyo->PlayAnimation("PlaceComplete");
-					CurPuyo->IsDropComplete = true;
+					CurPuyo->SetIsDropComplete(true);
 				}
 				else
 				{
-					CurPuyo->SetActorLocation(FVector2D::MoveTowards(CurPuyo->GetActorLocation(), GetLocationByIndex(Point.X, PlaceY), 2.0f));
-					if (CurPuyo->GetActorLocation().Distance(GetLocationByIndex(Point.X, PlaceY)) < 0.1f)
+					CurPuyo->SetActorLocation(FVector2D::MoveTowards(CurPuyo->GetActorLocation(), GetLocationByIndex(CurPuyo->GetTargetXY()), 2.0f));
+					if (CurPuyo->GetActorLocation().Distance(GetLocationByIndex(CurPuyo->GetTargetXY())) < 0.1f)
 					{
-						Board[Point.Y][Point.X] = nullptr;
-						Point = FIntPoint(Point.X, PlaceY);
-						Board[PlaceY][Point.X] = CurPuyo;
+						//Board[Point.Y][Point.X] = nullptr;
+						//Point = FIntPoint(Point.X, PlaceY);
+						Board[CurPuyo->GetTargetXY().Y][CurPuyo->GetTargetXY().X] = CurPuyo;
+						CurPuyo->SetCurXY(CurPuyo->GetTargetXY());
 						CurPuyo->PlayAnimation("PlaceComplete");
-						CurPuyo->IsDropComplete = true;
+						CurPuyo->SetIsDropComplete(true);
 					}
 				}
 			}
 		}
 		// 모든 블럭에 대해 위치 완료 애니메이션이 끝나야 넘어간다.
 		bool CheckAllFinished = true;
-		for (FIntPoint Point : PlaceCheckList)
+		for (APuyo* CurPuyo : PlaceCheckList)
 		{
-			APuyo* CurPuyo = Board[Point.Y][Point.X];
-			if (CurPuyo->IsAnimationEnd == false)
+			if (false == CurPuyo->GetIsAnimationEnd())
 			{
 				CheckAllFinished = false;
 				break;
@@ -238,9 +243,10 @@ void APuyoBoard::PuyoPlaceLogic()
 		if (!CheckAllFinished)
 			return;
 	}
-	for (FIntPoint Point : PlaceCheckList)
+	for (APuyo* CurPuyo : PlaceCheckList)
 	{
-		Board[Point.Y][Point.X]->IsAnimationEnd = false;
+		CurPuyo->SetIsDropComplete(false);
+		CurPuyo->SetIsAnimationEnd(false);
 	}
 
 	PuyoConnectList = PlaceCheckList;
@@ -252,12 +258,13 @@ void APuyoBoard::PuyoPlaceLogic()
 void APuyoBoard::PuyoConnectLogic()
 {
 	//SetConnection
-	for (FIntPoint Point : PuyoConnectList)
+	for (APuyo* CurPuyo : PuyoConnectList)
 	{
-		auto [X, Y] = Point;
+		int X = CurPuyo->GetCurXY().X;
+		int Y = CurPuyo->GetCurXY().Y;
 		int SpriteIndex = 0;
 		// 로직상 CurPuyo는 nullptr일 수 없는데 체크해야하나?
-		APuyo* CurPuyo = Board[Y][X];
+		//APuyo* CurPuyo = Board[Y][X];
 		for (int i = 0; i < 4; i++)
 		{
 			int Dir = i;
@@ -305,7 +312,10 @@ void APuyoBoard::PuyoConnectLogic()
 		}
 		CurPuyo->SetSprite(SpriteIndex);
 	}
-	PuyoCheckList = PuyoConnectList;
+	for (APuyo* CurPuyo : PuyoConnectList)
+	{
+		PuyoCheckList.push_back(CurPuyo->GetCurXY());
+	}
 	PuyoConnectList.clear();
 
 	CurStep = EPuyoLogicStep::PuyoCheck;
@@ -319,7 +329,7 @@ void APuyoBoard::PuyoCheckLogic()
 	for (FIntPoint Point : PuyoCheckList)
 	{
 		// 추후 BFS 함수로 추출
-		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X ,false));
+		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
 		std::queue<FIntPoint> Queue;
 		std::vector<FIntPoint> Temp;
 
@@ -346,7 +356,7 @@ void APuyoBoard::PuyoCheckLogic()
 				}
 				if (TargetPuyo->GetColor() == CurPuyo->GetColor())
 				{
-					Queue.push(FIntPoint(TargetX,TargetY));
+					Queue.push(FIntPoint(TargetX, TargetY));
 					Temp.push_back(FIntPoint(TargetX, TargetY));
 					Visited[TargetY][TargetX] = true;
 				}
@@ -362,7 +372,7 @@ void APuyoBoard::PuyoCheckLogic()
 		}
 	}
 	PuyoCheckList.clear();
-	
+
 	CurStep = EPuyoLogicStep::PuyoDestroy;
 }
 
@@ -383,7 +393,7 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
-	if(PuyoUpdateColumns.empty())
+	if (PuyoUpdateColumns.empty())
 	{
 		CurStep = EPuyoLogicStep::PuyoCreate;
 	}
@@ -391,25 +401,25 @@ void APuyoBoard::PuyoUpdateLogic()
 	{
 		for (int X : PuyoUpdateColumns)
 		{
-			int Start = BoardSize.Y - 1;
-			for (int i = BoardSize.Y - 1; i >= 0; i--)
+			for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
 			{
-				if (Board[i][X] == nullptr)
+				if (Board[Y][X] == nullptr)
 				{
-					Start = i;
-					break;
-				}				
-			}
-
-			for (int i = Start; i >= 0; i--)
-			{
-				if (Board[i][X] != nullptr)
-				{
-					Board[i][X]->IsDropComplete = false;
-					Board[i][X]->SetSprite(0);
-					PlaceCheckList.push_back(FIntPoint(X, i));
+					for (int FindY = Y - 1; FindY >= 0; FindY--)
+					{
+						if (Board[FindY][X] != nullptr)
+						{
+							Board[Y][X] = Board[FindY][X];
+							Board[FindY][X] = nullptr;
+							Board[Y][X]->SetTargetXY({ X, Y });
+							PlaceCheckList.push_back(Board[Y][X]);
+							break;
+						}
+					}
 				}
 			}
+
+
 		}
 		PuyoUpdateColumns.clear();
 		CurStep = EPuyoLogicStep::PuyoPlace;
@@ -420,6 +430,11 @@ void APuyoBoard::PuyoUpdateLogic()
 FVector2D APuyoBoard::GetLocationByIndex(int _X, int _Y)
 {
 	return FVector2D(Offset.iX() + _X * PuyoSize.iX(), Offset.iY() + _Y * PuyoSize.iY());
+}
+
+FVector2D APuyoBoard::GetLocationByIndex(FIntPoint _XY)
+{
+	return GetLocationByIndex(_XY.X, _XY.Y);
 }
 
 bool APuyoBoard::CanMoveDown()

@@ -46,6 +46,15 @@ public:
 	void PuyoUpdateLogic();
 
 	FVector2D GetLocationByIndex(int _X, int _Y);
+	FVector2D GetLocationByIndex(FIntPoint _XY);
+	inline void SetPuyoOnBoard(int _X, int _Y, APuyo* _Puyo)
+	{
+		Board[_Y][_X] = _Puyo;
+	}
+	inline void SetPuyoOnBoard(FIntPoint _XY, APuyo* _Puyo)
+	{
+		SetPuyoOnBoard(_XY.X, _XY.Y, _Puyo);
+	}
 	bool CanMoveDown();
 	bool CanMoveLR(FVector2D _Dir);
 
@@ -90,8 +99,8 @@ private:
 	std::vector<APuyo*> NextNextBlock; // 다음다음뿌요
 
 	// 로직에서 체크해야할 좌표의 정보를 담는 배열
-	std::vector<FIntPoint> PlaceCheckList;
-	std::vector<FIntPoint> PuyoConnectList;
+	std::vector<APuyo*> PlaceCheckList;
+	std::vector<APuyo*> PuyoConnectList;
 	std::vector<FIntPoint> PuyoCheckList;
 	std::set<std::pair<int,int>> PuyoDestroyList;
 	std::vector<int> PuyoUpdateColumns;
