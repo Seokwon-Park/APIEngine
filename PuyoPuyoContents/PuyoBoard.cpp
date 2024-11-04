@@ -238,6 +238,11 @@ void APuyoBoard::PuyoPlaceLogic()
 		if (!CheckAllFinished)
 			return;
 	}
+	for (FIntPoint Point : PlaceCheckList)
+	{
+		Board[Point.Y][Point.X]->IsAnimationEnd = false;
+	}
+
 	PuyoConnectList = PlaceCheckList;
 	PlaceCheckList.clear();
 
@@ -368,6 +373,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		APuyo* Puyo = Board[Y][X];
 		Puyo->Destroy();
 		Board[Y][X] = nullptr;
+		PuyoUpdateColumns.push_back(X);
 	}
 
 	PuyoDestroyList.clear();
@@ -377,7 +383,38 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
-	CurStep = EPuyoLogicStep::PuyoCreate;
+	if(PuyoUpdateColumns.empty())
+	{
+		CurStep = EPuyoLogicStep::PuyoCreate;
+	}
+	else
+	{
+		for (int X : PuyoUpdateColumns)
+		{
+			int Start = BoardSize.Y - 1;
+			for (int i = BoardSize.Y - 1; i >= 0; i--)
+			{
+				if (Board[i][X] == nullptr)
+				{
+					Start = i;
+					break;
+				}				
+			}
+
+			for (int i = Start; i >= 0; i--)
+			{
+				if (Board[i][X] != nullptr)
+				{
+					Board[i][X]->IsDropComplete = false;
+					Board[i][X]->SetSprite(0);
+					PlaceCheckList.push_back(FIntPoint(X, i));
+				}
+			}
+		}
+		PuyoUpdateColumns.clear();
+		CurStep = EPuyoLogicStep::PuyoPlace;
+	}
+
 }
 
 FVector2D APuyoBoard::GetLocationByIndex(int _X, int _Y)

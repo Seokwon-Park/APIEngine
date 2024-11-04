@@ -23,6 +23,7 @@ void APlayGameMode::BeginPlay()
 
 	APlayMap* BackGround = GetWorld()->SpawnActor<APlayMap>();
 	APuyoBoard* PuyoBoard = GetWorld()->SpawnActor<APuyoBoard>();
-	//PuyoBoard->SetupPuyoBoard({ 48,16 }, { 32,32 });
-	PuyoBoard->SetupPuyoBoard({ 432,16 }, { 32,32 });
+	//APuyoBoard* PuyoBoard2 = GetWorld()->SpawnActor<APuyoBoard>();
+	PuyoBoard->SetupPuyoBoard({ 48,16 }, { 32,32 });
+	//PuyoBoard2->SetupPuyoBoard({ 432,16 }, { 32,32 });
 }

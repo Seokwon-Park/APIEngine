@@ -94,6 +94,7 @@ private:
 	std::vector<FIntPoint> PuyoConnectList;
 	std::vector<FIntPoint> PuyoCheckList;
 	std::set<std::pair<int,int>> PuyoDestroyList;
+	std::vector<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
 };
