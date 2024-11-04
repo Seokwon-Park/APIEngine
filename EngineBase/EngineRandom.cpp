@@ -1,19 +1,14 @@
 #include "aepch.h"
 #include "EngineRandom.h"
 
-std::mt19937 UEngineRandom::Generator;
 
 UEngineRandom::UEngineRandom()
+	:Generator(static_cast<unsigned long long>(time(nullptr)))
 {
 }
 
 UEngineRandom::~UEngineRandom()
 {
-}
-
-void UEngineRandom::Init()
-{
-	Generator.seed(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 int UEngineRandom::GetRandomInt(int _InclusiveMin, int _InclusiveMax)
@@ -22,8 +17,8 @@ int UEngineRandom::GetRandomInt(int _InclusiveMin, int _InclusiveMax)
 	return Dist(Generator);
 }
 
-float UEngineRandom::GetRandomFloat(float _InclusiveMin, float _InclusiveMax)
+float UEngineRandom::GetRandomFloat(float _InclusiveMin, float _ExclusiveMax)
 {
-	std::uniform_real_distribution<float> Dist(_InclusiveMin, _InclusiveMax);
+	std::uniform_real_distribution<float> Dist(_InclusiveMin, _ExclusiveMax);
 	return Dist(Generator);
 }

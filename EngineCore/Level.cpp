@@ -89,6 +89,34 @@ void ULevel::Render()
 	SwapBuffer();
 }
 
+void ULevel::Release()
+{
+
+	for (auto& RenderList : AllRenderers)
+	{
+		for (auto Itr = RenderList.second.begin(); Itr != RenderList.second.end(); Itr++)
+		{
+			USpriteRendererComponent* Renderer = *Itr;
+			if (!Renderer->GetOwner()->CheckDestroy())
+			{
+				continue;
+			}
+			Itr = RenderList.second.erase(Itr);
+		}
+	}
+
+	for (std::list<AActor*>::iterator Itr = AllActors.begin(); Itr != AllActors.end(); Itr++)
+	{
+		AActor* CurActor = *Itr;
+		if (false == CurActor->CheckDestroy())
+		{
+			continue;
+		}
+		delete CurActor;
+		Itr = AllActors.erase(Itr);
+	}
+}
+
 void ULevel::SwapBuffer()
 {
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();

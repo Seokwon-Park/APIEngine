@@ -41,7 +41,6 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	UserCore = _UserCore;
 
 	UEngineWindow::EngineWindowInit(_Inst);
-	UEngineRandom::Init();
 
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
@@ -134,6 +133,7 @@ void UEngineAPICore::Tick()
 	UEngineInput::GetInstance().EventCheck();
 	CurLevel->Tick(DeltaTime);
 	CurLevel->Render();
+	CurLevel->Release();
 }
 
 void UEngineAPICore::CheckLevel()

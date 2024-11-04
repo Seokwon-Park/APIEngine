@@ -21,6 +21,7 @@ public:
 	void EndPlay();
 	void Tick(float _DeltaTime);
 	void Render();
+	void Release();
 
 	template <typename ActorType>
 	ActorType* SpawnActor()

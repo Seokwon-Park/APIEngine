@@ -2,10 +2,11 @@
 #include <random>
 
 // 클래스 설명 :
-class UEngineRandom 
+class UEngineRandom
 {
 public:
 	// Constrcuter Destructer
+	UEngineRandom();
 	~UEngineRandom();
 
 	// Delete Function
@@ -14,15 +15,12 @@ public:
 	UEngineRandom& operator=(const UEngineRandom& _Other) = delete;
 	UEngineRandom& operator=(UEngineRandom&& _Other) noexcept = delete;
 
-	static void Init();           
-	static int GetRandomInt(int min, int max);
-	static float GetRandomFloat(float min, float max);
+	inline void SetSeed(unsigned long long _Seed) { Generator.seed(_Seed); }
+	int GetRandomInt(int _InclusiveMin, int _InclusiveMax);
+	float GetRandomFloat(float _InclusiveMin, float _ExclusiveMax);
 protected:
 
 private:
-	
-private:
-	UEngineRandom();
-	static std::mt19937 Generator;
+	std::mt19937_64 Generator;
 
 };

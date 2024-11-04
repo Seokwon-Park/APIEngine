@@ -16,15 +16,17 @@ APuyo::APuyo()
 	ColorSprites.push_back("PUYO_Y.CNS.BMP");
 	Sr->SetSprite("PUYO_R.CNS.BMP", 0);
 	Sr->SetComponentScale({ 32, 32 });
+	// MainPuyoIdle Animation
 	for (int i = 0; i < ColorSprites.size(); i++)
 	{
 		Animator->CreateAnimation("AxisPuyoIdle" + std::to_string(i), ColorSprites[i], { 0,19 }, .1f);
 	}
 
+	// PuyoPlaceCompleteAnimation
 	for (int i = 0; i < ColorSprites.size(); i++)
 	{
-		Animator->CreateAnimation("DropComplete" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0 }, .1f, false);
-		Animator->SetAnimationEvent("DropComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
+		Animator->CreateAnimation("PlaceComplete" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0 }, .1f, false);
+		Animator->SetAnimationEvent("PlaceComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
 	}
 	/*Animator->CreateAnimation("DropComplete0", "PUYO_R.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
 	Animator->CreateAnimation("DropComplete1", "PUYO_G.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
