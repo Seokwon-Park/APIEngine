@@ -7,8 +7,8 @@ enum EColor
 	Red,
 	Green,
 	Blue,
-	Yellow,
-	Purple
+	Purple,
+	Yellow
 };
 // Ό³Έν :
 class APuyo : public AActor

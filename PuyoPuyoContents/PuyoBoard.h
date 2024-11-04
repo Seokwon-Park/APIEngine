@@ -7,7 +7,8 @@ enum class EPuyoLogicStep
 {
 	PuyoCreate, // 뿌요 블럭 생성
 	PuyoMove, // 뿌요 움직임
-	PuyoBlockUpdate, // 뿌요가 닿았을 때? 옆에 친구가 떨어져야 할수도 있다.
+	PuyoPlace, // 뿌요 착지로직
+	PuyoConnect, // 뿌요 연결 로직
 	PuyoCheck,
 	PuyoDestroy,
 	PuyoUpdate,
@@ -29,16 +30,19 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void SetupPuyoBoard(FVector2D _Offset, FVector2D _PuyoSize, FVector2D _BoardSize = FVector2D(6,13));
+	void SetupPuyoBoard(FVector2D _Offset, FVector2D _PuyoSize, FIntPoint _BoardSize = FIntPoint(6,13));
+	std::vector<APuyo*> CreatePuyoBlock();
 
+	//LogicStep
 	void PuyoCreateLogic();
 	void PuyoMoveLogic();
-	void PuyoBlockUpdateLogic(float _DeltaTime);
+	void PuyoPlaceLogic(float _DeltaTime);
+	void PuyoConnectLogic(float _DeltaTime);
 	void PuyoCheckLogic();
 	void PuyoDestroyLogic();
 	void PuyoUpdateLogic();
 
-	FVector2D GetPosByIndex(int _X, int _Y);
+	FVector2D GetLocationByIndex(int _X, int _Y);
 	bool CanMoveDown();
 	bool CanMoveLR(FVector2D _Dir);
 
@@ -48,19 +52,25 @@ public:
 protected:
 
 private:
-	const int Dx[4] = { 0, 1, 0, -1 };
+	//위쪽 방향부터 반시계 방향으로 -> 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
+	const int Dx[4] = { 0, -1, 0, 1 };
 	const int Dy[4] = { -1, 0, 1, 0 };
 	FVector2D Offset;
 	FVector2D PuyoSize;
-	FVector2D BoardSize;
+	FIntPoint BoardSize;
+	// Slave Puyo
+	FIntPoint MainPuyoCoord;
 	float PuyoDropTimer;
 	float PuyoDropDelay;
 	int PuyoTick;
-	int BlockX;
-	int BlockY;
 	int Dir; // 0,1,2,3 시계방향으로 위,오른쪽,아래,왼쪽
 	EPuyoLogicStep CurStep;
 	std::vector<APuyo*> Block; // 0번 뿌요를 기준으로 회전
+	std::vector<APuyo*> NextBlock; // 다음뿌요
+	std::vector<APuyo*> NextNextBlock; // 다음다음뿌요
+	std::vector<FIntPoint> PuyoConnectList;
+	std::vector<FIntPoint> PlaceCheckList;
+	
 	std::vector<std::vector<APuyo*>> Board;
 };
 

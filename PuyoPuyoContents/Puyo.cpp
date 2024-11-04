@@ -12,8 +12,8 @@ APuyo::APuyo()
 	ColorSprites.push_back("PUYO_R.CNS.BMP");
 	ColorSprites.push_back("PUYO_G.CNS.BMP");
 	ColorSprites.push_back("PUYO_B.CNS.BMP");
-	ColorSprites.push_back("PUYO_Y.CNS.BMP");
 	ColorSprites.push_back("PUYO_P.CNS.BMP");
+	ColorSprites.push_back("PUYO_Y.CNS.BMP");
 	Sr->SetSprite("PUYO_R.CNS.BMP", 0);
 	Sr->SetComponentScale({ 32, 32 });
 	for (int i = 0; i < ColorSprites.size(); i++)
