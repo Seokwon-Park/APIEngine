@@ -1,18 +1,18 @@
 #include "aepch.h"
-#include "PlayMap.h"
+#include "PlayBackground.h"
 #include <EngineCore/EngineAPICore.h>
 
-APlayMap::APlayMap()
+APlayBackground::APlayBackground()
 {
 	SetActorLocation(UEngineAPICore::GetEngineWindow().GetWindowSize()/2);
 	SetActorScale({100,100});
 
-	Sr = CreateDefaultSubObject<USpriteRendererComponent>();
+	Sr = CreateDefaultSubobject<USpriteRendererComponent>("PlayBackground");
 	Sr->SetOrder(-1);
 	Sr->SetSprite("L1_F.CNS.bmp", 0);
 	Sr->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 }
 
-APlayMap::~APlayMap()
+APlayBackground::~APlayBackground()
 {
 }

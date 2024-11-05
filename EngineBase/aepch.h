@@ -12,6 +12,9 @@
 #include <iostream>
 #include <functional>
 
+// Base Class
+#include "Object.h"
+
 // ¼öÇÐ
 #include "EngineMath.h"
 #include "EngineDebug.h"

@@ -24,7 +24,6 @@ public:
 	APuyo& operator=(const APuyo& _Other) = delete;
 	APuyo& operator=(APuyo&& _Other) noexcept = delete;
 
-	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void SetupPuyo(FVector2D _Location, int _Color);
 	void PlayAnimation(std::string _Name);
@@ -45,7 +44,7 @@ public:
 	// int X, Y;
 	// int TargetX, TargetY;
 protected:
-
+	void BeginPlay() override;
 private:
 	FIntPoint CurXY;
 	FIntPoint TargetXY;

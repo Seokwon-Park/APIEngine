@@ -1,7 +1,7 @@
 #pragma once
 
 using KeyCode = unsigned short;
-class Key
+class EKey
 {
 public:
 	enum : KeyCode

@@ -1,6 +1,6 @@
 #pragma once
-#include <EngineBase/Object.h>
 #include <EngineBase/EngineMath.h>
+#include "ActorComponent.h"
 
 #include "EngineSprite.h"
 
@@ -22,7 +22,6 @@ public:
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
 	// 이 객체가 처음 Tick을 돌리기 직전에 실행
-	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime) {}
 
 	inline class ULevel* GetWorld() const { return World; }
@@ -34,14 +33,22 @@ public:
 	inline void SetActorLocation(FVector2D _Location) { Transform.Location = _Location; }
 	inline void SetActorScale(FVector2D _Scale){Transform.Scale = _Scale;}
 
+	inline virtual void SetActive(bool _Value)
+	{
+		for (auto Component : Components)
+		{
+			Component->SetActive(_Value);
+		}
+	}
 	// 이 함수는 생성자에서만 호출해야 합니다.
 	template<typename UComponentType>
-	UComponentType* CreateDefaultSubObject()
+	UComponentType* CreateDefaultSubobject(std::string_view _Name)
 	{
 		UComponentType* NewComponent = new UComponentType();
 
 		UActorComponent* UComponentPtr = dynamic_cast<UActorComponent*>(NewComponent);
 
+		UComponentPtr->SetName(_Name);
 		UComponentPtr->ParentActor = this;
 
 		// Actor의 생성자가 다 끝나고 나서 World가 결정됩니다.
@@ -50,11 +57,10 @@ public:
 		return NewComponent;
 	}
 protected:
-
+	virtual void BeginPlay();
 private:
 	class ULevel* World;
 	FTransform Transform;
 	std::list<class UActorComponent*> Components;
-
 };
 

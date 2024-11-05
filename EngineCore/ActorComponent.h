@@ -1,5 +1,4 @@
 #pragma once
-#include <EngineBase/Object.h>
 
 // Ό³Έν :
 class UActorComponent : public UObject

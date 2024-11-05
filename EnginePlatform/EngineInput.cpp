@@ -76,7 +76,6 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 			IsFree = true;
 			IsUp = false;
 		}
-
 	}
 }
 

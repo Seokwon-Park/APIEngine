@@ -14,7 +14,7 @@ const std::string BmpExt = ".BMP";
 
 
 UEngineWinImage::UEngineWinImage()
-	:/*Scale(FVector2D::ZERO),*/ ImageDC(nullptr), hBitmap(nullptr), Info(BITMAP())
+	: ImageDC(nullptr), hBitmap(nullptr), Info(BITMAP())
 {
 }
 
@@ -174,5 +174,22 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	ImageDC = NewImageDC;
 
 	GetObject(hBitmap, sizeof(BITMAP), &Info);
+}
+
+UColor UEngineWinImage::GetPixelColor(FIntPoint _Point, UColor _DefaultColor)
+{
+	if (0 > _Point.X) { return _DefaultColor; }
+	if (0 > _Point.Y) { return _DefaultColor; }
+	if (Info.bmWidth <= _Point.X) { return _DefaultColor; }
+	if (Info.bmHeight <= _Point.Y) { return _DefaultColor; }
+
+	// ::꼭 붙여야 한다. 명시적으로 전역에 존재하는 윈도우
+	// UEngineWinImage::GetPixel 혼돈이 올수 있다.
+
+	// RGBA
+	// 1111
+
+	UColor ResultColor = ::GetPixel(ImageDC, _Point.X, _Point.Y);
+	return ResultColor;
 }
 

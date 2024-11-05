@@ -13,14 +13,23 @@
     <Filter Include="ContentsObject\GameMode">
       <UniqueIdentifier>{640d94f4-d09c-416f-9b48-76f15a75181f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Global">
-      <UniqueIdentifier>{321e988c-73d9-46aa-a6a9-08748132e085}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Play">
       <UniqueIdentifier>{2ad6b0cb-af63-4756-a36f-d70c0bcd3351}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Actor">
+    <Filter Include="ContentsObject\Intro">
+      <UniqueIdentifier>{be6e8079-d32f-4750-9174-07037cb598bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Actor">
       <UniqueIdentifier>{07d994fd-2f3f-4c43-8682-1cf2addabfd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Text">
+      <UniqueIdentifier>{51ab49ce-8988-4e0d-9684-0c8bdb7fb779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Menu">
+      <UniqueIdentifier>{b5760ea0-8dfe-4995-b518-93692df60794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\DummyPawn">
+      <UniqueIdentifier>{321e988c-73d9-46aa-a6a9-08748132e085}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,23 +39,35 @@
     <ClCompile Include="PuyoPuyoContentsCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
+    <ClCompile Include="TogetherPlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject\Global</Filter>
+    <ClCompile Include="DummyPawn.cpp">
+      <Filter>ContentsObject\DummyPawn</Filter>
     </ClCompile>
-    <ClCompile Include="PlayMap.cpp">
+    <ClCompile Include="PlayBackground.cpp">
       <Filter>ContentsObject\Play</Filter>
     </ClCompile>
     <ClCompile Include="IntroGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="PuyoBoard.cpp">
-      <Filter>ContentsObject\Actor</Filter>
+      <Filter>ContentsObject\Play\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Puyo.cpp">
-      <Filter>ContentsObject\Actor</Filter>
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroBackground.cpp">
+      <Filter>ContentsObject\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoText.cpp">
+      <Filter>ContentsObject\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="CarbuncleMenu.cpp">
+      <Filter>ContentsObject\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,23 +77,35 @@
     <ClInclude Include="PuyoPuyoContentsCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
+    <ClInclude Include="TogetherPlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ContentsObject\Global</Filter>
+    <ClInclude Include="DummyPawn.h">
+      <Filter>ContentsObject\DummyPawn</Filter>
     </ClInclude>
-    <ClInclude Include="PlayMap.h">
+    <ClInclude Include="PlayBackground.h">
       <Filter>ContentsObject\Play</Filter>
     </ClInclude>
     <ClInclude Include="IntroGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="PuyoBoard.h">
-      <Filter>ContentsObject\Actor</Filter>
+      <Filter>ContentsObject\Play\Actor</Filter>
     </ClInclude>
     <ClInclude Include="Puyo.h">
-      <Filter>ContentsObject\Actor</Filter>
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroBackground.h">
+      <Filter>ContentsObject\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoText.h">
+      <Filter>ContentsObject\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="CarbuncleMenu.h">
+      <Filter>ContentsObject\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

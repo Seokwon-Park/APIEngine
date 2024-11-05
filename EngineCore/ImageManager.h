@@ -3,7 +3,7 @@
 #include <EnginePlatform/EngineWinImage.h>
 
 // Ό³Έν :
-class UImageManager
+class UImageManager : public UObject
 {
 public:
 	// constrcuter destructer
@@ -29,6 +29,7 @@ public:
 	void LoadFolderToSprite(std::string_view _KeyName, std::string_view _Path);
 	void CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize);
 	void CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols);
+	void CreateCustomCuttingSprite(std::string_view _KeyName, int _Rows, int _Cols);
 	bool IsLoadSprite(std::string_view _KeyName);
 	UEngineSprite* FindSprite(std::string_view _KeyName);
 	UEngineWinImage* FindImage(std::string_view _KeyName);

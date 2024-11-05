@@ -7,8 +7,8 @@ APuyo::APuyo()
 	SetActorLocation({ 48, 48 });
 	SetActorScale({ 32, 32 });
 
-	Sr = CreateDefaultSubObject<USpriteRendererComponent>();
-	Animator = CreateDefaultSubObject<UAnimatorComponent>();
+	Sr = CreateDefaultSubobject<USpriteRendererComponent>("PuyoSpriteRenderer");
+	Animator = CreateDefaultSubobject<UAnimatorComponent>("PuyoAnimator");
 	ColorSprites.push_back("PUYO_R.CNS.BMP");
 	ColorSprites.push_back("PUYO_G.CNS.BMP");
 	ColorSprites.push_back("PUYO_B.CNS.BMP");
@@ -16,6 +16,7 @@ APuyo::APuyo()
 	ColorSprites.push_back("PUYO_Y.CNS.BMP");
 	Sr->SetSprite("PUYO_R.CNS.BMP", 0);
 	Sr->SetComponentScale({ 32, 32 });
+	Sr->SetRemoveBackground(true);
 	// MainPuyoIdle Animation
 	for (int i = 0; i < ColorSprites.size(); i++)
 	{

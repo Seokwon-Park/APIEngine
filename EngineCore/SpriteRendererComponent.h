@@ -29,6 +29,7 @@ public:
 	inline std::string GetCurSpriteName()const { return Sprite->GetName(); }
 	template <typename EnumType>
 	inline void SetOrder(EnumType _Order) { SetOrder(static_cast<int>(_Order)); }
+	inline void SetRemoveBackground(bool _Value) { RemoveBackground = _Value; }
 protected:
 
 private:
@@ -36,6 +37,8 @@ private:
 	class UEngineSprite* Sprite;
 	int CurIndex;
 	UAnimatorComponent* AnimatorComponent;
+	bool RemoveBackground;
+	UColor RemoveColor;
 };
 
 

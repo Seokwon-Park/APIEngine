@@ -10,12 +10,6 @@
     <ClCompile Include="Level.cpp">
       <Filter>Object\Level</Filter>
     </ClCompile>
-    <ClCompile Include="GameMode.cpp">
-      <Filter>Object\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
@@ -23,25 +17,34 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="ActorComponent.cpp">
-      <Filter>Object\Actor\Component</Filter>
+      <Filter>Object\Component</Filter>
     </ClCompile>
     <ClCompile Include="SceneComponent.cpp">
-      <Filter>Object\Actor\Component</Filter>
+      <Filter>Object\Component</Filter>
     </ClCompile>
     <ClCompile Include="SpriteRendererComponent.cpp">
-      <Filter>Object\Actor\Component\Rendering</Filter>
+      <Filter>Object\Component\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Collision2DComponent.cpp">
-      <Filter>Object\Actor\Component\Collision</Filter>
+      <Filter>Object\Component\Collision</Filter>
     </ClCompile>
     <ClCompile Include="EngineDebugHelper.cpp">
       <Filter>Helper\Debug</Filter>
     </ClCompile>
     <ClCompile Include="AnimatorComponent.cpp">
-      <Filter>Object\Actor\Component\Rendering</Filter>
+      <Filter>Object\Component\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="EngineAnimation.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>Object\Actor\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Object\Actor\GameMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,12 +57,6 @@
     <ClInclude Include="Level.h">
       <Filter>Object\Level</Filter>
     </ClInclude>
-    <ClInclude Include="GameMode.h">
-      <Filter>Object\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>Resources</Filter>
     </ClInclude>
@@ -67,25 +64,34 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="ActorComponent.h">
-      <Filter>Object\Actor\Component</Filter>
+      <Filter>Object\Component</Filter>
     </ClInclude>
     <ClInclude Include="SceneComponent.h">
-      <Filter>Object\Actor\Component</Filter>
+      <Filter>Object\Component</Filter>
     </ClInclude>
     <ClInclude Include="SpriteRendererComponent.h">
-      <Filter>Object\Actor\Component\Rendering</Filter>
+      <Filter>Object\Component\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Collision2DComponent.h">
-      <Filter>Object\Actor\Component\Collision</Filter>
+      <Filter>Object\Component\Collision</Filter>
     </ClInclude>
     <ClInclude Include="EngineDebugHelper.h">
       <Filter>Helper\Debug</Filter>
     </ClInclude>
     <ClInclude Include="AnimatorComponent.h">
-      <Filter>Object\Actor\Component\Rendering</Filter>
+      <Filter>Object\Component\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="EngineAnimation.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Object\Actor\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>Object\Actor\GameMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,20 +113,26 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{cdf80cb4-4efb-4f30-86ee-9cb4e8b91976}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Actor\Component">
-      <UniqueIdentifier>{8a038052-1784-4a40-b81c-f83dbe9157c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Actor\Component\Rendering">
-      <UniqueIdentifier>{d7f4eed3-2002-4f5b-b401-d84568bb92dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Actor\Component\Collision">
-      <UniqueIdentifier>{a5025ddb-abcf-4460-a091-b831ca42396e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helper">
       <UniqueIdentifier>{db292efc-c489-4e11-9d3c-dfa93dbac406}</UniqueIdentifier>
     </Filter>
     <Filter Include="Helper\Debug">
       <UniqueIdentifier>{81f21645-7bed-4be9-8ea3-f0971c1103b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component">
+      <UniqueIdentifier>{8a038052-1784-4a40-b81c-f83dbe9157c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Rendering">
+      <UniqueIdentifier>{d7f4eed3-2002-4f5b-b401-d84568bb92dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Collision">
+      <UniqueIdentifier>{a5025ddb-abcf-4460-a091-b831ca42396e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\GameMode">
+      <UniqueIdentifier>{38214da3-e021-4d1d-b92d-dc4c3db64c9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Tilemap">
+      <UniqueIdentifier>{bf38cff2-3122-4069-a27b-0f9771102e99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

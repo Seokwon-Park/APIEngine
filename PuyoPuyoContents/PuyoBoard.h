@@ -20,6 +20,15 @@ enum class EPuyoLogicStep
 class APuyoBoard : public AActor
 {
 public:
+	struct PuyoBoardSettings
+	{
+		FVector2D Offset;
+		FVector2D PuyoSize;
+		int Difficulty;
+		FIntPoint NextBlockCoord;
+		FIntPoint NextNextBlockCoord;
+		FIntPoint BoardSize;
+	};
 	// constrcuter destructer
 	APuyoBoard();
 	~APuyoBoard();
@@ -30,10 +39,10 @@ public:
 	APuyoBoard& operator=(const APuyoBoard& _Other) = delete;
 	APuyoBoard& operator=(APuyoBoard&& _Other) noexcept = delete;
 
-	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void SetupPuyoBoard(FVector2D _Offset, FVector2D _PuyoSize, int Difficulty = 3, FIntPoint _BoardSize = FIntPoint(6, 13));
+	void SetupPuyoBoard(const PuyoBoardSettings& _Settings);
+	void SetKey(int _Up, int _Down, int _Left, int _Right);
 	std::vector<APuyo*> CreatePuyoBlock();
 
 	//LogicStep
@@ -45,8 +54,23 @@ public:
 	void PuyoDestroyLogic();
 	void PuyoUpdateLogic();
 
-	FVector2D GetLocationByIndex(int _X, int _Y);
-	FVector2D GetLocationByIndex(FIntPoint _XY);
+	inline FVector2D GetLocationByIndex(int _X, int _Y) const
+	{
+		return FVector2D(_X * PuyoSize.iX(), _Y * PuyoSize.iY()) + PuyoSize.Half();
+	}
+	inline FVector2D GetLocationByIndex(FIntPoint _XY) const
+	{
+		return GetLocationByIndex(_XY.X, _XY.Y);
+	}
+
+	inline FVector2D GetLocationByIndexWithOffset(int _X, int _Y)const
+	{
+		return FVector2D(Offset.iX() + _X * PuyoSize.iX(), Offset.iY() + _Y * PuyoSize.iY());
+	}
+	inline FVector2D GetLocationByIndexWithOffset(FIntPoint _XY)const
+	{
+		return GetLocationByIndexWithOffset(_XY.X, _XY.Y);
+	}
 	inline void SetPuyoOnBoard(int _X, int _Y, APuyo* _Puyo)
 	{
 		Board[_Y][_X] = _Puyo;
@@ -62,7 +86,7 @@ public:
 	void Rotate();
 	void PuyoForceDown();
 protected:
-
+	void BeginPlay() override;
 private:
 	//위쪽 방향부터 반시계 방향으로 -> 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
 	const int Dx[4] = { 0, -1, 0, 1 };
@@ -76,6 +100,14 @@ private:
 	FVector2D Offset; // 윈도우를 기준으로 XY로 몇픽셀 떨어져있음?
 	FVector2D PuyoSize; // 뿌요 1개의 픽셀 크기
 	FIntPoint BoardSize; // 게임판의 칸수
+	FIntPoint NextBlockCoord; // 게임판의 칸수
+	FIntPoint NextNextBlockCoord; // 게임판의 칸수
+
+	//Key셋팅
+	int UpKey = 0;
+	int DownKey = 0;
+	int LeftKey = 0;
+	int RightKey = 0;
 
 	// Slave Puyo의 좌표는 MainCoord와 Dir을 통해서 얻을 수 있다.
 	FIntPoint MainPuyoCoord;
@@ -102,7 +134,7 @@ private:
 	std::vector<APuyo*> PlaceCheckList;
 	std::vector<APuyo*> PuyoConnectList;
 	std::vector<FIntPoint> PuyoCheckList;
-	std::set<std::pair<int,int>> PuyoDestroyList;
+	std::set<std::pair<int, int>> PuyoDestroyList;
 	std::vector<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;

@@ -5,7 +5,7 @@
 #include <EngineCore/EngineAPICore.h>
 
 USpriteRendererComponent::USpriteRendererComponent()
-	:Order(0), Sprite(nullptr), CurIndex(0), AnimatorComponent(nullptr)
+	:Order(0), Sprite(nullptr), CurIndex(0), AnimatorComponent(nullptr), RemoveBackground(false), RemoveColor(UColor(255, 0, 255, 0))
 {
 }
 
@@ -121,8 +121,17 @@ void USpriteRendererComponent::Render()
 
 	Transform.Location = Transform.Location - Level->CameraPos;
 
+	
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	CurData.Image->CopyToTransparent(BackBufferImage, Transform, CurData.Transform);
+	if (true == RemoveBackground)
+	{
+		RemoveColor = CurData.Image->GetPixelColor({ 0,0 }, { 0,0,0,0 });
+	}
+	else
+	{
+		RemoveColor = UColor(255, 0, 255, 0);
+	}
+	CurData.Image->CopyToTransparent(BackBufferImage, Transform, CurData.Transform, RemoveColor);
 }
 
 void USpriteRendererComponent::SetOrder(int _Order)

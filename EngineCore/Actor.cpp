@@ -3,7 +3,6 @@
 #include "ImageManager.h"
  
 #include <EngineCore/EngineAPICore.h>
-#include "ActorComponent.h"
 
 AActor::AActor()
 	:World(nullptr), Transform(FTransform())

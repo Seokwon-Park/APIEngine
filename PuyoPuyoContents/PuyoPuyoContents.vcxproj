@@ -153,12 +153,28 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="PlayMap.h">
+    <ClInclude Include="CarbuncleMenu.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="IntroBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MenuGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayBackground.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="aepch.h" />
-    <ClInclude Include="PlayGameMode.h">
+    <ClInclude Include="PuyoText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TogetherPlayGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -174,14 +190,26 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="DummyPawn.h" />
     <ClInclude Include="IntroGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlayMap.cpp">
+    <ClCompile Include="CarbuncleMenu.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="IntroBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayBackground.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -189,7 +217,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
+    <ClCompile Include="PuyoText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TogetherPlayGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -205,7 +237,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="DummyPawn.cpp" />
     <ClCompile Include="IntroGameMode.cpp">
       <SubType>
       </SubType>

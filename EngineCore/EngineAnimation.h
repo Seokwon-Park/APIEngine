@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineSprite.h"
 
-class UEngineAnimation
+class UEngineAnimation : public UObject
 {
 public:
 	friend class UAnimatorComponent;

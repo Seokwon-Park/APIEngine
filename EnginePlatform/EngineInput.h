@@ -17,7 +17,7 @@ enum class KeyEvent
 class UEngineInput
 {
 public:
-	
+
 	// constrcuter destructer
 	~UEngineInput();
 
@@ -36,7 +36,7 @@ public:
 	void KeyCheck(float _DeltaTime);
 	void EventCheck();
 
-	bool GetKeyUp(int _KeyIndex)
+	bool GetIsKeyUp(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
@@ -47,7 +47,7 @@ public:
 		return Keys[_KeyIndex].IsUp;
 	}
 
-	bool GetKeyPress(int _KeyIndex)
+	bool GetIsKeyPress(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
@@ -70,7 +70,7 @@ public:
 	}
 
 
-	bool GetKeyFree(int _KeyIndex)
+	bool GetIsKeyFree(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
@@ -110,7 +110,6 @@ private:
 		void KeyCheck(float _DeltaTime);
 	};
 
-	//std::vector<UEngineKey> Keys;
 	std::map<int, UEngineKey> Keys;
 
 	UEngineInput();

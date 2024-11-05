@@ -60,6 +60,10 @@ void ULevel::Tick(float _DeltaTime)
 
 	for (AActor* Actor : AllActors)
 	{
+		if (false == Actor->IsActivated())
+		{
+			continue;
+		}
 		if (nullptr != Actor)
 		{
 			Actor->Tick(_DeltaTime);
@@ -80,6 +84,10 @@ void ULevel::Render()
 	{
 		for (USpriteRendererComponent* Renderer : RenderList.second)
 		{
+			if (false == Renderer->IsActivated())
+			{
+				continue;
+			}
 			Renderer->Render();
 		}
 	}

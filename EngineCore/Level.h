@@ -2,7 +2,7 @@
 #include "GameMode.h"
 
 // Ό³Έν :
-class ULevel
+class ULevel : public UObject
 {
 public:
 	friend class USpriteRendererComponent;

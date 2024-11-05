@@ -23,7 +23,7 @@ public:
 	static void PrintEngineDebugText();
 	static void CheckFPSOption();
 	//FPS 표시여부
-	inline static void SetShowFPS(bool _ShowFPS){Instance.ShowFPS = true;}
+	inline static void SetShowFPS(bool _ShowFPS){Instance.ShowFPS = _ShowFPS;}
 protected:
 
 private:
