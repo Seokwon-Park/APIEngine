@@ -18,10 +18,9 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가
 
 	// 회전 변환 계산 (라디안으로 변환 필요)
-	float angleInRadians = FEngineMath::DegreesToRadians(FEngineMath::Lerp(0.0f, 90.0f, deltaTime * 5));
+	float angleInRadians = FEngineMath::DegreesToRadians(FEngineMath::Lerp(0.0f, 90.0f, deltaTime * 10));
 	float cosTheta = std::cos(angleInRadians);
 	float sinTheta = std::sin(angleInRadians);
-
 
 
 	// 원점 기준 회전 후 Main Puyo 위치로 이동
@@ -32,7 +31,7 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
 	slavePuyoPosition = FVector2D(rotatedX, rotatedY) + mainPuyoPosition;
-	if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.2f)
+	if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
 	{
 		IsRotating = false;
 	}
@@ -50,14 +49,14 @@ void APuyoBoard::BeginPlay()
 
 	// 회전
 	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하고 키 따로 두기?
-	UEngineInput::GetInstance().BindAction(UpKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
+	GetWorld()->GetInputSystem().BindAction(UpKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
 
 	// 빠른 낙하
-	UEngineInput::GetInstance().BindAction(DownKey, KeyEvent::Down, std::bind(&APuyoBoard::PuyoForceDown, this));
+	GetWorld()->GetInputSystem().BindAction(DownKey, KeyEvent::Down, std::bind(&APuyoBoard::PuyoForceDown, this));
 
 	// 좌우 이동
-	UEngineInput::GetInstance().BindAction(LeftKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::LEFT));
-	UEngineInput::GetInstance().BindAction(RightKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::RIGHT));
+	GetWorld()->GetInputSystem().BindAction(LeftKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::LEFT));
+	GetWorld()->GetInputSystem().BindAction(RightKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::RIGHT));
 
 	// Todo : BeginPlay는 임시위치, 게임시작 애니메이션이 끝나고 렌더링 되어야 함.
 	NextBlock = CreatePuyoBlock();
@@ -208,6 +207,7 @@ void APuyoBoard::PuyoCreateLogic()
 	{
 		NextBlock[i]->SetActorLocation(GetLocationByIndex(NextBlockCoord.X, NextBlockCoord.Y + Dy[BlockDir] * i));
 	}
+
 	//새로 생성된 NextNextBlock은 설정된 로케이션으로 이동해야 한다.
 	NextNextBlock = CreatePuyoBlock();
 	for (int i = 0; i < 2; i++)
@@ -587,7 +587,7 @@ void APuyoBoard::MoveLR(FVector2D _Dir)
 
 void APuyoBoard::Rotate(bool _IsClockwise)
 {
-	if (CurStep != EPuyoLogicStep::PuyoMove || IsRotating)
+	if (CurStep != EPuyoLogicStep::PuyoMove || IsRotating || IsKicking)
 	{
 		return;
 	}

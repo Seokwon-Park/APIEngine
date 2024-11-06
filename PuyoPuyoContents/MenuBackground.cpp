@@ -41,13 +41,13 @@ AMenuBackground::AMenuBackground()
 		{
 			BgRenderers[i][j] = CreateDefaultSubobject<USpriteRendererComponent>("BgRenderer" + std::to_string(i * 6 + j));
 			BgRenderers[i][j]->SetSprite(LineSpriteName, 0);
-			BgRenderers[i][j]->SetComponentLocation(FVector2D(j * 128, i * 128));
+			BgRenderers[i][j]->SetComponentLocation(FVector2D((j-1) * 128, i * 128));
 			BgRenderers[i][j]->SetComponentScale({ 128,128 });
 			BgRenderers[i][j]->SetAnimator(BgAnimators[i]);
-			BgRenderers[i][j]->SetRemoveBackground(true);
+			//BgRenderers[i][j]->SetRemoveBackground(true);
 			BgAnimators[i]->ChangeAnimation("Loop" + std::to_string(Selected[i]));
-		
 			BgRenderers[i][j]->SetPivot(PivotType::TopLeft);
+		
 		}
 	}
 }
@@ -68,19 +68,19 @@ void AMenuBackground::Tick(float _DeltaTime)
 		{
 			if (i % 2 == 0)
 			{
-				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::RIGHT*.2f);
+				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::RIGHT *.3f);
 				if (BgRenderers[i][j]->GetComponentLocation().X > UEngineAPICore::GetEngineWindow().GetWindowSize().X)
 				{
-					BgRenderers[i][j]->SetComponentLocation({ -128.0f ,
+					BgRenderers[i][j]->SetComponentLocation({ BgRenderers[i][(j+1)%6]->GetComponentLocation().X -127,
 						BgRenderers[i][j]->GetComponentLocation().Y});
 				}
 			}
 			else
 			{
-				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::LEFT*.2f);
+				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::LEFT * .3f);
 				if (BgRenderers[i][j]->GetComponentLocation().X < -128.0f)
 				{
-					BgRenderers[i][j]->SetComponentLocation({ UEngineAPICore::GetEngineWindow().GetWindowSize().X-1,
+					BgRenderers[i][j]->SetComponentLocation({ BgRenderers[i][(j + 5) % 6]->GetComponentLocation().X +127,
 						BgRenderers[i][j]->GetComponentLocation().Y });
 				}
 			}

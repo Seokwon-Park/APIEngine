@@ -28,11 +28,11 @@ public:
 	UEngineInput& operator=(const UEngineInput& _Other) = delete;
 	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
 
-	static UEngineInput& GetInstance()
+	/*static UEngineInput& GetInstance()
 	{
 		static UEngineInput Inst = UEngineInput();
 		return Inst;
-	}
+	}*/
 
 	void KeyCheck(float _DeltaTime);
 	void EventCheck();
@@ -112,6 +112,5 @@ private:
 	};
 
 	std::map<int, UEngineKey> Keys;
-
 };
 

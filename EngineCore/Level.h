@@ -1,5 +1,6 @@
 #pragma once
 #include "GameMode.h"
+#include <EnginePlatform/EngineInput.h>
 
 // Ό³Έν :
 class ULevel : public UObject
@@ -43,6 +44,7 @@ public:
 	inline void SetCameraPos(FVector2D _Pos){CameraPos = _Pos;}
 	inline FVector2D GetCameraPivot() const {return CameraPivot;}
 	inline FVector2D GetCameraPos() const {return CameraPos;}
+	inline UEngineInput& GetInputSystem() { return InputSystem; }
 protected:
 
 private:
@@ -79,5 +81,6 @@ private:
 	std::list<AActor*> AllActors;
 	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
+	UEngineInput InputSystem;
 };
 

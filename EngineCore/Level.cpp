@@ -58,6 +58,8 @@ void ULevel::Tick(float _DeltaTime)
 		AllActors.push_back(SpawnedActor);
 	}
 
+	InputSystem.KeyCheck(_DeltaTime);
+
 	for (AActor* Actor : AllActors)
 	{
 		if (false == Actor->IsActivated())
@@ -69,6 +71,8 @@ void ULevel::Tick(float _DeltaTime)
 			Actor->Tick(_DeltaTime);
 		}
 	}
+	InputSystem.EventCheck();
+
 }
 
 void ULevel::Render()

@@ -14,8 +14,10 @@ public:
 	AGameMode(AGameMode&& _Other) noexcept = delete;
 	AGameMode& operator=(const AGameMode& _Other) = delete;
 	AGameMode& operator=(AGameMode&& _Other) noexcept = delete;
+	void Tick(float _DeltaTime) override {};
 
 protected:
+	void BeginPlay() override {};
 private:
 
 };

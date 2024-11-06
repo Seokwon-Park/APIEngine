@@ -26,10 +26,10 @@ void ADummyPawn::BeginPlay()
 	Super::BeginPlay();
 	// 이벤트 방식으로 처리
 	GetWorld()->SetCameraToMainPawn(false);
-	/*UEngineInput::GetInstance().BindAction(Key::Left, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::LEFT));
-	UEngineInput::GetInstance().BindAction(Key::Right, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::RIGHT));
-	UEngineInput::GetInstance().BindAction(Key::Down, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::DOWN));
-	UEngineInput::GetInstance().BindAction(Key::Up, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::UP));*/
+	/*GetWorld()->GetInputSystem().BindAction(Key::Left, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::LEFT));
+	GetWorld()->GetInputSystem().BindAction(Key::Right, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::RIGHT));
+	GetWorld()->GetInputSystem().BindAction(Key::Down, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::DOWN));
+	GetWorld()->GetInputSystem().BindAction(Key::Up, KeyEvent::Press, std::bind(&ADummyPawn::MoveFunction, this, FVector2D::UP));*/
 }
 
 //void ADummyPawn::MoveFunction(FVector2D _Dir)

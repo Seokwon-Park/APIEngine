@@ -14,7 +14,7 @@ AIntroGameMode::~AIntroGameMode()
 void AIntroGameMode::BeginPlay()
 {
 	// Todo : PressAnyKey·Î ¹Ù²Ü°Í
-	UEngineInput::GetInstance().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
+	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();
 
 }

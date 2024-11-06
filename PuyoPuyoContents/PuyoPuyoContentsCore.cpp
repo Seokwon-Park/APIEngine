@@ -33,8 +33,8 @@ void PuyoPuyoContentsCore::BeginPlay()
 	//Cut Intro Bg
 	for (int i = 0; i <= 9; i++)
 	{
-		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "L.CNS.BMP", 1, 4);
-		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "R.CNS.BMP", 1, 4);
+		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "L.CNS.BMP", { 128, 128 });
+		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "R.CNS.BMP", { 128, 128 });
 	}
 
 	//Cut Play Bg
