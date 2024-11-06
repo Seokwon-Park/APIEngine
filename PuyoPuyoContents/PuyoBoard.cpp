@@ -18,7 +18,7 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가
 
 	// 회전 변환 계산 (라디안으로 변환 필요)
-	float angleInRadians = FEngineMath::DegreesToRadians(FEngineMath::Lerp(0.0f, 90.0f, deltaTime * 10));
+	float angleInRadians = FEngineMath::DegreesToRadians(1.0f);
 	float cosTheta = std::cos(angleInRadians);
 	float sinTheta = std::sin(angleInRadians);
 
@@ -82,10 +82,6 @@ void APuyoBoard::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	if (IsRotating)
-	{
-		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime());
-	}
 	if (IsKicking)
 	{
 		if (BlockDir == 1)
@@ -116,6 +112,11 @@ void APuyoBoard::Tick(float _DeltaTime)
 			}
 		}
 	}
+	if (IsRotating)
+	{
+		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime());
+	}
+	
 
 	// Todo : 여기서 시작 애니메이션이 안끝났으면 계속 Return하도록 설정?
 	//UEngineDebugHelper::PushString("X = " + std::to_string(MainPuyoCoord.X) + ", Y = " + std::to_string(MainPuyoCoord.Y));

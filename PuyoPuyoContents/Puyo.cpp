@@ -25,7 +25,7 @@ APuyo::APuyo()
 	// PuyoPlaceCompleteAnimation
 	for (int i = 0; i < ColorSprites.size(); i++)
 	{
-		Animator->CreateAnimation("PlaceComplete" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0 }, .1f, false);
+		Animator->CreateAnimation("PlaceComplete" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0 }, .05f, false);
 		Animator->SetAnimationEvent("PlaceComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
 	}
 	/*Animator->CreateAnimation("DropComplete0", "PUYO_R.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
