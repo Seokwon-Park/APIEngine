@@ -4,9 +4,6 @@
 APuyo::APuyo()
 	: IsAnimationEnd(false), IsDropComplete(false), Color(Red), SpriteIndex(0)
 {
-	SetActorLocation({ 48, 48 });
-	SetActorScale({ 32, 32 });
-
 	Sr = CreateDefaultSubobject<USpriteRendererComponent>("PuyoSpriteRenderer");
 	Animator = CreateDefaultSubobject<UAnimatorComponent>("PuyoAnimator");
 	ColorSprites.push_back("PUYO_R.CNS.BMP");
@@ -17,6 +14,8 @@ APuyo::APuyo()
 	Sr->SetSprite("PUYO_R.CNS.BMP", 0);
 	Sr->SetComponentScale({ 32, 32 });
 	Sr->SetRemoveBackground(true);
+	Sr->SetPivot(PivotType::TopLeft);
+	Sr->SetAnimator(Animator);
 	// MainPuyoIdle Animation
 	for (int i = 0; i < ColorSprites.size(); i++)
 	{

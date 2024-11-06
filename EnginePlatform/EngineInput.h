@@ -18,6 +18,7 @@ class UEngineInput
 {
 public:
 
+	UEngineInput();
 	// constrcuter destructer
 	~UEngineInput();
 
@@ -112,6 +113,5 @@ private:
 
 	std::map<int, UEngineKey> Keys;
 
-	UEngineInput();
 };
 

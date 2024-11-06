@@ -40,6 +40,7 @@ public:
 			Component->SetActive(_Value);
 		}
 	}
+
 	// 이 함수는 생성자에서만 호출해야 합니다.
 	template<typename UComponentType>
 	UComponentType* CreateDefaultSubobject(std::string_view _Name)

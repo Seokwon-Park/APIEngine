@@ -1,10 +1,6 @@
 #pragma once
 
-// FVector로 통일하겠습니다.
-// FVector2D xy
-// FVector3D xyz
-// FVector4D xyzw
-// FVector4D == FVector;
+#include <numbers>
 
 class FVector2D
 {
@@ -119,6 +115,15 @@ public:
 		return Result;
 	}
 
+	FVector2D operator-() const
+	{
+		FVector2D Result;
+		Result.X = -X;
+		Result.Y = -Y;
+		return Result;
+	}
+
+
 
 	FVector2D operator/(int _Value) const
 	{
@@ -154,6 +159,7 @@ public:
 	{
 		std::string Result = "";
 		Result = "X : [" + std::to_string(X) + "] Y : [" + std::to_string(Y) + "]";
+		return Result;
 	}
 
 	static FVector2D Lerp(FVector2D _A, FVector2D _B, float _T)
@@ -166,7 +172,7 @@ public:
 	{
 		float X = _A.X - _B.X;
 		float Y = _A.Y - _B.Y;
-		return std::sqrt(X*X+Y*Y);
+		return std::sqrt(X * X + Y * Y);
 	}
 
 
@@ -258,6 +264,13 @@ public:
 		Y += _Other.Y;
 		return *this;
 	}
+
+	std::string ToString()
+	{
+		std::string Result = "";
+		Result = "X : [" + std::to_string(X) + "] Y : [" + std::to_string(Y) + "]";
+		return Result;
+	}
 };
 
 class UColor
@@ -294,7 +307,22 @@ public:
 	}
 };
 
-class EngineMath
+class FEngineMath
 {
+public:
+	static const double PI_D;
+	static const float PI;
+	FEngineMath() {};
+
+	inline static float DegreesToRadians(float _Degrees)
+	{
+		return _Degrees * (PI / 180.0f);
+	}
+
+	inline static float Lerp(float _Start, float _End, float _T)
+	{
+		return _Start + (_End - _Start) * _T;
+	}
+
 };
 

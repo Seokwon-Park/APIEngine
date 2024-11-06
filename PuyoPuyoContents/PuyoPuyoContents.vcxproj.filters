@@ -31,6 +31,9 @@
     <Filter Include="ContentsObject\DummyPawn">
       <UniqueIdentifier>{321e988c-73d9-46aa-a6a9-08748132e085}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\SoloPuyo">
+      <UniqueIdentifier>{f5f9a8a9-50f6-4d57-8082-fd9e12b2f65b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aepch.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="CarbuncleMenu.cpp">
       <Filter>ContentsObject\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="MenuBackground.cpp">
+      <Filter>ContentsObject\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -105,6 +111,9 @@
       <Filter>ContentsObject\Text</Filter>
     </ClInclude>
     <ClInclude Include="CarbuncleMenu.h">
+      <Filter>ContentsObject\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBackground.h">
       <Filter>ContentsObject\Menu</Filter>
     </ClInclude>
   </ItemGroup>

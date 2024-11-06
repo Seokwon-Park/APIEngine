@@ -15,7 +15,7 @@ public:
 	ATogetherPlayGameMode& operator=(const ATogetherPlayGameMode& _Other) = delete;
 	ATogetherPlayGameMode& operator=(ATogetherPlayGameMode&& _Other) noexcept = delete;
 
-	void BeginPlay();
+	void BeginPlay() override;
 protected:
 
 private:

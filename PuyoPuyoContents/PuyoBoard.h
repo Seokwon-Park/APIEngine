@@ -22,7 +22,6 @@ class APuyoBoard : public AActor
 public:
 	struct PuyoBoardSettings
 	{
-		FVector2D Offset;
 		FVector2D PuyoSize;
 		int Difficulty;
 		FIntPoint NextBlockCoord;
@@ -56,20 +55,20 @@ public:
 
 	inline FVector2D GetLocationByIndex(int _X, int _Y) const
 	{
-		return FVector2D(_X * PuyoSize.iX(), _Y * PuyoSize.iY()) + PuyoSize.Half();
+		return FVector2D(_X * PuyoSize.iX(), _Y * PuyoSize.iY());
 	}
 	inline FVector2D GetLocationByIndex(FIntPoint _XY) const
 	{
 		return GetLocationByIndex(_XY.X, _XY.Y);
 	}
 
-	inline FVector2D GetLocationByIndexWithOffset(int _X, int _Y)const
+	inline FVector2D GetLocationByIndexOnBoard(int _X, int _Y)const
 	{
-		return FVector2D(Offset.iX() + _X * PuyoSize.iX(), Offset.iY() + _Y * PuyoSize.iY());
+		return FVector2D(GetActorLocation().iX() + _X * PuyoSize.iX(), GetActorLocation().iY() + _Y * PuyoSize.iY());
 	}
-	inline FVector2D GetLocationByIndexWithOffset(FIntPoint _XY)const
+	inline FVector2D GetLocationByIndexOnBoard(FIntPoint _XY)const
 	{
-		return GetLocationByIndexWithOffset(_XY.X, _XY.Y);
+		return GetLocationByIndexOnBoard(_XY.X, _XY.Y);
 	}
 	inline void SetPuyoOnBoard(int _X, int _Y, APuyo* _Puyo)
 	{
@@ -83,8 +82,10 @@ public:
 	bool CanMoveLR(FVector2D _Dir);
 
 	void MoveLR(FVector2D _Dir);
-	void Rotate();
+	void Rotate(bool _IsClockwise);
 	void PuyoForceDown();
+
+	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime);
 protected:
 	void BeginPlay() override;
 private:
@@ -97,17 +98,20 @@ private:
 
 	//Setup함수에서 인자로 받는 부분.
 	int Difficulty;
-	FVector2D Offset; // 윈도우를 기준으로 XY로 몇픽셀 떨어져있음?
 	FVector2D PuyoSize; // 뿌요 1개의 픽셀 크기
 	FIntPoint BoardSize; // 게임판의 칸수
 	FIntPoint NextBlockCoord; // 게임판의 칸수
 	FIntPoint NextNextBlockCoord; // 게임판의 칸수
 
-	//Key셋팅
+	//Key코드 값 정보를 받는 변수
 	int UpKey = 0;
 	int DownKey = 0;
 	int LeftKey = 0;
 	int RightKey = 0;
+
+	//부드러운 움직임을 위한 회전 관련 처리 변수
+	bool IsRotating = false;
+	bool IsKicking = false;
 
 	// Slave Puyo의 좌표는 MainCoord와 Dir을 통해서 얻을 수 있다.
 	FIntPoint MainPuyoCoord;
@@ -138,5 +142,10 @@ private:
 	std::vector<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
+
+	
+	
+
+	//여기 밑으로는 실험실 변수
 };
 

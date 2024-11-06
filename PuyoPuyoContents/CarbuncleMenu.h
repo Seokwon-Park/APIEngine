@@ -20,5 +20,7 @@ protected:
 
 private:
 	USpriteRendererComponent* HeadRenderer;
+	USpriteRendererComponent* BodyRenderer;
+	USpriteRendererComponent* TailRenderer;
 };
 

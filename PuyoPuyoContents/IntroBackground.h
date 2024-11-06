@@ -19,6 +19,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 private:
-	USpriteRendererComponent* Sr;
+	USpriteRendererComponent* Sr[2];
+	UAnimatorComponent* Animator;
+	float WaitTimer = .5f;
 };
 

@@ -17,6 +17,8 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void MoveToScene(std::string _SceneName);
+
 protected:
 
 private:

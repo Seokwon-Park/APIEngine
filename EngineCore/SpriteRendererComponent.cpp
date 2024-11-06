@@ -5,7 +5,8 @@
 #include <EngineCore/EngineAPICore.h>
 
 USpriteRendererComponent::USpriteRendererComponent()
-	:Order(0), Sprite(nullptr), CurIndex(0), AnimatorComponent(nullptr), RemoveBackground(false), RemoveColor(UColor(255, 0, 255, 0))
+	:Order(0), Sprite(nullptr), CurIndex(0), AnimatorComponent(nullptr), IsCameraEffected(false),
+	RemoveBackground(false), RemoveColor(UColor(255, 0, 255, 0)), Pivot(FVector2D::ZERO)
 {
 }
 
@@ -33,7 +34,7 @@ void USpriteRendererComponent::BeginPlay()
 	AActor* Actor = GetOwner();
 	ULevel* Level = Actor->GetWorld();
 
-	for (UActorComponent* Component : Actor->GetComponents())
+	/*for (UActorComponent* Component : Actor->GetComponents())
 	{
 		UAnimatorComponent* Animator = dynamic_cast<UAnimatorComponent*>(Component);
 		if (nullptr != Animator)
@@ -41,7 +42,7 @@ void USpriteRendererComponent::BeginPlay()
 			AnimatorComponent = Animator;
 			break;
 		}
-	}
+	}*/
 
 
 	Level->PushRenderer(this);
@@ -119,9 +120,13 @@ void USpriteRendererComponent::Render()
 
 	ULevel* Level = GetOwner()->GetWorld();
 
-	Transform.Location = Transform.Location - Level->CameraPos;
+	if (true == IsCameraEffected)
+	{
+		Transform.Location = Transform.Location - (Level->CameraPos);
+	}
 
-	
+	Transform.Location += Pivot;
+
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 	if (true == RemoveBackground)
 	{
@@ -163,6 +168,53 @@ FVector2D USpriteRendererComponent::SetSpriteScale(float _Ratio, int _Index)
 	SetComponentScale(CurData.Transform.Scale * _Ratio);
 
 	return Scale;
+}
+
+void USpriteRendererComponent::SetPivot(PivotType _Type)
+{
+	if (PivotType::MiddleCenter == _Type)
+	{
+		SetPivot(FVector2D::ZERO);
+		return;
+	}
+
+	if (nullptr == Sprite)
+	{
+		MSGASSERT("이미지를 기반으로한 피봇설정은 스프라이트가 세팅되지 않은 상태에서는 호출할수 없습니다");
+		return;
+	}
+
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+
+	switch (_Type)
+	{
+	case PivotType::TopLeft:
+		Pivot = CurData.Transform.Scale.Half();
+		break;
+	case PivotType::TopCenter:
+		Pivot.X = 0.0f;
+		Pivot.Y = CurData.Transform.Scale.Half().Y;
+		break;
+	case PivotType::TopRight:
+		Pivot.X = -CurData.Transform.Scale.Half().X;
+		Pivot.Y = CurData.Transform.Scale.Half().Y;
+		break;
+	case PivotType::MiddleLeft:
+		break;
+	case PivotType::MiddleCenter:
+		break;
+	case PivotType::MiddleRight:
+		break;
+	case PivotType::BottomLeft:
+		break;
+	case PivotType::BottomCenter:
+		break;
+	case PivotType::BottomRight:
+		break;
+	default:
+		break;
+	}
+
 }
 
 

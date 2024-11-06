@@ -2,6 +2,20 @@
 #include "SceneComponent.h"
 #include "AnimatorComponent.h"
 
+enum class PivotType
+{
+	TopLeft,
+	TopCenter,
+	TopRight,
+	MiddleLeft,
+	MiddleCenter,
+	MiddleRight,
+	BottomLeft,
+	BottomCenter,
+	BottomRight
+};
+
+
 // Ό³Έν :
 class USpriteRendererComponent : public USceneComponent
 {
@@ -30,6 +44,9 @@ public:
 	template <typename EnumType>
 	inline void SetOrder(EnumType _Order) { SetOrder(static_cast<int>(_Order)); }
 	inline void SetRemoveBackground(bool _Value) { RemoveBackground = _Value; }
+	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }
+	void SetPivot(PivotType _Type);
+	inline void SetPivot(FVector2D _Pivot) { Pivot = _Pivot; }
 protected:
 
 private:
@@ -37,8 +54,11 @@ private:
 	class UEngineSprite* Sprite;
 	int CurIndex;
 	UAnimatorComponent* AnimatorComponent;
+	bool IsCameraEffected;
 	bool RemoveBackground;
 	UColor RemoveColor;
+	FVector2D Pivot;
+
 };
 
 

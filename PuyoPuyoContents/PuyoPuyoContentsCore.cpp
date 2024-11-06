@@ -19,7 +19,7 @@ PuyoPuyoContentsCore::~PuyoPuyoContentsCore()
 
 void PuyoPuyoContentsCore::BeginPlay()
 {
-	UEngineDebugHelper::SetShowFPS(false);
+	UEngineDebugHelper::SetShowFPS(true);
 
 	UEngineAPICore::GetCore()->LoadResources();
 
@@ -30,7 +30,17 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_RY.CNS.BMP", { 16,32 });
 
+	//Cut Intro Bg
+	for (int i = 0; i <= 9; i++)
+	{
+		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "L.CNS.BMP", 1, 4);
+		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "R.CNS.BMP", 1, 4);
+	}
+
+	//Cut Play Bg
 	UImageManager::GetInstance().CuttingSprite("L1_F.CNS.BMP", { 640,480 });
+
+	//Cut Menu Image
 	UImageManager::GetInstance().CuttingSprite("MENU_KA.CNS.BMP", { 640,480 });
 	UImageManager::GetInstance().CuttingSprite("MENU_KB.CNS.BMP", { 640,480 });
 
@@ -60,4 +70,5 @@ void PuyoPuyoContentsCore::SetupPuyoSprite()
 
 void PuyoPuyoContentsCore::Tick()
 {
+	
 }

@@ -161,6 +161,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MenuBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MenuGameMode.h">
       <SubType>
       </SubType>
@@ -202,6 +206,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuBackground.cpp">
       <SubType>
       </SubType>
     </ClCompile>
