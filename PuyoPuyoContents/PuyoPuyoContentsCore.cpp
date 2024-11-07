@@ -2,6 +2,7 @@
 #include "PuyoPuyoContentsCore.h"
 #include "TogetherPlayGameMode.h"
 #include "MenuGameMode.h"
+#include "SoloMenuGameMode.h"
 #include "IntroGameMode.h"
 #include "DummyPawn.h"
 #include <EngineBase/EngineFile.h>
@@ -51,6 +52,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 640, 480 });
 	UEngineAPICore::GetCore()->CreateLevel<AIntroGameMode, ADummyPawn>("Intro");
 	UEngineAPICore::GetCore()->CreateLevel<AMenuGameMode, ADummyPawn>("Menu");
+	UEngineAPICore::GetCore()->CreateLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
 	UEngineAPICore::GetCore()->CreateLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
 	//UEngineAPICore::GetCore()->CreateLevel("End");
 

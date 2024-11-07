@@ -57,39 +57,6 @@ AMenuBackground::~AMenuBackground()
 {
 }
 
-void AMenuBackground::Tick(float _DeltaTime)
-{
-	Super::Tick(_DeltaTime);
-
-	for (int i = 0; i < 4; i++)
-	{
-		std::string LineSpriteName = "SD" + std::to_string(Selected[i]) + (i % 2 == 0 ? "R" : "L") + ".CNS.BMP";
-		for (int j = 0; j < 6; j++)
-		{
-			if (i % 2 == 0)
-			{
-				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::RIGHT *.3f);
-				if (BgRenderers[i][j]->GetComponentLocation().X > UEngineAPICore::GetEngineWindow().GetWindowSize().X)
-				{
-					BgRenderers[i][j]->SetComponentLocation({ BgRenderers[i][(j+1)%6]->GetComponentLocation().X -127,
-						BgRenderers[i][j]->GetComponentLocation().Y});
-				}
-			}
-			else
-			{
-				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::LEFT * .3f);
-				if (BgRenderers[i][j]->GetComponentLocation().X < -128.0f)
-				{
-					BgRenderers[i][j]->SetComponentLocation({ BgRenderers[i][(j + 5) % 6]->GetComponentLocation().X +127,
-						BgRenderers[i][j]->GetComponentLocation().Y });
-				}
-			}
-
-
-		}
-	}
-}
-
 void AMenuBackground::BeginPlay()
 {
 	Super::BeginPlay();
@@ -106,5 +73,40 @@ void AMenuBackground::BeginPlay()
 	//		BgRenderers[i][j]->SetPivot(PivotType::TopLeft);
 	//	}
 	//}
+}
+
+
+
+void AMenuBackground::Tick(float _DeltaTime)
+{
+	Super::Tick(_DeltaTime);
+
+	FVector2D Size = UEngineAPICore::GetEngineWindow().GetWindowSize();
+	for (int i = 0; i < 4; i++)
+	{
+		std::string LineSpriteName = "SD" + std::to_string(Selected[i]) + (i % 2 == 0 ? "R" : "L") + ".CNS.BMP";
+		for (int j = 0; j < 6; j++)
+		{
+			if (i % 2 == 0)
+			{
+				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::RIGHT *_DeltaTime * 100.0f);
+				if (BgRenderers[i][j]->GetComponentLocation().X > UEngineAPICore::GetEngineWindow().GetWindowSize().X)
+				{
+					BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() - FVector2D(128,0) * 6);
+				}
+			}
+			else
+			{
+				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::LEFT * _DeltaTime * 100.0f);
+				if (BgRenderers[i][j]->GetComponentLocation().X < -128.0f)
+				{
+					BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D(128, 0) * 6);
+
+				}
+			}
+
+
+		}
+	}
 }
 

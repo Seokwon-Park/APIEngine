@@ -18,8 +18,8 @@ public:
 	ULevel& operator=(const ULevel& _Other) = delete;
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
-	void BeginPlay();
-	void EndPlay();
+	virtual void BeginPlay();
+	virtual void EndPlay();
 	void Tick(float _DeltaTime);
 	void Render();
 	void Release();

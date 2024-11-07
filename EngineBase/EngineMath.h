@@ -314,6 +314,10 @@ public:
 	static const float PI;
 	FEngineMath() {};
 
+	inline static float Sqrt(float _Value)
+	{
+		return ::sqrtf(_Value);
+	}
 	inline static float DegreesToRadians(float _Degrees)
 	{
 		return _Degrees * (PI / 180.0f);

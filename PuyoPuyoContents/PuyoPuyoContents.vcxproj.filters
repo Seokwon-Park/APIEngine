@@ -75,6 +75,12 @@
     <ClCompile Include="MenuBackground.cpp">
       <Filter>ContentsObject\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="SoloMenuBackground.cpp">
+      <Filter>ContentsObject\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloMenuGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="MenuBackground.h">
       <Filter>ContentsObject\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloMenuBackground.h">
+      <Filter>ContentsObject\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloMenuGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

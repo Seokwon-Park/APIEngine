@@ -178,6 +178,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SoloMenuBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SoloMenuGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TogetherPlayGameMode.h">
       <SubType>
       </SubType>
@@ -226,6 +234,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PuyoText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SoloMenuBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SoloMenuGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>
