@@ -82,7 +82,7 @@ public:
 	bool CanMoveLocation();
 	bool CanMoveLR(FVector2D _Dir);
 
-	void MoveLR(FVector2D _Dir);
+	void PuyoMoveLR(FVector2D _Dir);
 	void Rotate(bool _IsClockwise);
 	bool CheckRotationInput();
 	void PuyoForceDown();
@@ -123,6 +123,8 @@ private:
 	float PuyoDropTimer;
 	float ForceDownDelay;
 	float ForceDownTimer;
+	float LRMoveDelay;
+	float LRMoveTimer;
 
 
 	// 2틱 마다 보드 좌표상으로 Y가 1 증가한다.

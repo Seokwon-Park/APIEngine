@@ -55,8 +55,8 @@ void APuyoBoard::BeginPlay()
 	GetWorld()->GetInputSystem().BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
 
 	// 좌우 이동
-	GetWorld()->GetInputSystem().BindAction(LeftKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::LEFT));
-	GetWorld()->GetInputSystem().BindAction(RightKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::RIGHT));
+	GetWorld()->GetInputSystem().BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
+	GetWorld()->GetInputSystem().BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
 
 	// Todo : BeginPlay는 임시위치, 게임시작 애니메이션이 끝나고 렌더링 되어야 함.
 	NextBlock = CreatePuyoBlock();
@@ -576,12 +576,20 @@ bool APuyoBoard::CanMoveLR(FVector2D _Dir)
 
 }
 
-void APuyoBoard::MoveLR(FVector2D _Dir)
+void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 {
 	if (CurStep != EPuyoLogicStep::PuyoMove)
 	{
 		return;
 	}
+
+	LRMoveTimer -= UEngineAPICore::GetEngineDeltaTime();
+	if (LRMoveTimer > 0.0f)
+	{
+		return;
+	}
+
+	LRMoveTimer = 0.05f;
 	if (false == CanMoveLR(_Dir))
 	{
 		return;
