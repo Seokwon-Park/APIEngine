@@ -1,5 +1,6 @@
 #include "aepch.h"
 #include "MenuGameMode.h"
+#include "CarbuncleMenu.h"
 #include "MenuBackground.h"
 #include <EnginePlatform/EngineInput.h>
 
@@ -20,6 +21,12 @@ void AMenuGameMode::BeginPlay()
 	GetWorld()->GetInputSystem().BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "SoloMenu"));
 
 	AMenuBackground* Background = GetWorld()->SpawnActor<AMenuBackground>();
+	for (int i = 0; i < 5; i++)
+	{
+		ACarbuncleMenu* Car = GetWorld()->SpawnActor<ACarbuncleMenu>();
+		Car->SetActorLocation({ i*200, 200 });
+	}
+
 
 }
 

@@ -32,7 +32,7 @@ public:
 	USpriteRendererComponent& operator=(const USpriteRendererComponent& _Other) = delete;
 	USpriteRendererComponent& operator=(USpriteRendererComponent&& _Other) noexcept = delete;
 
-	void SetSprite(std::string_view _Name, int _CurIndex);
+	void SetSprite(std::string_view _Name, int _CurIndex = 0);
 	void BeginPlay() override;
 	void TickComponent(float _DeltaTime) override;
 	void Render();

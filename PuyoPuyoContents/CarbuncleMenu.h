@@ -16,12 +16,26 @@ public:
 	ACarbuncleMenu& operator=(const ACarbuncleMenu& _Other) = delete;
 	ACarbuncleMenu& operator=(ACarbuncleMenu&& _Other) noexcept = delete;
 
+	void Test();
+	void SetInacitve();
+	void Tick(float _DeltaTime) override;
 protected:
-
+	void BeginPlay() override;
 private:
+	int MenuIndex = 0;
+
 	USpriteRendererComponent* HeadRenderer;
-	USpriteRendererComponent* BodyRenderer;
-	USpriteRendererComponent* TailRenderer;
+	USpriteRendererComponent* UBodyRenderer;
+	USpriteRendererComponent* DBodyRenderer;
+	USpriteRendererComponent* LHandRenderer;
+	USpriteRendererComponent* RHandRenderer;
+	USpriteRendererComponent* LegRenderer;
+	USpriteRendererComponent* LArrowRenderer;
+	USpriteRendererComponent* RArrowRenderer;
+	USpriteRendererComponent* JewelRenderer;
+	UAnimatorComponent* LArrowAnimator;
+	UAnimatorComponent* RArrowAnimator;
+	UAnimatorComponent* JewelAnimator;
 
 };
 

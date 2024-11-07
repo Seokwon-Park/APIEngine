@@ -26,9 +26,7 @@ void ATogetherPlayGameMode::BeginPlay()
 	APlayBackground* Background = GetWorld()->SpawnActor<APlayBackground>();
 
 	APuyoBoard* PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
-	
 	PuyoBoardP1->SetActorLocation(FVector2D(32, 0));
-
 	APuyoBoard::PuyoBoardSettings Settings;
 	{
 		//Settings.Offset = FVector2D(48, 16);
@@ -39,18 +37,17 @@ void ATogetherPlayGameMode::BeginPlay()
 		Settings.NextNextBlockCoord = FIntPoint(9, 5);
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
-	PuyoBoardP1->SetKey(EKey::Up, EKey::Down, EKey::Left, EKey::Right);
-
-	//PuyoBoardP1->SetKey(EKey::W, EKey::S, EKey::A, EKey::D);
+	PuyoBoardP1->SetKey(EKey::Z ,EKey::X, EKey::B, EKey::F, EKey::H);
+	//PuyoBoardP1->SetKey(EKey::Up, EKey::Down, EKey::Left, EKey::Right);
 	
-	//APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
-	//{
-	//	Settings.Offset = FVector2D(432, 16);
-	//	Settings.BoardSize = FIntPoint(6, 13);
-	//	Settings.Difficulty = 3;
-	//	Settings.NextBlockCoord = FIntPoint(11, 4);
-	//	Settings.NextNextBlockCoord = FIntPoint(10, 5);
-	//}
-	//PuyoBoardP2->SetupPuyoBoard(Settings);
-	//PuyoBoardP2->SetKey(EKey::Up, EKey::Down, EKey::Left, EKey::Right);
+	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
+	PuyoBoardP2->SetActorLocation(FVector2D(416, 0));
+	{
+		Settings.BoardSize = FIntPoint(6, 13);
+		Settings.Difficulty = 3;
+		Settings.NextBlockCoord = FIntPoint(11, 4);
+		Settings.NextNextBlockCoord = FIntPoint(10, 5);
+	}
+	PuyoBoardP2->SetupPuyoBoard(Settings);
+	PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
 }

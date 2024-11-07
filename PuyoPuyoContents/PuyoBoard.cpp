@@ -14,19 +14,19 @@ APuyoBoard::APuyoBoard()
 {
 }
 
-void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPosition, float deltaTime) {
+void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPosition, float _DeltaTime, bool _IsClockwise) {
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가
 
 	// 회전 변환 계산 (라디안으로 변환 필요)
-	float angleInRadians = FEngineMath::DegreesToRadians(500.0f * deltaTime);
-	float cosTheta = std::cos(angleInRadians);
-	float sinTheta = std::sin(angleInRadians);
+	float AngleInRadians = FEngineMath::DegreesToRadians(500.0f * _DeltaTime * (_IsClockwise ? 1.0f : -1.0f));
+	float CosTheta = std::cos(AngleInRadians);
+	float SinTheta = std::sin(AngleInRadians);
 
 
 	// 원점 기준 회전 후 Main Puyo 위치로 이동
 	FVector2D relativePosition = slavePuyoPosition - mainPuyoPosition;
-	float rotatedX = relativePosition.X * cosTheta - relativePosition.Y * sinTheta;
-	float rotatedY = relativePosition.X * sinTheta + relativePosition.Y * cosTheta;
+	float rotatedX = relativePosition.X * CosTheta - relativePosition.Y * SinTheta;
+	float rotatedY = relativePosition.X * SinTheta + relativePosition.Y * CosTheta;
 
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
@@ -49,7 +49,8 @@ void APuyoBoard::BeginPlay()
 
 	// 회전
 	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하고 키 따로 두기?
-	GetWorld()->GetInputSystem().BindAction(UpKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
+	GetWorld()->GetInputSystem().BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
+	GetWorld()->GetInputSystem().BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
 
 	// 빠른 낙하
 	GetWorld()->GetInputSystem().BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
@@ -95,8 +96,8 @@ void APuyoBoard::Tick(float _DeltaTime)
 		}
 		else if (BlockDir == 3)
 		{
-			Block[0]->AddActorLocation(FVector2D::LEFT * .2f);
-			Block[1]->AddActorLocation(FVector2D::LEFT * .2f);
+			Block[0]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 500.0f);
+			Block[1]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 500.0f);
 			if (FVector2D::Distance(Block[0]->GetActorLocation(), { GetLocationByIndexOnBoard(MainPuyoCoord).X, Block[0]->GetActorLocation().Y }) < 0.2f)
 			{
 				IsKicking = false;
@@ -114,7 +115,7 @@ void APuyoBoard::Tick(float _DeltaTime)
 	}
 	if (IsRotating)
 	{
-		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime());
+		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime(), IsRotatedClockWise);
 	}
 
 
@@ -164,9 +165,10 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
 }
 
-void APuyoBoard::SetKey(int _Up, int _Down, int _Left, int _Right)
+void APuyoBoard::SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right)
 {
-	UpKey = _Up;
+	CWRotateKey = _CWRotate;
+	CCWRotateKey = _CCWRotate;
 	DownKey = _Down;
 	LeftKey = _Left;
 	RightKey = _Right;
@@ -244,10 +246,6 @@ void APuyoBoard::PuyoMoveLogic()
 			//Puyo->SetActorLocation(FVector2D::Lerp(Puyo->GetActorLocation(), Puyo->GetActorLocation() + FVector2D(0,32),UEngineAPICore::GetCore()->GetDeltaTime()));
 		}
 	}
-	else
-	{
-		int a = 0;
-	}
 
 	MainPuyoCoord.Y += (PuyoTick % 2 == 0);
 
@@ -257,6 +255,7 @@ void APuyoBoard::PuyoMoveLogic()
 		{
 			int X = MainPuyoCoord.X + Dx[BlockDir] * i;
 			int Y = MainPuyoCoord.Y + Dy[BlockDir] * i;
+			IsRotating = false;
 			Block[i]->SetActorLocation(GetLocationByIndexOnBoard(X, Y));
 			PlaceCheckList.push_back(Block[i]);
 			Block[i]->SetCurXY({ X,Y });
@@ -309,7 +308,7 @@ void APuyoBoard::PuyoPlaceLogic()
 				}
 				else
 				{
-					CurPuyo->SetActorLocation(FVector2D::MoveTowards(CurPuyo->GetActorLocation(), GetLocationByIndexOnBoard(CurPuyo->GetTargetXY()), 2.0f));
+					CurPuyo->SetActorLocation(FVector2D::MoveTowards(CurPuyo->GetActorLocation(), GetLocationByIndexOnBoard(CurPuyo->GetTargetXY()), 3.0f));
 					if (CurPuyo->GetActorLocation().Distance(GetLocationByIndexOnBoard(CurPuyo->GetTargetXY())) < 0.1f)
 					{
 						//Board[Point.Y][Point.X] = nullptr;
@@ -658,11 +657,13 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 			{
 				if (PuyoTick % 2 == 1)
 				{
+					PuyoTick--;
+					IsKicking = true;
 				}
-				//IsKicking = true;
 			}
 		}
 	}
+	IsRotatedClockWise = _IsClockwise;
 	IsRotating = true;
 
 

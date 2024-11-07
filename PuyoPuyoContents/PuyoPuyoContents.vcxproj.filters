@@ -81,6 +81,12 @@
     <ClCompile Include="SoloMenuGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
+    <ClCompile Include="PuyoBoomParticle.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoChainEffect.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -127,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="SoloMenuGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoBoomParticle.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoChainEffect.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -41,7 +41,7 @@ public:
 	void Tick(float _DeltaTime) override;
 
 	void SetupPuyoBoard(const PuyoBoardSettings& _Settings);
-	void SetKey(int _Up, int _Down, int _Left, int _Right);
+	void SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right);
 	std::vector<APuyo*> CreatePuyoBlock();
 
 	//LogicStep
@@ -87,7 +87,7 @@ public:
 	bool CheckRotationInput();
 	void PuyoForceDown();
 
-	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime);
+	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 protected:
 	void BeginPlay() override;
 private:
@@ -106,7 +106,8 @@ private:
 	FIntPoint NextNextBlockCoord; // 게임판의 칸수
 
 	//Key코드 값 정보를 받는 변수
-	int UpKey = 0;
+	int CWRotateKey = 0;
+	int CCWRotateKey = 0;
 	int DownKey = 0;
 	int LeftKey = 0;
 	int RightKey = 0;
@@ -114,6 +115,7 @@ private:
 	//부드러운 움직임을 위한 회전 관련 처리 변수
 	bool IsRotating = false;
 	bool IsKicking = false;
+	bool IsRotatedClockWise = false;
 
 	// Slave Puyo의 좌표는 MainCoord와 Dir을 통해서 얻을 수 있다.
 	FIntPoint MainPuyoCoord;
@@ -150,6 +152,8 @@ private:
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
 
+	// 상대 게임판 객체 포인터
+	APuyoBoard* CounterBoard;
 	
 	
 

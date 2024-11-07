@@ -26,5 +26,6 @@ private:
 	std::vector<std::vector<int>> Combinations;
 	std::vector<std::vector<USpriteRendererComponent*>> BgRenderers;
 	std::vector<UAnimatorComponent*> BgAnimators;
+	USpriteRendererComponent* TextRenderer;
 };
 

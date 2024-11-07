@@ -153,7 +153,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	}
 	else
 	{
-
+		MSGASSERT("이미지 파일이 아닙니다.");
 	}
 
 	if (nullptr == NewBitmap)

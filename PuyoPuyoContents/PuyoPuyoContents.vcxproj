@@ -174,6 +174,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="aepch.h" />
+    <ClInclude Include="PuyoBoomParticle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PuyoChainEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PuyoText.h">
       <SubType>
       </SubType>
@@ -232,6 +240,14 @@
     <ClCompile Include="aepch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PuyoBoomParticle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PuyoChainEffect.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="PuyoText.cpp">
       <SubType>

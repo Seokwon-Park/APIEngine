@@ -203,6 +203,12 @@ public:
 
 	}
 
+	FTransform(FVector2D _Location, FVector2D _Scale)
+		:Location(_Location), Scale(_Scale)
+	{
+
+	}
+
 	FVector2D CenterLeftTop() const
 	{
 		return Location - Scale.Half();

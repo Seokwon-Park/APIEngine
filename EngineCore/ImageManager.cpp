@@ -32,6 +32,17 @@ UImageManager::~UImageManager()
 	}
 }
 
+void UImageManager::ClearSpriteData(std::string_view _SpriteName, UEngineSprite* _Sprite)
+{
+	std::string UpperSpriteName = UEngineString::ToUpper(_SpriteName);
+	if (false != Sprites.contains(_SpriteName.data()))
+	{
+		MSGASSERT(std::string(_SpriteName) + "라는 이름의 스프라이트가 존재하지 않습니다.");
+	}
+	Sprites[UpperSpriteName]->ClearSpriteData();
+
+}
+
 void UImageManager::Load(std::string_view _Path)
 {
 	UEnginePath Path = UEnginePath(_Path);
@@ -224,6 +235,85 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, int _Rows, int _Col
 		CuttingTransform.Location.X = 0.0f;
 		CuttingTransform.Location.Y += Height;
 	}
+}
+
+void UImageManager::CuttingSprite(std::string_view _NewSpriteName, std::string_view _ImageName, FVector2D _CuttingSize)
+{
+	std::string SpriteUpperName = UEngineString::ToUpper(_NewSpriteName);
+	std::string ImageUpperName = UEngineString::ToUpper(_ImageName);
+
+	if (false == Images.contains(ImageUpperName))
+	{
+		MSGASSERT("존재하지 않는 이미지를 기반으로 스프라이트를 자르려고 했습니다" + std::string(_ImageName));
+		return;
+	}
+
+	UEngineSprite* Sprite = nullptr;
+
+	if (false == Sprites.contains(SpriteUpperName))
+	{
+		Sprite = new UEngineSprite();
+		Sprite->SetName(SpriteUpperName);
+		Sprites.insert({ SpriteUpperName, Sprite });
+	}
+	else 
+	{
+		Sprite = Sprites[SpriteUpperName];
+	}
+
+	UEngineWinImage* Image = Images[ImageUpperName];
+
+	Sprite->ClearSpriteData();
+
+	int SpriteX = Image->GetImageSize().iX() / _CuttingSize.iX();
+	int SpriteY = Image->GetImageSize().iY() / _CuttingSize.iY();
+
+	FTransform CuttingTrans;
+
+	CuttingTrans.Location = FVector2D::ZERO;
+	CuttingTrans.Scale = _CuttingSize;
+
+	for (size_t y = 0; y < SpriteY; ++y)
+	{
+		for (size_t x = 0; x < SpriteX; ++x)
+		{
+			Sprite->PushData(Image, CuttingTrans);
+			CuttingTrans.Location.X += _CuttingSize.X;
+		}
+
+		CuttingTrans.Location.X = 0.0f;
+		CuttingTrans.Location.Y += _CuttingSize.Y;
+	}
+}
+
+void UImageManager::InsertCustomSpriteData(std::string_view _SpriteName, std::string_view _ImageName, FTransform _CutData)
+{
+	std::string SpriteUpperName = UEngineString::ToUpper(_SpriteName);
+	std::string ImageUpperName = UEngineString::ToUpper(_ImageName);
+
+	if (false == Images.contains(ImageUpperName))
+	{
+		MSGASSERT("존재하지 않는 이미지를 기반으로 스프라이트를 자르려고 했습니다" + std::string(_ImageName));
+		return;
+	}
+
+	UEngineWinImage* Image = Images[ImageUpperName];
+	UEngineSprite* Sprite = nullptr;
+
+	if (false == Sprites.contains(SpriteUpperName))
+	{
+		Sprite = new UEngineSprite();
+		Sprite->SetName(SpriteUpperName);
+		Sprites.insert({ SpriteUpperName, Sprite });
+	}
+	else {
+		Sprite = Sprites[SpriteUpperName];
+	}
+
+	Sprite->SetName(SpriteUpperName);
+	Image->SetName(ImageUpperName);
+
+	Sprite->PushData(Image, _CutData);
 }
 
 bool UImageManager::IsLoadSprite(std::string_view _KeyName)

@@ -200,16 +200,27 @@ void USpriteRendererComponent::SetPivot(PivotType _Type)
 		Pivot.Y = CurData.Transform.Scale.Half().Y;
 		break;
 	case PivotType::MiddleLeft:
+		Pivot.X = CurData.Transform.Scale.Half().X;
+		Pivot.Y = 0.0f;
 		break;
 	case PivotType::MiddleCenter:
+		SetPivot(FVector2D::ZERO);
 		break;
 	case PivotType::MiddleRight:
+		Pivot.X = -CurData.Transform.Scale.Half().X;
+		Pivot.Y = 0.0f;
 		break;
 	case PivotType::BottomLeft:
+		Pivot.X = CurData.Transform.Scale.Half().X;
+		Pivot.Y = -CurData.Transform.Scale.Half().Y;
 		break;
 	case PivotType::BottomCenter:
+		Pivot.X = 0.0f;
+		Pivot.Y = -CurData.Transform.Scale.Half().Y;
 		break;
 	case PivotType::BottomRight:
+		Pivot.X = -CurData.Transform.Scale.Half().X;
+		Pivot.Y = -CurData.Transform.Scale.Half().Y;
 		break;
 	default:
 		break;

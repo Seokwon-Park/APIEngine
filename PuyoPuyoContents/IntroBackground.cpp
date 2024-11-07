@@ -30,7 +30,7 @@ void AIntroBackground::Tick(float _DeltaTime)
 
 	for (int i = 0; i < 2; i++)
 	{
-		Sr[i]->SetComponentLocation(Sr[i]->GetComponentLocation() + FVector2D::DOWN);
+		Sr[i]->SetComponentLocation(Sr[i]->GetComponentLocation() + FVector2D::DOWN * _DeltaTime * 100.0f);
 		if (Sr[i]->GetComponentLocation().Y > UEngineAPICore::GetEngineWindow().GetWindowSize().Y)
 		{
 			Sr[i]->SetComponentLocation({ Sr[i]->GetComponentLocation().X, Sr[i]->GetComponentLocation().Y - UEngineAPICore::GetEngineWindow().GetWindowSize().Y*2});
