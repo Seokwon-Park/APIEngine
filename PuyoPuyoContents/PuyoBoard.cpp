@@ -18,7 +18,7 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가
 
 	// 회전 변환 계산 (라디안으로 변환 필요)
-	float angleInRadians = FEngineMath::DegreesToRadians(1.0f);
+	float angleInRadians = FEngineMath::DegreesToRadians(500.0f * deltaTime);
 	float cosTheta = std::cos(angleInRadians);
 	float sinTheta = std::sin(angleInRadians);
 
@@ -52,7 +52,7 @@ void APuyoBoard::BeginPlay()
 	GetWorld()->GetInputSystem().BindAction(UpKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
 
 	// 빠른 낙하
-	GetWorld()->GetInputSystem().BindAction(DownKey, KeyEvent::Down, std::bind(&APuyoBoard::PuyoForceDown, this));
+	GetWorld()->GetInputSystem().BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
 
 	// 좌우 이동
 	GetWorld()->GetInputSystem().BindAction(LeftKey, KeyEvent::Down, std::bind(&APuyoBoard::MoveLR, this, FVector2D::LEFT));
@@ -86,8 +86,8 @@ void APuyoBoard::Tick(float _DeltaTime)
 	{
 		if (BlockDir == 1)
 		{
-			Block[0]->AddActorLocation(FVector2D::RIGHT * .2f);
-			Block[1]->AddActorLocation(FVector2D::RIGHT * .2f);
+			Block[0]->AddActorLocation(FVector2D::RIGHT * _DeltaTime * 500.0f);
+			Block[1]->AddActorLocation(FVector2D::RIGHT * _DeltaTime * 500.0f);
 			if (FVector2D::Distance(Block[0]->GetActorLocation(), { GetLocationByIndexOnBoard(MainPuyoCoord).X, Block[0]->GetActorLocation().Y }) < 0.2f)
 			{
 				IsKicking = false;
@@ -104,8 +104,8 @@ void APuyoBoard::Tick(float _DeltaTime)
 		}
 		else
 		{
-			Block[0]->AddActorLocation(FVector2D::UP * .2f);
-			Block[1]->AddActorLocation(FVector2D::UP * .2f);
+			Block[0]->AddActorLocation(FVector2D::UP * _DeltaTime * 500.0f);
+			Block[1]->AddActorLocation(FVector2D::UP * _DeltaTime * 500.0f);
 			if (FVector2D::Distance(Block[0]->GetActorLocation(), { Block[0]->GetActorLocation().X, GetLocationByIndexOnBoard(MainPuyoCoord).Y }) < 0.2f)
 			{
 				IsKicking = false;
@@ -116,7 +116,7 @@ void APuyoBoard::Tick(float _DeltaTime)
 	{
 		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime());
 	}
-	
+
 
 	// Todo : 여기서 시작 애니메이션이 안끝났으면 계속 Return하도록 설정?
 	//UEngineDebugHelper::PushString("X = " + std::to_string(MainPuyoCoord.X) + ", Y = " + std::to_string(MainPuyoCoord.Y));
@@ -229,11 +229,15 @@ void APuyoBoard::PuyoCreateLogic()
 void APuyoBoard::PuyoMoveLogic()
 {
 	PuyoDropTimer -= UEngineAPICore::GetEngineDeltaTime();
-	if (PuyoDropTimer >= 0.0f)return;
-	PuyoTick++;
-	if (true == CanMoveDown())
+	// 정해진 시간이 지나면 뿌요를 내린다.
+	if (PuyoDropTimer >= 0.0f)
 	{
-		PuyoTick %= 2;
+		return;
+	}
+	PuyoTick++;
+	// 위치상으로 내릴 수 있는지 확인한다.
+	if (true == CanMoveLocation())
+	{
 		for (auto Puyo : Block)
 		{
 			Puyo->AddActorLocation(FVector2D(0.0f, PuyoSize.Half().Y));
@@ -242,40 +246,36 @@ void APuyoBoard::PuyoMoveLogic()
 	}
 	else
 	{
-		PuyoTick = 0;
-		MainPuyoCoord.Y--;
+		int a = 0;
 	}
 
-	if (PuyoTick == 0)
-	{
-		// 더 이상 내려갈 수 없으면
-		// 여기서 유예를 둬야함.
-		// 시바 또어케 고침??
-		MainPuyoCoord.Y++;
-		if (false == CanMoveDown())
-		{
-			for (int i = 0; i < 2; i++)
-			{
-				int X = MainPuyoCoord.X + Dx[BlockDir] * i;
-				int Y = MainPuyoCoord.Y + Dy[BlockDir] * i;
-				Block[i]->SetActorLocation(GetLocationByIndexOnBoard(X, Y));
-				PlaceCheckList.push_back(Block[i]);
-				Block[i]->SetCurXY({ X,Y });
-				Block[i]->SetTargetXY({ X,Y });
-				if (BlockDir % 2 == 1) // 가로로 누운 블럭인 경우
-				{
-					int PlaceY = Y;
-					while (PlaceY + 1 < BoardSize.Y && Board[PlaceY + 1][X] == nullptr) { PlaceY++; }
-					Block[i]->SetTargetXY({ X,PlaceY });
-				}
-				SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
-			}
+	MainPuyoCoord.Y += (PuyoTick % 2 == 0);
 
-			CurStep = EPuyoLogicStep::PuyoPlace;
-			return;
+	if (false == CanMoveDown())
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			int X = MainPuyoCoord.X + Dx[BlockDir] * i;
+			int Y = MainPuyoCoord.Y + Dy[BlockDir] * i;
+			Block[i]->SetActorLocation(GetLocationByIndexOnBoard(X, Y));
+			PlaceCheckList.push_back(Block[i]);
+			Block[i]->SetCurXY({ X,Y });
+			Block[i]->SetTargetXY({ X,Y });
+			if (BlockDir % 2 == 1) // 가로로 누운 블럭인 경우
+			{
+				int PlaceY = Y;
+				while (PlaceY + 1 < BoardSize.Y && Board[PlaceY + 1][X] == nullptr) { PlaceY++; }
+				Block[i]->SetTargetXY({ X,PlaceY });
+			}
+			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
+			PuyoTick = 0;
 		}
 
+		CurStep = EPuyoLogicStep::PuyoPlace;
+		return;
 	}
+
+
 
 	PuyoDropTimer = PuyoDropDelay;
 }
@@ -549,6 +549,16 @@ bool APuyoBoard::CanMoveDown()
 	return true;
 }
 
+bool APuyoBoard::CanMoveLocation()
+{
+	int Y = BoardSize.Y - 1;
+	if (PuyoTick >= (Y - 1 - Dy[BlockDir]) * 2)
+	{
+		return false;
+	}
+	return true;
+}
+
 bool APuyoBoard::CanMoveLR(FVector2D _Dir)
 {
 	if (MainPuyoCoord.X + _Dir.iX() < 0 || MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX() < 0 ||
@@ -559,7 +569,7 @@ bool APuyoBoard::CanMoveLR(FVector2D _Dir)
 		return false;
 	}
 
-	if (MainPuyoCoord.Y +Dy[BlockDir] +1 < BoardSize.Y && (Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X + _Dir.iX()] != nullptr ||
+	if (MainPuyoCoord.Y + Dy[BlockDir] + 1 < BoardSize.Y && (Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X + _Dir.iX()] != nullptr ||
 		Board[MainPuyoCoord.Y + Dy[BlockDir] + 1][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr))
 		return false;
 	return true;
@@ -588,7 +598,7 @@ void APuyoBoard::MoveLR(FVector2D _Dir)
 
 void APuyoBoard::Rotate(bool _IsClockwise)
 {
-	if (CurStep != EPuyoLogicStep::PuyoMove || IsRotating || IsKicking)
+	if (CurStep != EPuyoLogicStep::PuyoMove)
 	{
 		return;
 	}
@@ -639,28 +649,20 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 			if (MainPuyoCoord.Y + 1 == BoardSize.Y - 1 || Board[MainPuyoCoord.Y + 2][MainPuyoCoord.X] != nullptr)
 			{
 				if (PuyoTick % 2 == 1)
-					IsKicking = true;
+				{
+				}
+				//IsKicking = true;
 			}
 		}
 	}
 	IsRotating = true;
-	//Todo : 회전시 예외에 대한 처리. 아직 어떻게 해야할지 모르겠다.
-	/*switch (Dir)
-	{
-	case 0:
-		Block[1]->SetActorLocation(Block[0]->GetActorLocation() - FVector2D(0, 32));
-		break;
-	case 1:
-		Block[1]->SetActorLocation(Block[0]->GetActorLocation() + FVector2D(32, 0));
-		break;
-	case 2:
-		Block[1]->SetActorLocation(Block[0]->GetActorLocation() + FVector2D(0, 32));
-		break;
-	case 3:
-		Block[1]->SetActorLocation(Block[0]->GetActorLocation() - FVector2D(32, 0));
-		break;
-	}*/
 
+
+}
+
+bool APuyoBoard::CheckRotationInput()
+{
+	return false;
 }
 
 void APuyoBoard::PuyoForceDown()
@@ -669,5 +671,11 @@ void APuyoBoard::PuyoForceDown()
 	{
 		return;
 	}
-	PuyoDropTimer -= 0.5f;
+	ForceDownTimer -= UEngineAPICore::GetEngineDeltaTime();
+	if (ForceDownTimer< 0.0f)
+	{
+		PuyoDropTimer = 0.0f;
+		ForceDownTimer = 0.05f;
+		
+	}
 }

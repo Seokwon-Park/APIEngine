@@ -79,10 +79,12 @@ public:
 		SetPuyoOnBoard(_XY.X, _XY.Y, _Puyo);
 	}
 	bool CanMoveDown();
+	bool CanMoveLocation();
 	bool CanMoveLR(FVector2D _Dir);
 
 	void MoveLR(FVector2D _Dir);
 	void Rotate(bool _IsClockwise);
+	bool CheckRotationInput();
 	void PuyoForceDown();
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime);
@@ -119,6 +121,9 @@ private:
 	// 뿌요를 몇초마다 떨어뜨릴 것인가?
 	float PuyoDropDelay;
 	float PuyoDropTimer;
+	float ForceDownDelay;
+	float ForceDownTimer;
+
 
 	// 2틱 마다 보드 좌표상으로 Y가 1 증가한다.
 	int PuyoTick;
