@@ -19,5 +19,7 @@ protected:
 
 private:
 	USpriteRendererComponent* Sr;
+	USpriteRendererComponent* HeadSr;
+	USpriteRendererComponent* CenterSr;
 };
 

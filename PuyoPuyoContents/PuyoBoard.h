@@ -137,6 +137,8 @@ private:
 
 	//파괴애니메이션 재생중
 	bool IsDestroying = false;
+	float FlickDelay= 0.05f;
+	int FlickCount= 0;
 
 	// 2틱 마다 보드 좌표상으로 Y가 1 증가한다.
 	int PuyoTick;

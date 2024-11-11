@@ -21,6 +21,8 @@ APuyo::APuyo()
 	{
 		Animator->CreateAnimation("AxisPuyoIdle" + std::to_string(i), ColorSprites[i], { 0,19 }, .1f);
 	}
+	Animator->CreateAnimation("AxisPuyoIdle5", "GARBAGE", { 0, 0 }, .1f);
+
 
 	// PuyoPlaceCompleteAnimation
 	for (int i = 0; i < ColorSprites.size(); i++)
@@ -30,6 +32,13 @@ APuyo::APuyo()
 		Animator->SetAnimationEvent("PlaceComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
 		Animator->SetAnimationEvent("Boom" + std::to_string(i), 6, std::bind(&APuyo::AnimationEndTrigger, this));
 	}
+	Animator->CreateAnimation("PlaceComplete5", "GARBAGE", 0, 0, 0.1f);
+	Animator->CreateAnimation("Boom5", "GARBAGE", 0, 3, .05f, false);
+	Animator->SetAnimationEvent("PlaceComplete5", 0, std::bind(&APuyo::AnimationEndTrigger, this));
+	Animator->SetAnimationEvent("Boom5", 3, std::bind(&APuyo::AnimationEndTrigger, this));
+
+
+
 	//Animator->ChangeAnimation("Test");
 	//SetSprite("test.png");
 }
@@ -52,13 +61,24 @@ void APuyo::SetupPuyo(FVector2D _Location, int _Color)
 {
 	SetActorLocation(_Location);
 	Color = _Color;
-	Sr->SetSprite(ColorSprites[_Color], 0);
+	if (_Color < ColorSprites.size())
+	{
+		Sr->SetSprite(ColorSprites[Color], 0);
+	}
+	else
+	{
+		Sr->SetSprite("GARBAGE", 0);
+	}
 }
+
 
 void APuyo::SetSprite(int _Index)
 {
 	Animator->CancelAnimation();
-	Sr->SetSprite(ColorSprites[Color], _Index);
+	if (Color < ColorSprites.size())
+	{
+		Sr->SetSprite(ColorSprites[Color], _Index);
+	}
 }
 
 void APuyo::PlayAnimation(std::string _Name)

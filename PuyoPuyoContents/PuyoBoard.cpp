@@ -192,8 +192,9 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		//Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), RandomDevice.GetRandomInt(0, Difficulty));
-		Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 0);
+		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), RandomDevice.GetRandomInt(0, Difficulty));
+		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 0);
+		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 5);
 		NewBlock[i] = Puyo;
 	}
 
@@ -205,7 +206,7 @@ void APuyoBoard::PuyoCreateLogic()
 {
 	BlockDir = 0;
 	MainPuyoCoord.X = (BoardSize.X - 1) / 2;
-	MainPuyoCoord.Y = 1;
+	MainPuyoCoord.Y = 0;
 	// 대충 생각해본 로직
 
 	Block = NextBlock;
@@ -281,7 +282,7 @@ void APuyoBoard::PuyoMoveLogic()
 			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			PuyoTick = 0;
 		}
-		SendAttack(500);
+		SendAttack(10);
 		CounterBoard->UpdateWarning();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
@@ -321,7 +322,7 @@ void APuyoBoard::PuyoPlaceLogic()
 				}
 				else
 				{
-					CurPuyo->SetActorLocation(FVector2D::MoveTowards(CurPuyo->GetActorLocation(), GetLocationByIndexOnBoard(CurPuyo->GetTargetXY()), 3.0f));
+					CurPuyo->AddActorLocation(FVector2D::DOWN * UEngineAPICore::GetEngineDeltaTime() * 300.0f);
 					if (CurPuyo->GetActorLocation().Distance(GetLocationByIndexOnBoard(CurPuyo->GetTargetXY())) < 0.1f)
 					{
 						//Board[Point.Y][Point.X] = nullptr;
@@ -364,6 +365,7 @@ void APuyoBoard::PuyoConnectLogic()
 	//SetConnection
 	for (APuyo* CurPuyo : PuyoConnectList)
 	{
+		if (CurPuyo->GetColor() == 5) continue;
 		int X = CurPuyo->GetCurXY().X;
 		int Y = CurPuyo->GetCurXY().Y;
 		int SpriteIndex = 0;
@@ -416,7 +418,10 @@ void APuyoBoard::PuyoConnectLogic()
 	}
 	for (APuyo* CurPuyo : PuyoConnectList)
 	{
-		PuyoCheckList.push_back(CurPuyo->GetCurXY());
+		if (CurPuyo->GetColor() != EPuyoColor::Garbage)
+		{
+			PuyoCheckList.push_back(CurPuyo->GetCurXY());
+		}
 	}
 	PuyoConnectList.clear();
 
@@ -433,6 +438,9 @@ void APuyoBoard::PuyoCheckLogic()
 		// 추후 BFS 함수로 추출
 		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
 		std::queue<FIntPoint> Queue;
+
+		// 현재 위치의 뿌요와 색상이 같은 뿌요의 좌표들이 저장되는 
+		// 임시 벡터 사이즈가 4보다 크면 제거목록에 넣음
 		std::vector<FIntPoint> Temp;
 
 		Queue.push(Point);
@@ -480,6 +488,27 @@ void APuyoBoard::PuyoCheckLogic()
 
 void APuyoBoard::PuyoDestroyLogic()
 {
+	if (!PuyoDestroyList.empty() && FlickCount < 10)
+	{
+		FlickDelay -= UEngineAPICore::GetEngineDeltaTime();
+		if (FlickDelay > 0.0f) return;
+		for (auto [X, Y] : PuyoDestroyList)
+		{
+			APuyo* Puyo = Board[Y][X];
+			if (FlickCount % 2 == 0)
+			{
+				Puyo->SetActive(false);
+			}
+			else
+			{
+				Puyo->SetActive(true);
+			}
+		}
+		FlickDelay = 0.05f;
+		FlickCount++;
+		return;
+	}
+
 	if (!IsDestroying)
 	{
 		for (auto [X, Y] : PuyoDestroyList)
@@ -489,6 +518,10 @@ void APuyoBoard::PuyoDestroyLogic()
 		}
 		IsDestroying = true;
 	}
+
+
+
+
 
 	// 모든 블럭에 대해 파괴 완료 애니메이션이 끝나야 넘어간다.
 	bool CheckAllFinished = true;
@@ -512,6 +545,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		PuyoUpdateColumns.push_back(X);
 	}
 	
+	FlickCount = 0;
 	IsDestroying = false;
 	PuyoDestroyList.clear();
 
@@ -601,7 +635,7 @@ bool APuyoBoard::CanMoveLR(FVector2D _Dir)
 	if (MainPuyoCoord.X + _Dir.iX() < 0 || MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX() < 0 ||
 		MainPuyoCoord.X + _Dir.iX() >= BoardSize.X || MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX() >= BoardSize.X ||
 		Board[MainPuyoCoord.Y][MainPuyoCoord.X + _Dir.iX()] != nullptr ||
-		Board[MainPuyoCoord.Y + Dy[BlockDir]][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr)
+		(MainPuyoCoord.Y -1 >=0 && Board[MainPuyoCoord.Y + Dy[BlockDir]][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr))
 	{
 		return false;
 	}

@@ -2,13 +2,14 @@
 #include <EngineCore/SpriteRendererComponent.h>
 #include <EngineCore/AnimatorComponent.h>
 
-enum EColor
+enum EPuyoColor
 {
 	Red,
 	Green,
 	Blue,
 	Purple,
-	Yellow
+	Yellow,
+	Garbage,
 };
 // Ό³Έν :
 class APuyo : public AActor

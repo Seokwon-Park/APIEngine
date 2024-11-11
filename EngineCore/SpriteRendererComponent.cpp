@@ -20,7 +20,7 @@ void USpriteRendererComponent::SetSprite(std::string_view _Name, int _CurIndex)
 
 	if (nullptr == Sprite)
 	{
-		MSGASSERT("");
+		MSGASSERT("스프라이트가 설정되지 않았습니다.");
 		return;
 	}
 
@@ -54,7 +54,7 @@ void USpriteRendererComponent::TickComponent(float _DeltaTime)
 
 void USpriteRendererComponent::Render()
 {
-	// 만약 스프라이트에 연결된 애니메이터 컴포넌트가 있으면 
+	// 만약 스프라이트 렌더러에 연결된 애니메이터 컴포넌트가 있으면 
 	if (AnimatorComponent != nullptr)
 	{
 		UEngineAnimation* CurAnimation = AnimatorComponent->CurAnimation;
@@ -70,7 +70,6 @@ void USpriteRendererComponent::Render()
 
 			float CurFrameTime = Intervals[CurAnimation->CurIndex];
 
-			//                           0.1 0.1 0.1
 			if (CurAnimation->CurTime > CurFrameTime)
 			{
 				CurAnimation->CurTime -= CurFrameTime;
@@ -100,7 +99,6 @@ void USpriteRendererComponent::Render()
 				}
 
 			}
-			//         2 3 4           0
 			CurIndex = Indices[CurAnimation->CurIndex];
 			// ++CurAnimation->CurIndex;
 		}

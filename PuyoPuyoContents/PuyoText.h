@@ -2,6 +2,13 @@
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRendererComponent.h>
 
+enum class EPuyoTextColor
+{
+	Blue,
+	Green,
+	Red,
+};
+
 // Ό³Έν :
 class APuyoText : public AActor
 {
@@ -18,7 +25,7 @@ public:
 
 	virtual void Tick(float _DeltaTime) override;
 
-	void SetupText(size_t _TextLength, std::string_view _SpriteName);
+	void SetupText(size_t _TextLength, EPuyoTextColor _Color);
 	void SetText(std::string _SpriteName);
 	void SetText(long long _Value);
 protected:
@@ -27,9 +34,10 @@ private:
 	const size_t MAXLEN = 18;
 	std::vector<int> ChMap;
 	size_t TextLength;
-	std::string TextSpriteName;
 	std::vector<USpriteRendererComponent*> TextSpriteRenderers;
+	std::vector<std::string> ColorSprites;
 	int TextAlign;
+	int Color = 0;
 	bool RemoveZero;
 	
 };

@@ -38,11 +38,26 @@ void PuyoPuyoContentsCore::BeginPlay()
 		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "R.CNS.BMP", { 128, 128 });
 	}
 
+	//Cut Puyo Boom Particles
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 0,32 }, { 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 0,32 }, { 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 0,32 }, { 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 0,32 }, { 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 0,32 }, { 32, 32 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 592,32 }, { 16, 16} });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 592,32 }, { 16, 16} });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 592,32 }, { 16, 16} });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 592,32 }, { 16, 16} });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 592,32 }, { 16, 16} });
+
 	//Cut Play Bg
 	UImageManager::GetInstance().CuttingSprite("L1_F.CNS.BMP", { 640,480 });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVHEAD", "L1_F.CNS.BMP", { { 0,0 }, { 640, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVCENTER", "L1_F.CNS.BMP", { { 304,64 }, { 32, 128 } });
 
 	//Cut Menu Image
-	
+
 	// 카벙클 메뉴 이미지 자르기
 	SetupCarbuncleSprite();
 
@@ -62,7 +77,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 
 
-	
+
 	UImageManager::GetInstance().CuttingSprite("MENU_KA.CNS.BMP", { 640,480 });
 	UImageManager::GetInstance().CuttingSprite("MENU_KB.CNS.BMP", { 640,480 });
 
@@ -119,7 +134,7 @@ void PuyoPuyoContentsCore::SetupCarbuncleSprite()
 	UImageManager::GetInstance().InsertCustomSpriteData("CARLEFTARROW", "MENU_KA.CNS.BMP", { { 304,24 },{ 16,24 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("CARRIGHTARROW", "MENU_KA.CNS.BMP", { { 320,0 },{ 16,24 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("CARRIGHTARROW", "MENU_KA.CNS.BMP", { { 320,24 },{ 16,24 } });
-	
+
 	UImageManager::GetInstance().InsertCustomSpriteData("CARJEWEL", "MENU_KA.CNS.BMP", { { 160,72 },{ 24,24 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("CARJEWEL", "MENU_KA.CNS.BMP", { { 184,72 },{ 24,24 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("CARJEWEL", "MENU_KA.CNS.BMP", { { 160,96 },{ 24,24 } });
@@ -134,7 +149,14 @@ void PuyoPuyoContentsCore::SetupPuyoSprite()
 	UImageManager::GetInstance().CuttingSprite("PUYO_B.CNS.BMP", { 32,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_P.CNS.BMP", { 32,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_Y.CNS.BMP", { 32,32 });
+	//방해 뿌요
+	UImageManager::GetInstance().InsertCustomSpriteData("GARBAGE", "PUYO_BP.CNS.BMP", { { 0,128 },{ 32,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GARBAGE", "PUYO_BP.CNS.BMP", { { 32,128 },{ 32,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GARBAGE", "PUYO_BP.CNS.BMP", { { 64,128 },{ 32,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GARBAGE", "PUYO_BP.CNS.BMP", { { 96,128 },{ 32,32 } });
 }
+
+
 
 void PuyoPuyoContentsCore::Tick()
 {

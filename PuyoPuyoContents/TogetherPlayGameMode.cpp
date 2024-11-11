@@ -24,6 +24,10 @@ void ATogetherPlayGameMode::BeginPlay()
 	// 
 
 	APlayBackground* Background = GetWorld()->SpawnActor<APlayBackground>();
+	APuyoText* Next = GetWorld()->SpawnActor<APuyoText>();
+	Next->SetupText(4, EPuyoTextColor::Green);
+	Next->SetActorLocation({ 9*32,32 });
+	Next->SetText("NEXT");
 
 	APuyoBoard* PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
 	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
