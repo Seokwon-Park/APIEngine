@@ -19,9 +19,6 @@
     <Filter Include="ContentsObject\Intro">
       <UniqueIdentifier>{be6e8079-d32f-4750-9174-07037cb598bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Play\Actor">
-      <UniqueIdentifier>{07d994fd-2f3f-4c43-8682-1cf2addabfd8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Text">
       <UniqueIdentifier>{51ab49ce-8988-4e0d-9684-0c8bdb7fb779}</UniqueIdentifier>
     </Filter>
@@ -31,8 +28,20 @@
     <Filter Include="ContentsObject\DummyPawn">
       <UniqueIdentifier>{321e988c-73d9-46aa-a6a9-08748132e085}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\SoloPuyo">
+    <Filter Include="ContentsObject\Intro\Actor">
+      <UniqueIdentifier>{ad47877f-f5ca-4d7f-86fc-7c3d905d021a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Menu\Actor">
+      <UniqueIdentifier>{b5e42502-ae70-4dbd-90a2-ebd68bf500a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Solo">
       <UniqueIdentifier>{f5f9a8a9-50f6-4d57-8082-fd9e12b2f65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Together">
+      <UniqueIdentifier>{dc593e12-f4c7-4dfc-a384-5d57d4db523f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Together\Actor">
+      <UniqueIdentifier>{07d994fd-2f3f-4c43-8682-1cf2addabfd8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,37 +64,37 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="PuyoBoard.cpp">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Puyo.cpp">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
     </ClCompile>
     <ClCompile Include="MenuGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="IntroBackground.cpp">
-      <Filter>ContentsObject\Intro</Filter>
-    </ClCompile>
     <ClCompile Include="PuyoText.cpp">
       <Filter>ContentsObject\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="CarbuncleMenu.cpp">
-      <Filter>ContentsObject\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuBackground.cpp">
-      <Filter>ContentsObject\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="SoloMenuBackground.cpp">
-      <Filter>ContentsObject\Menu</Filter>
     </ClCompile>
     <ClCompile Include="SoloMenuGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="PuyoBoomParticle.cpp">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
     </ClCompile>
     <ClCompile Include="PuyoChainEffect.cpp">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroBackground.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="CarbuncleMenu.cpp">
+      <Filter>ContentsObject\Menu\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuBackground.cpp">
+      <Filter>ContentsObject\Menu\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloMenuBackground.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,37 +117,37 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="PuyoBoard.h">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
     </ClInclude>
     <ClInclude Include="Puyo.h">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
     </ClInclude>
     <ClInclude Include="MenuGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="IntroBackground.h">
-      <Filter>ContentsObject\Intro</Filter>
-    </ClInclude>
     <ClInclude Include="PuyoText.h">
       <Filter>ContentsObject\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="CarbuncleMenu.h">
-      <Filter>ContentsObject\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuBackground.h">
-      <Filter>ContentsObject\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="SoloMenuBackground.h">
-      <Filter>ContentsObject\Menu</Filter>
     </ClInclude>
     <ClInclude Include="SoloMenuGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="PuyoBoomParticle.h">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
     </ClInclude>
     <ClInclude Include="PuyoChainEffect.h">
-      <Filter>ContentsObject\Play\Actor</Filter>
+      <Filter>ContentsObject\Play\Together\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroBackground.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="CarbuncleMenu.h">
+      <Filter>ContentsObject\Menu\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBackground.h">
+      <Filter>ContentsObject\Menu\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloMenuBackground.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

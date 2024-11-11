@@ -9,6 +9,10 @@ APuyoBoomParticle::~APuyoBoomParticle()
 {
 }
 
+void APuyoBoomParticle::Tick(float _DeltaTime)
+{
+}
+
 void APuyoBoomParticle::BeginPlay()
 {
 }

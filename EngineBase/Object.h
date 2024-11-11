@@ -18,7 +18,6 @@ public:
 	inline virtual std::string_view GetNameView() const { return Name.c_str(); }
 	inline virtual void SetName(std::string_view _Name) { Name = _Name.data(); }
 
-	inline bool IsTickable() const { return Tickable; }
 	inline bool IsActivated() const { return true == IsActive; }
 	inline bool CheckDestroy() const { return IsDestroyed; }
 	inline void Destroy(float _Delay= 0.0f) 
@@ -36,7 +35,6 @@ protected:
 private:
 	std::string Name;
 	bool IsActive;
-	bool Tickable;
 	bool IsDestroyed;
 	float DestroyDelay;
 };

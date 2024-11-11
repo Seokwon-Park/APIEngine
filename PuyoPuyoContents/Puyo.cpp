@@ -26,13 +26,10 @@ APuyo::APuyo()
 	for (int i = 0; i < ColorSprites.size(); i++)
 	{
 		Animator->CreateAnimation("PlaceComplete" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0 }, .05f, false);
+		Animator->CreateAnimation("Boom" + std::to_string(i), ColorSprites[i], { 0,16,17,18,20,21,22 }, .05f, false);
 		Animator->SetAnimationEvent("PlaceComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
+		Animator->SetAnimationEvent("Boom" + std::to_string(i), 6, std::bind(&APuyo::AnimationEndTrigger, this));
 	}
-	/*Animator->CreateAnimation("DropComplete0", "PUYO_R.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
-	Animator->CreateAnimation("DropComplete1", "PUYO_G.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
-	Animator->CreateAnimation("DropComplete2", "PUYO_B.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
-	Animator->CreateAnimation("DropComplete3", "PUYO_Y.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);
-	Animator->CreateAnimation("DropComplete4", "PUYO_P.CNS.BMP", { 0,16,0,17,0,16,0,17,0 }, .1f, false);*/
 	//Animator->ChangeAnimation("Test");
 	//SetSprite("test.png");
 }

@@ -30,6 +30,13 @@ APuyoText::~APuyoText()
 {
 }
 
+void APuyoText::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+}
+
 void APuyoText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
@@ -68,9 +75,4 @@ void APuyoText::SetText(long long _Value)
 
 
 
-void APuyoText::BeginPlay()
-{
-	Super::BeginPlay();
 
-
-}

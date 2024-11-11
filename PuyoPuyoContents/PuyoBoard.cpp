@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/Level.h>
+#include <EngineCore/ImageManager.h>
 
 APuyoBoard::APuyoBoard()
 	:Difficulty(3), PuyoSize(FVector2D::ZERO), BoardSize(FIntPoint::ZERO),
@@ -12,13 +13,22 @@ APuyoBoard::APuyoBoard()
 	CurStep(EPuyoLogicStep::PuyoCreate), Block(std::vector<APuyo*>(2))
 	//,Board(std::vector<std::vector<APuyo*>>(13, std::vector<APuyo*>(6, nullptr)))
 {
+	Warnings.resize(6, nullptr);
+	for (int i = 0; i < 6; i++)
+	{
+		Warnings[i] = CreateDefaultSubobject<USpriteRendererComponent>("Warn" + std::to_string(i));
+		Warnings[i]->SetRemoveBackground(true);
+		Warnings[i]->SetActive(false);
+	}
 }
 
 void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPosition, float _DeltaTime, bool _IsClockwise) {
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가
 
+	float dAngle = _DeltaTime * 1000.0f * (_IsClockwise ? 1.0f : -1.0f);
+	RotateLeft -= dAngle;
 	// 회전 변환 계산 (라디안으로 변환 필요)
-	float AngleInRadians = FEngineMath::DegreesToRadians(500.0f * _DeltaTime * (_IsClockwise ? 1.0f : -1.0f));
+	float AngleInRadians = FEngineMath::DegreesToRadians(dAngle);
 	float CosTheta = std::cos(AngleInRadians);
 	float SinTheta = std::sin(AngleInRadians);
 
@@ -31,7 +41,8 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
 	slavePuyoPosition = FVector2D(rotatedX, rotatedY) + mainPuyoPosition;
-	if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
+	if ((IsRotatedClockWise && RotateLeft <= 0.0f) || (!IsRotatedClockWise && RotateLeft >= 0.0f))
+		//if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
 	{
 		IsRotating = false;
 	}
@@ -71,12 +82,12 @@ void APuyoBoard::BeginPlay()
 		NextNextBlock[i]->SetActorLocation(GetLocationByIndex(NextNextBlockCoord.X, NextNextBlockCoord.Y + Dy[BlockDir] * i));
 	}
 
-	APuyoText* Text = GetWorld()->SpawnActor<APuyoText>();
+	//APuyoText* Text = GetWorld()->SpawnActor<APuyoText>();
 	//Text->SetupText(10, "PUYO_BP.CNS.BMP");
 	//Text->SetupText(10, "PUYO_G_.CNS.BMP");
-	Text->SetupText(10, "PUYO_RY.CNS.BMP");
-	Text->SetActorLocation({ 8,16 });
-	Text->SetText("asdfGf");
+	//Text->SetupText(10, "PUYO_RY.CNS.BMP");
+	//Text->SetActorLocation({ 8,16 });
+	//Text->SetText("asdfGf");
 }
 
 void APuyoBoard::Tick(float _DeltaTime)
@@ -122,8 +133,8 @@ void APuyoBoard::Tick(float _DeltaTime)
 	// Todo : 여기서 시작 애니메이션이 안끝났으면 계속 Return하도록 설정?
 	//UEngineDebugHelper::PushString("X = " + std::to_string(MainPuyoCoord.X) + ", Y = " + std::to_string(MainPuyoCoord.Y));
 	//UEngineDebugHelper::PushString("Timer = " + std::to_string(PuyoDropTimer));
-	UEngineDebugHelper::PushString("PuyoTick = " + std::to_string(PuyoTick));
-	UEngineDebugHelper::PushString("SlaveCoord = " + FIntPoint(MainPuyoCoord.X + Dx[BlockDir], MainPuyoCoord.Y + Dy[BlockDir]).ToString());
+	//UEngineDebugHelper::PushString("PuyoTick = " + std::to_string(PuyoTick));
+	//UEngineDebugHelper::PushString("SlaveCoord = " + FIntPoint(MainPuyoCoord.X + Dx[BlockDir], MainPuyoCoord.Y + Dy[BlockDir]).ToString());
 	//UEngineDebugHelper::PushString("CurStep = " + std::to_string(static_cast<int>(CurStep)));
 	switch (CurStep)
 	{
@@ -161,6 +172,7 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	BoardSize = _Settings.BoardSize;
 	NextBlockCoord = _Settings.NextBlockCoord;
 	NextNextBlockCoord = _Settings.NextNextBlockCoord;
+	CounterBoard = _Settings.CounterBoard;
 	Board.clear();
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
 }
@@ -180,8 +192,8 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), RandomDevice.GetRandomInt(0, Difficulty));
-		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 0);
+		//Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), RandomDevice.GetRandomInt(0, Difficulty));
+		Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 0);
 		NewBlock[i] = Puyo;
 	}
 
@@ -269,7 +281,8 @@ void APuyoBoard::PuyoMoveLogic()
 			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			PuyoTick = 0;
 		}
-
+		SendAttack(500);
+		CounterBoard->UpdateWarning();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
@@ -467,6 +480,30 @@ void APuyoBoard::PuyoCheckLogic()
 
 void APuyoBoard::PuyoDestroyLogic()
 {
+	if (!IsDestroying)
+	{
+		for (auto [X, Y] : PuyoDestroyList)
+		{
+			APuyo* Puyo = Board[Y][X];
+			Puyo->PlayAnimation("Boom");
+		}
+		IsDestroying = true;
+	}
+
+	// 모든 블럭에 대해 파괴 완료 애니메이션이 끝나야 넘어간다.
+	bool CheckAllFinished = true;
+	for (auto [X, Y] : PuyoDestroyList)
+	{
+		APuyo* CurPuyo = Board[Y][X];
+		if (false == CurPuyo->GetIsAnimationEnd())
+		{
+			CheckAllFinished = false;
+			break;
+		}
+	}
+	if (!CheckAllFinished)
+		return;
+
 	for (auto [X, Y] : PuyoDestroyList)
 	{
 		APuyo* Puyo = Board[Y][X];
@@ -474,7 +511,8 @@ void APuyoBoard::PuyoDestroyLogic()
 		Board[Y][X] = nullptr;
 		PuyoUpdateColumns.push_back(X);
 	}
-
+	
+	IsDestroying = false;
 	PuyoDestroyList.clear();
 
 	CurStep = EPuyoLogicStep::PuyoUpdate;
@@ -568,9 +606,13 @@ bool APuyoBoard::CanMoveLR(FVector2D _Dir)
 		return false;
 	}
 
-	if (MainPuyoCoord.Y + Dy[BlockDir] + 1 < BoardSize.Y && (Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X + _Dir.iX()] != nullptr ||
-		Board[MainPuyoCoord.Y + Dy[BlockDir] + 1][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr))
-		return false;
+	// 반칸 겹쳐도 옆으로 못가게 해야함.
+	if (PuyoTick % 2 == 1)
+	{
+		if (MainPuyoCoord.Y + Dy[BlockDir] < BoardSize.Y && (Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X + _Dir.iX()] != nullptr ||
+			Board[MainPuyoCoord.Y + Dy[BlockDir] + 1][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr))
+			return false;
+	}
 	return true;
 
 }
@@ -582,13 +624,14 @@ void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 		return;
 	}
 
+	//좌우 움직임 꾹 눌렀을때 딜레이
 	LRMoveTimer -= UEngineAPICore::GetEngineDeltaTime();
 	if (LRMoveTimer > 0.0f)
 	{
 		return;
 	}
-
 	LRMoveTimer = 0.05f;
+
 	if (false == CanMoveLR(_Dir))
 	{
 		return;
@@ -664,6 +707,14 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 		}
 	}
 	IsRotatedClockWise = _IsClockwise;
+	if (_IsClockwise)
+	{
+		RotateLeft += 90;
+	}
+	else
+	{
+		RotateLeft -= 90;
+	}
 	IsRotating = true;
 
 
@@ -681,10 +732,81 @@ void APuyoBoard::PuyoForceDown()
 		return;
 	}
 	ForceDownTimer -= UEngineAPICore::GetEngineDeltaTime();
-	if (ForceDownTimer< 0.0f)
+	if (ForceDownTimer < 0.0f)
 	{
 		PuyoDropTimer = 0.0f;
 		ForceDownTimer = 0.05f;
-		
+
 	}
+}
+
+void APuyoBoard::SendAttack(int _Amount) // 방해뿌요 몇개 보낼껀지
+{
+	// Todo: 대충 머 구슬같은거 날라가는 모션 추가해
+	CounterBoard->WarnNums += _Amount;
+}
+
+void APuyoBoard::UpdateWarning()
+{
+	int CurIndex = 0;
+	FVector2D CurLocation = FVector2D(0.0f, PuyoSize.Y);
+	for (int i = 5; i >= 0; i--)
+	{
+		if (CalcWarn(i, CurLocation, CurIndex))
+		{
+			break;
+		}
+	}
+	//UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite("Warning")->GetSpriteData(0);
+	//{
+	//	Warnings[CurIndex]->SetSprite("Warning", 4);
+	//	Warnings[CurIndex]->SetPivot(PivotType::BottomLeft);
+	//	Warnings[CurIndex]->SetComponentLocation(CurLocation);
+	//	Warnings[CurIndex]->SetComponentScale(CurData.Transform.Scale);
+	//	Warnings[CurIndex]->SetActive(true);
+	//	WarnNums -= 400;
+	//}
+	//while (WarnNums >= 300)
+	//{
+	//	WarnNums -= 400;
+
+	//}
+	//while (WarnNums >= 200) {
+	//	WarnNums -= 400;
+	//}
+	//while (WarnNums >= 30) {
+	//	WarnNums -= 400;
+	//}
+	//while (WarnNums >= 6) {
+	//	WarnNums -= 400;
+	//}
+	//while (WarnNums >= 1)
+	//{
+	//	WarnNums -= 400;
+	//}
+	WarnNums = 0;
+}
+
+// 만약 6자리가 다찼으면 true를 리턴한다.
+bool APuyoBoard::CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex)
+{
+	while (WarnNums >= WarnUnit[_SpriteIndex])
+	{
+		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite("Warning")->GetSpriteData(_SpriteIndex);
+		Warnings[_CurIndex]->SetSprite("Warning", _SpriteIndex);
+		Warnings[_CurIndex]->SetPivot(PivotType::BottomLeft);
+		Warnings[_CurIndex]->SetComponentLocation(_Offset);
+		Warnings[_CurIndex]->SetComponentScale(CurData.Transform.Scale);
+		Warnings[_CurIndex]->SetActive(true);
+		WarnNums -= WarnUnit[_SpriteIndex];
+		_CurIndex++;
+		_Offset += FVector2D(CurData.Transform.Scale.X, 0.0f);
+		if (_CurIndex == 6)
+		{
+			return true;
+			break;
+		}
+	}
+	return false;
+
 }

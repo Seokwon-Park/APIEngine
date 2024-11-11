@@ -27,6 +27,7 @@ public:
 		FIntPoint NextBlockCoord;
 		FIntPoint NextNextBlockCoord;
 		FIntPoint BoardSize;
+		APuyoBoard* CounterBoard;
 	};
 	// constrcuter destructer
 	APuyoBoard();
@@ -87,6 +88,10 @@ public:
 	bool CheckRotationInput();
 	void PuyoForceDown();
 
+	void SendAttack(int _Amount);
+	void UpdateWarning();  
+	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex);
+
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 protected:
 	void BeginPlay() override;
@@ -94,6 +99,7 @@ private:
 	//위쪽 방향부터 반시계 방향으로 -> 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
 	const int Dx[4] = { 0, -1, 0, 1 };
 	const int Dy[4] = { -1, 0, 1, 0 };
+	const int WarnUnit[6] = { 1,6,30, 200, 300, 400 };
 
 	// 난수 생성기
 	UEngineRandom RandomDevice;
@@ -116,6 +122,7 @@ private:
 	bool IsRotating = false;
 	bool IsKicking = false;
 	bool IsRotatedClockWise = false;
+	float RotateLeft = 0.0f;
 
 	// Slave Puyo의 좌표는 MainCoord와 Dir을 통해서 얻을 수 있다.
 	FIntPoint MainPuyoCoord;
@@ -128,6 +135,8 @@ private:
 	float LRMoveDelay;
 	float LRMoveTimer;
 
+	//파괴애니메이션 재생중
+	bool IsDestroying = false;
 
 	// 2틱 마다 보드 좌표상으로 Y가 1 증가한다.
 	int PuyoTick;
@@ -151,6 +160,12 @@ private:
 	std::vector<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
+
+	//방해뿌요?
+	std::vector<USpriteRendererComponent*> Warnings;
+	int WarnNums = 0;
+
+	
 
 	// 상대 게임판 객체 포인터
 	APuyoBoard* CounterBoard;

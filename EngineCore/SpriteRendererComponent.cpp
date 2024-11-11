@@ -33,7 +33,6 @@ void USpriteRendererComponent::BeginPlay()
 
 	AActor* Actor = GetOwner();
 	ULevel* Level = Actor->GetWorld();
-
 	/*for (UActorComponent* Component : Actor->GetComponents())
 	{
 		UAnimatorComponent* Animator = dynamic_cast<UAnimatorComponent*>(Component);
