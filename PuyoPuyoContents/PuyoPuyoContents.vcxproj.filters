@@ -152,7 +152,7 @@
     <ClInclude Include="SoloMenuBackground.h">
       <Filter>ContentsObject\Play\Solo</Filter>
     </ClInclude>
-    <ClInclude Include="ContentsLayer.h">
+    <ClInclude Include="ContentsEnums.h">
       <Filter>ContentsObject\Layers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -17,9 +17,9 @@ void AIntroGameMode::BeginPlay()
 {
 	// Todo : PressAnyKey·Î ¹Ù²Ü°Í
 	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
-	APuyoBoomFX* BoomFX = GetWorld()->SpawnActor<APuyoBoomFX>();
+	
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();
-	BoomFX->SetActorLocation({ 100,100 });
+	
 
 }
 

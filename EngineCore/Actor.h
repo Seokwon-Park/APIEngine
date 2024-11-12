@@ -33,8 +33,9 @@ public:
 	inline void SetActorLocation(FVector2D _Location) { Transform.Location = _Location; }
 	inline void SetActorScale(FVector2D _Scale){Transform.Scale = _Scale;}
 
-	inline virtual void SetActive(bool _Value)
+	inline virtual void SetActive(bool _Value) override
 	{
+		UObject::SetActive(_Value);
 		for (auto Component : Components)
 		{
 			Component->SetActive(_Value);

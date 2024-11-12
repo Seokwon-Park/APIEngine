@@ -1,5 +1,6 @@
 #include "aepch.h"
 #include "PuyoBoomFX.h"
+#include <EngineCore/ImageManager.h>
 
 APuyoBoomFX::APuyoBoomFX()
 {
@@ -16,29 +17,22 @@ APuyoBoomFX::APuyoBoomFX()
 	for (int i = 0; i < 4; i++)
 	{
 		Particles[i] = CreateDefaultSubobject<USpriteRendererComponent>("BoomParticles" + std::to_string(i));
-		Particles[i]->SetSprite("PuyoBoomR");
+		Particles[i]->SetSprite("PuyoBoomR", 1);
 		Particles[i]->SetComponentLocation({ -12 + 8 * i, 0 });
-		Particles[i]->SetComponentScale({ 32,32 });
+		Particles[i]->SetComponentScale({ 16,16 });
 		Particles[i]->SetRemoveBackground(true);
+		Particles[i]->SetActive(false);
 	}
 
-	Top[0] = { -128, -24 };
-	Top[1] = { -16, -32 };
-	Top[2] = { 16, -32 };
-	Top[3] = { 128, -24 };
+	Dir[0] = { -32, -144 };
+	Dir[1] = { -16, -144 };
+	Dir[2] = { 16, -144 };
+	Dir[3] = { 32, -144 };
 
 	XYStart[0] = { -12,0 };
 	XYStart[1] = { -4,0 };
 	XYStart[2] = { 4,0 };
 	XYStart[3] = { 12,0 };
-
-	for (int i = 0; i < 4; i++)
-	{
-		float X = (XYStart[i].X - Top[i].X);
-		float Y = (XYStart[i].Y - Top[i].Y);
-		A[i] = Y / (X * X);
-		Dir[i] = { X * X, Y };
-	}
 }
 
 APuyoBoomFX::~APuyoBoomFX()
@@ -48,29 +42,49 @@ APuyoBoomFX::~APuyoBoomFX()
 void APuyoBoomFX::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	FXDelay -= _DeltaTime;
+	if (FXDelay > 0.0f) return;
 	FXTimer += _DeltaTime;
-	if (FXTimer <= 1.0f)
+	for (int i = 0; i < 4; i++)
 	{
+		FVector2D Loc = Particles[i]->GetComponentLocation();
+
+		Dir[i].Y += 0.1f;
+
+		Particles[i]->SetSprite(SpriteName, 1);
+		Particles[i]->SetActive(true);
+		Particles[i]->SetComponentLocation(Loc + Dir[i] * _DeltaTime);
+	}
+
+	if (FXTimer >= 0.25f)
+	{
+		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite(SpriteName)->GetSpriteData(0);
 		for (int i = 0; i < 4; i++)
 		{
-			FVector2D Loc = Particles[i]->GetComponentLocation();
-			float X = 0.0f;
-			if (i < 2)
-			{
-				X = Loc.X - _DeltaTime * 50;
-			}
-			else
-			{
-				X = Loc.X + _DeltaTime *50;
-			}
-
-			FVector2D NextLoc = CalcParabola(A[i], Top[i], X);
-			Particles[i]->SetSprite("PuyoBoomR");
-			Particles[i]->SetComponentLocation(Loc + Dir[i]*_DeltaTime);
-			Particles[i]->SetComponentScale({ 32,32 });
-			Particles[i]->SetRemoveBackground(true);
+			Particles[i]->SetSprite(SpriteName, 0);
+			Particles[i]->SetComponentScale(CurData.Transform.Scale);
 		}
-		return;
+	}
+
+	if (FXTimer >= 0.5f)
+	{
+		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite(SpriteName)->GetSpriteData(1);
+		for (int i = 0; i < 4; i++)
+		{
+			Particles[i]->SetSprite(SpriteName, 1);
+			Particles[i]->SetComponentScale(CurData.Transform.Scale);
+		}
+	}
+	if (FXTimer >= 0.75f)
+	{
+		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite(SpriteName)->GetSpriteData(2);
+
+		for (int i = 0; i < 4; i++)
+		{
+			Particles[i]->SetSprite(SpriteName, 2);
+			Particles[i]->SetComponentScale(CurData.Transform.Scale);
+		}
 	}
 	//for (int i = 0; i < 4; i++)
 	//{
@@ -80,6 +94,16 @@ void APuyoBoomFX::Tick(float _DeltaTime)
 	//	Particles[i]->SetComponentScale({ 32,32 });
 	//	Particles[i]->SetRemoveBackground(true);
 	//}
+	if (FXTimer >= 1.5f)
+	{
+		this->Destroy();
+	}
+}
+
+void APuyoBoomFX::SetupBoomFX(EPuyoColor _Color, float _Delay)
+{
+	SpriteName = ColorSprites[static_cast<int>(_Color)];
+	FXDelay = _Delay;
 }
 
 void APuyoBoomFX::BeginPlay()

@@ -64,14 +64,15 @@ public:
 		return sqrtf(X * X + Y * Y);
 	}
 
-	void Normalize()
+	FVector2D Normalize()
 	{
 		float Len = Length();
 		if (0.0f < Len && false == isnan(Len))
 		{
 			X = X / Len;
-			X = Y / Len;
+			Y = Y / Len;
 		}
+		return *this;
 	}
 
 	float Distance(const FVector2D _Other)
@@ -123,9 +124,12 @@ public:
 		return Result;
 	}
 
-
-
 	FVector2D operator/(int _Value) const
+	{
+		return operator/(static_cast<float>(_Value));
+	}
+
+	FVector2D operator/(float _Value) const
 	{
 		FVector2D Result;
 		Result.X = X / _Value;

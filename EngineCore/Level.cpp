@@ -106,22 +106,25 @@ void ULevel::Release()
 
 	for (auto& RenderList : AllRenderers)
 	{
-		for (auto Itr = RenderList.second.begin(); Itr != RenderList.second.end(); Itr++)
+		auto EndItr = RenderList.second.end();
+		for (auto Itr = RenderList.second.begin(); Itr != EndItr;)
 		{
 			USpriteRendererComponent* Renderer = *Itr;
 			if (!Renderer->GetOwner()->CheckDestroy())
 			{
+				Itr++;
 				continue;
 			}
 			Itr = RenderList.second.erase(Itr);
 		}
 	}
 
-	for (std::list<AActor*>::iterator Itr = AllActors.begin(); Itr != AllActors.end(); Itr++)
+	for (std::list<AActor*>::iterator Itr = AllActors.begin(); Itr != AllActors.end();)
 	{
 		AActor* CurActor = *Itr;
 		if (false == CurActor->CheckDestroy())
 		{
+			Itr++;
 			continue;
 		}
 		delete CurActor;

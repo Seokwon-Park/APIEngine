@@ -17,16 +17,12 @@ public:
 	APuyoBoomFX& operator=(APuyoBoomFX&& _Other) noexcept = delete;
 
 	void Tick(float _DeltaTime)override;
-	// y = AX^2+b
-	FVector2D CalcParabola(const float _A, const FVector2D _XYOffset, const float _X)const
-	{
-		float X = (_X - _XYOffset.X);
-		float Y = _A * X * X + _XYOffset.Y;
-		return { _X, Y };
-	}
+
+	void SetupBoomFX(EPuyoColor _Color, float _Delay);
 protected:
 	void BeginPlay() override;
 private:
+	std::string SpriteName;
 	std::vector<std::string> ColorSprites;
 	std::vector<USpriteRendererComponent*> Particles;
 	std::vector<float> A;
@@ -34,5 +30,6 @@ private:
 	std::vector<FVector2D> Top;
 	std::vector<FVector2D> Dir;
 	float FXTimer = 0.0f;
+	float FXDelay = 0.0f;
 };
 

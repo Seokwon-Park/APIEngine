@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "PuyoBoard.h"
 #include "PuyoText.h"
+#include "PuyoBoomFX.h"
 
 #include <algorithm>
 #include <EnginePlatform/EngineInput.h>
@@ -23,9 +24,9 @@ APuyoBoard::APuyoBoard()
 }
 
 void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPosition, float _DeltaTime, bool _IsClockwise) {
-	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가
+	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가 
 
-	float dAngle = _DeltaTime * 1000.0f * (_IsClockwise ? 1.0f : -1.0f);
+	float dAngle = 90.0f * _DeltaTime / 0.1f * (_IsClockwise ? 1.0f : -1.0f);
 	RotateLeft -= dAngle;
 	// 회전 변환 계산 (라디안으로 변환 필요)
 	float AngleInRadians = FEngineMath::DegreesToRadians(dAngle);
@@ -41,12 +42,20 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
 	slavePuyoPosition = FVector2D(rotatedX, rotatedY) + mainPuyoPosition;
-	if ((IsRotatedClockWise && RotateLeft <= 0.0f) || (!IsRotatedClockWise && RotateLeft >= 0.0f))
+	if (abs(RotateLeft) < 0.2f || slavePuyoPosition.Distance(TargetLocation) < 0.2f)
 		//if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
 	{
+		Block[1]->SetActorLocation(TargetLocation);
 		IsRotating = false;
 	}
 	Block[1]->SetActorLocation(slavePuyoPosition);
+}
+
+void APuyoBoard::SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay)
+{
+	APuyoBoomFX* BoomFX = GetWorld()->SpawnActor<APuyoBoomFX>();
+	BoomFX->SetupBoomFX(_Color, _Delay);
+	BoomFX->SetActorLocation(_Loc);
 }
 
 APuyoBoard::~APuyoBoard()
@@ -98,17 +107,17 @@ void APuyoBoard::Tick(float _DeltaTime)
 	{
 		if (BlockDir == 1)
 		{
-			Block[0]->AddActorLocation(FVector2D::RIGHT * _DeltaTime * 500.0f);
-			Block[1]->AddActorLocation(FVector2D::RIGHT * _DeltaTime * 500.0f);
-			if (FVector2D::Distance(Block[0]->GetActorLocation(), { GetLocationByIndexOnBoard(MainPuyoCoord).X, Block[0]->GetActorLocation().Y }) < 0.2f)
+			Block[0]->AddActorLocation(FVector2D::RIGHT * _DeltaTime * 32.0f / 0.1f);
+			Block[1]->AddActorLocation(FVector2D::RIGHT * _DeltaTime * 32.0f / 0.1f);
+			if (Block[0]->GetActorLocation().X > GetLocationByIndexOnBoard(MainPuyoCoord).X)
 			{
 				IsKicking = false;
 			}
 		}
 		else if (BlockDir == 3)
 		{
-			Block[0]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 500.0f);
-			Block[1]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 500.0f);
+			Block[0]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 32.0f / 0.1f);
+			Block[1]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 32.0f / 0.1f);
 			if (FVector2D::Distance(Block[0]->GetActorLocation(), { GetLocationByIndexOnBoard(MainPuyoCoord).X, Block[0]->GetActorLocation().Y }) < 0.2f)
 			{
 				IsKicking = false;
@@ -116,9 +125,9 @@ void APuyoBoard::Tick(float _DeltaTime)
 		}
 		else
 		{
-			Block[0]->AddActorLocation(FVector2D::UP * _DeltaTime * 500.0f);
-			Block[1]->AddActorLocation(FVector2D::UP * _DeltaTime * 500.0f);
-			if (FVector2D::Distance(Block[0]->GetActorLocation(), { Block[0]->GetActorLocation().X, GetLocationByIndexOnBoard(MainPuyoCoord).Y }) < 0.2f)
+			Block[0]->AddActorLocation(FVector2D::UP * _DeltaTime * 32.0f / 0.1f);
+			Block[1]->AddActorLocation(FVector2D::UP * _DeltaTime * 32.0f / 0.1f);
+			if (Block[0]->GetActorLocation().Y < GetLocationByIndexOnBoard(MainPuyoCoord).Y)
 			{
 				IsKicking = false;
 			}
@@ -192,7 +201,7 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), RandomDevice.GetRandomInt(0, Difficulty));
+		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 0);
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 5);
 		NewBlock[i] = Puyo;
@@ -259,7 +268,6 @@ void APuyoBoard::PuyoMoveLogic()
 			//Puyo->SetActorLocation(FVector2D::Lerp(Puyo->GetActorLocation(), Puyo->GetActorLocation() + FVector2D(0,32),UEngineAPICore::GetCore()->GetDeltaTime()));
 		}
 	}
-
 	MainPuyoCoord.Y += (PuyoTick % 2 == 0);
 
 	if (false == CanMoveDown())
@@ -322,8 +330,8 @@ void APuyoBoard::PuyoPlaceLogic()
 				}
 				else
 				{
-					CurPuyo->AddActorLocation(FVector2D::DOWN * UEngineAPICore::GetEngineDeltaTime() * 300.0f);
-					if (CurPuyo->GetActorLocation().Distance(GetLocationByIndexOnBoard(CurPuyo->GetTargetXY())) < 0.1f)
+					CurPuyo->AddActorLocation(FVector2D::DOWN * UEngineAPICore::GetEngineDeltaTime() * 32.0f / 0.1f);
+					if (CurPuyo->GetActorLocation().Y >= GetLocationByIndexOnBoard(CurPuyo->GetTargetXY()).Y)// || CurPuyo->GetActorLocation().Distance(GetLocationByIndexOnBoard(CurPuyo->GetTargetXY())) < 0.1f)
 					{
 						//Board[Point.Y][Point.X] = nullptr;
 						//Point = FIntPoint(Point.X, PlaceY);
@@ -352,9 +360,9 @@ void APuyoBoard::PuyoPlaceLogic()
 	{
 		CurPuyo->SetIsDropComplete(false);
 		CurPuyo->SetIsAnimationEnd(false);
+		PuyoConnectList.push_back(CurPuyo);
 	}
 
-	PuyoConnectList = PlaceCheckList;
 	PlaceCheckList.clear();
 
 	CurStep = EPuyoLogicStep::PuyoConnect;
@@ -365,7 +373,7 @@ void APuyoBoard::PuyoConnectLogic()
 	//SetConnection
 	for (APuyo* CurPuyo : PuyoConnectList)
 	{
-		if (CurPuyo->GetColor() == 5) continue;
+		if (CurPuyo->GetColor() == EPuyoColor::Garbage) continue;
 		int X = CurPuyo->GetCurXY().X;
 		int Y = CurPuyo->GetCurXY().Y;
 		int SpriteIndex = 0;
@@ -375,7 +383,7 @@ void APuyoBoard::PuyoConnectLogic()
 			int TargetX = X + Dx[Dir];
 			int TargetY = Y + Dy[Dir];
 			// 범위가 보드 밖이면 조사하면 안된다.
-			if (TargetX < 0 || TargetY < 0 || TargetX >= BoardSize.X || TargetY >= BoardSize.Y)
+			if (!IsInBoard(TargetX,TargetY))
 			{
 				continue;
 			}
@@ -455,7 +463,7 @@ void APuyoBoard::PuyoCheckLogic()
 			{
 				int TargetX = CurX + Dx[Dir];
 				int TargetY = CurY + Dy[Dir];
-				if (TargetX < 0 || TargetY < 0 || TargetX >= BoardSize.X || TargetY >= BoardSize.Y || true == Visited[TargetY][TargetX])
+				if (!IsInBoard(TargetX, TargetY) || true == Visited[TargetY][TargetX])
 				{
 					continue;
 				}
@@ -477,7 +485,8 @@ void APuyoBoard::PuyoCheckLogic()
 		{
 			for (FIntPoint Point : Temp)
 			{
-				PuyoDestroyList.insert(std::make_pair(Point.X, Point.Y));
+				PuyoDestroyList.insert(Point);
+				//PuyoDestroyList.push_back(Point);
 			}
 		}
 	}
@@ -486,9 +495,15 @@ void APuyoBoard::PuyoCheckLogic()
 	CurStep = EPuyoLogicStep::PuyoDestroy;
 }
 
+
+
 void APuyoBoard::PuyoDestroyLogic()
 {
-	if (!PuyoDestroyList.empty() && FlickCount < 10)
+	if (PuyoDestroyList.empty())
+	{
+		CurStep = EPuyoLogicStep::PuyoUpdate;
+	}
+	if (FlickCount < 10)
 	{
 		FlickDelay -= UEngineAPICore::GetEngineDeltaTime();
 		if (FlickDelay > 0.0f) return;
@@ -511,17 +526,16 @@ void APuyoBoard::PuyoDestroyLogic()
 
 	if (!IsDestroying)
 	{
+		int ix = 0;
 		for (auto [X, Y] : PuyoDestroyList)
 		{
-			APuyo* Puyo = Board[Y][X];
-			Puyo->PlayAnimation("Boom");
+			APuyo* CurPuyo = Board[Y][X];
+			CurPuyo->PlayAnimation("Boom");
+			SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);
+			ix++;
 		}
 		IsDestroying = true;
 	}
-
-
-
-
 
 	// 모든 블럭에 대해 파괴 완료 애니메이션이 끝나야 넘어간다.
 	bool CheckAllFinished = true;
@@ -534,6 +548,7 @@ void APuyoBoard::PuyoDestroyLogic()
 			break;
 		}
 	}
+
 	if (!CheckAllFinished)
 		return;
 
@@ -544,7 +559,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		Board[Y][X] = nullptr;
 		PuyoUpdateColumns.push_back(X);
 	}
-	
+
 	FlickCount = 0;
 	IsDestroying = false;
 	PuyoDestroyList.clear();
@@ -564,6 +579,16 @@ void APuyoBoard::PuyoUpdateLogic()
 		{
 			for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
 			{
+				for (int Dir = 0; Dir < 4; Dir++)
+				{
+					int TargetX = X + Dx[Dir];
+					int TargetY = Y + Dy[Dir];
+					if (!IsInBoard(TargetX, TargetY)) continue;
+					if (Board[TargetY][TargetX] != nullptr)
+					{
+						PuyoConnectList.push_back(Board[TargetY][TargetX]);
+					}
+				}
 				if (Board[Y][X] == nullptr)
 				{
 					for (int FindY = Y - 1; FindY >= 0; FindY--)
@@ -579,13 +604,16 @@ void APuyoBoard::PuyoUpdateLogic()
 					}
 				}
 			}
-
-
 		}
 		PuyoUpdateColumns.clear();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 	}
 
+}
+
+bool APuyoBoard::IsInBoard(int TargetX, int TargetY)
+{
+	return false == (TargetX < 0 || TargetY < 0 || TargetX >= BoardSize.X || TargetY >= BoardSize.Y);
 }
 
 bool APuyoBoard::CanMoveDown()
@@ -597,33 +625,14 @@ bool APuyoBoard::CanMoveDown()
 	{
 		return false;
 	}
-	/*switch(Dir)
-	{
-	case 0:
-		if (MainPuyoCoord.Y + 1 >= Board.size() || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X] != nullptr)
-			return false;
-		break;
-	case 1:
-		if (MainPuyoCoord.Y + 1 >= Board.size() || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X] != nullptr || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X+1] != nullptr)
-			return false;
-		break;
-	case 2:
-		if (MainPuyoCoord.Y + 2 >= Board.size() || Board[MainPuyoCoord.Y + 2][MainPuyoCoord.X] != nullptr)
-			return false;
-		break;
-	case 3:
-		if (MainPuyoCoord.Y + 1 >= Board.size() || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X] != nullptr || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X - 1] != nullptr)
-			return false;
-		break;
-	}*/
-
 	return true;
 }
 
 bool APuyoBoard::CanMoveLocation()
 {
 	int Y = BoardSize.Y - 1;
-	if (PuyoTick >= (Y - 1 - Dy[BlockDir]) * 2)
+	//if (PuyoTick >= (Y - 1 - Dy[BlockDir]) * 2)
+	if (PuyoTick % 2 == 0 && MainPuyoCoord.Y == BoardSize.Y - 1)
 	{
 		return false;
 	}
@@ -635,7 +644,7 @@ bool APuyoBoard::CanMoveLR(FVector2D _Dir)
 	if (MainPuyoCoord.X + _Dir.iX() < 0 || MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX() < 0 ||
 		MainPuyoCoord.X + _Dir.iX() >= BoardSize.X || MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX() >= BoardSize.X ||
 		Board[MainPuyoCoord.Y][MainPuyoCoord.X + _Dir.iX()] != nullptr ||
-		(MainPuyoCoord.Y -1 >=0 && Board[MainPuyoCoord.Y + Dy[BlockDir]][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr))
+		(MainPuyoCoord.Y - 1 >= 0 && Board[MainPuyoCoord.Y + Dy[BlockDir]][MainPuyoCoord.X + Dx[BlockDir] + _Dir.iX()] != nullptr))
 	{
 		return false;
 	}
@@ -664,7 +673,7 @@ void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 	{
 		return;
 	}
-	LRMoveTimer = 0.05f;
+	LRMoveTimer = 0.08f;
 
 	if (false == CanMoveLR(_Dir))
 	{
@@ -682,7 +691,7 @@ void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 
 void APuyoBoard::Rotate(bool _IsClockwise)
 {
-	if (CurStep != EPuyoLogicStep::PuyoMove)
+	if (CurStep != EPuyoLogicStep::PuyoMove || IsRotating || IsKicking)
 	{
 		return;
 	}
@@ -696,9 +705,9 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 	{
 		BlockDir = (BlockDir + 1) % 4;
 	}
-	//Todo : 이것도 바로 Set을 안하고 부드럽게 움직이게 해야함.
+	//Todo : 버그 ㅅㅂ
 	//Block[1]->SetActorLocation(Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY()));
-	if (MainPuyoCoord.X == 0 || Board[MainPuyoCoord.Y][MainPuyoCoord.X - 1] != nullptr || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X - 1] != nullptr)
+	if (MainPuyoCoord.X == 0 || Board[MainPuyoCoord.Y][MainPuyoCoord.X - 1] != nullptr || (PuyoTick % 2 == 1 && Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X - 1] != nullptr))
 	{
 		if (BlockDir == 1)
 		{
@@ -712,7 +721,7 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 			Block[1]->SetActorLocation(Block[0]->GetActorLocation() + FVector2D(Dx[PrevDir] * PuyoSize.iX(), Dy[PrevDir] * PuyoSize.iY()));
 		}
 	}
-	if (MainPuyoCoord.X == BoardSize.X - 1 || Board[MainPuyoCoord.Y][MainPuyoCoord.X + 1] != nullptr || Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X + 1] != nullptr)
+	if (MainPuyoCoord.X == BoardSize.X - 1 || Board[MainPuyoCoord.Y][MainPuyoCoord.X + 1] != nullptr || (PuyoTick % 2 == 1 && Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X + 1] != nullptr))
 	{
 		if (BlockDir == 3)
 		{
@@ -726,13 +735,13 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 			Block[1]->SetActorLocation(Block[0]->GetActorLocation() + FVector2D(Dx[PrevDir] * PuyoSize.iX(), Dy[PrevDir] * PuyoSize.iY()));
 		}
 	}
-	if (MainPuyoCoord.Y == BoardSize.Y - 2 || Board[MainPuyoCoord.Y + 2][MainPuyoCoord.X] != nullptr)
+	if (PuyoTick % 2 == 1)
 	{
-		if (BlockDir == 2)
+		if (MainPuyoCoord.Y + 1 == BoardSize.Y - 1 || Board[MainPuyoCoord.Y + 2][MainPuyoCoord.X] != nullptr)
 		{
-			if (MainPuyoCoord.Y + 1 == BoardSize.Y - 1 || Board[MainPuyoCoord.Y + 2][MainPuyoCoord.X] != nullptr)
+			if (BlockDir == 2)
 			{
-				if (PuyoTick % 2 == 1)
+				if (MainPuyoCoord.Y + 1 == BoardSize.Y - 1 || Board[MainPuyoCoord.Y + 2][MainPuyoCoord.X] != nullptr)
 				{
 					PuyoTick--;
 					IsKicking = true;
@@ -750,14 +759,8 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 		RotateLeft -= 90;
 	}
 	IsRotating = true;
-
-
 }
 
-bool APuyoBoard::CheckRotationInput()
-{
-	return false;
-}
 
 void APuyoBoard::PuyoForceDown()
 {

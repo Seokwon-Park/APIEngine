@@ -54,6 +54,7 @@ public:
 	void PuyoDestroyLogic();
 	void PuyoUpdateLogic();
 
+	bool IsInBoard(int TargetX, int TargetY);
 	inline FVector2D GetLocationByIndex(int _X, int _Y) const
 	{
 		return FVector2D(_X * PuyoSize.iX(), _Y * PuyoSize.iY());
@@ -79,26 +80,32 @@ public:
 	{
 		SetPuyoOnBoard(_XY.X, _XY.Y, _Puyo);
 	}
+	//움직일 수 있는지 검사하는 함수
+	// 아래 움직임
+	// 왜 2개로 나눴는지는 아무튼 필요해서 나눔
 	bool CanMoveDown();
 	bool CanMoveLocation();
+	//좌우 움직임
 	bool CanMoveLR(FVector2D _Dir);
 
 	void PuyoMoveLR(FVector2D _Dir);
 	void Rotate(bool _IsClockwise);
-	bool CheckRotationInput();
 	void PuyoForceDown();
 
 	void SendAttack(int _Amount);
-	void UpdateWarning();  
+	void UpdateWarning();
 	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex);
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
+
+	void SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay);
 protected:
 	void BeginPlay() override;
 private:
 	//위쪽 방향부터 반시계 방향으로 -> 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
 	const int Dx[4] = { 0, -1, 0, 1 };
 	const int Dy[4] = { -1, 0, 1, 0 };
+	//예고 뿌요 단위
 	const int WarnUnit[6] = { 1,6,30, 200, 300, 400 };
 
 	// 난수 생성기
@@ -137,11 +144,13 @@ private:
 
 	//파괴애니메이션 재생중
 	bool IsDestroying = false;
-	float FlickDelay= 0.05f;
-	int FlickCount= 0;
+	float FlickDelay = 0.05f;
+	int FlickCount = 0;
 
 	// 2틱 마다 보드 좌표상으로 Y가 1 증가한다.
 	int PuyoTick;
+	//float DropCompleteDelay = 0.5f;
+	//float DropCompleteTimer = 0.0f;
 
 	// MainPuyo를 기준으로 SlavePuyo가 어느 방향을 향하고 있는지를 말한다.
 	int BlockDir; // 0,1,2,3 반시계방향으로 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
@@ -158,7 +167,14 @@ private:
 	std::vector<APuyo*> PlaceCheckList;
 	std::vector<APuyo*> PuyoConnectList;
 	std::vector<FIntPoint> PuyoCheckList;
-	std::set<std::pair<int, int>> PuyoDestroyList;
+	//std::set<std::pair<int, int>> PuyoDestroyList;
+	std::set < FIntPoint, decltype([](const auto a, const auto b) {
+		if (a.Y == b.Y)
+		{
+			return a.X < b.X;
+		}
+		return a.Y < b.Y;
+		}) > PuyoDestroyList;
 	std::vector<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
@@ -167,12 +183,12 @@ private:
 	std::vector<USpriteRendererComponent*> Warnings;
 	int WarnNums = 0;
 
-	
+
 
 	// 상대 게임판 객체 포인터
 	APuyoBoard* CounterBoard;
-	
-	
+
+
 
 	//여기 밑으로는 실험실 변수
 };

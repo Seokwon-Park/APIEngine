@@ -157,7 +157,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ContentsLayer.h" />
+    <ClInclude Include="ContentsEnums.h" />
     <ClInclude Include="IntroBackground.h">
       <SubType>
       </SubType>

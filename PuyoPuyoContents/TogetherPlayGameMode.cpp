@@ -30,6 +30,7 @@ void ATogetherPlayGameMode::BeginPlay()
 	Next->SetText("NEXT");
 
 	APuyoBoard* PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
+	PuyoBoardP1->SetActive(false);
 	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
 
 	//Player1 Setting

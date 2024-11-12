@@ -2,7 +2,7 @@
 #include "Puyo.h"
 
 APuyo::APuyo()
-	: IsAnimationEnd(false), IsDropComplete(false), Color(Red), SpriteIndex(0)
+	: IsAnimationEnd(false), IsDropComplete(false), Color(EPuyoColor::Red), SpriteIndex(0)
 {
 	Sr = CreateDefaultSubobject<USpriteRendererComponent>("PuyoSpriteRenderer");
 	Animator = CreateDefaultSubobject<UAnimatorComponent>("PuyoAnimator");
@@ -57,13 +57,14 @@ void APuyo::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 }
 
-void APuyo::SetupPuyo(FVector2D _Location, int _Color)
+void APuyo::SetupPuyo(FVector2D _Location, EPuyoColor _Color)
 {
 	SetActorLocation(_Location);
 	Color = _Color;
-	if (_Color < ColorSprites.size())
+	ColorIndex = static_cast<int>(_Color);
+	if (ColorIndex < ColorSprites.size())
 	{
-		Sr->SetSprite(ColorSprites[Color], 0);
+		Sr->SetSprite(ColorSprites[ColorIndex], 0);
 	}
 	else
 	{
@@ -75,14 +76,15 @@ void APuyo::SetupPuyo(FVector2D _Location, int _Color)
 void APuyo::SetSprite(int _Index)
 {
 	Animator->CancelAnimation();
-	if (Color < ColorSprites.size())
+	SpriteIndex = _Index;
+	if (ColorIndex < ColorSprites.size())
 	{
-		Sr->SetSprite(ColorSprites[Color], _Index);
+		Sr->SetSprite(ColorSprites[ColorIndex], _Index);
 	}
 }
 
 void APuyo::PlayAnimation(std::string _Name)
 {
 	IsAnimationEnd = false;
-	Animator->ChangeAnimation(_Name + std::to_string(Color));
+	Animator->ChangeAnimation(_Name + std::to_string(ColorIndex));
 }
