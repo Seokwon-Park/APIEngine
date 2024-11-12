@@ -2,7 +2,7 @@
 #include "SceneComponent.h"
 #include "AnimatorComponent.h"
 
-enum class PivotType
+enum class EPivotType
 {
 	TopLeft,
 	TopCenter,
@@ -45,7 +45,7 @@ public:
 	inline void SetOrder(EnumType _Order) { SetOrder(static_cast<int>(_Order)); }
 	inline void SetRemoveBackground(bool _Value) { RemoveBackground = _Value; }
 	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }
-	void SetPivot(PivotType _Type);
+	void SetPivot(EPivotType _Type);
 	inline void SetPivot(FVector2D _Pivot) { Pivot = _Pivot; }
 protected:
 

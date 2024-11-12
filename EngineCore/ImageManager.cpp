@@ -286,6 +286,58 @@ void UImageManager::CuttingSprite(std::string_view _NewSpriteName, std::string_v
 	}
 }
 
+void UImageManager::CuttingSpriteCustom(std::string_view _NewSpriteName, std::string_view _ImageName, FIntPoint _StartPos, FIntPoint _EndPos, FVector2D _CuttingSize)
+{
+	std::string SpriteUpperName = UEngineString::ToUpper(_NewSpriteName);
+	std::string ImageUpperName = UEngineString::ToUpper(_ImageName);
+
+	if (false == Images.contains(ImageUpperName))
+	{
+		MSGASSERT("존재하지 않는 이미지를 기반으로 스프라이트를 자르려고 했습니다" + std::string(_ImageName));
+		return;
+	}
+
+	UEngineSprite* Sprite = nullptr; 
+
+	if (false == Sprites.contains(SpriteUpperName))
+	{
+		Sprite = new UEngineSprite();
+		Sprite->SetName(SpriteUpperName);
+		Sprites.insert({ SpriteUpperName, Sprite });
+	}
+	else
+	{
+		Sprite = Sprites[SpriteUpperName];
+	}
+
+	UEngineWinImage* Image = Images[ImageUpperName];
+
+	Sprite->ClearSpriteData();
+
+	int Width = _EndPos.X - _StartPos.X;
+	int Height = _EndPos.Y - _StartPos.Y;
+
+	int SpriteX = Width / _CuttingSize.iX();
+	int SpriteY = Height / _CuttingSize.iY();
+
+	FTransform CuttingTrans;
+
+	CuttingTrans.Location = FVector2D(_StartPos.X, _StartPos.Y);
+	CuttingTrans.Scale = _CuttingSize;
+
+	for (size_t y = 0; y < SpriteY; ++y)
+	{
+		for (size_t x = 0; x < SpriteX; ++x)
+		{
+			Sprite->PushData(Image, CuttingTrans);
+			CuttingTrans.Location.X += _CuttingSize.X;
+		}
+
+		CuttingTrans.Location.X = 0.0f;
+		CuttingTrans.Location.Y += _CuttingSize.Y;
+	}
+}
+
 void UImageManager::InsertCustomSpriteData(std::string_view _SpriteName, std::string_view _ImageName, FTransform _CutData)
 {
 	std::string SpriteUpperName = UEngineString::ToUpper(_SpriteName);

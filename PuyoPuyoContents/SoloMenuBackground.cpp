@@ -12,7 +12,7 @@ ASoloMenuBackground::ASoloMenuBackground()
 			BgRenderers[i][j]->SetSprite("SELECT_B.CNS.BMP", 0);
 			BgRenderers[i][j]->SetComponentLocation(FVector2D((j - 1) * 320, (i-1) * 240));
 			BgRenderers[i][j]->SetComponentScale({ 320,240 });
-			BgRenderers[i][j]->SetPivot(PivotType::TopLeft);
+			BgRenderers[i][j]->SetPivot(EPivotType::TopLeft);
 
 		}
 	}

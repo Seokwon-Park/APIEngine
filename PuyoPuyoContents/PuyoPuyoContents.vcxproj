@@ -183,10 +183,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PuyoChainText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PuyoText.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ScoringTable.h" />
     <ClInclude Include="SoloMenuBackground.h">
       <SubType>
       </SubType>
@@ -247,6 +252,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PuyoChainEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PuyoChainText.cpp">
       <SubType>
       </SubType>
     </ClCompile>

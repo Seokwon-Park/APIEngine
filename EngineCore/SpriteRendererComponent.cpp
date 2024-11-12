@@ -167,9 +167,9 @@ FVector2D USpriteRendererComponent::SetSpriteScale(float _Ratio, int _Index)
 	return Scale;
 }
 
-void USpriteRendererComponent::SetPivot(PivotType _Type)
+void USpriteRendererComponent::SetPivot(EPivotType _Type)
 {
-	if (PivotType::MiddleCenter == _Type)
+	if (EPivotType::MiddleCenter == _Type)
 	{
 		SetPivot(FVector2D::ZERO);
 		return;
@@ -185,37 +185,37 @@ void USpriteRendererComponent::SetPivot(PivotType _Type)
 
 	switch (_Type)
 	{
-	case PivotType::TopLeft:
+	case EPivotType::TopLeft:
 		Pivot = CurData.Transform.Scale.Half();
 		break;
-	case PivotType::TopCenter:
+	case EPivotType::TopCenter:
 		Pivot.X = 0.0f;
 		Pivot.Y = CurData.Transform.Scale.Half().Y;
 		break;
-	case PivotType::TopRight:
+	case EPivotType::TopRight:
 		Pivot.X = -CurData.Transform.Scale.Half().X;
 		Pivot.Y = CurData.Transform.Scale.Half().Y;
 		break;
-	case PivotType::MiddleLeft:
+	case EPivotType::MiddleLeft:
 		Pivot.X = CurData.Transform.Scale.Half().X;
 		Pivot.Y = 0.0f;
 		break;
-	case PivotType::MiddleCenter:
+	case EPivotType::MiddleCenter:
 		SetPivot(FVector2D::ZERO);
 		break;
-	case PivotType::MiddleRight:
+	case EPivotType::MiddleRight:
 		Pivot.X = -CurData.Transform.Scale.Half().X;
 		Pivot.Y = 0.0f;
 		break;
-	case PivotType::BottomLeft:
+	case EPivotType::BottomLeft:
 		Pivot.X = CurData.Transform.Scale.Half().X;
 		Pivot.Y = -CurData.Transform.Scale.Half().Y;
 		break;
-	case PivotType::BottomCenter:
+	case EPivotType::BottomCenter:
 		Pivot.X = 0.0f;
 		Pivot.Y = -CurData.Transform.Scale.Half().Y;
 		break;
-	case PivotType::BottomRight:
+	case EPivotType::BottomRight:
 		Pivot.X = -CurData.Transform.Scale.Half().X;
 		Pivot.Y = -CurData.Transform.Scale.Half().Y;
 		break;

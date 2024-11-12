@@ -30,6 +30,9 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_RY.CNS.BMP", { 16,32 });
+	UImageManager::GetInstance().CuttingSpriteCustom("NameText", "PUYO_RY.CNS.BMP", { 0,208 }, { 640,240 }, { 16,16 });
+	UImageManager::GetInstance().InsertCustomSpriteData("ChainString", "PUYO_RY.CNS.BMP", { { 240,32 }, { 48, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("ChainString", "PUYO_BP.CNS.BMP", { { 240,32 }, { 48, 16 } });
 
 	//Cut Intro Bg
 	for (int i = 0; i <= 9; i++)
@@ -38,27 +41,31 @@ void PuyoPuyoContentsCore::BeginPlay()
 		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "R.CNS.BMP", { 128, 128 });
 	}
 
-	//Cut Puyo Boom Particles
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 0,32 }, { 32, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 0,32 }, { 32, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 0,32 }, { 32, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 0,32 }, { 32, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 0,32 }, { 32, 32 } });
-
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 592,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 592,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 592,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 592,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 592,32 }, { 16, 16} });
-
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 608,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 608,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 608,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 608,32 }, { 16, 16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 608,32 }, { 16, 16} });
+	SetupPuyoBoomParticleSprite();
 
 	//Solo Play Bg
-	UImageManager::GetInstance().CuttingSprite("L1_F.CNS.BMP", { 640,480 });
+	for (int i = 1; i <= 8; i++)
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "L1_F.CNS.BMP", { {0,0},{640,480} });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("LVHEAD", "L1_F.CNS.BMP", { { 0,0 }, { 640, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("LVCENTER", "L1_F.CNS.BMP", { { 304,64 }, { 32, 128 } });
+
+	//Multi Play Bg
+	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_2K.CNS.BMP", { { 0,0 }, { 640, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_2K.CNS.BMP", { { 304,64 }, { 32, 128 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("VSBOARD", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSBOARD", "VS_6K.CNS.BMP", { { 0,0 },{ 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSBOARD", "VS_H.CNS.BMP", { { 0,0 }, { 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSBOARD", "VS_N.CNS.BMP", { { 0,0 }, { 640,480 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSBOARD", "VS_S.CNS.BMP", { { 0,0 }, { 640,480 } });
+
 	UImageManager::GetInstance().InsertCustomSpriteData("LVHEAD", "L1_F.CNS.BMP", { { 0,0 }, { 640, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("LVCENTER", "L1_F.CNS.BMP", { { 304,64 }, { 32, 128 } });
 
@@ -86,8 +93,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("Warning", "PUYO_RY.CNS.BMP", { { 192,128 },{ 32, 32 } });
 
 
-
-
 	UImageManager::GetInstance().CuttingSprite("MENU_KA.CNS.BMP", { 640,480 });
 	UImageManager::GetInstance().CuttingSprite("MENU_KB.CNS.BMP", { 640,480 });
 
@@ -104,6 +109,28 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	UEngineAPICore::GetCore()->OpenLevel("Intro");
 	//UEngineAPICore::GetCore()->OpenLevel("TogetherPlay");
+}
+
+void PuyoPuyoContentsCore::SetupPuyoBoomParticleSprite()
+{
+	//Cut Puyo Boom Particles
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 0,32 },{ 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 0,32 },{ 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 0,32 },{ 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 0,32 },{ 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 0,32 },{ 32, 32 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 592,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 592,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 592,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 592,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 592,32 },{ 16, 16 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomR", "PUYO_R.CNS.BMP", { { 608,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomG", "PUYO_G.CNS.BMP", { { 608,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomB", "PUYO_B.CNS.BMP", { { 608,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomP", "PUYO_P.CNS.BMP", { { 608,32 },{ 16, 16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("PuyoBoomY", "PUYO_Y.CNS.BMP", { { 608,32 },{ 16, 16 } });
 }
 
 void PuyoPuyoContentsCore::SetupCarbuncleSprite()

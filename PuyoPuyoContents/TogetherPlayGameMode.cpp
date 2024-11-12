@@ -29,8 +29,20 @@ void ATogetherPlayGameMode::BeginPlay()
 	Next->SetActorLocation({ 9*32,32 });
 	Next->SetText("NEXT");
 
+
+
+	APuyoText* P1Score = GetWorld()->SpawnActor<APuyoText>();
+	P1Score->SetupText(8, EPuyoTextColor::Red, ETextAlign::Right);
+	P1Score->SetActorLocation({ 7 * 32+16, 11*32 });
+	P1Score->SetText("0");
+	APuyoText* P2Score = GetWorld()->SpawnActor<APuyoText>();
+	P2Score->SetupText(8, EPuyoTextColor::Blue, ETextAlign::Right);
+	P2Score->SetActorLocation({ 8 * 32 + 16, 12*32 });
+	P2Score->SetText("0");
+
+
 	APuyoBoard* PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
-	PuyoBoardP1->SetActive(false);
+	//PuyoBoardP1->SetActive(false);
 	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
 
 	//Player1 Setting
@@ -44,6 +56,7 @@ void ATogetherPlayGameMode::BeginPlay()
 		Settings.NextBlockCoord = FIntPoint(8, 4);
 		Settings.NextNextBlockCoord = FIntPoint(9, 5);
 		Settings.CounterBoard = PuyoBoardP2;
+		Settings.Score = P1Score;
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
 	PuyoBoardP1->SetKey(EKey::Z, EKey::X, EKey::B, EKey::F, EKey::H);
@@ -58,6 +71,7 @@ void ATogetherPlayGameMode::BeginPlay()
 		Settings.NextBlockCoord = FIntPoint(11, 4);
 		Settings.NextNextBlockCoord = FIntPoint(10, 5);
 		Settings.CounterBoard = PuyoBoardP1;
+		Settings.Score = P2Score;
 	}
 	PuyoBoardP2->SetupPuyoBoard(Settings);
 	PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);

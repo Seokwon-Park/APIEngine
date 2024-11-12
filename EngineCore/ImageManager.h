@@ -32,6 +32,8 @@ public:
 	void CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize);
 	void CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols);
 	void CuttingSprite(std::string_view _NewSpriteName, std::string_view _ImageName, FVector2D _CuttingSize);
+	void CuttingSpriteCustom(std::string_view _NewSpriteName, std::string_view _ImageName, FIntPoint _StartPos,
+		FIntPoint _EndPos,FVector2D _CuttingSize);
 	void InsertCustomSpriteData(std::string_view _SpriteName, std::string_view _ImageName, FTransform _CutData);
 	bool IsLoadSprite(std::string_view _KeyName);
 	UEngineSprite* FindSprite(std::string_view _KeyName);

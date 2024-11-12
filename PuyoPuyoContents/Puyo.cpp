@@ -14,7 +14,7 @@ APuyo::APuyo()
 	Sr->SetSprite("PUYO_R.CNS.BMP", 0);
 	Sr->SetComponentScale({ 32, 32 });
 	Sr->SetRemoveBackground(true);
-	Sr->SetPivot(PivotType::TopLeft);
+	Sr->SetPivot(EPivotType::TopLeft);
 	Sr->SetAnimator(Animator);
 	// MainPuyoIdle Animation
 	for (int i = 0; i < ColorSprites.size(); i++)

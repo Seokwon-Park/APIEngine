@@ -45,7 +45,7 @@ AMenuBackground::AMenuBackground()
 			BgRenderers[i][j]->SetComponentLocation(FVector2D((j - 1) * 128, i * 128));
 			BgRenderers[i][j]->SetComponentScale({ 128,128 });
 			BgRenderers[i][j]->SetAnimator(BgAnimators[i]);
-			BgRenderers[i][j]->SetPivot(PivotType::TopLeft);
+			BgRenderers[i][j]->SetPivot(EPivotType::TopLeft);
 			//BgRenderers[i][j]->SetRemoveBackground(true);
 			BgAnimators[i]->ChangeAnimation("Loop" + std::to_string(Selected[i]));
 
@@ -58,7 +58,7 @@ AMenuBackground::AMenuBackground()
 	TextRenderer->SetComponentScale({ 528, 48 });
 	TextRenderer->SetComponentLocation(FVector2D(Size.Half().X, 48.0f));
 	TextRenderer->SetRemoveBackground(true);
-	TextRenderer->SetPivot(PivotType::TopCenter);
+	TextRenderer->SetPivot(EPivotType::TopCenter);
 }
 
 

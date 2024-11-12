@@ -18,6 +18,7 @@ public:
 protected:
 	// UContentsCore을(를) 통해 상속됨
 	void BeginPlay() override;
+	void SetupPuyoBoomParticleSprite();
 	void SetupCarbuncleSprite();
 	void SetupPuyoSprite();
 	void Tick() override;

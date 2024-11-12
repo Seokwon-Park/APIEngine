@@ -1,5 +1,6 @@
 #pragma once
 #include "Puyo.h"
+#include "PuyoText.h"
 
 #include <set>
 #include <EngineCore/Actor.h>
@@ -27,6 +28,7 @@ public:
 		FIntPoint NextBlockCoord;
 		FIntPoint NextNextBlockCoord;
 		FIntPoint BoardSize;
+		APuyoText* Score;
 		APuyoBoard* CounterBoard;
 	};
 	// constrcuter destructer
@@ -98,6 +100,7 @@ public:
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 
+	//Todo: Effect라는 클래스로 추상화?
 	void SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay);
 protected:
 	void BeginPlay() override;
@@ -183,10 +186,14 @@ private:
 	std::vector<USpriteRendererComponent*> Warnings;
 	int WarnNums = 0;
 
+	//연쇄 카운트
+	int Rensa = 0;
+	int ScoreToAdd = 0;
 
 
 	// 상대 게임판 객체 포인터
 	APuyoBoard* CounterBoard;
+	APuyoText* Score;
 
 
 

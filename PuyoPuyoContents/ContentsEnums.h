@@ -17,3 +17,10 @@ enum class EPuyoColor
 	Yellow,
 	Garbage,
 };
+
+enum class EPuyoTextColor
+{
+	Red,
+	Blue,
+	Green,
+};

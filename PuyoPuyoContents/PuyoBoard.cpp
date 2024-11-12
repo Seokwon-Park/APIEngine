@@ -2,6 +2,8 @@
 #include "PuyoBoard.h"
 #include "PuyoText.h"
 #include "PuyoBoomFX.h"
+#include "PuyoChainText.h"
+#include "ScoringTable.h"
 
 #include <algorithm>
 #include <EnginePlatform/EngineInput.h>
@@ -19,6 +21,7 @@ APuyoBoard::APuyoBoard()
 	{
 		Warnings[i] = CreateDefaultSubobject<USpriteRendererComponent>("Warn" + std::to_string(i));
 		Warnings[i]->SetRemoveBackground(true);
+		Warnings[i]->SetOrder(100);
 		Warnings[i]->SetActive(false);
 	}
 }
@@ -181,6 +184,7 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	BoardSize = _Settings.BoardSize;
 	NextBlockCoord = _Settings.NextBlockCoord;
 	NextNextBlockCoord = _Settings.NextNextBlockCoord;
+	Score = _Settings.Score;
 	CounterBoard = _Settings.CounterBoard;
 	Board.clear();
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
@@ -213,6 +217,9 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 
 void APuyoBoard::PuyoCreateLogic()
 {
+	Score->Add(ScoreToAdd);
+	ScoreToAdd = 0;
+	Rensa = 0; // 여기로 오게되면 연쇄는 0
 	BlockDir = 0;
 	MainPuyoCoord.X = (BoardSize.X - 1) / 2;
 	MainPuyoCoord.Y = 0;
@@ -487,8 +494,24 @@ void APuyoBoard::PuyoCheckLogic()
 			{
 				PuyoDestroyList.insert(Point);
 				//PuyoDestroyList.push_back(Point);
-			}
+			} 
+			
+
 		}
+	}
+	
+	if (!PuyoDestroyList.empty())
+	{
+		Rensa++;
+		int PC = static_cast<int>(PuyoDestroyList.size());
+		int CP = ChainPowerTable[Rensa];
+		int CB = ColorBonusTable[1];
+		int GB = GroupBonusTable[PC];
+		std::string PCText = std::to_string(PC * 10);
+		std::string BonusText = std::to_string(CP + CB + GB);
+		std::string Display = std::string(4 - PCText.size(), ' ') + PCText + '*' + std::string(3 - BonusText.size(), ' ') + BonusText;
+		Score->SetText(Display);
+		ScoreToAdd += PC * 10 * (CP + CB + GB);
 	}
 	PuyoCheckList.clear();
 
@@ -526,6 +549,9 @@ void APuyoBoard::PuyoDestroyLogic()
 
 	if (!IsDestroying)
 	{
+		auto Test = GetWorld()->SpawnActor<APuyoChainText>();
+		Test->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+		Test->SetupChainText(Rensa, EPuyoTextColor::Red);
 		int ix = 0;
 		for (auto [X, Y] : PuyoDestroyList)
 		{
@@ -773,7 +799,10 @@ void APuyoBoard::PuyoForceDown()
 	{
 		PuyoDropTimer = 0.0f;
 		ForceDownTimer = 0.05f;
-
+		if (PuyoTick % 2 == 0)
+		{
+			Score->Add(1);
+		}
 	}
 }
 
@@ -831,7 +860,7 @@ bool APuyoBoard::CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurI
 	{
 		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite("Warning")->GetSpriteData(_SpriteIndex);
 		Warnings[_CurIndex]->SetSprite("Warning", _SpriteIndex);
-		Warnings[_CurIndex]->SetPivot(PivotType::BottomLeft);
+		Warnings[_CurIndex]->SetPivot(EPivotType::BottomLeft);
 		Warnings[_CurIndex]->SetComponentLocation(_Offset);
 		Warnings[_CurIndex]->SetComponentScale(CurData.Transform.Scale);
 		Warnings[_CurIndex]->SetActive(true);

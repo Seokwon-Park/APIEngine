@@ -40,11 +40,11 @@
     <Filter Include="ContentsObject\Play\Together">
       <UniqueIdentifier>{dc593e12-f4c7-4dfc-a384-5d57d4db523f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Layers">
-      <UniqueIdentifier>{b9662924-ef07-47f3-a908-b1e8c3c968b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Play\Actor">
       <UniqueIdentifier>{07d994fd-2f3f-4c43-8682-1cf2addabfd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Global">
+      <UniqueIdentifier>{b9662924-ef07-47f3-a908-b1e8c3c968b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="SoloMenuBackground.cpp">
       <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoChainText.cpp">
+      <Filter>ContentsObject\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +156,13 @@
       <Filter>ContentsObject\Play\Solo</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnums.h">
-      <Filter>ContentsObject\Layers</Filter>
+      <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoChainText.h">
+      <Filter>ContentsObject\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoringTable.h">
+      <Filter>ContentsObject\Global</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
