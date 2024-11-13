@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineCore/GameMode.h"
 
-// »Ñ¿ä»Ñ¿ä ÇÃ·¹ÀÌÇÒ °ÔÀÓ¸ðµå
+// ³Ê¶û³ª¶û »Ñ¿ä»Ñ¿ä
 class ATogetherPlayGameMode : public AGameMode
 {
 public:

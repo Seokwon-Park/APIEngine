@@ -26,7 +26,7 @@ APuyoBoard::APuyoBoard()
 	}
 }
 
-void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPosition, float _DeltaTime, bool _IsClockwise) {
+void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, float _DeltaTime, bool _IsClockwise) {
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가 
 
 	float dAngle = 90.0f * _DeltaTime / 0.1f * (_IsClockwise ? 1.0f : -1.0f);
@@ -38,20 +38,20 @@ void APuyoBoard::SmoothRotate(FVector2D slavePuyoPosition, FVector2D mainPuyoPos
 
 
 	// 원점 기준 회전 후 Main Puyo 위치로 이동
-	FVector2D relativePosition = slavePuyoPosition - mainPuyoPosition;
+	FVector2D relativePosition = _SlavePuyoPos - _MainPuyoPos;
 	float rotatedX = relativePosition.X * CosTheta - relativePosition.Y * SinTheta;
 	float rotatedY = relativePosition.X * SinTheta + relativePosition.Y * CosTheta;
 
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
-	slavePuyoPosition = FVector2D(rotatedX, rotatedY) + mainPuyoPosition;
-	if (abs(RotateLeft) < 0.2f || slavePuyoPosition.Distance(TargetLocation) < 0.2f)
+	_SlavePuyoPos = FVector2D(rotatedX, rotatedY) + _MainPuyoPos;
+	if (abs(RotateLeft) < .1f || _SlavePuyoPos.Distance(TargetLocation) < 0.2f)
 		//if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
 	{
 		Block[1]->SetActorLocation(TargetLocation);
 		IsRotating = false;
 	}
-	Block[1]->SetActorLocation(slavePuyoPosition);
+	Block[1]->SetActorLocation(_SlavePuyoPos);
 }
 
 void APuyoBoard::SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay)

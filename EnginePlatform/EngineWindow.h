@@ -44,6 +44,11 @@ public:
 	{
 		return WindowImage;
 	}
+	//Temp
+	inline HWND GetHandle()
+	{
+		return WindowHandle;
+	}
 
 	inline void SetWindowTitle(std::string_view Text)
 	{

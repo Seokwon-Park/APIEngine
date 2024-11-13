@@ -83,6 +83,7 @@ public:
 	}
 
 	void BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function);
+
 protected:
 
 private:
