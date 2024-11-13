@@ -54,6 +54,7 @@ public:
 	void PuyoConnectLogic();
 	void PuyoCheckLogic();
 	void PuyoDestroyLogic();
+	void SpawnChainText();
 	void PuyoUpdateLogic();
 
 	bool IsInBoard(int TargetX, int TargetY);
@@ -94,7 +95,7 @@ public:
 	void Rotate(bool _IsClockwise);
 	void PuyoForceDown();
 
-	void SendAttack(int _Amount);
+	void SendAttack(int _Amount, FVector2D _StartPos);
 	void UpdateWarning();
 	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex);
 

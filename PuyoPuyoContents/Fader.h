@@ -16,14 +16,20 @@ public:
 	AFader& operator=(const AFader& _Other) = delete;
 	AFader& operator=(AFader&& _Other) noexcept = delete;
 
-	void Tick(float _DeltaTime) override;
+	// Lighter and Lighter
+	void FadeIn(float _Duration);
+	// Darker and Darker
+	void FadeOut(float _Duration);
 
-	
+	void Tick(float _DeltaTime) override;
 protected:
 	void BeginPlay() override;
 private:
 	USpriteRendererComponent* FadeRenderer;
-	unsigned char Alpha = 0;
-
+	float Start = 0.0f;
+	float End = 1.0f;
+	float ElapsedTime = 1.0f;
+	float Duration = 1.0f;
+	bool IsFading = false;
 };
 

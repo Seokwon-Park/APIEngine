@@ -23,10 +23,19 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineDebugHelper::SetShowFPS(true);
 
 	UEngineAPICore::GetCore()->LoadResources();
-
+	 
+	//인게임 뿌요 관련 스프라이트
 	SetupPuyoSprite();
+	
+	//Intro Eye
+	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOEYE", "OP_PUYO.CNS.BMP", { {0,0 }, { 144, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOBOT", "OP_PUYO.CNS.BMP", { {0,240 }, { 640, 240 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOTOP", "OP_PUYO.CNS.BMP", { {160,0 }, { 480, 240 } });
 
-	UImageManager::GetInstance().TestCreate("Black");
+
+	UImageManager::GetInstance().CreateColorImage("Black" );
+	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
+	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
 	//Cut Text
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });
@@ -41,6 +50,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "L.CNS.BMP", { 128, 128 });
 		UImageManager::GetInstance().CuttingSprite("SD" + std::to_string(i) + "R.CNS.BMP", { 128, 128 });
 	}
+
 
 	SetupPuyoBoomParticleSprite();
 
@@ -80,12 +90,21 @@ void PuyoPuyoContentsCore::BeginPlay()
 	SetupCarbuncleSprite();
 
 	// 연쇄발생시 이펙트 커팅
-	UImageManager::GetInstance().InsertCustomSpriteData("ChainEffect", "MENU_KA.CNS.BMP", { { 0,64 },{ 32, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("ChainEffect", "MENU_KA.CNS.BMP", { { 32,64 },{ 32, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("ChainEffect", "MENU_KA.CNS.BMP", { { 64,64 },{ 64, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("ChainFXR", "PUYO_RY.CNS.BMP", { {0,64},{32, 32} });
+	UImageManager::GetInstance().InsertCustomSpriteData("ChainFXR", "PUYO_RY.CNS.BMP", { { 32,64 },{ 32, 32 } });
+	for (int i = 0; i < 6; i++)
+	{
+		UImageManager::GetInstance().InsertCustomSpriteData("ChainFXR", "PUYO_RY.CNS.BMP", { { 64 + 64*i , 64 },{ 64, 64 } });
+	}
+	UImageManager::GetInstance().InsertCustomSpriteData("ChainFXB", "PUYO_BP.CNS.BMP", { {0,64},{32, 32} });
+	UImageManager::GetInstance().InsertCustomSpriteData("ChainFXB", "PUYO_BP.CNS.BMP", { { 32,64 },{ 32, 32 } });
+	for (int i = 0; i < 6; i++)
+	{
+		UImageManager::GetInstance().InsertCustomSpriteData("ChainFXB", "PUYO_BP.CNS.BMP", { { 64 + 64 * i , 64 },{ 64, 64 } });
+	}
 
 
-	//방해뿌요 스프라이트 커팅
+	//예고뿌요 스프라이트 커팅
 	UImageManager::GetInstance().InsertCustomSpriteData("Warning", "PUYO_RY.CNS.BMP", { { 320,144 },{ 16, 16 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Warning", "PUYO_RY.CNS.BMP", { { 288,128 },{ 32, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Warning", "PUYO_RY.CNS.BMP", { { 256,128 },{ 32, 32 } });

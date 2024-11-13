@@ -9,6 +9,7 @@ AMenuBackground::AMenuBackground()
 	std::fill(Select.end() - 4, Select.end(), 1);
 	do
 	{
+		//생성된 조합 저장을 위한 임시 벡터
 		std::vector<int> Temp;
 		Temp.reserve(4);
 		for (int i = 0; i < 10; i++)

@@ -72,7 +72,7 @@ void USpriteRendererComponent::Render()
 
 			if (CurAnimation->CurTime > CurFrameTime)
 			{
-				CurAnimation->CurTime -= CurFrameTime;
+				CurAnimation->CurTime = 0.0f;
 				++CurAnimation->CurIndex;
 
 				if (CurAnimation->Events.contains(CurAnimation->CurIndex))
@@ -127,7 +127,7 @@ void USpriteRendererComponent::Render()
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 	if (true == RemoveBackground)
 	{
-		RemoveColor = CurData.Image->GetPixelColor({ 0,0 }, { 0,0,0,0 });
+		RemoveColor = CurData.Image->GetPixelColor(RemoveCoord, { 0,0,0,0 });
 	}
 	else
 	{

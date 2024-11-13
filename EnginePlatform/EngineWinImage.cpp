@@ -204,14 +204,16 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	GetObject(hBitmap, sizeof(BITMAP), &Info);
 }
 
-void UEngineWinImage::CreateBitmap32(UEngineWinImage* _TargetImage, FVector2D _Scale)
+void UEngineWinImage::CreateBitmap32(UEngineWinImage* _TargetImage, FVector2D _Scale, UColor _ARGB)
 {
 	HBITMAP NewBitmap = nullptr;
 
 	// 픽셀 데이터 포인터
 	DWORD* PixelData = new DWORD[_Scale.iX()*_Scale.iY()];
 
-	DWORD color = (255 << 24) | 0x000000; // ARGB: 알파 값과 검은색
+	//DWORD color = (255 << 24) | 0x000000; // ARGB: 알파 값과 검은색
+	DWORD color = _ARGB; // ARGB: 알파 값과 검은색
+
 	for (int i = 0; i < _Scale.iX() * _Scale.iY(); ++i) {
 		PixelData[i] = color;
 	}

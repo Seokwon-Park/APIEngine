@@ -26,7 +26,7 @@ public:
 		const FTransform& _LTImageTrans,unsigned char _Alpha);
 	void Load(UEngineWinImage* _TargetImage, std::string_view _Path);
 	UColor GetPixelColor(FIntPoint _Point, UColor _DefaultColor);
-	void CreateBitmap32(UEngineWinImage* _TargetImage, FVector2D _Transform);
+	void CreateBitmap32(UEngineWinImage* _TargetImage, FVector2D _Transform, UColor _Color = UColor(0,0,0,255));
 protected:
 
 private:

@@ -401,7 +401,7 @@ UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
 	return Images[UpperName];
 }
 
-void UImageManager::TestCreate(std::string_view _KeyName)
+void UImageManager::CreateColorImage(std::string_view _KeyName, UColor _Color)
 {
 	std::string UpperName = UEngineString::ToUpper(_KeyName);
 
@@ -409,7 +409,7 @@ void UImageManager::TestCreate(std::string_view _KeyName)
 
 	UEngineWinImage* NewImage = new UEngineWinImage();
 	NewImage->SetName(UpperName);
-	NewImage->CreateBitmap32(WindowImage, {640,480});
+	NewImage->CreateBitmap32(WindowImage, {640,480}, _Color);
 
 	Images.insert({ UpperName, NewImage });
 

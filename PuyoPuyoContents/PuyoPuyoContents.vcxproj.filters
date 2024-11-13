@@ -84,9 +84,6 @@
     <ClCompile Include="PuyoBoomFX.cpp">
       <Filter>ContentsObject\Play\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="PuyoChainEffect.cpp">
-      <Filter>ContentsObject\Play\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="IntroBackground.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
@@ -104,6 +101,21 @@
     </ClCompile>
     <ClCompile Include="Fader.cpp">
       <Filter>ContentsObject\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="PublisherLogo.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningPuyo.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ThunderBackground.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoChainFX.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningRoll.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +155,6 @@
     <ClInclude Include="PuyoBoomFX.h">
       <Filter>ContentsObject\Play\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="PuyoChainEffect.h">
-      <Filter>ContentsObject\Play\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="IntroBackground.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
@@ -169,6 +178,21 @@
     </ClInclude>
     <ClInclude Include="Fader.h">
       <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="PublisherLogo.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningPuyo.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ThunderBackground.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoChainFX.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningRoll.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -44,12 +44,21 @@ public:
 	template <typename EnumType>
 	inline void SetOrder(EnumType _Order) { SetOrder(static_cast<int>(_Order)); }
 	inline void SetRemoveBackground(bool _Value) { RemoveBackground = _Value; }
-	inline void SetRemoveColor(FIntPoint _Coord) { RemoveColor = Sprite->GetSpriteData(CurIndex).Image->GetPixelColor(_Coord, { 0,0,0,0 }); }
+	inline void SetRemoveColor(FIntPoint _Coord) { RemoveCoord = _Coord; }
 	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }
 	void SetPivot(EPivotType _Type);
 	inline void SetPivot(FVector2D _Pivot) { Pivot = _Pivot; }
 
-	inline void SetAlphaChar(unsigned char _Value){Alpha = _Value;}
+	inline void SetAlpha(int _Value)
+	{
+		Alpha = _Value;
+		_Value = std::clamp(_Value, 0, 255);
+	}
+	inline void SetAlphaRate(float _Value)
+	{
+		_Value = std::clamp(_Value, 0.0f, 1.0f);
+		Alpha = static_cast<unsigned char>(_Value * 255);
+	}
 	//void SetAlphafloat(float _Value){
 	//	_Value = UEngineMath::Clamp(_Value, 0.0f, 1.0f);
 	//Alpha = static_cast<unsigned char>(_Value * 255.0f);
@@ -64,9 +73,10 @@ private:
 	bool IsCameraEffected;
 	bool RemoveBackground;
 	UColor RemoveColor;
+	FIntPoint RemoveCoord = FIntPoint::ZERO;
 	FVector2D Pivot;
 
-	unsigned char Alpha = 255;
+	int Alpha = 255;
 };
 
 

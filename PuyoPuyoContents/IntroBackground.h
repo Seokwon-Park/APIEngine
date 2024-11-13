@@ -19,7 +19,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 private:
-	USpriteRendererComponent* CKLogo;
 	USpriteRendererComponent* Sr[2];
 	float WaitTimer = .5f;
 };

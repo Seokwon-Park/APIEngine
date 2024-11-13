@@ -288,7 +288,7 @@ class UColor
 public:
 	union
 	{
-		int Color = 0;
+		unsigned int Color = 0;
 		struct
 		{
 			unsigned char R;
@@ -296,6 +296,7 @@ public:
 			unsigned char B;
 			unsigned char A;
 		};
+		
 	};
 
 	UColor()
@@ -314,6 +315,10 @@ public:
 		:R(_R), G(_G), B(_B), A(_A)
 	{
 
+	}
+	operator DWORD()
+	{
+		return (A << 24) | (R << 16) | (G << 8) | B;
 	}
 };
 

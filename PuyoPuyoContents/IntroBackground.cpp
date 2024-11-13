@@ -5,14 +5,11 @@ AIntroBackground::AIntroBackground()
 {
 	SetActorLocation(UEngineAPICore::GetEngineWindow().GetWindowSize().Half());
 
-	CKLogo = CreateDefaultSubobject<USpriteRendererComponent>("CompileKorea");
-	CKLogo->SetSprite("AAA.CNS.BMP", 0);
-	CKLogo->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 
 	for (int i = 0; i < 2; i++)
 	{
 		Sr[i] = CreateDefaultSubobject<USpriteRendererComponent>("IntroBackground" + std::to_string(i));
-		Sr[i]->SetOrder(-1);
+		Sr[i]->SetOrder(ERenderLayer::BACKGROUND);
 		Sr[i]->SetSprite("OP_LINE.CNS.BMP", 0);
 		Sr[i]->SetComponentLocation({ 0.0f, i*-UEngineAPICore::GetEngineWindow().GetWindowSize().Y });
 		Sr[i]->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());

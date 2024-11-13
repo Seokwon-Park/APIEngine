@@ -3,7 +3,9 @@
 #include "PuyoText.h"
 #include "PuyoBoomFX.h"
 #include "PuyoChainText.h"
+#include "PuyoChainFX.h"
 #include "ScoringTable.h"
+
 
 #include <algorithm>
 #include <EnginePlatform/EngineInput.h>
@@ -30,7 +32,7 @@ void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, f
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가 
 
 	float dAngle = 90.0f * _DeltaTime / 0.1f * (_IsClockwise ? 1.0f : -1.0f);
-	RotateLeft -= dAngle;
+	RotateLeft -= abs(dAngle);
 	// 회전 변환 계산 (라디안으로 변환 필요)
 	float AngleInRadians = FEngineMath::DegreesToRadians(dAngle);
 	float CosTheta = std::cos(AngleInRadians);
@@ -45,7 +47,7 @@ void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, f
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
 	_SlavePuyoPos = FVector2D(rotatedX, rotatedY) + _MainPuyoPos;
-	if (abs(RotateLeft) < .1f || _SlavePuyoPos.Distance(TargetLocation) < 0.2f)
+	if (RotateLeft < .1f || _SlavePuyoPos.Distance(TargetLocation) < 0.2f)
 		//if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
 	{
 		Block[1]->SetActorLocation(TargetLocation);
@@ -297,13 +299,10 @@ void APuyoBoard::PuyoMoveLogic()
 			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			PuyoTick = 0;
 		}
-		SendAttack(10);
 		CounterBoard->UpdateWarning();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
-
-
 
 	PuyoDropTimer = PuyoDropDelay;
 }
@@ -390,7 +389,7 @@ void APuyoBoard::PuyoConnectLogic()
 			int TargetX = X + Dx[Dir];
 			int TargetY = Y + Dy[Dir];
 			// 범위가 보드 밖이면 조사하면 안된다.
-			if (!IsInBoard(TargetX,TargetY))
+			if (!IsInBoard(TargetX, TargetY))
 			{
 				continue;
 			}
@@ -494,12 +493,12 @@ void APuyoBoard::PuyoCheckLogic()
 			{
 				PuyoDestroyList.insert(Point);
 				//PuyoDestroyList.push_back(Point);
-			} 
-			
+			}
+
 
 		}
 	}
-	
+
 	if (!PuyoDestroyList.empty())
 	{
 		Rensa++;
@@ -549,9 +548,8 @@ void APuyoBoard::PuyoDestroyLogic()
 
 	if (!IsDestroying)
 	{
-		auto Test = GetWorld()->SpawnActor<APuyoChainText>();
-		Test->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-		Test->SetupChainText(Rensa, EPuyoTextColor::Red);
+		SpawnChainText();
+		SendAttack(10, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
 		int ix = 0;
 		for (auto [X, Y] : PuyoDestroyList)
 		{
@@ -560,6 +558,7 @@ void APuyoBoard::PuyoDestroyLogic()
 			SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);
 			ix++;
 		}
+		//여기서 공격한다.
 		IsDestroying = true;
 	}
 
@@ -591,6 +590,13 @@ void APuyoBoard::PuyoDestroyLogic()
 	PuyoDestroyList.clear();
 
 	CurStep = EPuyoLogicStep::PuyoUpdate;
+}
+
+void APuyoBoard::SpawnChainText()
+{
+	APuyoChainText* Text = GetWorld()->SpawnActor<APuyoChainText>();
+	Text->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+	Text->SetupChainText(Rensa, EPuyoTextColor::Red);
 }
 
 void APuyoBoard::PuyoUpdateLogic()
@@ -776,19 +782,12 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 		}
 	}
 	IsRotatedClockWise = _IsClockwise;
-	if (_IsClockwise)
-	{
-		RotateLeft += 90;
-	}
-	else
-	{
-		RotateLeft -= 90;
-	}
+	RotateLeft = 90;
 	IsRotating = true;
 }
 
 
-void APuyoBoard::PuyoForceDown()
+void APuyoBoard::PuyoForceDown() 
 {
 	if (CurStep != EPuyoLogicStep::PuyoMove)
 	{
@@ -806,9 +805,12 @@ void APuyoBoard::PuyoForceDown()
 	}
 }
 
-void APuyoBoard::SendAttack(int _Amount) // 방해뿌요 몇개 보낼껀지
+void APuyoBoard::SendAttack(int _Amount, FVector2D _StartPos) // 방해뿌요 몇개 보낼껀지
 {
 	// Todo: 대충 머 구슬같은거 날라가는 모션 추가해
+	APuyoChainFX* Temp = GetWorld()->SpawnActor<APuyoChainFX>();
+	Temp->SetActorLocation(_StartPos);
+	Temp->SetupChainFX(_StartPos, CounterBoard->GetActorLocation()+ FVector2D(PuyoSize.X*3.0f,32.0f), 1.0f);
 	CounterBoard->WarnNums += _Amount;
 }
 

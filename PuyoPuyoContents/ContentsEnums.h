@@ -3,9 +3,7 @@
 enum class ERenderLayer
 {
 	BACKGROUND = -1000,
-	COLMAP = -999,
-	PLAYER = 0,
-	FRONT = 10000,
+	PLAY = 0,
 };
 
 enum class EPuyoColor

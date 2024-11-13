@@ -153,6 +153,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="OpeningPuyo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CarbuncleMenu.h">
       <SubType>
       </SubType>
@@ -174,16 +178,24 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="OpeningRoll.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PlayBackground.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="aepch.h" />
+    <ClInclude Include="PublisherLogo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PuyoBoomFX.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PuyoChainEffect.h">
+    <ClInclude Include="PuyoChainFX.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -201,6 +213,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SoloMenuGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ThunderBackground.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -227,6 +243,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="OpeningPuyo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CarbuncleMenu.cpp">
       <SubType>
       </SubType>
@@ -247,6 +267,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="OpeningRoll.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PlayBackground.cpp">
       <SubType>
       </SubType>
@@ -255,11 +279,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PublisherLogo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PuyoBoomFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PuyoChainEffect.cpp">
+    <ClCompile Include="PuyoChainFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -276,6 +304,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SoloMenuGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ThunderBackground.cpp">
       <SubType>
       </SubType>
     </ClCompile>
