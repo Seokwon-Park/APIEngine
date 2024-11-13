@@ -133,7 +133,15 @@ void USpriteRendererComponent::Render()
 	{
 		RemoveColor = UColor(255, 0, 255, 0);
 	}
-	CurData.Image->CopyToTransparent(BackBufferImage, Transform, CurData.Transform, RemoveColor);
+
+	if (Alpha == 255)
+	{
+		CurData.Image->CopyToTransparent(BackBufferImage, Transform, CurData.Transform, RemoveColor);
+	}
+	else
+	{
+		CurData.Image->CopyToAlphaBlend(BackBufferImage, Transform, CurData.Transform, Alpha);
+	}
 }
 
 void USpriteRendererComponent::SetOrder(int _Order)

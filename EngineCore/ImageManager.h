@@ -39,7 +39,7 @@ public:
 	UEngineSprite* FindSprite(std::string_view _KeyName);
 	UEngineWinImage* FindImage(std::string_view _KeyName);
 
-
+	void TestCreate(std::string_view _KeyName);
 protected:
 
 private:

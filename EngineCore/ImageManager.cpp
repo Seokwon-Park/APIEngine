@@ -401,4 +401,28 @@ UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
 	return Images[UpperName];
 }
 
+void UImageManager::TestCreate(std::string_view _KeyName)
+{
+	std::string UpperName = UEngineString::ToUpper(_KeyName);
+
+	UEngineWinImage* WindowImage = UEngineAPICore::GetWindowBuffer();
+
+	UEngineWinImage* NewImage = new UEngineWinImage();
+	NewImage->SetName(UpperName);
+	NewImage->CreateBitmap32(WindowImage, {640,480});
+
+	Images.insert({ UpperName, NewImage });
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	NewImage->SetName(UpperName);
+
+	FTransform Transform;
+	Transform.Location = { 0,0 };
+	Transform.Scale = NewImage->GetImageSize();
+
+	NewSprite->PushData(NewImage, Transform);
+
+	Sprites.insert({ UpperName, NewSprite });
+}
+
 

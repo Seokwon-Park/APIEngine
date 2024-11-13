@@ -26,6 +26,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	SetupPuyoSprite();
 
+	UImageManager::GetInstance().TestCreate("Black");
 	//Cut Text
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });

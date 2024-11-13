@@ -113,6 +113,34 @@ void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTr
 	);
 }
 
+void UEngineWinImage::CopyToAlphaBlend(UEngineWinImage* _TargetImage, const FTransform& _RenderTransform,
+	const FTransform& _CopyTransform, unsigned char _Alpha)
+{
+	BLENDFUNCTION BlendFunc;
+	BlendFunc.BlendOp = AC_SRC_OVER;
+	BlendFunc.BlendFlags = 0;
+	BlendFunc.AlphaFormat = AC_SRC_ALPHA;
+	BlendFunc.SourceConstantAlpha = _Alpha;
+
+	HDC CopyDC = ImageDC;
+	HDC TargetDC = _TargetImage->ImageDC;
+	FVector2D LeftTop = _RenderTransform.CenterLeftTop();
+
+	AlphaBlend(
+		TargetDC,
+		LeftTop.iX(),
+		LeftTop.iY(),
+		_RenderTransform.Scale.iX(),
+		_RenderTransform.Scale.iY(),
+		CopyDC,
+		_CopyTransform.Location.iX(),
+		_CopyTransform.Location.iY(),
+		_CopyTransform.Scale.iX(),
+		_CopyTransform.Scale.iY(),
+		BlendFunc
+	);
+}
+
 void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path)
 {
 	UEnginePath Path = _Path;
@@ -174,6 +202,45 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	ImageDC = NewImageDC;
 
 	GetObject(hBitmap, sizeof(BITMAP), &Info);
+}
+
+void UEngineWinImage::CreateBitmap32(UEngineWinImage* _TargetImage, FVector2D _Scale)
+{
+	HBITMAP NewBitmap = nullptr;
+
+	// 픽셀 데이터 포인터
+	DWORD* PixelData = new DWORD[_Scale.iX()*_Scale.iY()];
+
+	DWORD color = (255 << 24) | 0x000000; // ARGB: 알파 값과 검은색
+	for (int i = 0; i < _Scale.iX() * _Scale.iY(); ++i) {
+		PixelData[i] = color;
+	}
+
+	// 32비트 비트맵 생성
+	NewBitmap = CreateBitmap(_Scale.iX(), _Scale.iY(), 1, 32, PixelData);
+	delete[] PixelData;
+
+	if (nullptr == NewBitmap)
+	{
+		MSGASSERT("이미지 생성에 실패했습니다.");
+		return;
+	}
+
+
+	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
+	HBITMAP OldBitmap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
+
+	if (nullptr != OldBitmap)
+	{
+		DeleteObject(OldBitmap);
+	}
+
+
+	hBitmap = NewBitmap;
+	ImageDC = NewImageDC;
+
+	GetObject(hBitmap, sizeof(BITMAP), &Info);
+
 }
 
 UColor UEngineWinImage::GetPixelColor(FIntPoint _Point, UColor _DefaultColor)

@@ -102,6 +102,9 @@
     <ClCompile Include="PuyoChainText.cpp">
       <Filter>ContentsObject\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Fader.cpp">
+      <Filter>ContentsObject\Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -162,6 +165,9 @@
       <Filter>ContentsObject\Text</Filter>
     </ClInclude>
     <ClInclude Include="ScoringTable.h">
+      <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Fader.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
   </ItemGroup>

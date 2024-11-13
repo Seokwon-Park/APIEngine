@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "IntroGameMode.h"
 #include "IntroBackground.h"
+#include "Fader.h"
 #include <EnginePlatform/EngineInput.h>
 //테스트 용
 #include "PuyoBoomFX.h"
@@ -19,8 +20,7 @@ void AIntroGameMode::BeginPlay()
 	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
 	
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();
-	
-
+	AFader* Fader = GetWorld()->SpawnActor<AFader>();
 }
 
 void AIntroGameMode::Tick(float _DeltaTime)

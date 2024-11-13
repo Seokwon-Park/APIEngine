@@ -3,19 +3,26 @@
 
 AIntroBackground::AIntroBackground()
 {
-	SetActorLocation(UEngineAPICore::GetEngineWindow().GetWindowSize() / 2);
-	SetActorScale({ 100,100 });
+	SetActorLocation(UEngineAPICore::GetEngineWindow().GetWindowSize().Half());
 
-	Sr[0] = CreateDefaultSubobject<USpriteRendererComponent>("IntroBackground");
-	Sr[0]->SetOrder(-1);
-	Sr[0]->SetSprite("OP_LINE.CNS.BMP", 0);
-	Sr[0]->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
+	CKLogo = CreateDefaultSubobject<USpriteRendererComponent>("CompileKorea");
+	CKLogo->SetSprite("AAA.CNS.BMP", 0);
+	CKLogo->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 
-	Sr[1] = CreateDefaultSubobject<USpriteRendererComponent>("IntroBackground2");
-	Sr[1]->SetOrder(-1);
-	Sr[1]->SetSprite("OP_LINE.CNS.BMP", 0);
-	Sr[1]->SetComponentLocation({ Sr[1]->GetComponentLocation().X, -UEngineAPICore::GetEngineWindow().GetWindowSize().Y });
-	Sr[1]->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
+	for (int i = 0; i < 2; i++)
+	{
+		Sr[i] = CreateDefaultSubobject<USpriteRendererComponent>("IntroBackground" + std::to_string(i));
+		Sr[i]->SetOrder(-1);
+		Sr[i]->SetSprite("OP_LINE.CNS.BMP", 0);
+		Sr[i]->SetComponentLocation({ 0.0f, i*-UEngineAPICore::GetEngineWindow().GetWindowSize().Y });
+		Sr[i]->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
+
+
+		//Sr[1] = CreateDefaultSubobject<USpriteRendererComponent>("IntroBackground2");
+		//Sr[1]->SetOrder(-1);
+		//Sr[1]->SetSprite("OP_LINE.CNS.BMP", 0);
+		//Sr[1]->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
+	}
 	//Animator->CreateAnimation("BgAnim1", "OP_LINE.CNS.BMP", )
 
 }
