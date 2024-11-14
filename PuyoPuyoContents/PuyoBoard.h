@@ -16,6 +16,7 @@ enum class EPuyoLogicStep
 	PuyoCheck, // 뿌요 파괴조건 체크 로직
 	PuyoDestroy, // 뿌요 파괴 로직
 	PuyoUpdate, // 파괴되고 난다음 낙하해야 되는 뿌요가 있는지 체크-> 있으면 Place로 없으면 Create로
+	PuyoGameOver, // 게임오버 로직
 };
 // 설명 :
 class APuyoBoard : public AActor
@@ -54,7 +55,6 @@ public:
 	void PuyoConnectLogic();
 	void PuyoCheckLogic();
 	void PuyoDestroyLogic();
-	void SpawnChainText();
 	void PuyoUpdateLogic();
 
 	bool IsInBoard(int TargetX, int TargetY);
@@ -83,6 +83,11 @@ public:
 	{
 		SetPuyoOnBoard(_XY.X, _XY.Y, _Puyo);
 	}
+
+	inline void AddWarnNums(int _Amount)
+	{
+		WarnNums += _Amount;
+	}
 	//움직일 수 있는지 검사하는 함수
 	// 아래 움직임
 	// 왜 2개로 나눴는지는 아무튼 필요해서 나눔
@@ -95,9 +100,10 @@ public:
 	void Rotate(bool _IsClockwise);
 	void PuyoForceDown();
 
-	void SendAttack(int _Amount, FVector2D _StartPos);
+	void SpawnChainText();
+	void SpawnAttack(int _Amount, FVector2D _StartPos);
 	void UpdateWarning();
-	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex);
+	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex, int& _Left);
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 
@@ -110,7 +116,7 @@ private:
 	const int Dx[4] = { 0, -1, 0, 1 };
 	const int Dy[4] = { -1, 0, 1, 0 };
 	//예고 뿌요 단위
-	const int WarnUnit[6] = { 1,6,30, 200, 300, 400 };
+	const int WarnUnit[6] = { 1,6,30, 200, 300, 420 };
 
 	// 난수 생성기
 	UEngineRandom RandomDevice;
@@ -186,6 +192,9 @@ private:
 	//방해뿌요?
 	std::vector<USpriteRendererComponent*> Warnings;
 	int WarnNums = 0;
+	//내가 놓았어도 상대 연쇄가 진행중이면 방해뿌요를 놓지 않는다.
+	bool IsChaining = false;
+	
 
 	//연쇄 카운트
 	int Rensa = 0;

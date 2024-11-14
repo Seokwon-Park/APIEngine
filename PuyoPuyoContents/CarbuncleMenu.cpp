@@ -92,7 +92,7 @@ void ACarbuncleMenu::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetWorld()->GetInputSystem().BindAction(EKey::Mouseleft, KeyEvent::Down, std::bind(&ACarbuncleMenu::Test, this));
+	//GetWorld()->GetInputSystem().BindAction(EKey::Mouseleft, KeyEvent::Down, std::bind(&ACarbuncleMenu::Test, this));
 
 }
 
@@ -105,13 +105,26 @@ void ACarbuncleMenu::Test()
 	RHandRenderer->SetSprite("CARRIGHT", MenuIndex % 3);
 	LArrowAnimator->ChangeAnimation("CarArrowIdle");
 	RArrowAnimator->ChangeAnimation("CarArrowIdle");
-	SetInacitve();
+	SetInactive();
 
 }
 
-void ACarbuncleMenu::SetInacitve()
+void ACarbuncleMenu::SetInactive()
 {
 	HeadRenderer->SetSprite("CARHEAD", 1);
+
+}
+
+void ACarbuncleMenu::SetActive()
+{
+	HeadRenderer->SetSprite("CARHEAD", 0);
+}
+
+void ACarbuncleMenu::SetupCarbuncleMenu(int _MenuIndex)
+{
+	MenuIndex = _MenuIndex;
+	UBodyRenderer->SetSprite("CARUBODY", MenuIndex);
+	DBodyRenderer->SetSprite("CARDBODY", MenuIndex);
 
 }
 

@@ -17,7 +17,9 @@ public:
 	ACarbuncleMenu& operator=(ACarbuncleMenu&& _Other) noexcept = delete;
 
 	void Test();
-	void SetInacitve();
+	void SetInactive();
+	void SetActive();
+	void SetupCarbuncleMenu(int _MenuIndex);
 	void Tick(float _DeltaTime) override;
 protected:
 	void BeginPlay() override;

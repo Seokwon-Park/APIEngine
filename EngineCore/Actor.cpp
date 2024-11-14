@@ -23,6 +23,16 @@ AActor::~AActor()
 	Components.clear();
 }
 
+void AActor::Tick(float _DeltaTime)
+{
+	if (true == IsDebug)
+	{
+		FVector2D Pos = GetActorLocation();
+		FVector2D CameraPos = GetWorld()->GetCameraPos();
+		UEngineDebugHelper::SetDebugPos(Pos - CameraPos, UEngineDebugHelper::EDebugPosType::Circle);
+	}
+}
+
 void AActor::BeginPlay()
 {
 	for (auto Component : Components)

@@ -18,10 +18,12 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void MoveToScene(std::string _SceneName);
+	void MoveMenu(FVector2D _Dir);
 
 protected:
 
 private:
-
+	int CurMenuIndex = 0;
+	std::vector<class ACarbuncleMenu*> Menus;
 };
 

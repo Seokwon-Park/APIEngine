@@ -21,8 +21,7 @@ public:
 	AActor& operator=(const AActor& _Other) = delete;
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
-	// 이 객체가 처음 Tick을 돌리기 직전에 실행
-	virtual void Tick(float _DeltaTime) {}
+	virtual void Tick(float _DeltaTime);
 
 	inline class ULevel* GetWorld() const { return World; }
 	inline FTransform GetTransform() const { return Transform; }
@@ -31,7 +30,7 @@ public:
 
 	inline void AddActorLocation(FVector2D _Direction) { Transform.Location += _Direction; }
 	inline void SetActorLocation(FVector2D _Location) { Transform.Location = _Location; }
-	inline void SetActorScale(FVector2D _Scale){Transform.Scale = _Scale;}
+	inline void SetActorDebug(bool _Value) { IsDebug = _Value; }
 
 	inline virtual void SetActive(bool _Value) override
 	{
@@ -59,8 +58,10 @@ public:
 		return NewComponent;
 	}
 protected:
+	// 이 객체가 처음 Tick을 돌리기 직전에 실행
 	virtual void BeginPlay();
 private:
+	bool IsDebug = false;
 	class ULevel* World;
 	FTransform Transform;
 	std::list<class UActorComponent*> Components;

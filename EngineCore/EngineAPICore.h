@@ -62,9 +62,14 @@ public:
 		return EngineMainWindow;
 	}
 
-	float GetDeltaTime()
+	float GetDeltaTime() 
 	{
 		return DeltaTimer.GetDeltaTime();
+	}
+
+	inline static ULevel* GetCurrentLevel()
+	{
+		return MainCore->CurLevel;
 	}
 
 	template <typename GameModeType, typename MainPawnType>

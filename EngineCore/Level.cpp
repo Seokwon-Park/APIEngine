@@ -34,6 +34,8 @@ ULevel::~ULevel()
 
 void ULevel::BeginPlay()
 {
+	GetInputSystem().BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&UEngineDebugHelper::PivotDebugSwitch));
+
 	//for (AActor* Actor : AllActors)
 	//{
 	//	if (nullptr != Actor)
@@ -96,7 +98,7 @@ void ULevel::Render()
 		}
 	}
 
-	UEngineDebugHelper::PrintEngineDebugText();
+	UEngineDebugHelper::PrintEngineDebugRender();
 
 	SwapBuffer();
 }
@@ -129,6 +131,36 @@ void ULevel::Release()
 		}
 		delete CurActor;
 		Itr = AllActors.erase(Itr);
+	}
+}
+
+void ULevel::PivotDebugOn()
+{
+	for (AActor* Actor : AllActors)
+	{
+		if (false == Actor->IsActivated())
+		{
+			continue;
+		}
+		if (nullptr != Actor)
+		{
+			Actor->SetActorDebug(true);
+		}
+	}
+}
+
+void ULevel::PivotDebugOff()
+{
+	for (AActor* Actor : AllActors)
+	{
+		if (false == Actor->IsActivated())
+		{
+			continue;
+		}
+		if (nullptr != Actor)
+		{
+			Actor->SetActorDebug(false);
+		}
 	}
 }
 

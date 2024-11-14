@@ -22,5 +22,6 @@ protected:
 private:
 	USpriteRendererComponent* OPPuyoTop;
 	USpriteRendererComponent* OPPuyoBot;
+	USpriteRendererComponent* OPPuyoEye;
 };
 

@@ -219,6 +219,11 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 
 void APuyoBoard::PuyoCreateLogic()
 {
+
+	if (Board[1][2] != nullptr)
+	{
+		return;
+	}
 	Score->Add(ScoreToAdd);
 	ScoreToAdd = 0;
 	Rensa = 0; // 여기로 오게되면 연쇄는 0
@@ -299,7 +304,42 @@ void APuyoBoard::PuyoMoveLogic()
 			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			PuyoTick = 0;
 		}
-		CounterBoard->UpdateWarning();
+		//방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
+		if (WarnNums > 0 && !IsChaining)
+		{
+			int DropAmount = FEngineMath::Min(WarnNums, 30); // 최대 5줄씩떨어뜨릴 수 있다.
+			WarnNums -= DropAmount;
+			std::vector<APuyo*> DropList;
+			//떨어뜨려야 하는 개수만큼 생성한다.
+			for (int i = 0; i < DropAmount; i++)
+			{
+				APuyo* GarbagePuyo = GetWorld()->SpawnActor<APuyo>();
+				DropList.push_back(GarbagePuyo);
+			}
+
+			// 일단 게임판의 폭(=6)보다 크면 한줄씩 채워야 한다.
+			int Height = DropAmount / BoardSize.X;
+			for (int Y = 0; Y < Height; Y++)
+			{
+				for (int X = 0; X < BoardSize.X; X++)
+				{
+					int Index = BoardSize.X * Y + X;
+					DropList[Index]->SetupPuyo(GetActorLocation() + FVector2D(PuyoSize.X * X, -PuyoSize.Y * Y), EPuyoColor::Garbage);
+					for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
+					{
+						if (Board[Y][X] == nullptr)
+						{
+							Board[Y][X] = DropList[Index];
+							Board[Y][X]->SetTargetXY({ X, Y });
+							PlaceCheckList.push_back(Board[Y][X]);
+							Index++;
+							break;
+						}
+					}
+				}
+			}
+			UpdateWarning();
+		}
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
@@ -453,9 +493,12 @@ void APuyoBoard::PuyoCheckLogic()
 		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
 		std::queue<FIntPoint> Queue;
 
+		// Todo : 룰에따라 4대신 다른값도 쓰일 수 있게 할 예정
 		// 현재 위치의 뿌요와 색상이 같은 뿌요의 좌표들이 저장되는 
 		// 임시 벡터 사이즈가 4보다 크면 제거목록에 넣음
 		std::vector<FIntPoint> Temp;
+		// 근처의 방해뿌요도 같이 저장해놓고 4보다 크면 지우자
+		std::vector<FIntPoint> Garbages;
 
 		Queue.push(Point);
 		Temp.push_back(Point);
@@ -484,6 +527,11 @@ void APuyoBoard::PuyoCheckLogic()
 					Temp.push_back(FIntPoint(TargetX, TargetY));
 					Visited[TargetY][TargetX] = true;
 				}
+				if (TargetPuyo->GetColor() == EPuyoColor::Garbage)
+				{
+					Garbages.push_back(FIntPoint(TargetX, TargetY));
+					Visited[TargetY][TargetX] = true;
+				}
 			}
 		}
 
@@ -494,8 +542,11 @@ void APuyoBoard::PuyoCheckLogic()
 				PuyoDestroyList.insert(Point);
 				//PuyoDestroyList.push_back(Point);
 			}
-
-
+			for (FIntPoint Point : Garbages)
+			{
+				PuyoDestroyList.insert(Point);
+				//PuyoDestroyList.push_back(Point);
+			}
 		}
 	}
 
@@ -549,14 +600,17 @@ void APuyoBoard::PuyoDestroyLogic()
 	if (!IsDestroying)
 	{
 		SpawnChainText();
-		SendAttack(10, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+		SpawnAttack(RandomDevice.GetRandomInt(6, 10), GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
 		int ix = 0;
 		for (auto [X, Y] : PuyoDestroyList)
 		{
 			APuyo* CurPuyo = Board[Y][X];
-			CurPuyo->PlayAnimation("Boom");
-			SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);
-			ix++;
+			if (CurPuyo->GetColor() != EPuyoColor::Garbage)
+			{
+				CurPuyo->PlayAnimation("Boom");
+				SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);
+				ix++;
+			}
 		}
 		//여기서 공격한다.
 		IsDestroying = true;
@@ -592,12 +646,6 @@ void APuyoBoard::PuyoDestroyLogic()
 	CurStep = EPuyoLogicStep::PuyoUpdate;
 }
 
-void APuyoBoard::SpawnChainText()
-{
-	APuyoChainText* Text = GetWorld()->SpawnActor<APuyoChainText>();
-	Text->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-	Text->SetupChainText(Rensa, EPuyoTextColor::Red);
-}
 
 void APuyoBoard::PuyoUpdateLogic()
 {
@@ -737,7 +785,7 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 	{
 		BlockDir = (BlockDir + 1) % 4;
 	}
-	//Todo : 버그 ㅅㅂ
+	//Todo : 버그 ㅈㄴ생김 지속적 관찰 요망
 	//Block[1]->SetActorLocation(Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY()));
 	if (MainPuyoCoord.X == 0 || Board[MainPuyoCoord.Y][MainPuyoCoord.X - 1] != nullptr || (PuyoTick % 2 == 1 && Board[MainPuyoCoord.Y + 1][MainPuyoCoord.X - 1] != nullptr))
 	{
@@ -787,7 +835,7 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 }
 
 
-void APuyoBoard::PuyoForceDown() 
+void APuyoBoard::PuyoForceDown()
 {
 	if (CurStep != EPuyoLogicStep::PuyoMove)
 	{
@@ -805,60 +853,45 @@ void APuyoBoard::PuyoForceDown()
 	}
 }
 
-void APuyoBoard::SendAttack(int _Amount, FVector2D _StartPos) // 방해뿌요 몇개 보낼껀지
+void APuyoBoard::SpawnChainText()
+{
+	APuyoChainText* Text = GetWorld()->SpawnActor<APuyoChainText>();
+	Text->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+	Text->SetupChainText(Rensa, EPuyoTextColor::Red);
+}
+
+
+void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos) // 방해뿌요 몇개 보낼껀지
 {
 	// Todo: 대충 머 구슬같은거 날라가는 모션 추가해
-	APuyoChainFX* Temp = GetWorld()->SpawnActor<APuyoChainFX>();
-	Temp->SetActorLocation(_StartPos);
-	Temp->SetupChainFX(_StartPos, CounterBoard->GetActorLocation()+ FVector2D(PuyoSize.X*3.0f,32.0f), 1.0f);
-	CounterBoard->WarnNums += _Amount;
+	APuyoChainFX* ChainFX = GetWorld()->SpawnActor<APuyoChainFX>();
+	ChainFX->SetActorLocation(_StartPos);
+	ChainFX->SetupChainFX(CounterBoard, _StartPos, CounterBoard->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f), _Amount);
 }
 
 void APuyoBoard::UpdateWarning()
 {
 	int CurIndex = 0;
+	int Temp = WarnNums;
 	FVector2D CurLocation = FVector2D(0.0f, PuyoSize.Y);
+	for (int i = 0; i < 6; i++)
+	{
+		Warnings[i]->SetActive(false);
+	}
+	// i = WarUnitIndex ?머라할지 모르겠다 코드 복잡해짐.
 	for (int i = 5; i >= 0; i--)
 	{
-		if (CalcWarn(i, CurLocation, CurIndex))
+		if (CalcWarn(i, CurLocation, CurIndex, Temp))
 		{
 			break;
 		}
 	}
-	//UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite("Warning")->GetSpriteData(0);
-	//{
-	//	Warnings[CurIndex]->SetSprite("Warning", 4);
-	//	Warnings[CurIndex]->SetPivot(PivotType::BottomLeft);
-	//	Warnings[CurIndex]->SetComponentLocation(CurLocation);
-	//	Warnings[CurIndex]->SetComponentScale(CurData.Transform.Scale);
-	//	Warnings[CurIndex]->SetActive(true);
-	//	WarnNums -= 400;
-	//}
-	//while (WarnNums >= 300)
-	//{
-	//	WarnNums -= 400;
-
-	//}
-	//while (WarnNums >= 200) {
-	//	WarnNums -= 400;
-	//}
-	//while (WarnNums >= 30) {
-	//	WarnNums -= 400;
-	//}
-	//while (WarnNums >= 6) {
-	//	WarnNums -= 400;
-	//}
-	//while (WarnNums >= 1)
-	//{
-	//	WarnNums -= 400;
-	//}
-	WarnNums = 0;
 }
 
 // 만약 6자리가 다찼으면 true를 리턴한다.
-bool APuyoBoard::CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex)
+bool APuyoBoard::CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex, int& _Left)
 {
-	while (WarnNums >= WarnUnit[_SpriteIndex])
+	while (_Left >= WarnUnit[_SpriteIndex])
 	{
 		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite("Warning")->GetSpriteData(_SpriteIndex);
 		Warnings[_CurIndex]->SetSprite("Warning", _SpriteIndex);
@@ -866,7 +899,7 @@ bool APuyoBoard::CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurI
 		Warnings[_CurIndex]->SetComponentLocation(_Offset);
 		Warnings[_CurIndex]->SetComponentScale(CurData.Transform.Scale);
 		Warnings[_CurIndex]->SetActive(true);
-		WarnNums -= WarnUnit[_SpriteIndex];
+		_Left -= WarnUnit[_SpriteIndex];
 		_CurIndex++;
 		_Offset += FVector2D(CurData.Transform.Scale.X, 0.0f);
 		if (_CurIndex == 6)

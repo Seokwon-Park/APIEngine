@@ -18,6 +18,7 @@ APuyoChainFX::APuyoChainFX()
 	Animator->ChangeAnimation("Start");
 	Animator->SetAnimationEvent("Start", 1, std::bind(&APuyoChainFX::ChangeScaleAndAnimation, this));
 	Animator->SetAnimationEvent("Pop", 3, std::bind(&APuyoChainFX::Destroy, this, 0.0f));
+	Animator->SetAnimationEvent("Pop", 3, [=]() {Target->AddWarnNums(AttackAmount);  Target->UpdateWarning(); });
 
 }
 
@@ -26,12 +27,14 @@ APuyoChainFX::~APuyoChainFX()
 }
 
 
-void APuyoChainFX::SetupChainFX(FVector2D _Start, FVector2D _End, float _Duration)
+void APuyoChainFX::SetupChainFX(APuyoBoard* _Target, FVector2D _Start, FVector2D _End, int _Amount, float _Duration)
 {
+	Target = _Target;
 	StartLocation = _Start;
 	TargetLocation = _End;
 	Duration = _Duration;
 	Elapsed = 0.0f;
+	AttackAmount = _Amount;
 }
 
 void APuyoChainFX::Tick(float _DeltaTime)
@@ -45,6 +48,7 @@ void APuyoChainFX::Tick(float _DeltaTime)
 		return;
 	}
 	Animator->ChangeAnimation("Pop");
+
 
 }
 void APuyoChainFX::BeginPlay()

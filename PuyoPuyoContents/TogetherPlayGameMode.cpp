@@ -34,11 +34,11 @@ void ATogetherPlayGameMode::BeginPlay()
 	APuyoText* P1Score = GetWorld()->SpawnActor<APuyoText>();
 	P1Score->SetupText(8, EPuyoTextColor::Red, ETextAlign::Right);
 	P1Score->SetActorLocation({ 7 * 32+16, 11*32 });
-	P1Score->SetText("0");
+	P1Score->SetText(0);
 	APuyoText* P2Score = GetWorld()->SpawnActor<APuyoText>();
 	P2Score->SetupText(8, EPuyoTextColor::Blue, ETextAlign::Right);
 	P2Score->SetActorLocation({ 8 * 32 + 16, 12*32 });
-	P2Score->SetText("0");
+	P2Score->SetText(0);
 
 
 	APuyoBoard* PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();

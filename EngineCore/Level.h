@@ -38,10 +38,23 @@ public:
 		return NewActor;
 	}
 
+	void PivotDebugOn();
+	void PivotDebugOff();
+
 	// Camera -> ÄÄÆ÷³ÍÆ®·Î µû·Î »¬±î?
 	inline void SetCameraToMainPawn(bool _IsCameraToMainPawn){IsCameraToMainPawn = _IsCameraToMainPawn;}
 	inline void SetCameraPivot(FVector2D _Pivot){CameraPivot = _Pivot;}
 	inline void SetCameraPos(FVector2D _Pos){CameraPos = _Pos;}
+	AGameMode* GetGameMode()
+	{
+		return GameMode;
+	}
+	template<typename ActorType>
+	ActorType* GetMainPawn()
+	{
+		ActorType* CastMainPawn = dynamic_cast<ActorType*>(MainPawn);
+		return CastMainPawn;
+	}
 	inline FVector2D GetCameraPivot() const {return CameraPivot;}
 	inline FVector2D GetCameraPos() const {return CameraPos;}
 	inline UEngineInput& GetInputSystem() { return InputSystem; }

@@ -7,7 +7,7 @@ public:
 	enum : KeyCode
 	{
 		Mouseleft = 0x01, // Left mouse button
-		Mouseright = 0x02, // Right mouse button
+		MouseRight = 0x02, // Right mouse button
 		Cancel = 0x03, // Control-break processing
 		Mousemiddle = 0x04, // Middle mouse button (three-button mouse)
 		Mousex1 = 0x05, // X1 mouse button
