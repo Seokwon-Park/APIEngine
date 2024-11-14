@@ -126,7 +126,7 @@ void APuyoBoard::Tick(float _DeltaTime)
 		{
 			Block[0]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 32.0f / 0.1f);
 			Block[1]->AddActorLocation(FVector2D::LEFT * _DeltaTime * 32.0f / 0.1f);
-			if (FVector2D::Distance(Block[0]->GetActorLocation(), { GetLocationByIndexOnBoard(MainPuyoCoord).X, Block[0]->GetActorLocation().Y }) < 0.2f)
+			if (Block[0]->GetActorLocation().X < GetLocationByIndexOnBoard(MainPuyoCoord).X)
 			{
 				IsKicking = false;
 			}
@@ -329,6 +329,7 @@ void APuyoBoard::PuyoPlaceLogic()
 
 	if (!PlaceCheckList.empty())
 	{
+		// 이부분은 set으로 대체되었다.
 		//sort(PlaceCheckList.begin(), PlaceCheckList.end(), [](auto _A, auto _B)
 		//	{
 		//		if (_A.Y == _B.Y)
@@ -534,6 +535,7 @@ void APuyoBoard::PuyoCheckLogic()
 		Rensa++;
 		int PC = static_cast<int>(PuyoDestroyList.size());
 		int CP = ChainPowerTable[Rensa];
+		//TODO : 컬러보너스 계산해야함
 		int CB = ColorBonusTable[1];
 		int GB = GroupBonusTable[PC];
 		std::string PCText = std::to_string(PC * 10);
@@ -582,14 +584,13 @@ void APuyoBoard::PuyoDestroyLogic()
 	if (!IsDestroying)
 	{
 		SpawnChainText();
-		//Todo : 방해뿌요량계산공식 추가하십쇼 두번하십쇼 이것도 위치 여기 맞는지 확신X
+		//Todo : 방해뿌요량계산공식 추가하십쇼 두번하십쇼 이것도 코드위치 여기 맞는지 확신X
 		int AttackAmount = RandomDevice.GetRandomInt(6, 12);
 		//상쇄 검사가 필요하다면
 		if (CheckOffset)
 		{
 			CheckOffset = false;
-			// WarnNums에 따른 순서때문에 따로 적어야함 나중에 고칠것.
-			// Todo:
+			// Todo: WarnNums에 따른 순서때문에 따로 적어야함 나중에 고칠것.
 			//내가 상쇄하는 양이 더 적으면
 			if (AttackAmount < WarnNums)
 			{

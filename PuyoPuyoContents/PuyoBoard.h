@@ -108,7 +108,7 @@ public:
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 
-	//Todo: Effect라는 클래스로 추상화?
+	//Todo: Effect라는 클래스로 추상화필수적
 	void SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay);
 protected:
 	void BeginPlay() override;
