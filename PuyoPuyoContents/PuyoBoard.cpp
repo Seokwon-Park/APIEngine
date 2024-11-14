@@ -210,8 +210,8 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		//Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
-		Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
+		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
+		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 5);
 		NewBlock[i] = Puyo;
 	}
@@ -557,7 +557,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		CurStep = EPuyoLogicStep::PuyoUpdate;
 		return;
 	}
-	
+
 	if (FlickCount < 10)
 	{
 		FlickDelay -= UEngineAPICore::GetEngineDeltaTime();
@@ -588,21 +588,23 @@ void APuyoBoard::PuyoDestroyLogic()
 		if (CheckOffset)
 		{
 			CheckOffset = false;
+			// WarnNums에 따른 순서때문에 따로 적어야함 나중에 고칠것.
+			// Todo:
 			//내가 상쇄하는 양이 더 적으면
-			if (AttackAmount <= WarnNums)
+			if (AttackAmount < WarnNums)
 			{
 				WarnNums -= AttackAmount;
-				SpawnAttack(0, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-				UpdateWarning();
+				AttackAmount = 0;
+				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
 			}
 			//내가 상쇄하는 양이 더 많으면
 			else
 			{
 				AttackAmount -= WarnNums;
-				WarnNums = 0;
 				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-				UpdateWarning();
+				WarnNums = 0;
 			}
+			UpdateWarning();
 		}
 		else
 		{
