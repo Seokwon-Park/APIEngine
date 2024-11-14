@@ -34,7 +34,7 @@ void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, f
 
 	// 90도 : 1초 = dAngle : _DeltaTime로 dAngle구하기
 	float dAngle = 90.0f * _DeltaTime / 0.1f * (_IsClockwise ? 1.0f : -1.0f);
-	//남은 회전각도
+	//남은 회전각도 이걸로 판단해야 회전오류 안남
 	NeedToRotate -= abs(dAngle);
 	// 회전 변환 계산 (라디안으로 변환 필요)
 	float AngleInRadians = FEngineMath::DegreesToRadians(dAngle);
@@ -222,14 +222,20 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 
 void APuyoBoard::PuyoCreateLogic()
 {
-
+	//게임오벌,,,
 	if (Board[1][2] != nullptr)
 	{
 		return;
 	}
+
+	//더해야될 점수가 있으면 더해
 	Score->Add(ScoreToAdd);
 	ScoreToAdd = 0;
+
+
 	Rensa = 0; // 여기로 오게되면 연쇄는 0
+
+	//처음 블록방향은 위쪽, 처음 블록 위치는 고스트라인(=0번줄)
 	BlockDir = 0;
 	MainPuyoCoord.X = (BoardSize.X - 1) / 2;
 	MainPuyoCoord.Y = 0;
@@ -287,6 +293,7 @@ void APuyoBoard::PuyoMoveLogic()
 	}
 	MainPuyoCoord.Y += (PuyoTick % 2 == 0);
 
+	//Todo: 밑에 내려와도 딜레이가 있어야 되는데 어케 고치지
 	if (false == CanMoveDown())
 	{
 		for (int i = 0; i < 2; i++)
@@ -308,7 +315,7 @@ void APuyoBoard::PuyoMoveLogic()
 			PuyoTick = 0;
 		}
 
-		//방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
+		//Todo : 방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
 		//일단 방해뿌요가 내보드에 존재하면 파괴 로직 단계에서 상쇄검사를 하십쇼.
 		if (WarnNums > 0 && !IsChaining)
 		{
@@ -342,7 +349,7 @@ void APuyoBoard::PuyoPlaceLogic()
 
 		// 보드에서 떨어져야 할 블럭이 있는지 체크해서 업데이트 하는 부분.
 		// 체크해야할 모든 블럭에 대해 돌리자.
-		// 블록은 반칸씩 떨어졌다면 여기서는 부드럽게 떨어지는 느낌임.(Lerp? MoveTowards?)
+		// 블록은 반칸씩 떨어졌다면 여기서는 좀더 스무스하게 떨어지는 느낌임.
 		for (APuyo* CurPuyo : PlaceCheckList)
 		{
 			if (false == CurPuyo->GetIsDropComplete())
@@ -560,6 +567,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		return;
 	}
 
+	//파괴할게 있어
 	if (FlickCount < 10)
 	{
 		FlickDelay -= UEngineAPICore::GetEngineDeltaTime();
@@ -668,43 +676,40 @@ void APuyoBoard::PuyoUpdateLogic()
 	if (PuyoUpdateColumns.empty())
 	{
 		CurStep = EPuyoLogicStep::PuyoCreate;
+		return;
 	}
-	else
+	for (int X : PuyoUpdateColumns)
 	{
-		for (int X : PuyoUpdateColumns)
+		for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
 		{
-			for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
+			for (int Dir = 0; Dir < 4; Dir++)
 			{
-				for (int Dir = 0; Dir < 4; Dir++)
+				int TargetX = X + Dx[Dir];
+				int TargetY = Y + Dy[Dir];
+				if (!IsInBoard(TargetX, TargetY)) continue;
+				if (Board[TargetY][TargetX] != nullptr)
 				{
-					int TargetX = X + Dx[Dir];
-					int TargetY = Y + Dy[Dir];
-					if (!IsInBoard(TargetX, TargetY)) continue;
-					if (Board[TargetY][TargetX] != nullptr)
-					{
-						PuyoConnectList.push_back(Board[TargetY][TargetX]);
-					}
+					PuyoConnectList.push_back(Board[TargetY][TargetX]);
 				}
-				if (Board[Y][X] == nullptr)
+			}
+			if (Board[Y][X] == nullptr)
+			{
+				for (int FindY = Y - 1; FindY >= 0; FindY--)
 				{
-					for (int FindY = Y - 1; FindY >= 0; FindY--)
+					if (Board[FindY][X] != nullptr)
 					{
-						if (Board[FindY][X] != nullptr)
-						{
-							Board[Y][X] = Board[FindY][X];
-							Board[FindY][X] = nullptr;
-							Board[Y][X]->SetTargetXY({ X, Y });
-							PlaceCheckList.push_back(Board[Y][X]);
-							break;
-						}
+						Board[Y][X] = Board[FindY][X];
+						Board[FindY][X] = nullptr;
+						Board[Y][X]->SetTargetXY({ X, Y });
+						PlaceCheckList.push_back(Board[Y][X]);
+						break;
 					}
 				}
 			}
 		}
-		PuyoUpdateColumns.clear();
-		CurStep = EPuyoLogicStep::PuyoPlace;
 	}
-
+	PuyoUpdateColumns.clear();
+	CurStep = EPuyoLogicStep::PuyoPlace;
 }
 
 bool APuyoBoard::IsInBoard(int TargetX, int TargetY)
