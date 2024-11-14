@@ -18,6 +18,7 @@ APuyoBoard::APuyoBoard()
 	CurStep(EPuyoLogicStep::PuyoCreate), Block(std::vector<APuyo*>(2))
 	//,Board(std::vector<std::vector<APuyo*>>(13, std::vector<APuyo*>(6, nullptr)))
 {
+	// 예고 뿌요
 	Warnings.resize(6, nullptr);
 	for (int i = 0; i < 6; i++)
 	{
@@ -31,8 +32,10 @@ APuyoBoard::APuyoBoard()
 void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, float _DeltaTime, bool _IsClockwise) {
 	// 각도를 deltaTime에 비례해 보간하여 점진적으로 증가 
 
+	// 90도 : 1초 = dAngle : _DeltaTime로 dAngle구하기
 	float dAngle = 90.0f * _DeltaTime / 0.1f * (_IsClockwise ? 1.0f : -1.0f);
-	RotateLeft -= abs(dAngle);
+	//남은 회전각도
+	NeedToRotate -= abs(dAngle);
 	// 회전 변환 계산 (라디안으로 변환 필요)
 	float AngleInRadians = FEngineMath::DegreesToRadians(dAngle);
 	float CosTheta = std::cos(AngleInRadians);
@@ -40,14 +43,14 @@ void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, f
 
 
 	// 원점 기준 회전 후 Main Puyo 위치로 이동
-	FVector2D relativePosition = _SlavePuyoPos - _MainPuyoPos;
-	float rotatedX = relativePosition.X * CosTheta - relativePosition.Y * SinTheta;
-	float rotatedY = relativePosition.X * SinTheta + relativePosition.Y * CosTheta;
+	FVector2D RelativePosition = _SlavePuyoPos - _MainPuyoPos;
+	float RotatedX = RelativePosition.X * CosTheta - RelativePosition.Y * SinTheta;
+	float RotatedY = RelativePosition.X * SinTheta + RelativePosition.Y * CosTheta;
 
 	FVector2D TargetLocation = Block[0]->GetActorLocation() + FVector2D(Dx[BlockDir] * PuyoSize.iX(), Dy[BlockDir] * PuyoSize.iY());
 	// 새로운 Slave Puyo 위치
-	_SlavePuyoPos = FVector2D(rotatedX, rotatedY) + _MainPuyoPos;
-	if (RotateLeft < .1f || _SlavePuyoPos.Distance(TargetLocation) < 0.2f)
+	_SlavePuyoPos = FVector2D(RotatedX, RotatedY) + _MainPuyoPos;
+	if (NeedToRotate < .1f || _SlavePuyoPos.Distance(TargetLocation) < 0.2f)
 		//if (FVector2D::Distance(slavePuyoPosition, TargetLocation) < 0.1f)
 	{
 		Block[1]->SetActorLocation(TargetLocation);
@@ -73,7 +76,7 @@ void APuyoBoard::BeginPlay()
 	PuyoDropTimer = PuyoDropDelay;
 
 	// 회전
-	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하고 키 따로 두기?
+	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
 	GetWorld()->GetInputSystem().BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
 	GetWorld()->GetInputSystem().BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
 
@@ -207,8 +210,8 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
-		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 0);
+		//Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
+		Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 5);
 		NewBlock[i] = Puyo;
 	}
@@ -304,41 +307,13 @@ void APuyoBoard::PuyoMoveLogic()
 			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			PuyoTick = 0;
 		}
+
 		//방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
+		//일단 방해뿌요가 내보드에 존재하면 파괴 로직 단계에서 상쇄검사를 하십쇼.
 		if (WarnNums > 0 && !IsChaining)
 		{
-			int DropAmount = FEngineMath::Min(WarnNums, 30); // 최대 5줄씩떨어뜨릴 수 있다.
-			WarnNums -= DropAmount;
-			std::vector<APuyo*> DropList;
-			//떨어뜨려야 하는 개수만큼 생성한다.
-			for (int i = 0; i < DropAmount; i++)
-			{
-				APuyo* GarbagePuyo = GetWorld()->SpawnActor<APuyo>();
-				DropList.push_back(GarbagePuyo);
-			}
-
-			// 일단 게임판의 폭(=6)보다 크면 한줄씩 채워야 한다.
-			int Height = DropAmount / BoardSize.X;
-			for (int Y = 0; Y < Height; Y++)
-			{
-				for (int X = 0; X < BoardSize.X; X++)
-				{
-					int Index = BoardSize.X * Y + X;
-					DropList[Index]->SetupPuyo(GetActorLocation() + FVector2D(PuyoSize.X * X, -PuyoSize.Y * Y), EPuyoColor::Garbage);
-					for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
-					{
-						if (Board[Y][X] == nullptr)
-						{
-							Board[Y][X] = DropList[Index];
-							Board[Y][X]->SetTargetXY({ X, Y });
-							PlaceCheckList.push_back(Board[Y][X]);
-							Index++;
-							break;
-						}
-					}
-				}
-			}
-			UpdateWarning();
+			CheckOffset = true;
+			//SpawnNuisancePuyo();
 		}
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
@@ -347,8 +322,11 @@ void APuyoBoard::PuyoMoveLogic()
 	PuyoDropTimer = PuyoDropDelay;
 }
 
+
+
 void APuyoBoard::PuyoPlaceLogic()
 {
+
 	if (!PlaceCheckList.empty())
 	{
 		//sort(PlaceCheckList.begin(), PlaceCheckList.end(), [](auto _A, auto _B)
@@ -383,6 +361,7 @@ void APuyoBoard::PuyoPlaceLogic()
 						//Point = FIntPoint(Point.X, PlaceY);
 						Board[CurPuyo->GetTargetXY().Y][CurPuyo->GetTargetXY().X] = CurPuyo;
 						CurPuyo->SetCurXY(CurPuyo->GetTargetXY());
+						CurPuyo->SetActorLocation(GetLocationByIndexOnBoard(CurPuyo->GetTargetXY()));
 						CurPuyo->PlayAnimation("PlaceComplete");
 						CurPuyo->SetIsDropComplete(true);
 					}
@@ -572,10 +551,13 @@ void APuyoBoard::PuyoCheckLogic()
 
 void APuyoBoard::PuyoDestroyLogic()
 {
+	//파괴할게 없어
 	if (PuyoDestroyList.empty())
 	{
 		CurStep = EPuyoLogicStep::PuyoUpdate;
+		return;
 	}
+	
 	if (FlickCount < 10)
 	{
 		FlickDelay -= UEngineAPICore::GetEngineDeltaTime();
@@ -600,7 +582,32 @@ void APuyoBoard::PuyoDestroyLogic()
 	if (!IsDestroying)
 	{
 		SpawnChainText();
-		SpawnAttack(RandomDevice.GetRandomInt(6, 10), GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+		//Todo : 방해뿌요량계산공식 추가하십쇼 두번하십쇼 이것도 위치 여기 맞는지 확신X
+		int AttackAmount = RandomDevice.GetRandomInt(6, 12);
+		//상쇄 검사가 필요하다면
+		if (CheckOffset)
+		{
+			CheckOffset = false;
+			//내가 상쇄하는 양이 더 적으면
+			if (AttackAmount <= WarnNums)
+			{
+				WarnNums -= AttackAmount;
+				SpawnAttack(0, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+				UpdateWarning();
+			}
+			//내가 상쇄하는 양이 더 많으면
+			else
+			{
+				AttackAmount -= WarnNums;
+				WarnNums = 0;
+				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+				UpdateWarning();
+			}
+		}
+		else
+		{
+			SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+		}
 		int ix = 0;
 		for (auto [X, Y] : PuyoDestroyList)
 		{
@@ -649,6 +656,12 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
+	if (WarnNums > 0)
+	{
+		SpawnNuisancePuyo();
+		CurStep = EPuyoLogicStep::PuyoPlace;
+		return;
+	}
 	if (PuyoUpdateColumns.empty())
 	{
 		CurStep = EPuyoLogicStep::PuyoCreate;
@@ -769,6 +782,7 @@ void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 	Block[1]->AddActorLocation(_Dir * PuyoSize.iX());*/
 }
 
+
 void APuyoBoard::Rotate(bool _IsClockwise)
 {
 	if (CurStep != EPuyoLogicStep::PuyoMove || IsRotating || IsKicking)
@@ -830,7 +844,7 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 		}
 	}
 	IsRotatedClockWise = _IsClockwise;
-	RotateLeft = 90;
+	NeedToRotate = 90;
 	IsRotating = true;
 }
 
@@ -866,7 +880,78 @@ void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos) // 방해뿌요 몇개 
 	// Todo: 대충 머 구슬같은거 날라가는 모션 추가해
 	APuyoChainFX* ChainFX = GetWorld()->SpawnActor<APuyoChainFX>();
 	ChainFX->SetActorLocation(_StartPos);
-	ChainFX->SetupChainFX(CounterBoard, _StartPos, CounterBoard->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f), _Amount);
+	FVector2D TargetLocation = CounterBoard->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+	if (WarnNums > 0)
+	{
+		TargetLocation = GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+	}
+	CounterBoard->AddWarnNums(_Amount);
+	ChainFX->SetupChainFX(CounterBoard, _StartPos, TargetLocation, _Amount);
+}
+
+void APuyoBoard::SpawnNuisancePuyo()
+{
+	int DropAmount = FEngineMath::Min(WarnNums, 30); // 최대 5줄씩떨어뜨릴 수 있다.
+	WarnNums -= DropAmount;
+	std::vector<APuyo*> DropList;
+	//떨어뜨려야 하는 개수만큼 생성한다.
+	for (int i = 0; i < DropAmount; i++)
+	{
+		APuyo* GarbagePuyo = GetWorld()->SpawnActor<APuyo>();
+		DropList.push_back(GarbagePuyo);
+	}
+
+	// 일단 게임판의 폭(=6)보다 크면 Height줄 만큼 채우고 시작한다.
+	int Height = DropAmount / BoardSize.X;
+	for (int Y = 0; Y < Height; Y++)
+	{
+		for (int X = 0; X < BoardSize.X; X++)
+		{
+			int Index = BoardSize.X * Y + X;
+			DropList[Index]->SetupPuyo(GetActorLocation() + FVector2D(PuyoSize.X * X, -PuyoSize.Y * Y), EPuyoColor::Garbage);
+			for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
+			{
+				if (Board[Y][X] == nullptr)
+				{
+					Board[Y][X] = DropList[Index];
+					Board[Y][X]->SetTargetXY({ X, Y });
+					PlaceCheckList.push_back(Board[Y][X]);
+					break;
+				}
+			}
+		}
+	}
+
+	int Index = Height * BoardSize.X;
+	std::vector<int> XLines(BoardSize.X);
+	for (int i = 0; i < BoardSize.X; i++)
+	{
+		XLines[i] = i;
+	}
+
+	//남은 횟수는 그냥 랜덤 인덱스를 뽑아보자.
+	int Range = BoardSize.X - 1;
+	for (int i = 0; i < DropAmount % BoardSize.X; i++)
+	{
+		int Pick = RandomDevice.GetRandomInt(0, XLines.size() - 1);
+		int X = XLines[Pick];
+		std::swap(XLines[Pick], XLines[XLines.size() - 1]);
+		XLines.pop_back();
+		DropList[Index]->SetupPuyo(GetActorLocation() + FVector2D(PuyoSize.X * X, -PuyoSize.Y * Height), EPuyoColor::Garbage);
+		for (int Y = BoardSize.Y - 1; Y >= 0; Y--)
+		{
+			if (Board[Y][X] == nullptr)
+			{
+				Board[Y][X] = DropList[Index];
+				Board[Y][X]->SetTargetXY({ X, Y });
+				PlaceCheckList.push_back(Board[Y][X]);
+				break;
+			}
+		}
+		Index++;
+	}
+
+	UpdateWarning();
 }
 
 void APuyoBoard::UpdateWarning()

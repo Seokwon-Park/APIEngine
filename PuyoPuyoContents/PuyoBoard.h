@@ -51,6 +51,7 @@ public:
 	//LogicStep
 	void PuyoCreateLogic();
 	void PuyoMoveLogic();
+	void SpawnNuisancePuyo();
 	void PuyoPlaceLogic();
 	void PuyoConnectLogic();
 	void PuyoCheckLogic();
@@ -139,7 +140,7 @@ private:
 	bool IsRotating = false;
 	bool IsKicking = false;
 	bool IsRotatedClockWise = false;
-	float RotateLeft = 0.0f;
+	float NeedToRotate = 0.0f;
 
 	// Slave Puyo의 좌표는 MainCoord와 Dir을 통해서 얻을 수 있다.
 	FIntPoint MainPuyoCoord;
@@ -192,9 +193,11 @@ private:
 	//방해뿌요?
 	std::vector<USpriteRendererComponent*> Warnings;
 	int WarnNums = 0;
+	// 만약 방해뿌요가 있으면 상쇄가 가능할때까지 미루는 용도(?) 아오 복잡
+	bool CheckOffset = false;
+
 	//내가 놓았어도 상대 연쇄가 진행중이면 방해뿌요를 놓지 않는다.
 	bool IsChaining = false;
-	
 
 	//연쇄 카운트
 	int Rensa = 0;
