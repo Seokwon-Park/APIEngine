@@ -2,6 +2,8 @@
 #include "GameMode.h"
 #include <EnginePlatform/EngineInput.h>
 
+
+
 // Ό³Έν :
 class ULevel : public UObject
 {
@@ -95,5 +97,8 @@ private:
 	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
 	UEngineInput InputSystem;
+	
+	//temp 
+	std::vector<class UEnginePostProcess*> Post;
 };
 

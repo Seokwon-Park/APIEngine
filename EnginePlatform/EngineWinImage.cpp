@@ -90,20 +90,20 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _Target, const FTransform& _Tra
 
 }
 
-void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _RenderTransform,
+void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _TargetTransform,
 	const FTransform& _CopyTransform, UColor _Color)
 {
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
 
-	FVector2D LeftTop = _RenderTransform.CenterLeftTop();
+	FVector2D LeftTop = _TargetTransform.CenterLeftTop();
 
 	TransparentBlt(
 		TargetDC,
 		LeftTop.iX(),
 		LeftTop.iY(),
-		_RenderTransform.Scale.iX(),
-		_RenderTransform.Scale.iY(),
+		_TargetTransform.Scale.iX(),
+		_TargetTransform.Scale.iY(),
 		CopyDC,
 		_CopyTransform.Location.iX(),
 		_CopyTransform.Location.iY(),

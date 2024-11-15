@@ -20,6 +20,8 @@ public:
 	void Create(HDC _DC);
 	void Create(UEngineWinImage* _TargetImage, FVector2D _ScaleS);
 	void CopyToBit(UEngineWinImage* _Dst, const FTransform& _Transform);
+
+	//_TargetImage에 _TargetTransform의 트랜스폼에 자기자신을 복제, _CopyTransform은 자기자신의 크기와 일치해야한다.
 	void CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _TargetTransform,
 		const FTransform& _CopyTransform, UColor _Color = UColor(255, 0, 255, 0));
 	void CopyToAlphaBlend(UEngineWinImage* _TargetImage,const FTransform& _RenderTrans,
