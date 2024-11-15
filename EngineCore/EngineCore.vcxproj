@@ -179,7 +179,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineSound.h" />
     <ClInclude Include="EngineSprite.h">
       <SubType>
       </SubType>
@@ -243,7 +242,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineSound.cpp" />
     <ClCompile Include="EngineSprite.cpp">
       <SubType>
       </SubType>

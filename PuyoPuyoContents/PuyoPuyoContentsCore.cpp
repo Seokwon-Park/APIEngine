@@ -8,7 +8,8 @@
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/ImageManager.h>
-#include <EngineCore/EngineSound.h>
+#include <EngineCore/SoundManager.h>
+#include <EnginePlatform/EngineSound.h>
 
 
 PuyoPuyoContentsCore::PuyoPuyoContentsCore()
@@ -25,7 +26,8 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	UEngineAPICore::GetCore()->LoadResources();
 
-	UEngineSound::Load("C:\\AAA.mp3");
+	/*UEngineSound* Sound = USoundManager::GetInstance().FindSound("Test.wav");
+	Sound->Play();*/
 
 	//인게임 뿌요 관련 스프라이트
 	SetupPuyoSprite();

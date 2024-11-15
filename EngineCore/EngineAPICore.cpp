@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "EngineAPICore.h"
 #include "ImageManager.h"
+#include "SoundManager.h"
 
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDebug.h>
@@ -31,16 +32,21 @@ UEngineAPICore::~UEngineAPICore()
 	}
 
 	Levels.clear();
+
+	//사운드를 먼저 할당해제시켜줘야함 ㅠ
+	USoundManager::GetInstance().ReleaseSounds();
+	UEngineAudio::Release();
 }
 
 int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(7946);
+	//_CrtSetBreakAlloc(252);
 
 	UserCore = _UserCore;
 
 	UEngineWindow::EngineWindowInit(_Inst);
+	UEngineAudio::Init();
 
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
@@ -68,7 +74,7 @@ void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 void UEngineAPICore::LoadResources(std::string_view _FolderName)
 {
 	UEngineDirectory Dir;
-	if (false == Dir.MoveParentToDirectory("Resources"))
+	if (false == Dir.MoveParentToDirectory(_FolderName))
 	{
 		MSGASSERT(std::string(_FolderName) + "라는 이름의 리소스 폴더를 찾지 못했습니다.");
 		return;
@@ -76,14 +82,14 @@ void UEngineAPICore::LoadResources(std::string_view _FolderName)
 
 	//이미지 리소스 로드
 	LoadImageResources(Dir.ToString());
-	LoadSoundResources();
+	LoadSoundResources(Dir.ToString());
 }
 
 // TODO : 나중에 시간날 때 수정
-void UEngineAPICore::LoadImageResources(std::string_view _FolderDir,
+void UEngineAPICore::LoadImageResources(std::string_view _FolderName,
 	std::string_view _ImageFolderName)
 {
-	UEngineDirectory Dir(_FolderDir);
+	UEngineDirectory Dir(_FolderName);
 	Dir.AppendDirectory(_ImageFolderName);
 
 	if (false == Dir.IsExists())
@@ -101,8 +107,23 @@ void UEngineAPICore::LoadImageResources(std::string_view _FolderDir,
 }
 
 // TODO : 나중에 시간날 때 수정
-void UEngineAPICore::LoadSoundResources(std::string_view _FolderName)
+void UEngineAPICore::LoadSoundResources(std::string_view _FolderName, std::string_view _SoundFolderName)
 {
+	UEngineDirectory Dir(_FolderName);
+	Dir.AppendDirectory(_SoundFolderName);
+
+	if (false == Dir.IsExists())
+	{
+		MSGASSERT("사운드 리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+
+	std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+	for (size_t i = 0; i < SoundFiles.size(); i++)
+	{
+		std::string FilePath = SoundFiles[i].ToString();
+		USoundManager::GetInstance().Load(FilePath);
+	}
 }
 
 void UEngineAPICore::EngineBeginPlay()
@@ -128,7 +149,7 @@ void UEngineAPICore::Tick()
 		MSGASSERT("엔진 코어에 현재 레벨이 지정되지 않았습니다.");
 		return;
 	}
-
+	UEngineAudio::AudioUpdate();
 	CurLevel->Tick(DeltaTime);
 	CurLevel->Render();
 	CurLevel->Release();

@@ -30,7 +30,8 @@ void AIntroGameMode::BeginPlay()
 	AOpeningRoll* OPRoll= GetWorld()->SpawnActor<AOpeningRoll>();
 	Fader = GetWorld()->SpawnActor<AFader>();
 
-	//이렇게 하는게 맞나?? 잘모르겠다
+	//인트로 애니메이션 설정 ㅋㅋ
+	// 이렇게 해도 되는지는 모름.
 	UEngineDelegate NewDelegate;
 	NewDelegate += std::bind(&AFader::FadeIn, Fader, 1.0f);
 	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
@@ -53,36 +54,71 @@ void AIntroGameMode::BeginPlay()
 	EventQueue.push({ 3.0f, NewDelegate });
 	NewDelegate.Clear();
 
-	//오프닝 뿌요 화면 종료
+	//오프닝 뿌요 화면 종료1
 	NewDelegate += std::bind(&AFader::SetActive, Fader, true);
 	NewDelegate += std::bind(&AFader::FadeOut, Fader, .5f);
 	EventQueue.push({ 3.5f, NewDelegate });
 	NewDelegate.Clear();
 
 	//오프닝 애들 나옴
-	NewDelegate += std::bind(&AFader::SetActive, Fader, false);
-	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, true);
-	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
-	NewDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, false);
-	NewDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, true);
-	EventQueue.push({ 5.0f, NewDelegate });
-	NewDelegate.Clear();
-
-	//오프닝 애들 화면 종료
+	UEngineDelegate OPRollDelegate;
+	OPRollDelegate += std::bind(&AFader::SetActive, Fader, false);
+	OPRollDelegate += std::bind(&AIntroBackground::SetActive, Background, true);
+	OPRollDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
+	OPRollDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, false);
+	OPRollDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, true);
+	EventQueue.push({ 5.0f, OPRollDelegate });
+	//NewDelegate.Clear();
+	
+	//오프닝 애들 화면 종료2
 	NewDelegate += std::bind(&AFader::SetActive, Fader, true);
 	NewDelegate += std::bind(&AFader::FadeOut, Fader, .5f);
 	EventQueue.push({ 6.0f, NewDelegate });
 	NewDelegate.Clear();
 
-	//다시
+	//다시 번쩍이2
 	NewDelegate += std::bind(&AFader::SetActive, Fader, false);
-	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, true);
-	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
-	NewDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, false);
-	NewDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, true);
-	EventQueue.push({ 5.0f, NewDelegate });
+	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, false);
+	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
+	NewDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, false);
+	EventQueue.push({ 7.0f, NewDelegate });
+	NewDelegate.Clear();
+
+	//다시 종료
+	NewDelegate += std::bind(&AFader::SetActive, Fader, true);
+	NewDelegate += std::bind(&AFader::FadeOut, Fader, .5f);
+	EventQueue.push({ 8.0f, NewDelegate });
+	NewDelegate.Clear();
+
+	//오프닝 애들 2
+	EventQueue.push({ 9.0f, OPRollDelegate });
+	NewDelegate.Clear();
+
+	//오프닝 애들 화면 종료3
+	NewDelegate += std::bind(&AFader::SetActive, Fader, true);
+	NewDelegate += std::bind(&AFader::FadeOut, Fader, .5f);
+	EventQueue.push({ 10.0f, NewDelegate });
+	NewDelegate.Clear();
+
+	//번쩍이 3
+	NewDelegate += std::bind(&AFader::SetActive, Fader, false);
+	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, false);
+	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
+	NewDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, false);
+	EventQueue.push({11.0f, NewDelegate });
+	NewDelegate.Clear();
+
+	//다시 종료
+	NewDelegate += std::bind(&AFader::SetActive, Fader, true);
+	NewDelegate += std::bind(&AFader::FadeOut, Fader, .5f);
+	EventQueue.push({ 12.0f, NewDelegate });
+	NewDelegate.Clear();
+
+	//오프닝 애들 라스트
+	EventQueue.push({ 13.0f, OPRollDelegate });
 	NewDelegate.Clear();
 }
+
 
 void AIntroGameMode::Tick(float _DeltaTime)
 {

@@ -521,7 +521,7 @@ void APuyoBoard::PuyoCheckLogic()
 				}
 			}
 		}
-
+		// Todo: 4대신 다른값 넣으세우
 		if (Temp.size() >= 4)
 		{
 			for (FIntPoint Point : Temp)

@@ -89,7 +89,8 @@ public:
 	void LoadResources(std::string_view _FolderName = DefaultResourceFolder);
 	void LoadImageResources(std::string_view _FolderName = DefaultResourceFolder,
 		std::string_view _ImageFolderName = DefaultImageFolder);
-	void LoadSoundResources(std::string_view _FolderName = DefaultSoundFolder);
+	void LoadSoundResources(std::string_view _FolderName = DefaultResourceFolder,
+		std::string_view _SoundFolderName = DefaultSoundFolder);
 
 protected:
 

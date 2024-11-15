@@ -10,11 +10,14 @@
     <Filter Include="Input">
       <UniqueIdentifier>{a75b8525-c98e-41ae-9328-af3a0fc300ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Texture">
-      <UniqueIdentifier>{ed18bc95-48d4-4869-85b3-c01700ed2105}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{79836b3d-22a6-4436-ba4d-80b6624fcd03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{ed18bc95-48d4-4869-85b3-c01700ed2105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{2a7bdee9-57a8-4734-bb3f-37bdbb39ed17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,10 +31,16 @@
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="EngineWinImage.cpp">
-      <Filter>Texture</Filter>
+      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="EngineWinDebug.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSound.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineAudio.cpp">
+      <Filter>Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,10 +57,16 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="EngineWinImage.h">
-      <Filter>Texture</Filter>
+      <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="EngineWinDebug.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSound.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineAudio.h">
+      <Filter>Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

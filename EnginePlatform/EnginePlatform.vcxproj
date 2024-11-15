@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h" />
+    <ClInclude Include="EngineSound.h" />
     <ClInclude Include="EngineWinDebug.h" />
     <ClInclude Include="EngineWindow.h" />
     <ClInclude Include="EngineInput.h">
@@ -164,6 +165,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineAudio.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KeyCode.h" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +176,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="EngineSound.cpp" />
     <ClCompile Include="EngineWinDebug.cpp" />
     <ClCompile Include="EngineWindow.cpp" />
     <ClCompile Include="EngineInput.cpp">
@@ -178,6 +184,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineWinImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineAudio.cpp">
       <SubType>
       </SubType>
     </ClCompile>
