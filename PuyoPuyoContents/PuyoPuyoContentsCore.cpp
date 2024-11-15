@@ -8,6 +8,7 @@
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/ImageManager.h>
+#include <EngineCore/EngineSound.h>
 
 
 PuyoPuyoContentsCore::PuyoPuyoContentsCore()
@@ -20,10 +21,12 @@ PuyoPuyoContentsCore::~PuyoPuyoContentsCore()
 
 void PuyoPuyoContentsCore::BeginPlay()
 {
-	UEngineDebugHelper::SetShowFPS(true);
+	EngineDebugHelper::SetShowFPS(true);
 
 	UEngineAPICore::GetCore()->LoadResources();
-	 
+
+	UEngineSound::Load("C:\\AAA.mp3");
+
 	//인게임 뿌요 관련 스프라이트
 	SetupPuyoSprite();
 	

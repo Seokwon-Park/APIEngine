@@ -25,6 +25,6 @@ private:
 	AFader* Fader = nullptr;
 
 	// 순차적으로 실행
-	std::queue<std::pair<float, EngineDelegate>> EventQueue;
+	std::queue<std::pair<float, UEngineDelegate>> EventQueue;
 };
 

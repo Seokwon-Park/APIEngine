@@ -173,11 +173,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineSerializer.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineString.h">
+    <ClInclude Include="EngineStringHelper.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -213,11 +217,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineSerializer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineString.cpp">
+    <ClCompile Include="EngineStringHelper.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -14,7 +14,7 @@ public:
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
 	static WNDCLASSEXA CreateWNDCLASSEX();
 
-	static int WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction);
+	static int WindowMessageLoop(UEngineDelegate _StartFunction, UEngineDelegate _FrameFunction);
 	void SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale);
 
 	// constructer destructer

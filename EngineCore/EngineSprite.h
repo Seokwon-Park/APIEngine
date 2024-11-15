@@ -1,7 +1,9 @@
 #pragma once
 
+#include <EngineBase/EngineResource.h>
+
 // Ό³Έν :
-class UEngineSprite : public UObject
+class UEngineSprite : public UEngineResource
 {
 public:
 	class USpriteData

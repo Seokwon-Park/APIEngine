@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "EngineWinImage.h"
 #include <EngineBase/EnginePath.h>
-#include <EngineBase/EngineString.h>
+#include <EngineBase/EngineStringHelper.h>
 
 #include <objidl.h>
 #include <gdiplus.h>
@@ -145,7 +145,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 {
 	UEnginePath Path = _Path;
 
-	std::string Ext = UEngineString::ToUpper(Path.GetFileExtension());
+	std::string Ext = UEngineStringHelper::ToUpper(Path.GetFileExtension());
 
 	HBITMAP NewBitmap = nullptr;
 
@@ -156,7 +156,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 		Gdiplus::GdiplusStartupInput StartupInput;
 		Gdiplus::GdiplusStartup(&GdiplusToken, &StartupInput, nullptr);
 
-		std::wstring WidePath = UEngineString::AnsiToUnicode(_Path);
+		std::wstring WidePath = UEngineStringHelper::AnsiToUnicode(_Path);
 
 		// FromFile() returns new => 할당 해제 필요
 		Gdiplus::Image* GdiplusImage = Gdiplus::Image::FromFile(WidePath.c_str());

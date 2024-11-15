@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "ImageManager.h"
 #include <EngineBase/EngineFile.h>
-#include <EngineBase/EngineString.h>
+#include <EngineBase/EngineStringHelper.h>
 #include <EngineBase/EngineDirectory.h>
 #include "EngineAPICore.h"
 
@@ -34,7 +34,7 @@ UImageManager::~UImageManager()
 
 void UImageManager::ClearSpriteData(std::string_view _SpriteName, UEngineSprite* _Sprite)
 {
-	std::string UpperSpriteName = UEngineString::ToUpper(_SpriteName);
+	std::string UpperSpriteName = UEngineStringHelper::ToUpper(_SpriteName);
 	if (false != Sprites.contains(_SpriteName.data()))
 	{
 		MSGASSERT(std::string(_SpriteName) + "라는 이름의 스프라이트가 존재하지 않습니다.");
@@ -70,7 +70,7 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 
 	UEngineWinImage* WindowImage = UEngineAPICore::GetWindowBuffer();
 
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	if (Images.contains(UpperName))
 	{
@@ -115,7 +115,7 @@ void UImageManager::LoadFolderToSprite(std::string_view _KeyName, std::string_vi
 		return;
 	}
 
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	if (true == Sprites.contains(UpperName))
 	{
@@ -134,7 +134,7 @@ void UImageManager::LoadFolderToSprite(std::string_view _KeyName, std::string_vi
 	for (size_t i = 0; i < ImageFiles.size(); i++)
 	{
 		std::string FilePath = ImageFiles[i].ToString();
-		std::string UpperFileName = UEngineString::ToUpper(ImageFiles[i].GetPathName());
+		std::string UpperFileName = UEngineStringHelper::ToUpper(ImageFiles[i].GetPathName());
 
 		UEngineWinImage* NewImage = FindImage(UpperFileName);
 		if (nullptr == NewImage)
@@ -155,7 +155,7 @@ void UImageManager::LoadFolderToSprite(std::string_view _KeyName, std::string_vi
 
 void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize)
 {
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	if (false == Sprites.contains(UpperName))
 	{
@@ -197,7 +197,7 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingS
 
 void UImageManager::CuttingSprite(std::string_view _KeyName, int _Rows, int _Cols)
 {
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	if (false == Sprites.contains(UpperName))
 	{
@@ -239,8 +239,8 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, int _Rows, int _Col
 
 void UImageManager::CuttingSprite(std::string_view _NewSpriteName, std::string_view _ImageName, FVector2D _CuttingSize)
 {
-	std::string SpriteUpperName = UEngineString::ToUpper(_NewSpriteName);
-	std::string ImageUpperName = UEngineString::ToUpper(_ImageName);
+	std::string SpriteUpperName = UEngineStringHelper::ToUpper(_NewSpriteName);
+	std::string ImageUpperName = UEngineStringHelper::ToUpper(_ImageName);
 
 	if (false == Images.contains(ImageUpperName))
 	{
@@ -288,8 +288,8 @@ void UImageManager::CuttingSprite(std::string_view _NewSpriteName, std::string_v
 
 void UImageManager::CuttingSpriteCustom(std::string_view _NewSpriteName, std::string_view _ImageName, FIntPoint _StartPos, FIntPoint _EndPos, FVector2D _CuttingSize)
 {
-	std::string SpriteUpperName = UEngineString::ToUpper(_NewSpriteName);
-	std::string ImageUpperName = UEngineString::ToUpper(_ImageName);
+	std::string SpriteUpperName = UEngineStringHelper::ToUpper(_NewSpriteName);
+	std::string ImageUpperName = UEngineStringHelper::ToUpper(_ImageName);
 
 	if (false == Images.contains(ImageUpperName))
 	{
@@ -340,8 +340,8 @@ void UImageManager::CuttingSpriteCustom(std::string_view _NewSpriteName, std::st
 
 void UImageManager::InsertCustomSpriteData(std::string_view _SpriteName, std::string_view _ImageName, FTransform _CutData)
 {
-	std::string SpriteUpperName = UEngineString::ToUpper(_SpriteName);
-	std::string ImageUpperName = UEngineString::ToUpper(_ImageName);
+	std::string SpriteUpperName = UEngineStringHelper::ToUpper(_SpriteName);
+	std::string ImageUpperName = UEngineStringHelper::ToUpper(_ImageName);
 
 	if (false == Images.contains(ImageUpperName))
 	{
@@ -370,14 +370,14 @@ void UImageManager::InsertCustomSpriteData(std::string_view _SpriteName, std::st
 
 bool UImageManager::IsLoadSprite(std::string_view _KeyName)
 {
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	return Sprites.contains(UpperName);
 }
 
 UEngineSprite* UImageManager::FindSprite(std::string_view _KeyName)
 {
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	if (false == Sprites.contains(UpperName))
 	{
@@ -389,7 +389,7 @@ UEngineSprite* UImageManager::FindSprite(std::string_view _KeyName)
 
 UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
 {
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	if (false == Images.contains(UpperName))
 	{
@@ -403,7 +403,7 @@ UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
 
 void UImageManager::CreateColorImage(std::string_view _KeyName, UColor _Color)
 {
-	std::string UpperName = UEngineString::ToUpper(_KeyName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 
 	UEngineWinImage* WindowImage = UEngineAPICore::GetWindowBuffer();
 

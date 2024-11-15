@@ -2,7 +2,7 @@
 #include <filesystem>
 
 // Ό³Έν :
-class UEnginePath
+class UEnginePath : public UObject
 {
 public:
 	// constrcuter destructer

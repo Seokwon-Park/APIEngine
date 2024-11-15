@@ -25,7 +25,7 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="EngineString.h">
+    <ClInclude Include="EngineStringHelper.h">
       <Filter>String</Filter>
     </ClInclude>
     <ClInclude Include="EngineDebug.h">
@@ -36,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="EngineSerializer.h">
       <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResource.h">
+      <Filter>Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +66,7 @@
     <ClCompile Include="Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="EngineString.cpp">
+    <ClCompile Include="EngineStringHelper.cpp">
       <Filter>String</Filter>
     </ClCompile>
     <ClCompile Include="EngineRandom.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="EngineSerializer.cpp">
       <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResource.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +103,9 @@
     </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{a0b6b9cb-8ffc-45c4-86cc-6d95f0bdb156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{24ac2b45-fd63-4769-99dd-553deac98a7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

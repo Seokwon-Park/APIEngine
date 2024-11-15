@@ -9,10 +9,10 @@ public:
 	virtual ~UObject();
 
 	// delete Function
-	UObject(const UObject& _Other) = delete;
-	UObject(UObject&& _Other) noexcept = delete;
-	UObject& operator=(const UObject& _Other) = delete;
-	UObject& operator=(UObject&& _Other) noexcept = delete;
+	//UObject(const UObject& _Other) = delete;
+	//UObject(UObject&& _Other) noexcept = delete;
+	//UObject& operator=(const UObject& _Other) = delete;
+	//UObject& operator=(UObject&& _Other) noexcept = delete;
 
 	inline virtual std::string GetName() const { return Name; }
 	inline virtual std::string_view GetNameView() const { return Name.c_str(); }
@@ -33,9 +33,9 @@ public:
 protected:
 
 private:
-	std::string Name;
-	bool IsActive;
-	bool IsDestroyed;
-	float DestroyDelay;
+	std::string Name = "";
+	bool IsActive = true;
+	bool IsDestroyed = false;
+	float DestroyDelay = 0.0f;
 };
 

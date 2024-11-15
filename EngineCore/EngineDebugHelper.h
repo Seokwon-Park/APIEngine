@@ -2,7 +2,7 @@
 #include "EngineAPICore.h"
 
 // 설명 :
-class UEngineDebugHelper
+class EngineDebugHelper
 {
 public:
 	enum class EDebugPosType
@@ -12,13 +12,13 @@ public:
 	};
 
 	// constrcuter destructer
-	~UEngineDebugHelper() {};
+	~EngineDebugHelper() {};
 
 	// delete Function
-	UEngineDebugHelper(const UEngineDebugHelper& _Other) = delete;
-	UEngineDebugHelper(UEngineDebugHelper&& _Other) noexcept = delete;
-	UEngineDebugHelper& operator=(const UEngineDebugHelper& _Other) = delete;
-	UEngineDebugHelper& operator=(UEngineDebugHelper&& _Other) noexcept = delete;
+	EngineDebugHelper(const EngineDebugHelper& _Other) = delete;
+	EngineDebugHelper(EngineDebugHelper&& _Other) noexcept = delete;
+	EngineDebugHelper& operator=(const EngineDebugHelper& _Other) = delete;
+	EngineDebugHelper& operator=(EngineDebugHelper&& _Other) noexcept = delete;
 
 	//디버그 텍스트 표시여부
 	inline void SetIsDebug(bool _Use) { Instance.UseDebugHelper = _Use; }
@@ -32,14 +32,14 @@ public:
 	//FPS 표시여부
 	inline static void SetShowFPS(bool _Value){Instance.ShowFPS = _Value;}
 
-	inline static UEngineDebugHelper& GetInstance()
+	inline static EngineDebugHelper& GetInstance()
 	{
 		return Instance;
 	}
 protected:
 
 private:
-	UEngineDebugHelper() : ShowFPS(false), UseDebugHelper(true),
+	EngineDebugHelper() : ShowFPS(false), UseDebugHelper(true),
 		DebugOptionPos(FVector2D::ZERO), DebugTextPos(FVector2D::ZERO) {};
 	class DebugTextInfo
 	{
@@ -57,7 +57,7 @@ private:
 
 
 
-	static UEngineDebugHelper Instance;
+	static EngineDebugHelper Instance;
 
 	//옵션을 설정할 수 있게 하고 얘를 먼저 출력하자.
 	bool ShowFPS;

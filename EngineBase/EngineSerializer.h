@@ -1,7 +1,7 @@
 #pragma once
 
 // Ό³Έν :
-class UEngineSerializer
+class UEngineSerializer : public UObject
 {
 public:
 	// constrcuter destructer

@@ -2,7 +2,6 @@
 #include "Object.h"
 
 UObject::UObject()
-	:IsActive(true)
 {
 }
 

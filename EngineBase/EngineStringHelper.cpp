@@ -1,7 +1,7 @@
 #include "aepch.h"
-#include "EngineString.h"
+#include "EngineStringHelper.h"
 
-std::string UEngineString::ToUpper(std::string_view _String)
+std::string UEngineStringHelper::ToUpper(std::string_view _String)
 {
 	std::string Result = _String.data();
 	Result.resize(_String.size());
@@ -14,7 +14,7 @@ std::string UEngineString::ToUpper(std::string_view _String)
 	return Result;
 }
 
-std::wstring UEngineString::AnsiToUnicode(std::string_view _String)
+std::wstring UEngineStringHelper::AnsiToUnicode(std::string_view _String)
 {
 	int Size = MultiByteToWideChar(CP_ACP, 0, _String.data(), static_cast<int>(_String.size()), nullptr, 0);
 
@@ -38,7 +38,7 @@ std::wstring UEngineString::AnsiToUnicode(std::string_view _String)
 	return Result;
 }
 
-std::string UEngineString::UnicodeToAnsi(std::wstring_view _WString)
+std::string UEngineStringHelper::UnicodeToAnsi(std::wstring_view _WString)
 {
 	int Size = WideCharToMultiByte(CP_ACP, 0, _WString.data(), static_cast<int>(_WString.size()), nullptr, 0, nullptr, nullptr);
 
@@ -62,10 +62,10 @@ std::string UEngineString::UnicodeToAnsi(std::wstring_view _WString)
 	return Result;
 }
 
-UEngineString::UEngineString()
+UEngineStringHelper::UEngineStringHelper()
 {
 }
 
-UEngineString::~UEngineString()
+UEngineStringHelper::~UEngineStringHelper()
 {
 }

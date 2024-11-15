@@ -29,7 +29,7 @@ void AActor::Tick(float _DeltaTime)
 	{
 		FVector2D Pos = GetActorLocation();
 		FVector2D CameraPos = GetWorld()->GetCameraPos();
-		UEngineDebugHelper::SetDebugPos(Pos - CameraPos, UEngineDebugHelper::EDebugPosType::Circle);
+		EngineDebugHelper::SetDebugPos(Pos - CameraPos, EngineDebugHelper::EDebugPosType::Circle);
 	}
 }
 

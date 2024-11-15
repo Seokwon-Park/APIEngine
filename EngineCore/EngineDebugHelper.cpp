@@ -3,20 +3,20 @@
 
 #include <EnginePlatform/EngineWinDebug.h>
 
-UEngineDebugHelper UEngineDebugHelper::Instance;
+EngineDebugHelper EngineDebugHelper::Instance;
 
-void UEngineDebugHelper::PushString(std::string_view _Text)
+void EngineDebugHelper::PushString(std::string_view _Text)
 {
 	Instance.DebugTexts.push_back({ _Text.data(), Instance.DebugTextPos });
 	Instance.DebugTextPos.Y += 20;
 }
 
-void UEngineDebugHelper::PushString(std::string_view _Text, FVector2D _Pos)
+void EngineDebugHelper::PushString(std::string_view _Text, FVector2D _Pos)
 {
 	Instance.DebugTexts.push_back({_Text.data(), _Pos});
 }
 
-void UEngineDebugHelper::PrintEngineDebugRender()
+void EngineDebugHelper::PrintEngineDebugRender()
 {
 	if (false == Instance.UseDebugHelper)
 	{
@@ -72,7 +72,7 @@ void UEngineDebugHelper::PrintEngineDebugRender()
 
 }
 
-void UEngineDebugHelper::CheckFPSOption()
+void EngineDebugHelper::CheckFPSOption()
 {
 	if (true == Instance.ShowFPS)
 	{
@@ -82,12 +82,12 @@ void UEngineDebugHelper::CheckFPSOption()
 	}
 }
 
-void UEngineDebugHelper::SetDebugPos(FVector2D _Pos, EDebugPosType _Type)
+void EngineDebugHelper::SetDebugPos(FVector2D _Pos, EDebugPosType _Type)
 {
 	Instance.DebugPoses.push_back({ _Pos, _Type });
 }
 
-void UEngineDebugHelper::PivotDebugSwitch()
+void EngineDebugHelper::PivotDebugSwitch()
 {
 	Instance.ShowAllActorPivot = !Instance.ShowAllActorPivot;
 	if (Instance.ShowAllActorPivot)

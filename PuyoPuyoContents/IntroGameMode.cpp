@@ -31,7 +31,7 @@ void AIntroGameMode::BeginPlay()
 	Fader = GetWorld()->SpawnActor<AFader>();
 
 	//이렇게 하는게 맞나?? 잘모르겠다
-	EngineDelegate NewDelegate;
+	UEngineDelegate NewDelegate;
 	NewDelegate += std::bind(&AFader::FadeIn, Fader, 1.0f);
 	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
 	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, false);

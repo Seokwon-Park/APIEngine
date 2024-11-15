@@ -1,18 +1,18 @@
 #pragma once
 
 // Ό³Έν :
-class EngineDelegate
+class UEngineDelegate : public UObject
 {
 public:
 	// constrcuter destructer
-	EngineDelegate();
+	UEngineDelegate();
 
-	EngineDelegate(std::function<void()> _Function)
+	UEngineDelegate(std::function<void()> _Function)
 	{
 		Functions.push_back(_Function);
 	}
 
-	~EngineDelegate();
+	~UEngineDelegate();
 
 	// delete Function
 	//EngineDelegate(const EngineDelegate& _Other) = delete;

@@ -34,7 +34,7 @@ ULevel::~ULevel()
 
 void ULevel::BeginPlay()
 {
-	GetInputSystem().BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&UEngineDebugHelper::PivotDebugSwitch));
+	GetInputSystem().BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&EngineDebugHelper::PivotDebugSwitch));
 
 	//for (AActor* Actor : AllActors)
 	//{
@@ -98,7 +98,7 @@ void ULevel::Render()
 		}
 	}
 
-	UEngineDebugHelper::PrintEngineDebugRender();
+	EngineDebugHelper::PrintEngineDebugRender();
 
 	SwapBuffer();
 }

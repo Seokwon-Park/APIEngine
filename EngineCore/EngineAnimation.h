@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineSprite.h"
 
-class UEngineAnimation : public UObject
+class UEngineAnimation : public UEngineResource
 {
 public:
 	friend class UAnimatorComponent;
@@ -33,7 +33,7 @@ private:
 	std::vector<int> FrameIndices;
 	std::vector<float> FrameIntervals;
 	//특정 프레임에 실행되어야 할 이벤트
-	std::map<int, EngineDelegate> Events;
+	std::map<int, UEngineDelegate> Events;
 
 };
 

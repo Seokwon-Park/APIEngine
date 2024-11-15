@@ -1,7 +1,7 @@
 #pragma once
 
 // Ό³Έν :
-class UEngineWinImage : public UObject
+class UEngineWinImage : public UEngineResource
 {
 public:
 	// constrcuter destructer

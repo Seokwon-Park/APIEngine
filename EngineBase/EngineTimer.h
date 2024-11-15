@@ -1,7 +1,7 @@
 #pragma once
 
 // Ό³Έν :
-class UEngineTimer
+class UEngineTimer : public UObject
 {
 public:
 	// constrcuter destructer
@@ -45,9 +45,7 @@ private:
 	LARGE_INTEGER CurTime;
 
 	double TimeCounter;
-
 	double DeltaTime;
-
 	float fDeltaTime;
 };
 

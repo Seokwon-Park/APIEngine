@@ -2,7 +2,7 @@
 #include <random>
 
 // 클래스 설명 :
-class UEngineRandom
+class UEngineRandom :public UObject
 {
 public:
 	// Constrcuter Destructer

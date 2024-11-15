@@ -10,9 +10,6 @@
     <ClCompile Include="Level.cpp">
       <Filter>Object\Level</Filter>
     </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="EngineSprite.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
@@ -46,6 +43,15 @@
     <ClCompile Include="GameMode.cpp">
       <Filter>Object\Actor\GameMode</Filter>
     </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>Resources\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSound.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Resources\ResourceManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -56,9 +62,6 @@
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Object\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="EngineSprite.h">
       <Filter>Resources</Filter>
@@ -92,6 +95,15 @@
     </ClInclude>
     <ClInclude Include="GameMode.h">
       <Filter>Object\Actor\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>Resources\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSound.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Resources\ResourceManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,5 +146,34 @@
     <Filter Include="Object\Actor\Tilemap">
       <UniqueIdentifier>{bf38cff2-3122-4069-a27b-0f9771102e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\ResourceManager">
+      <UniqueIdentifier>{77c32583-b5ca-4a92-952c-3ee7c141a525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{fb17fa4d-ff31-4577-b15a-eeb877fb93a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD">
+      <UniqueIdentifier>{2d353c83-a4ec-4511-89e2-930b72a5ba68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD\Debug">
+      <UniqueIdentifier>{b88a74a6-59cb-4c69-9460-cb5d280e934d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD\Release">
+      <UniqueIdentifier>{a5e348dc-be36-4dc4-9c02-8a37953c153c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\ThirdParty\FMOD\bin\Debug\fmodL.dll">
+      <Filter>ThirdParty\FMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\ThirdParty\FMOD\bin\Debug\fmodL_vc.lib">
+      <Filter>ThirdParty\FMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\ThirdParty\FMOD\bin\Release\fmod.dll">
+      <Filter>ThirdParty\FMOD\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\ThirdParty\FMOD\bin\Release\fmod_vc.lib">
+      <Filter>ThirdParty\FMOD\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

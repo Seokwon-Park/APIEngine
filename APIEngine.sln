@@ -41,20 +41,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application\
 		{D216B657-BE06-4FBC-8FE2-B2E6140590F4} = {D216B657-BE06-4FBC-8FE2-B2E6140590F4}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{383AE59E-5659-462E-9E7E-0C3E90B1F4C5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Debug", "Debug", "{5B61DDC2-46A8-4315-84F7-C2D45C701164}"
-	ProjectSection(SolutionItems) = preProject
-		EnginePlatform\ThirdParty\FMOD\bin\Debug\fmodL.dll = EnginePlatform\ThirdParty\FMOD\bin\Debug\fmodL.dll
-		EnginePlatform\ThirdParty\FMOD\bin\Debug\fmodL_vc.lib = EnginePlatform\ThirdParty\FMOD\bin\Debug\fmodL_vc.lib
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{DF297DE2-A9E5-4B96-8038-563226E089FF}"
-	ProjectSection(SolutionItems) = preProject
-		EnginePlatform\ThirdParty\FMOD\bin\Release\fmod.dll = EnginePlatform\ThirdParty\FMOD\bin\Release\fmod.dll
-		EnginePlatform\ThirdParty\FMOD\bin\Release\fmod_vc.lib = EnginePlatform\ThirdParty\FMOD\bin\Release\fmod_vc.lib
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -113,8 +99,6 @@ Global
 		{1C0C0E63-4A10-4264-9589-5B81F74EA098} = {1012E8FD-8210-4BC0-9A5C-F10FC499838D}
 		{D216B657-BE06-4FBC-8FE2-B2E6140590F4} = {245406CF-52ED-4FFD-89FF-4248AE2F3554}
 		{C0F877A0-DA61-4D02-940B-DA3947E8FFFB} = {9722BBA9-FE9A-43C7-BF07-597FABDE09B3}
-		{5B61DDC2-46A8-4315-84F7-C2D45C701164} = {383AE59E-5659-462E-9E7E-0C3E90B1F4C5}
-		{DF297DE2-A9E5-4B96-8038-563226E089FF} = {383AE59E-5659-462E-9E7E-0C3E90B1F4C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4119756-7FC0-4776-9494-A5AD753C04F8}

@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "AnimatorComponent.h"
 #include "ImageManager.h"
-#include <EngineBase/EngineString.h>
+#include <EngineBase/EngineStringHelper.h>
 
 UAnimatorComponent::UAnimatorComponent()
 	:CurAnimation(nullptr)
@@ -46,7 +46,7 @@ void UAnimatorComponent::CreateAnimation(std::string_view _AnimationName, std::s
 void UAnimatorComponent::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName,
 	std::vector<int> _FrameIndex, std::vector<float> _FrameInterval, bool _IsLoop)
 {
-	std::string UpperName = UEngineString::ToUpper(_AnimationName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_AnimationName);
 
 	if (_FrameIndex.size() != _FrameInterval.size())
 	{
@@ -79,7 +79,7 @@ void UAnimatorComponent::CreateAnimation(std::string_view _AnimationName, std::s
 
 void UAnimatorComponent::ChangeAnimation(std::string_view _AnimationName, bool _IsForce /*= false*/)
 {
-	std::string UpperName = UEngineString::ToUpper(_AnimationName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_AnimationName);
 
 	if (false == Animations.contains(UpperName))
 	{
@@ -102,7 +102,7 @@ void UAnimatorComponent::ChangeAnimation(std::string_view _AnimationName, bool _
 
 void UAnimatorComponent::SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function)
 {
-	std::string UpperName = UEngineString::ToUpper(_AnimationName);
+	std::string UpperName = UEngineStringHelper::ToUpper(_AnimationName);
 
 	if (false == Animations.contains(UpperName))
 	{

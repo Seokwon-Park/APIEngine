@@ -1,6 +1,6 @@
 #include "aepch.h"
 #include "SpriteRendererComponent.h"
-#include <EngineBase/EngineString.h>
+#include <EngineBase/EngineStringHelper.h>
 #include <EngineCore/ImageManager.h>
 #include <EngineCore/EngineAPICore.h>
 

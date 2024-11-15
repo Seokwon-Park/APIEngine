@@ -19,3 +19,5 @@
 #include "EngineMath.h"
 #include "EngineDebug.h"
 #include "EngineRandom.h"
+#include "EngineResource.h"
+
