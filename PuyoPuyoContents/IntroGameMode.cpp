@@ -59,13 +59,27 @@ void AIntroGameMode::BeginPlay()
 	EventQueue.push({ 3.5f, NewDelegate });
 	NewDelegate.Clear();
 
-	//?
+	//오프닝 애들 나옴
 	NewDelegate += std::bind(&AFader::SetActive, Fader, false);
 	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, true);
 	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
 	NewDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, false);
 	NewDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, true);
+	EventQueue.push({ 5.0f, NewDelegate });
+	NewDelegate.Clear();
 
+	//오프닝 애들 화면 종료
+	NewDelegate += std::bind(&AFader::SetActive, Fader, true);
+	NewDelegate += std::bind(&AFader::FadeOut, Fader, .5f);
+	EventQueue.push({ 6.0f, NewDelegate });
+	NewDelegate.Clear();
+
+	//다시
+	NewDelegate += std::bind(&AFader::SetActive, Fader, false);
+	NewDelegate += std::bind(&AIntroBackground::SetActive, Background, true);
+	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
+	NewDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, false);
+	NewDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, true);
 	EventQueue.push({ 5.0f, NewDelegate });
 	NewDelegate.Clear();
 }

@@ -6,6 +6,7 @@ enum class ERenderLayer
 	PLAY = 0,
 };
 
+//»Ñ¿ä»Ñ¿ä »ö
 enum class EPuyoColor
 {
 	Red,
@@ -16,6 +17,7 @@ enum class EPuyoColor
 	Garbage,
 };
 
+//»Ñ¿ä»Ñ¿ä ÅØ½ºÆ® »ö
 enum class EPuyoTextColor
 {
 	Red,

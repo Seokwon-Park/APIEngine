@@ -52,7 +52,8 @@ public:
 		UComponentPtr->SetName(_Name);
 		UComponentPtr->ParentActor = this;
 
-		// Actor의 생성자가 다 끝나고 나서 World가 결정됩니다.
+		// Actor의 생성자가 다 끝나고 나서 World가 결정되므로
+		// Actor의 BeginPlay를 미룬다. -> Actor의 BeginPlay에서 컴포넌트 리스트들의 BeginPlay를 실행해준다.
 		//NewComponent->BeginPlay();
 		Components.push_back(NewComponent);
 		return NewComponent;

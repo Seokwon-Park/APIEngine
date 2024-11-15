@@ -34,7 +34,7 @@ public:
 
 		for (size_t i = 0; i < _vector.size(); i++)
 		{
-			// 자료형 변환이 안된다는 것이다.
+			// 자료형 변환이 안된다
 			operator<<(_vector[i]);
 		}
 	}
@@ -61,7 +61,7 @@ public:
 		_vector.resize(Size);
 		for (size_t i = 0; i < _vector.size(); i++)
 		{
-			// 자료형 변환이 안된다는 것이다.
+			// 자료형 변환이 안된다.
 			operator>>(_vector[i]);
 		}
 	}
@@ -84,13 +84,11 @@ public:
 protected:
 
 private:
-	// 얼마나 데이터가 채워졌냐?
+	// 얼마나 데이터가 채워짐?
 	int WriteOffset = 0;
 
-	// 얼마나 데이터가 채워졌냐?
+	// 얼마나 데이터가 채워짐?
 	int ReadOffset = 0;
-
-	// 자료형이라는게 존재하지 않죠?
 	std::vector<char> Data;
 };
 

@@ -317,7 +317,7 @@ void APuyoBoard::PuyoMoveLogic()
 
 		//Todo : 방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
 		//일단 방해뿌요가 내보드에 존재하면 파괴 로직 단계에서 상쇄검사를 하십쇼.
-		if (WarnNums > 0 && !IsChaining)
+		if (WarnNums > 0 && !CounterBoard->IsChaining)
 		{
 			CheckOffset = true;
 			//SpawnNuisancePuyo();
@@ -567,6 +567,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		return;
 	}
 
+	IsChaining = true;
 	//파괴할게 있어
 	if (FlickCount < 10)
 	{
@@ -593,6 +594,7 @@ void APuyoBoard::PuyoDestroyLogic()
 	{
 		SpawnChainText();
 		//Todo : 방해뿌요량계산공식 추가하십쇼 두번하십쇼 이것도 코드위치 여기 맞는지 확신X
+		//NP : 계산된 방해 뿌요 (=AttackAmount)
 		int AttackAmount = RandomDevice.GetRandomInt(6, 12);
 		//상쇄 검사가 필요하다면
 		if (CheckOffset)
@@ -667,14 +669,16 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
-	if (WarnNums > 0)
+	if (WarnNums > 0 && CounterBoard->IsChaining == false)
 	{
+		// Todo: 현재 직관성이 좀 떨어지는거 같음.
 		SpawnNuisancePuyo();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
 	if (PuyoUpdateColumns.empty())
 	{
+		IsChaining = false;
 		CurStep = EPuyoLogicStep::PuyoCreate;
 		return;
 	}
@@ -941,7 +945,7 @@ void APuyoBoard::SpawnNuisancePuyo()
 	int Range = BoardSize.X - 1;
 	for (int i = 0; i < DropAmount % BoardSize.X; i++)
 	{
-		int Pick = RandomDevice.GetRandomInt(0, XLines.size() - 1);
+		int Pick = RandomDevice.GetRandomInt(0, static_cast<int>(XLines.size() - 1));
 		int X = XLines[Pick];
 		std::swap(XLines[Pick], XLines[XLines.size() - 1]);
 		XLines.pop_back();

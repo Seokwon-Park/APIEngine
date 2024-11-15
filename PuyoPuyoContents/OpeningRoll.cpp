@@ -20,7 +20,7 @@ void AOpeningRoll::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	AddActorLocation(FVector2D::DOWN * _DeltaTime);
+	AddActorLocation(FVector2D::DOWN * _DeltaTime * 50.0f);
 }
 void AOpeningRoll::BeginPlay()
 {

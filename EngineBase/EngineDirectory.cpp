@@ -41,6 +41,7 @@ void UEngineDirectory::GetAllFileRecur(std::filesystem::path _Path, std::vector<
 std::vector<UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecur)
 {
 	std::vector<UEngineFile> Result;
+
 	// 경로의 첫번째 파일을 가리키는 포인터
 	std::filesystem::directory_iterator DirItr = std::filesystem::directory_iterator(Path);
 
