@@ -1,5 +1,6 @@
 #pragma once
 #include "GameMode.h"
+#include "EnginePostProcess.h"
 #include <EnginePlatform/EngineInput.h>
 
 
@@ -36,17 +37,31 @@ public:
 
 		//NewActor->BeginPlay();
 		WaitForBeginPlay.push(NewActor);
-		
+
 		return NewActor;
 	}
+
+	template <typename PostProcessType>
+	PostProcessType* AddPostProcess()
+	{ 
+		PostProcessType* NewPostProcess= new PostProcessType();
+
+		UEnginePostProcess* PostProcessPtr = dynamic_cast<UEnginePostProcess*>(NewPostProcess);
+
+		PostProcesses.push_back(NewPostProcess);
+
+		return NewPostProcess;
+	}
+
 
 	void PivotDebugOn();
 	void PivotDebugOff();
 
+
 	// Camera -> ÄÄÆ÷³ÍÆ®·Î µû·Î »¬±î?
-	inline void SetCameraToMainPawn(bool _IsCameraToMainPawn){IsCameraToMainPawn = _IsCameraToMainPawn;}
-	inline void SetCameraPivot(FVector2D _Pivot){CameraPivot = _Pivot;}
-	inline void SetCameraPos(FVector2D _Pos){CameraPos = _Pos;}
+	inline void SetCameraToMainPawn(bool _IsCameraToMainPawn) { IsCameraToMainPawn = _IsCameraToMainPawn; }
+	inline void SetCameraPivot(FVector2D _Pivot) { CameraPivot = _Pivot; }
+	inline void SetCameraPos(FVector2D _Pos) { CameraPos = _Pos; }
 	AGameMode* GetGameMode()
 	{
 		return GameMode;
@@ -57,8 +72,8 @@ public:
 		ActorType* CastMainPawn = dynamic_cast<ActorType*>(MainPawn);
 		return CastMainPawn;
 	}
-	inline FVector2D GetCameraPivot() const {return CameraPivot;}
-	inline FVector2D GetCameraPos() const {return CameraPos;}
+	inline FVector2D GetCameraPivot() const { return CameraPivot; }
+	inline FVector2D GetCameraPos() const { return CameraPos; }
 	inline UEngineInput& GetInputSystem() { return InputSystem; }
 protected:
 
@@ -85,6 +100,8 @@ private:
 		WaitForBeginPlay.push(MainPawn);
 	}
 
+
+
 	AGameMode* GameMode;
 	AActor* MainPawn;
 
@@ -97,8 +114,8 @@ private:
 	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
 	UEngineInput InputSystem;
-	
+
 	//temp 
-	std::vector<class UEnginePostProcess*> Post;
+	std::vector<class UEnginePostProcess*> PostProcesses;
 };
 

@@ -33,7 +33,7 @@ UEngineAPICore::~UEngineAPICore()
 
 	Levels.clear();
 
-	//사운드를 먼저 할당해제시켜줘야함 ㅠ
+	//사운드를 먼저 할당해제시켜줘야 경고가 안뜸
 	USoundManager::GetInstance().ReleaseSounds();
 	UEngineAudio::Release();
 }

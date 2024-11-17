@@ -49,6 +49,7 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Resources\ResourceManager</Filter>
     </ClCompile>
+    <ClCompile Include="EnginePostProcess.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -99,6 +100,8 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Resources\ResourceManager</Filter>
     </ClInclude>
+    <ClInclude Include="EnginePostProcess.h" />
+    <ClInclude Include="ContentsCore.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

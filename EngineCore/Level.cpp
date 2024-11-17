@@ -3,60 +3,7 @@
 #include "EngineAPICore.h"
 #include "SpriteRendererComponent.h"
 
-class UEnginePostProcess
-{
-public:
-	virtual ~UEnginePostProcess() {};
-	virtual void EffectTick() = 0;
-};
 
-class UPuyoBoardShake :public UEnginePostProcess
-{
-public:
-	~UPuyoBoardShake() 
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			delete ShakeImage[i];
-		}
-	}
-	void CreateImage()
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			ShakeImage[i] = new UEngineWinImage();
-			ShakeImage[i]->Create(UEngineAPICore::GetBackBuffer(), { 32,480 });
-		}
-
-	}
-	void EffectTick() override
-	{
-		auto BackBuffer = UEngineAPICore::GetBackBuffer();
-
-		for (int i = 0; i < 6; i++)
-		{
-			FTransform TargetTrans1({ 16,240 }, { 32,480 });
-			FTransform CopyTrans1({ 32*i,0 }, { 32,480 });
-			BackBuffer->CopyToTransparent(ShakeImage[i], TargetTrans1, CopyTrans1);
-		}
-
-
-		for (int i = 0; i < 6; i++)
-		{
-			FTransform TargetTrans({ 32*i+16,240 }, { 32,480 });
-			FTransform CopyTrans({ 0,0 }, { 32,480 });
-			ShakeImage[i]->CopyToTransparent(BackBuffer, TargetTrans, CopyTrans);
-		}
-
-
-		//TargetTrans = { { 50,50 }, { 100,100 } };
-		//CopyTrans = { { 100,100 }, { 100,100 } };
-
-	}
-
-	UEngineRandom RandomDevice;
-	UEngineWinImage* ShakeImage[6];
-};
 
 ULevel::ULevel()
 	:GameMode(nullptr), MainPawn(nullptr)
@@ -91,9 +38,7 @@ void ULevel::BeginPlay()
 {
 	GetInputSystem().BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&EngineDebugHelper::PivotDebugSwitch));
 
-	UPuyoBoardShake* Shake = new UPuyoBoardShake();
-	Shake->CreateImage();
-	Post.push_back(Shake);
+	// 이게 안되는 이유는 게임 중간에 스폰하는 액터에 대해서는 BeginPlay실행이 안돼
 	//for (AActor* Actor : AllActors)
 	//{
 	//	if (nullptr != Actor)
@@ -156,13 +101,25 @@ void ULevel::Render()
 		}
 	}
 
-	for (auto Effect : Post)
+	for (auto Effect : PostProcesses)
 	{
 		Effect->EffectTick();
 	}
 
 
 	EngineDebugHelper::PrintEngineDebugRender();
+
+	if (UEngineWindow::Resize != UEngineAPICore::GetEngineWindow().GetWindowSize())
+	{
+		UEngineWinImage* BackBuffer = UEngineAPICore::GetBackBuffer();
+		UEngineWinImage* NewBack = new UEngineWinImage();
+		NewBack->Create(BackBuffer, UEngineWindow::Resize);
+		StretchBlt(NewBack->GetDC(), 0, 0, UEngineWindow::Resize.iX(), UEngineWindow::Resize.iY(), BackBuffer->GetDC(), 0, 0, 640, 480, SRCCOPY);
+
+		&BackBuffer = &NewBack;
+
+		delete BackBuffer;
+	}
 
 	SwapBuffer();
 }

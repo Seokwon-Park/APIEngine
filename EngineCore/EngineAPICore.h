@@ -1,18 +1,14 @@
 #pragma once
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineTimer.h>
+#include "ContentsCore.h"
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
 
 #include "Level.h"
 
-class UContentsCore
-{
-public:
-	virtual void BeginPlay() = 0;
-	virtual void Tick() = 0;
-};
+
 
 const std::string DefaultResourceFolder = "Resources";
 const std::string DefaultImageFolder = "Images";

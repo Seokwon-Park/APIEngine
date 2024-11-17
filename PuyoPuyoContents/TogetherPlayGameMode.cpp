@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "TogetherPlayGameMode.h"
 #include "PlayBackground.h"
+#include "PuyoBoardShake.h"
 #include "PuyoBoard.h"
 #include "PuyoText.h"
 #include <EnginePlatform/KeyCode.h>
@@ -22,7 +23,7 @@ void ATogetherPlayGameMode::BeginPlay()
 	// 점수텍스트(TextMesh?) 몇개?
 	// 솔로모드 << 상대방 이미지를 그리는 이미지?
 	// 
-
+	
 	APlayBackground* Background = GetWorld()->SpawnActor<APlayBackground>();
 	APuyoText* Next = GetWorld()->SpawnActor<APuyoText>();
 	Next->SetupText(4, EPuyoTextColor::Green);
@@ -45,6 +46,11 @@ void ATogetherPlayGameMode::BeginPlay()
 	//PuyoBoardP1->SetActive(false);
 	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
 
+	UPuyoBoardShake* ShakerP1 = GetWorld()->AddPostProcess<UPuyoBoardShake>();
+	ShakerP1->SetupProcess({ 32,0 });
+	UPuyoBoardShake* ShakerP2 = GetWorld()->AddPostProcess<UPuyoBoardShake>();
+	ShakerP2->SetupProcess({ 416,0 });
+
 	//Player1 Setting
 	PuyoBoardP1->SetActorLocation(FVector2D(32, 0));
 	APuyoBoard::PuyoBoardSettings Settings;
@@ -57,11 +63,13 @@ void ATogetherPlayGameMode::BeginPlay()
 		Settings.NextNextBlockCoord = FIntPoint(9, 5);
 		Settings.CounterBoard = PuyoBoardP2;
 		Settings.Score = P1Score;
+		Settings.Shaker = ShakerP1;
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
 	PuyoBoardP1->SetKey(EKey::Z, EKey::X, EKey::B, EKey::F, EKey::H);
 	//PuyoBoardP1->SetKey(EKey::Up, EKey::Down, EKey::Left, EKey::Right);
 
+	//test1->SetEnable();
 
 	//Player2 Setting
 	PuyoBoardP2->SetActorLocation(FVector2D(416, 0));
@@ -72,7 +80,11 @@ void ATogetherPlayGameMode::BeginPlay()
 		Settings.NextNextBlockCoord = FIntPoint(10, 5);
 		Settings.CounterBoard = PuyoBoardP1;
 		Settings.Score = P2Score;
+		Settings.Shaker = ShakerP2;
 	}
 	PuyoBoardP2->SetupPuyoBoard(Settings);
 	PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
+
+
+	//test2->SetEnable();
 }

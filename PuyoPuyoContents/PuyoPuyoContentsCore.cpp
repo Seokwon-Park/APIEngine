@@ -26,8 +26,9 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	UEngineAPICore::GetCore()->LoadResources();
 
-	/*UEngineSound* Sound = USoundManager::GetInstance().FindSound("Test.wav");
-	Sound->Play();*/
+	//USoundManager::GetInstance().FindSound("OPTheme.mp3")->Play();
+
+
 
 	//인게임 뿌요 관련 스프라이트
 	SetupPuyoSprite();
@@ -121,7 +122,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CuttingSprite("MENU_KA.CNS.BMP", { 640,480 });
 	UImageManager::GetInstance().CuttingSprite("MENU_KB.CNS.BMP", { 640,480 });
 
-	//UImageManager::GetInstance().CuttingSprite("PUYO_R.CNS.bmp", { 32, 32 });
+	// 여기서부터 게임 구성을 만든다.
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 
 	// 게임오버? , 게임엔딩?
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Puyo Puyo Tsu");

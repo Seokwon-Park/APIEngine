@@ -4,6 +4,7 @@
 
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
+FVector2D UEngineWindow::Resize = FVector2D::ZERO;
 std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasses;
 int WindowCount = 0;
 
@@ -20,7 +21,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_SIZE:
 	{
+		int width = LOWORD(lParam);  // 새로운 너비
+		int height = HIWORD(lParam); // 새로운 높이
 
+		UEngineWindow::Resize = { width, height };
 	}
 	break;
 	case WM_DESTROY:

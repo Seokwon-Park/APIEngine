@@ -46,6 +46,9 @@
     <Filter Include="ContentsObject\Global">
       <UniqueIdentifier>{b9662924-ef07-47f3-a908-b1e8c3c968b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Global\PostProcess">
+      <UniqueIdentifier>{4d6f9629-dee1-42e1-b3bc-32daef29c538}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aepch.cpp">
@@ -117,6 +120,9 @@
     <ClCompile Include="OpeningRoll.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="PuyoBoardShake.cpp">
+      <Filter>ContentsObject\Global\PostProcess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -173,9 +179,6 @@
     <ClInclude Include="PuyoChainText.h">
       <Filter>ContentsObject\Text</Filter>
     </ClInclude>
-    <ClInclude Include="ScoringTable.h">
-      <Filter>ContentsObject\Global</Filter>
-    </ClInclude>
     <ClInclude Include="Fader.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
@@ -193,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="OpeningRoll.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoBoardShake.h">
+      <Filter>ContentsObject\Global\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoringTable.h">
+      <Filter>ContentsObject\Global</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

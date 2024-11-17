@@ -1,6 +1,7 @@
 #pragma once
 #include "Puyo.h"
 #include "PuyoText.h"
+#include "PuyoBoardShake.h"
 
 #include <set>
 #include <EngineCore/Actor.h>
@@ -29,8 +30,10 @@ public:
 		FIntPoint NextBlockCoord;
 		FIntPoint NextNextBlockCoord;
 		FIntPoint BoardSize;
+		UPuyoBoardShake* Shaker;
 		APuyoText* Score;
 		APuyoBoard* CounterBoard;
+
 	};
 	// constrcuter destructer
 	APuyoBoard();
@@ -204,9 +207,11 @@ private:
 	int ScoreToAdd = 0;
 
 
+	APuyoText* Score;
+	UPuyoBoardShake* Shaker;
 	// 상대 게임판 객체 포인터
 	APuyoBoard* CounterBoard;
-	APuyoText* Score;
+
 
 
 

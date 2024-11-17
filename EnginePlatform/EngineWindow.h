@@ -54,6 +54,8 @@ public:
 	{
 		SetWindowTextA(WindowHandle, Text.data());
 	}
+	//Test
+	static FVector2D Resize;
 protected:
 
 private:

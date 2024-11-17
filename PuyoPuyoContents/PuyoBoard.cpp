@@ -191,6 +191,7 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	NextNextBlockCoord = _Settings.NextNextBlockCoord;
 	Score = _Settings.Score;
 	CounterBoard = _Settings.CounterBoard;
+	Shaker = _Settings.Shaker;
 	Board.clear();
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
 }
@@ -673,6 +674,7 @@ void APuyoBoard::PuyoUpdateLogic()
 	{
 		// Todo: 현재 직관성이 좀 떨어지는거 같음.
 		SpawnNuisancePuyo();
+		Shaker->SetEnable();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
