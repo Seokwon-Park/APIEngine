@@ -28,6 +28,7 @@ void AMenuGameMode::BeginPlay()
 		ACarbuncleMenu* Car = GetWorld()->SpawnActor<ACarbuncleMenu>();
 		Car->SetupCarbuncleMenu(i);
 		Car->SetActorLocation({ i*200, 200 });
+		Car->SetInactive();
 		Menus.push_back(Car);
 	}
 }

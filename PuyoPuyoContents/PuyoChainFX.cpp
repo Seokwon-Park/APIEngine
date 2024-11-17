@@ -44,7 +44,7 @@ void APuyoChainFX::Tick(float _DeltaTime)
 	Elapsed += _DeltaTime;
 	if (Elapsed < Duration)
 	{
-		SetActorLocation(FVector2D::Lerp(StartLocation, TargetLocation, Elapsed / Duration));
+		SetActorLocation(FVector2D::BezierLerp(StartLocation, { StartLocation.X, TargetLocation.Y }, TargetLocation, Elapsed / Duration));
 		return;
 	}
 	Animator->ChangeAnimation("Pop");

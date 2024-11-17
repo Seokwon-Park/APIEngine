@@ -17,12 +17,18 @@ AOpeningPuyo::AOpeningPuyo()
 	OPPuyoTop->SetPivot(EPivotType::BottomRight);
 	OPPuyoTop->SetRemoveBackground(true);
 
-	OPPuyoEye= CreateDefaultSubobject<USpriteRendererComponent>("OPPuyoTop");
-	OPPuyoEye->SetSprite("OPPUYOEYE");
-	OPPuyoEye->SetComponentScale({ 480,240 });
-	OPPuyoEye->SetComponentLocation({ 640,240 });
-	OPPuyoEye->SetPivot(EPivotType::BottomRight);
-	OPPuyoEye->SetRemoveBackground(true);
+	OPPuyoEyeL= CreateDefaultSubobject<USpriteRendererComponent>("OPPuyoEyeL");
+	OPPuyoEyeL->SetSprite("OPPUYOEYE");
+	OPPuyoEyeL->SetComponentScale({ 144,144 });
+	OPPuyoEyeL->SetComponentLocation({ 448, 416 });
+	OPPuyoEyeL->SetPivot(EPivotType::BottomRight);
+	OPPuyoEyeL->SetRemoveBackground(true);
+
+	OPPuyoEyeR = CreateDefaultSubobject<USpriteRendererComponent>("OPPuyoEyeR");
+	OPPuyoEyeR->SetSprite("OPPUYOEYE");
+	OPPuyoEyeR->SetComponentScale({ 144,144 });
+	OPPuyoEyeR->SetComponentLocation({ 624,464 });
+	OPPuyoEyeR->SetRemoveBackground(true);
 }
 
 AOpeningPuyo::~AOpeningPuyo()

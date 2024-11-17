@@ -172,6 +172,17 @@ public:
 		return _A + (_B - _A) * _T;
 	}
 
+
+	static FVector2D BezierLerp(FVector2D _Start, FVector2D _Middle, FVector2D _Target, float _T)
+	{
+		// (1-T)*A + T*B
+		float U = 1 - _T;
+		FVector2D Result;
+		Result.X = U * U * _Start.X + 2 * U * _T * _Middle.X + _T * _T * _Target.X;
+		Result.Y = U * U * _Start.Y + 2 * U * _T * _Middle.Y + _T * _T * _Target.Y;
+		return Result;
+	}
+
 	static float Distance(const FVector2D& _A, const FVector2D& _B)
 	{
 		float X = _A.X - _B.X;
@@ -296,7 +307,7 @@ public:
 			unsigned char B;
 			unsigned char A;
 		};
-		
+
 	};
 
 	UColor()

@@ -111,7 +111,12 @@ void ACarbuncleMenu::Test()
 
 void ACarbuncleMenu::SetInactive()
 {
+	int Index = 5 + MenuIndex;
 	HeadRenderer->SetSprite("CARHEAD", 1);
+	UBodyRenderer->SetSprite("CARUBODY", Index);
+	DBodyRenderer->SetSprite("CARDBODY", Index);
+	LHandRenderer->SetSprite("CARLEFT", Index % 3);
+	RHandRenderer->SetSprite("CARRIGHT", Index % 3);
 
 }
 

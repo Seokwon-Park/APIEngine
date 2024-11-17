@@ -602,9 +602,11 @@ void APuyoBoard::PuyoDestroyLogic()
 		{
 			CheckOffset = false;
 			// Todo: WarnNums에 따른 순서때문에 따로 적어야함 나중에 고칠것.
+			// +추가 지금 로직에도 문제가 좀 있음,
 			//내가 상쇄하는 양이 더 적으면
 			if (AttackAmount < WarnNums)
 			{
+				//Todo: 이경우에는 
 				WarnNums -= AttackAmount;
 				AttackAmount = 0;
 				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));

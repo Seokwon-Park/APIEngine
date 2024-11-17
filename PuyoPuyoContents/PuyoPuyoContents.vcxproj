@@ -153,6 +153,14 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="OpeningArle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="OpeningCar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="OpeningPuyo.h">
       <SubType>
       </SubType>
@@ -247,6 +255,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="OpeningArle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OpeningCar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="OpeningPuyo.cpp">
       <SubType>
       </SubType>

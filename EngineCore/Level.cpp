@@ -109,18 +109,6 @@ void ULevel::Render()
 
 	EngineDebugHelper::PrintEngineDebugRender();
 
-	if (UEngineWindow::Resize != UEngineAPICore::GetEngineWindow().GetWindowSize())
-	{
-		UEngineWinImage* BackBuffer = UEngineAPICore::GetBackBuffer();
-		UEngineWinImage* NewBack = new UEngineWinImage();
-		NewBack->Create(BackBuffer, UEngineWindow::Resize);
-		StretchBlt(NewBack->GetDC(), 0, 0, UEngineWindow::Resize.iX(), UEngineWindow::Resize.iY(), BackBuffer->GetDC(), 0, 0, 640, 480, SRCCOPY);
-
-		&BackBuffer = &NewBack;
-
-		delete BackBuffer;
-	}
-
 	SwapBuffer();
 }
 

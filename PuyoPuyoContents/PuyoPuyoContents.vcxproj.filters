@@ -123,6 +123,12 @@
     <ClCompile Include="PuyoBoardShake.cpp">
       <Filter>ContentsObject\Global\PostProcess</Filter>
     </ClCompile>
+    <ClCompile Include="OpeningCar.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningArle.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -202,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="ScoringTable.h">
       <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningCar.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningArle.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

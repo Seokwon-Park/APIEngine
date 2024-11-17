@@ -7,6 +7,8 @@
 #include "IntroBackground.h"
 #include "Fader.h"
 #include <EnginePlatform/EngineInput.h>
+#include <EnginePlatform/EngineSound.h>
+#include <EngineCore/SoundManager.h>
 //테스트 용
 #include "PuyoBoomFX.h"
 
@@ -22,6 +24,7 @@ void AIntroGameMode::BeginPlay()
 {
 	// Todo : PressAnyKey로 바꿀것
 	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
+	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&UEngineSound::Stop, USoundManager::GetInstance().FindSound("OPTheme.MP3")));
 
 	APublisherLogo* Logo = GetWorld()->SpawnActor<APublisherLogo>();
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();
@@ -51,6 +54,7 @@ void AIntroGameMode::BeginPlay()
 	NewDelegate += std::bind(&APublisherLogo::SetActive, Logo, false);
 	NewDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
 	NewDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, true);
+	NewDelegate += std::bind(&UEngineSound::Play, USoundManager::GetInstance().FindSound("OPTheme.MP3"));
 	EventQueue.push({ 3.0f, NewDelegate });
 	NewDelegate.Clear();
 
