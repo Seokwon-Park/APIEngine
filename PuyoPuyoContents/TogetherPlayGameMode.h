@@ -1,6 +1,9 @@
 #pragma once
 #include "PlayGameMode.h"
 
+#include "TogetherFrame.h"
+#include "TogetherBackground.h"
+
 // ³Ê¶û³ª¶û »Ñ¿ä»Ñ¿ä
 class ATogetherPlayGameMode : public APlayGameMode
 {

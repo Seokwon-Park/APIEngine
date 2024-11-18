@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "PlayGameMode.h"
 
-#include "PlayBackground.h"
+#include "TogetherBackground.h"
 #include "PuyoBoardShake.h"
 #include "PuyoBoard.h"
 #include "PuyoText.h"
@@ -66,7 +66,7 @@ void APlayGameMode::BeginPlay()
 		Settings.TextColor = EPuyoBoardColor::Red;
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
-	PuyoBoardP1->SetKey(EKey::Z, EKey::X, EKey::B, EKey::F, EKey::H);
+	PuyoBoardP1->SetKey(EKey::G, EKey::H, EKey::S, EKey::A, EKey::D);
 	//PuyoBoardP1->SetKey(EKey::Up, EKey::Down, EKey::Left, EKey::Right);
 
 	//test1->SetEnable();

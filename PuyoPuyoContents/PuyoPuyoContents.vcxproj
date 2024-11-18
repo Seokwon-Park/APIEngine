@@ -194,7 +194,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayBackground.h">
+    <ClInclude Include="TogetherBackground.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -237,6 +237,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ThunderBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TogetherFrame.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -323,7 +327,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayBackground.cpp">
+    <ClCompile Include="TogetherBackground.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -368,6 +372,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ThunderBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TogetherFrame.cpp">
       <SubType>
       </SubType>
     </ClCompile>
