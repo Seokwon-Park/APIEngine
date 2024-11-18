@@ -17,14 +17,17 @@ public:
 	ACarbuncleMenu& operator=(ACarbuncleMenu&& _Other) noexcept = delete;
 
 	void Test();
-	void SetInactive();
-	void SetActive();
+	void SetMenuInactive();
+	void SetMenuActive();
+	void PlayAnimation();
 	void SetupCarbuncleMenu(int _MenuIndex);
 	void Tick(float _DeltaTime) override;
 protected:
 	void BeginPlay() override;
 private:
+	const int MaxMenuSize = 5;
 	int MenuIndex = 0;
+	float Timer = 0.0f;
 
 	USpriteRendererComponent* HeadRenderer;
 	USpriteRendererComponent* UBodyRenderer;

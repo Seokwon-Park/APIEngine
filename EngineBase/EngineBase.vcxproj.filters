@@ -40,6 +40,12 @@
     <ClInclude Include="EngineResource.h">
       <Filter>Resource</Filter>
     </ClInclude>
+    <ClInclude Include="EngineEventSystem.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEvent.h">
+      <Filter>Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineFile.cpp">
@@ -78,6 +84,9 @@
     <ClCompile Include="EngineResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
+    <ClCompile Include="EngineEventSystem.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IO">
@@ -106,6 +115,9 @@
     </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{24ac2b45-fd63-4769-99dd-553deac98a7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{ef23f9ab-0912-41cd-b284-a4cce35a509a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

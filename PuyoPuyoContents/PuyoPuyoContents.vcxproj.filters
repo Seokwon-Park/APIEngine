@@ -129,6 +129,15 @@
     <ClCompile Include="OpeningArle.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverText.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="TogetherMenuGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="TogetherMenuBackground.cpp">
+      <Filter>ContentsObject\Play\Together</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -214,6 +223,15 @@
     </ClInclude>
     <ClInclude Include="OpeningArle.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverText.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="TogetherMenuGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="TogetherMenuBackground.h">
+      <Filter>ContentsObject\Play\Together</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

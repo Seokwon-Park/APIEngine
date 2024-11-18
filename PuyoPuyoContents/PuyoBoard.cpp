@@ -3,6 +3,7 @@
 #include "PuyoText.h"
 #include "PuyoBoomFX.h"
 #include "PuyoChainText.h"
+#include "GameOverText.h"
 #include "PuyoChainFX.h"
 #include "ScoringTable.h"
 
@@ -176,6 +177,9 @@ void APuyoBoard::Tick(float _DeltaTime)
 	case EPuyoLogicStep::PuyoUpdate:
 		PuyoUpdateLogic();
 		break;
+	case EPuyoLogicStep::PuyoGameOver:
+		PuyoGameOverLogic();
+		break;
 	default:
 		break;
 	}
@@ -226,6 +230,9 @@ void APuyoBoard::PuyoCreateLogic()
 	//°ÔÀÓ¿À¹ú,,,
 	if (Board[1][2] != nullptr)
 	{
+		AGameOverText* Test = GetWorld()->SpawnActor<AGameOverText>();
+		Test->SetActorLocation(GetActorLocation());
+		CurStep = EPuyoLogicStep::PuyoGameOver;
 		return;
 	}
 
@@ -718,6 +725,22 @@ void APuyoBoard::PuyoUpdateLogic()
 	}
 	PuyoUpdateColumns.clear();
 	CurStep = EPuyoLogicStep::PuyoPlace;
+}
+
+void APuyoBoard::PuyoGameOverLogic()
+{
+
+
+	for (int i = 0; i < BoardSize.Y; i++)
+	{
+		for (int j = 0; j < BoardSize.X; j++)
+		{
+			if (Board[i][j] != nullptr)
+			{
+				Board[i][j]->AddActorLocation(FVector2D::DOWN);
+			}
+		}
+	}
 }
 
 bool APuyoBoard::IsInBoard(int TargetX, int TargetY)

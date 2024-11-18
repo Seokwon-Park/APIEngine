@@ -31,6 +31,14 @@ void AActor::Tick(float _DeltaTime)
 		FVector2D CameraPos = GetWorld()->GetCameraPos();
 		EngineDebugHelper::SetDebugPos(Pos - CameraPos, EngineDebugHelper::EDebugPosType::Circle);
 	}
+
+	for (auto Component : Components)
+	{
+		if (nullptr != Component)
+		{
+			Component->TickComponent(_DeltaTime);
+		}
+	}
 }
 
 void AActor::BeginPlay()

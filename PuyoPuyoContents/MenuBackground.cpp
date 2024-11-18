@@ -100,7 +100,7 @@ void AMenuBackground::Tick(float _DeltaTime)
 		{
 			if (i % 2 == 0)
 			{
-				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::RIGHT * _DeltaTime * 100.0f);
+				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::RIGHT * _DeltaTime * 200.0f);
 				if (BgRenderers[i][j]->GetComponentLocation().X >= UEngineAPICore::GetEngineWindow().GetWindowSize().X)
 				{
 					BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() - FVector2D(128, 0) * 6);
@@ -108,7 +108,7 @@ void AMenuBackground::Tick(float _DeltaTime)
 			}
 			else
 			{
-				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::LEFT * _DeltaTime * 100.0f);
+				BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D::LEFT * _DeltaTime * 200.0f);
 				if (BgRenderers[i][j]->GetComponentLocation().X <= -128.0f)
 				{
 					BgRenderers[i][j]->SetComponentLocation(BgRenderers[i][j]->GetComponentLocation() + FVector2D(128, 0) * 6);

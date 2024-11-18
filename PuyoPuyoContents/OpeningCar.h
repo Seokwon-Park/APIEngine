@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineCore/SpriteRendererComponent.h>
 
 // 클래스 설명 :
 class AOpeningCar : public AActor
@@ -19,5 +20,6 @@ protected:
 	void BeginPlay()override;
 
 private:
-
+	USpriteRendererComponent* OPCar;
+	USpriteRendererComponent* OPCarJewel;
 };

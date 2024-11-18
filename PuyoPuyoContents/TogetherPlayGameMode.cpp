@@ -23,7 +23,8 @@ void ATogetherPlayGameMode::BeginPlay()
 	// 점수텍스트(TextMesh?) 몇개?
 	// 솔로모드 << 상대방 이미지를 그리는 이미지?
 	// 
-	
+	//GetWorld()->GetInputSystem().BindAction(std::bind(EKey::Esc, this);
+
 	APlayBackground* Background = GetWorld()->SpawnActor<APlayBackground>();
 	APuyoText* Next = GetWorld()->SpawnActor<APuyoText>();
 	Next->SetupText(4, EPuyoTextColor::Green);

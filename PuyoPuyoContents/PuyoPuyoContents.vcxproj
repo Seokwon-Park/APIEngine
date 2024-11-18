@@ -153,6 +153,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameOverText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="OpeningArle.h">
       <SubType>
       </SubType>
@@ -232,6 +236,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TogetherMenuBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TogetherMenuGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TogetherPlayGameMode.h">
       <SubType>
       </SubType>
@@ -255,6 +267,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameOverText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="OpeningArle.cpp">
       <SubType>
       </SubType>
@@ -332,6 +348,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ThunderBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TogetherMenuBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TogetherMenuGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

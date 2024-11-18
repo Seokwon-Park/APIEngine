@@ -20,6 +20,10 @@ public:
 		static USoundManager Instance;
 		return Instance;
 	}
+	static void SoundPlay(std::string_view _KeyName)
+	{
+		GetInstance().FindSound(_KeyName)->Play();
+	}
 
 	void Load(std::string_view _Path);
 	void Load(std::string_view _KeyName, std::string_view _Path);

@@ -14,16 +14,10 @@ public:
 	ADummyPawn& operator=(const ADummyPawn& _Other) = delete;
 	ADummyPawn& operator=(ADummyPawn&& _Other) noexcept = delete;
 
-	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-
-	//void MoveFunction(FVector2D _Dir);
 protected:
+	void BeginPlay() override;
 
 private:
-	float Speed = 100.0f;
-	//int MySpriteIndex = 0;
-
-	//USpriteRendererComponent* Sr;
 };
 

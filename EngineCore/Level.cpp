@@ -24,6 +24,15 @@ ULevel::~ULevel()
 		}
 	}
 
+	for (auto* PostProcess : PostProcesses)
+	{
+		if (nullptr != PostProcess)
+		{
+			delete PostProcess;
+			PostProcess = nullptr;
+		}
+	}
+
 	for (AActor* Actor : AllActors)
 	{
 		if (nullptr != Actor)

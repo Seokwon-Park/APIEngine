@@ -1,4 +1,6 @@
 #pragma once
+#include <EngineCore/SpriteRendererComponent.h>
+
 
 // 클래스 설명 :
 class AOpeningArle : public AActor
@@ -20,5 +22,5 @@ protected:
 
 
 private:
-
+	USpriteRendererComponent* OPArle;
 };

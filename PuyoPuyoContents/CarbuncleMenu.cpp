@@ -56,7 +56,7 @@ ACarbuncleMenu::ACarbuncleMenu()
 	LArrowRenderer->SetRemoveBackground(true);
 	LArrowRenderer->SetPivot(EPivotType::MiddleRight);
 	LArrowRenderer->SetAnimator(LArrowAnimator);
-	LArrowAnimator->CreateAnimation("CarFlicker", "CARLEFTARROW", 0, 1, .05f);
+	LArrowAnimator->CreateAnimation("CarFlicker", "CARLEFTARROW", 0, 1, 0.1f);
 	LArrowAnimator->CreateAnimation("CarArrowIdle", "CARLEFTARROW", 1, 1, 0.0f);
 	LArrowAnimator->ChangeAnimation("CarFlicker");
 
@@ -68,7 +68,7 @@ ACarbuncleMenu::ACarbuncleMenu()
 	RArrowRenderer->SetRemoveBackground(true);
 	RArrowRenderer->SetPivot(EPivotType::MiddleLeft);
 	RArrowRenderer->SetAnimator(RArrowAnimator);
-	RArrowAnimator->CreateAnimation("CarFlicker", "CARRIGHTARROW", 0, 1, .05f);
+	RArrowAnimator->CreateAnimation("CarFlicker", "CARRIGHTARROW", 0, 1, 0.1f);
 	RArrowAnimator->CreateAnimation("CarArrowIdle", "CARRIGHTARROW", 1, 1, 0.0f);
 	RArrowAnimator->ChangeAnimation("CarFlicker");
 
@@ -80,8 +80,6 @@ ACarbuncleMenu::ACarbuncleMenu()
 	JewelRenderer->SetAnimator(JewelAnimator);
 	JewelAnimator->CreateAnimation("CarTwinkle", "CARJEWEL", 0, 3, .05f);
 	JewelAnimator->ChangeAnimation("CarTwinkle");
-
-
 }
 
 ACarbuncleMenu::~ACarbuncleMenu()
@@ -105,31 +103,102 @@ void ACarbuncleMenu::Test()
 	RHandRenderer->SetSprite("CARRIGHT", MenuIndex % 3);
 	LArrowAnimator->ChangeAnimation("CarArrowIdle");
 	RArrowAnimator->ChangeAnimation("CarArrowIdle");
-	SetInactive();
+	SetMenuInactive();
 
 }
 
-void ACarbuncleMenu::SetInactive()
+void ACarbuncleMenu::SetMenuInactive()
 {
 	int Index = 5 + MenuIndex;
 	HeadRenderer->SetSprite("CARHEAD", 1);
 	UBodyRenderer->SetSprite("CARUBODY", Index);
 	DBodyRenderer->SetSprite("CARDBODY", Index);
-	LHandRenderer->SetSprite("CARLEFT", Index % 3);
-	RHandRenderer->SetSprite("CARRIGHT", Index % 3);
-
+	LHandRenderer->SetSprite("CARLEFT", 3);
+	RHandRenderer->SetSprite("CARRIGHT", 3);
+	LegRenderer->SetSprite("CARLEG", 1);
+	JewelRenderer->SetActive(false);
+	LArrowAnimator->ChangeAnimation("CarArrowIdle");
+	RArrowAnimator->ChangeAnimation("CarArrowIdle");
 }
 
-void ACarbuncleMenu::SetActive()
+void ACarbuncleMenu::SetMenuActive()
 {
 	HeadRenderer->SetSprite("CARHEAD", 0);
+	UBodyRenderer->SetSprite("CARUBODY", MenuIndex);
+	DBodyRenderer->SetSprite("CARDBODY", MenuIndex);
+	LHandRenderer->SetSprite("CARLEFT", 0);
+	RHandRenderer->SetSprite("CARRIGHT", 0);
+	LegRenderer->SetSprite("CARLEG", 0);
+	LArrowAnimator->ChangeAnimation("CarFlicker");
+	RArrowAnimator->ChangeAnimation("CarFlicker");
 }
+
+void ACarbuncleMenu::PlayAnimation()
+{
+	Timer += UEngineAPICore::GetEngineDeltaTime();
+
+	if (Timer > 0.0f && Timer < 0.33f)
+	{
+		int Index = 10 + MenuIndex;
+		HeadRenderer->SetSprite("CARHEAD", 1);
+		UBodyRenderer->SetSprite("CARUBODY", Index);
+		UBodyRenderer->SetComponentScale({ 144,40 });
+		UBodyRenderer->SetPivot(EPivotType::TopCenter);
+		DBodyRenderer->SetSprite("CARDBODY", Index);
+		DBodyRenderer->SetComponentScale({ 144,48 });
+		DBodyRenderer->SetComponentLocation({ 0, 192 });
+		DBodyRenderer->SetPivot(EPivotType::TopCenter);
+		LHandRenderer->SetSprite("CARLEFT", 3);
+		RHandRenderer->SetSprite("CARRIGHT", 3);
+		LegRenderer->SetSprite("CARLEG", 1);
+		JewelRenderer->SetActive(false);
+	}
+	else if (Timer > 0.33f && Timer < 0.66f)
+	{
+		int Index = 15 + MenuIndex;
+		HeadRenderer->SetSprite("CARHEAD", 1);
+		UBodyRenderer->SetSprite("CARUBODY", Index);
+		UBodyRenderer->SetComponentScale({ 144,56 });
+		UBodyRenderer->SetPivot(EPivotType::TopCenter);
+		DBodyRenderer->SetSprite("CARDBODY", Index);
+		DBodyRenderer->SetComponentScale({ 144,32 });
+		DBodyRenderer->SetComponentLocation({ 0, 208 });
+		DBodyRenderer->SetPivot(EPivotType::TopCenter);
+		LHandRenderer->SetSprite("CARLEFT", 3);
+		RHandRenderer->SetSprite("CARRIGHT", 3);
+		LegRenderer->SetSprite("CARLEG", 1);
+	}
+	else if (Timer > .66f)
+	{
+		int Index = 20;
+		HeadRenderer->SetSprite("CARHEAD", 1);
+		UBodyRenderer->SetSprite("CARUBODY", Index);
+		UBodyRenderer->SetComponentScale({ 144,88 });
+		UBodyRenderer->SetPivot(EPivotType::TopCenter);
+		DBodyRenderer->SetActive(false);
+		LHandRenderer->SetSprite("CARLEFT", 3);
+		RHandRenderer->SetSprite("CARRIGHT", 3);
+		LegRenderer->SetSprite("CARLEG", 1);
+	}
+}
+
+
 
 void ACarbuncleMenu::SetupCarbuncleMenu(int _MenuIndex)
 {
 	MenuIndex = _MenuIndex;
+	if (MenuIndex == 0)
+	{
+		LArrowRenderer->SetActive(false);
+	}
+	if (MenuIndex == MaxMenuSize - 1)
+	{
+		RArrowRenderer->SetActive(false);
+	}
 	UBodyRenderer->SetSprite("CARUBODY", MenuIndex);
 	DBodyRenderer->SetSprite("CARDBODY", MenuIndex);
+
+
 
 }
 

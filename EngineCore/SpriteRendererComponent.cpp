@@ -50,10 +50,7 @@ void USpriteRendererComponent::BeginPlay()
 void USpriteRendererComponent::TickComponent(float _DeltaTime)
 {
 	Super::TickComponent(_DeltaTime);
-}
 
-void USpriteRendererComponent::Render()
-{
 	// 만약 스프라이트 렌더러에 연결된 애니메이터 컴포넌트가 있으면 
 	if (AnimatorComponent != nullptr)
 	{
@@ -103,7 +100,10 @@ void USpriteRendererComponent::Render()
 			// ++CurAnimation->CurIndex;
 		}
 	}
+}
 
+void USpriteRendererComponent::Render()
+{
 	if (nullptr == Sprite)
 	{
 		MSGASSERT("스프라이트가 세팅되지 않은 액터를 랜더링을 할수 없습니다.");

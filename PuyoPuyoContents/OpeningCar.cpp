@@ -3,6 +3,11 @@
 
 AOpeningCar::AOpeningCar()
 {
+	OPCar = CreateDefaultSubobject<USpriteRendererComponent>("");
+	OPCar->SetSprite("OPCAR");
+	OPCar->SetComponentScale({ 448, 480 });
+	OPCar->SetRemoveBackground(true);
+	OPCar->SetPivot(EPivotType::TopLeft);
 }
 
 AOpeningCar::~AOpeningCar()

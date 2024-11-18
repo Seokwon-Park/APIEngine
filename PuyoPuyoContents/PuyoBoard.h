@@ -18,6 +18,7 @@ enum class EPuyoLogicStep
 	PuyoDestroy, // 뿌요 파괴 로직
 	PuyoUpdate, // 파괴되고 난다음 낙하해야 되는 뿌요가 있는지 체크-> 있으면 Place로 없으면 Create로
 	PuyoGameOver, // 게임오버 로직
+	PuyoWin, // 게임 승리 로직
 };
 // 설명 :
 class APuyoBoard : public AActor
@@ -60,6 +61,7 @@ public:
 	void PuyoCheckLogic();
 	void PuyoDestroyLogic();
 	void PuyoUpdateLogic();
+	void PuyoGameOverLogic();
 
 	bool IsInBoard(int TargetX, int TargetY);
 	inline FVector2D GetLocationByIndex(int _X, int _Y) const
@@ -211,6 +213,8 @@ private:
 	UPuyoBoardShake* Shaker;
 	// 상대 게임판 객체 포인터
 	APuyoBoard* CounterBoard;
+
+	
 
 
 

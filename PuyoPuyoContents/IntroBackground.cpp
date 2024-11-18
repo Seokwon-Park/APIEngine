@@ -10,7 +10,7 @@ AIntroBackground::AIntroBackground()
 	{
 		Sr[i] = CreateDefaultSubobject<USpriteRendererComponent>("IntroBackground" + std::to_string(i));
 		Sr[i]->SetOrder(ERenderLayer::BACKGROUND);
-		Sr[i]->SetSprite("OP_LINE.CNS.BMP", 0);
+		Sr[i]->SetSprite("OP_LINE.CNS.BMP");
 		Sr[i]->SetComponentLocation({ 0.0f, i*-UEngineAPICore::GetEngineWindow().GetWindowSize().Y });
 		Sr[i]->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 

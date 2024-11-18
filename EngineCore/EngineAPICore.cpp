@@ -150,6 +150,7 @@ void UEngineAPICore::Tick()
 		return;
 	}
 	UEngineAudio::AudioUpdate();
+	UEngineEventSystem::UpdateEvents(DeltaTime);
 	CurLevel->Tick(DeltaTime);
 	CurLevel->Render();
 	CurLevel->Release();
