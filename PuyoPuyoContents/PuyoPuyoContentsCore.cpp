@@ -4,6 +4,7 @@
 #include "MenuGameMode.h"
 #include "SoloMenuGameMode.h"
 #include "TogetherMenuGameMode.h"
+#include "TrainingPlayGameMode.h"
 
 #include "TogetherPlayGameMode.h"
 #include "IntroGameMode.h"
@@ -31,8 +32,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	//USoundManager::GetInstance().FindSound("OPTheme.mp3")->Play();
 
-
-
 	//인게임 뿌요 관련 스프라이트
 	SetupPuyoSprite();
 	//뿌요 터질 때 파티클
@@ -51,6 +50,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {0,480 }, { 144, 104 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {0,480 }, { 176, 104 } });
 
+	//단색 스프라이트(+페이더용)
 	UImageManager::GetInstance().CreateColorImage("Black" );
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
@@ -61,6 +61,12 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CuttingSpriteCustom("NameText", "PUYO_RY.CNS.BMP", { 0,208 }, { 640,240 }, { 16,16 });
 	UImageManager::GetInstance().InsertCustomSpriteData("ChainString", "PUYO_RY.CNS.BMP", { { 240,32 }, { 48, 16 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("ChainString", "PUYO_BP.CNS.BMP", { { 240,32 }, { 48, 16 } });
+
+	// 일시정지(휴식) 텍스트
+	UImageManager::GetInstance().InsertCustomSpriteData("Pause", "PUYO_RY.CNS.BMP", { { 512,128 }, { 128, 48 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Pause", "PUYO_BP.CNS.BMP", { { 512,128 }, { 128, 48 } });
+
+
 
 	//Cut Menu Bg
 	for (int i = 0; i <= 9; i++)
@@ -143,7 +149,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AMenuGameMode, ADummyPawn>("Menu");
 	UEngineAPICore::GetCore()->CreateLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
 	UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("TogetherMenu");
-	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("TrainingPlay");
+	UEngineAPICore::GetCore()->CreateLevel<ATrainingPlayGameMode, ADummyPawn>("TrainingPlay");
 	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("PuzzlePlay");
 	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("Options");
 	UEngineAPICore::GetCore()->CreateLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
@@ -283,8 +289,6 @@ void PuyoPuyoContentsCore::SetupPuyoSprite()
 	UImageManager::GetInstance().InsertCustomSpriteData("GARBAGE", "PUYO_BP.CNS.BMP", { { 64,128 },{ 32,32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("GARBAGE", "PUYO_BP.CNS.BMP", { { 96,128 },{ 32,32 } });
 }
-
-
 
 void PuyoPuyoContentsCore::Tick()
 {

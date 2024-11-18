@@ -24,7 +24,7 @@ public:
 
 	virtual void Tick(float _DeltaTime) override;
 
-	void SetupText(size_t _TextLength, EPuyoTextColor _Color, ETextAlign _TextAlign = ETextAlign::Left);
+	void SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign _TextAlign = ETextAlign::Left);
 	void SetText(std::string _SpriteName);
 	void SetText(long long _Value);
 	inline void Add(long long _Value) { Score += _Value; SetText(Score); }

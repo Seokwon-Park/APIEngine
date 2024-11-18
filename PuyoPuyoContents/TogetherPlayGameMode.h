@@ -1,8 +1,8 @@
 #pragma once
-#include "EngineCore/GameMode.h"
+#include "PlayGameMode.h"
 
 // ³Ê¶û³ª¶û »Ñ¿ä»Ñ¿ä
-class ATogetherPlayGameMode : public AGameMode
+class ATogetherPlayGameMode : public APlayGameMode
 {
 public:
 	// constrcuter destructer
@@ -17,7 +17,7 @@ public:
 
 	void BeginPlay() override;
 protected:
-
+	void Tick(float _DeltaTime) override;
 private:
 
 };

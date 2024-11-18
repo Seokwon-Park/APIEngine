@@ -28,6 +28,16 @@ APuyoBoard::APuyoBoard()
 		Warnings[i]->SetOrder(100);
 		Warnings[i]->SetActive(false);
 	}
+
+	PauseText = CreateDefaultSubobject<USpriteRendererComponent>("PauseText");
+	PauseText->SetSprite("Pause", static_cast<int>(TextColor));
+	PauseText->SetRemoveBackground(true);
+	PauseText->SetComponentScale({ 128, 48 });
+	PauseText->SetComponentLocation({ 32, 96 });
+	PauseText->SetPivot(EPivotType::TopLeft);
+	PauseText->SetOrder(100);
+	PauseText->SetActive(false);
+
 }
 
 void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, float _DeltaTime, bool _IsClockwise) {
@@ -67,6 +77,29 @@ void APuyoBoard::SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay)
 	BoomFX->SetActorLocation(_Loc);
 }
 
+void APuyoBoard::PauseGame()
+{
+	IsPaused = !IsPaused;
+	PauseText->SetActive(IsPaused);
+	for (int i = 0; i < BoardSize.Y; i++)
+	{
+		for (int j = 0; j < BoardSize.X; j++)
+		{
+			if (Board[i][j] != nullptr)
+			{
+				Board[i][j]->SetActive(!IsPaused);
+			}
+		}
+	}
+
+	for (int i = 0; i < Block.size(); i++)
+	{
+		Block[i]->SetActive(!IsPaused);
+		NextBlock[i]->SetActive(!IsPaused);
+		NextNextBlock[i]->SetActive(!IsPaused);
+	}
+}
+
 APuyoBoard::~APuyoBoard()
 {
 }
@@ -87,6 +120,9 @@ void APuyoBoard::BeginPlay()
 	// 좌우 이동
 	GetWorld()->GetInputSystem().BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
 	GetWorld()->GetInputSystem().BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
+
+	// 일시 정지
+	GetWorld()->GetInputSystem().BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, this));
 
 	// Todo : BeginPlay는 임시위치, 게임시작 애니메이션이 끝나고 렌더링 되어야 함.
 	NextBlock = CreatePuyoBlock();
@@ -112,7 +148,12 @@ void APuyoBoard::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	if (IsKicking)
+	if (true == IsPaused)
+	{
+		return;
+	}
+
+	if (true == IsKicking)
 	{
 		if (BlockDir == 1)
 		{
@@ -142,7 +183,7 @@ void APuyoBoard::Tick(float _DeltaTime)
 			}
 		}
 	}
-	if (IsRotating)
+	if (true == IsRotating)
 	{
 		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime(), IsRotatedClockWise);
 	}
@@ -196,8 +237,10 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	Score = _Settings.Score;
 	CounterBoard = _Settings.CounterBoard;
 	Shaker = _Settings.Shaker;
+	TextColor = _Settings.TextColor;
 	Board.clear();
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
+	PauseText->SetSprite("Pause", static_cast<int>(TextColor));
 }
 
 void APuyoBoard::SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right)
@@ -910,7 +953,7 @@ void APuyoBoard::SpawnChainText()
 {
 	APuyoChainText* Text = GetWorld()->SpawnActor<APuyoChainText>();
 	Text->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-	Text->SetupChainText(Rensa, EPuyoTextColor::Red);
+	Text->SetupChainText(Rensa, TextColor);
 }
 
 

@@ -21,10 +21,6 @@ public:
 protected:
 	void BeginPlay() override;
 private:
-	float EventTimer = 0.0f;
 	AFader* Fader = nullptr;
-
-	// 순차적으로 실행
-	std::queue<std::pair<float, UEngineDelegate>> EventQueue;
 };
 

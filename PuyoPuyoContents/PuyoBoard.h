@@ -34,6 +34,7 @@ public:
 		UPuyoBoardShake* Shaker;
 		APuyoText* Score;
 		APuyoBoard* CounterBoard;
+		EPuyoBoardColor TextColor;
 
 	};
 	// constrcuter destructer
@@ -115,6 +116,11 @@ public:
 
 	//Todo: Effect라는 클래스로 추상화필수적
 	void SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay);
+
+	//일시정지
+	void PauseGame();
+
+	
 protected:
 	void BeginPlay() override;
 private:
@@ -213,8 +219,14 @@ private:
 	UPuyoBoardShake* Shaker;
 	// 상대 게임판 객체 포인터
 	APuyoBoard* CounterBoard;
+	EPuyoBoardColor TextColor;
 
-	
+	//게임 일시정지
+	USpriteRendererComponent* PauseText;
+	bool IsPaused = false;
+
+
+
 
 
 

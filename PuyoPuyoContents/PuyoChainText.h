@@ -17,15 +17,14 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
-	void SetupChainText(int _Amount, EPuyoTextColor _Color);
+	void SetupChainText(int _Amount, EPuyoBoardColor _Color);
 protected:
 
 	void BeginPlay()override;
 
 private:
-	float Timer = 0.5f;
+	float FloatingTimer = 0.5f;
 	std::vector<std::string>ColorSprites;
-	std::vector<std::string>ChainStringColor;
 	std::vector<USpriteRendererComponent*> NumberText;
 	USpriteRendererComponent* ChainText;
 

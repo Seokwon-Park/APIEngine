@@ -199,6 +199,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="aepch.h" />
+    <ClInclude Include="PlayGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PublisherLogo.h">
       <SubType>
       </SubType>
@@ -265,6 +269,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TrainingBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TrainingFrame.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TrainingPlayGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameOverText.cpp">
@@ -314,6 +330,10 @@
     <ClCompile Include="aepch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PlayGameMode.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="PublisherLogo.cpp">
       <SubType>
@@ -377,6 +397,18 @@
     </ClCompile>
     <ClCompile Include="DummyPawn.cpp" />
     <ClCompile Include="IntroGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TrainingBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TrainingFrame.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TrainingPlayGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

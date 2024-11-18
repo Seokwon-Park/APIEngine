@@ -50,7 +50,7 @@ void APuyoText::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 }
 
-void APuyoText::SetupText(size_t _TextLength, EPuyoTextColor _Color, ETextAlign _TextAlign)
+void APuyoText::SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign _TextAlign)
 {
 	if (_TextLength > MAXLEN)
 	{

@@ -90,14 +90,14 @@ public:
 		return !(*this == _Other);
 	}
 
-
+	FVector2D operator*(int _Value) const
+	{
+		return operator*(static_cast<float>(_Value));
+	}
 
 	FVector2D operator*(float _Value) const
 	{
-		FVector2D Result;
-		Result.X = X * _Value;
-		Result.Y = Y * _Value;
-		return Result;
+		return FVector2D(X * _Value, Y * _Value);
 	}
 
 	FVector2D operator+(FVector2D _Other) const

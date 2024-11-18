@@ -49,6 +49,9 @@
     <Filter Include="ContentsObject\Global\PostProcess">
       <UniqueIdentifier>{4d6f9629-dee1-42e1-b3bc-32daef29c538}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Play\Training">
+      <UniqueIdentifier>{f6e39146-538b-43ad-a131-18778094088f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aepch.cpp">
@@ -129,14 +132,26 @@
     <ClCompile Include="OpeningArle.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverText.cpp">
-      <Filter>ContentsObject\Play\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="TogetherMenuGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="TogetherMenuBackground.cpp">
       <Filter>ContentsObject\Play\Together</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainingPlayGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainingBackground.cpp">
+      <Filter>ContentsObject\Play\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainingFrame.cpp">
+      <Filter>ContentsObject\Play\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverText.cpp">
+      <Filter>ContentsObject\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,14 +239,26 @@
     <ClInclude Include="OpeningArle.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverText.h">
-      <Filter>ContentsObject\Play\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="TogetherMenuGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="TogetherMenuBackground.h">
       <Filter>ContentsObject\Play\Together</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainingPlayGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainingBackground.h">
+      <Filter>ContentsObject\Play\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainingFrame.h">
+      <Filter>ContentsObject\Play\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverText.h">
+      <Filter>ContentsObject\Text</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

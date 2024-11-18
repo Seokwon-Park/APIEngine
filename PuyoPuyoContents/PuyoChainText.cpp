@@ -39,12 +39,12 @@ void APuyoChainText::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	AddActorLocation(FVector2D::UP * 0.1f);
-	Timer -= _DeltaTime;
-	if (Timer < 0.0f)
+	FloatingTimer -= _DeltaTime;
+	if (FloatingTimer < 0.0f)
 		this->Destroy();
 }
 
-void APuyoChainText::SetupChainText(int _Amount, EPuyoTextColor _Color)
+void APuyoChainText::SetupChainText(int _Amount, EPuyoBoardColor _Color)
 {
 	std::string NumText = std::to_string(_Amount);
 	int Size = static_cast<int>(NumText.size());
