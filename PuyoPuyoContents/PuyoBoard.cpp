@@ -93,7 +93,7 @@ APuyoBoard::~APuyoBoard()
 {
 }
 
-void APuyoBoard::BeginPlay()
+void APuyoBoard::BeginPlay() 
 {
 	Super::BeginPlay();
 	PuyoDropTimer = PuyoDropDelay;
@@ -151,6 +151,7 @@ void APuyoBoard::Tick(float _DeltaTime)
 	if (CounterBoardActor->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
 		CurStep = EPuyoLogicStep::PuyoGameWin;
+		return;
 	}
 
 	if (true == IsKicking)
@@ -829,6 +830,16 @@ void APuyoBoard::PuyoGameOverLogic()
 
 void APuyoBoard::PuyoGameWinLogic()
 {
+	for (int i = 0; i < BoardSize.Y; i++)
+	{
+		for (int j = 0; j < BoardSize.X; j++)
+		{
+			if (Board[i][j] != nullptr)
+			{
+				Board[i][j]->SetActive(false);
+			}
+		}
+	}
 }
 
 bool APuyoBoard::IsInBoard(const int TargetX, const int TargetY)

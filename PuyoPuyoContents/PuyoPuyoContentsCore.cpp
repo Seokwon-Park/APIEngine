@@ -83,6 +83,11 @@ void PuyoPuyoContentsCore::BeginPlay()
 		UImageManager::GetInstance().InsertCustomSpriteData("LVHEAD", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,0 }, { 640, 32 } });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVCENTER", "L" + std::to_string(i) + "_F.CNS.BMP", { { 304,64 }, { 32, 128 } });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVTAIL", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,416 }, { 640, 64 } });
+		UImageManager::GetInstance().InsertCustomSpriteData("LVBG", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,0 },{ 640,480 } });
+		UImageManager::GetInstance().InsertCustomSpriteData("LVL", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,32 },	{ 32,384} });
+		UImageManager::GetInstance().InsertCustomSpriteData("LVIL", "L" + std::to_string(i) + "_F.CNS.BMP", { { 224,32 }, { 16,384} });
+		UImageManager::GetInstance().InsertCustomSpriteData("LVR", "L" + std::to_string(i) + "_F.CNS.BMP", { { 608,32 }, { 32,384 } });
+		UImageManager::GetInstance().InsertCustomSpriteData("LVIR", "L" + std::to_string(i) + "_F.CNS.BMP", { { 400,32 }, { 16,384 } });
 	}
 
 

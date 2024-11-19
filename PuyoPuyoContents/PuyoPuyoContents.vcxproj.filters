@@ -58,6 +58,9 @@
     <Filter Include="ContentsObject\Play\Solo\Play">
       <UniqueIdentifier>{c1572549-02fa-4a7b-ba21-f2c7a4f9115d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Play\Solo\AI">
+      <UniqueIdentifier>{7625e297-0993-4ffa-9d1c-1a7a5796138c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aepch.cpp">
@@ -170,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="SoloFrame.cpp">
       <Filter>ContentsObject\Play\Solo\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoAIController.cpp">
+      <Filter>ContentsObject\Play\Solo\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="SoloFrame.h">
       <Filter>ContentsObject\Play\Solo\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoAIController.h">
+      <Filter>ContentsObject\Play\Solo\AI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
