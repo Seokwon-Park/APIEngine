@@ -17,7 +17,8 @@ public:
 	APuyoChainFX& operator=(const APuyoChainFX& _Other) = delete;
 	APuyoChainFX& operator=(APuyoChainFX&& _Other) noexcept = delete;
 
-	void SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, float _Duration = 1.0f);
+	void SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, EPuyoBoardColor _Color,bool _IsCounter, float _Duration = 1.0f, 
+		APuyoWarn* CounterWarn = nullptr, FVector2D _CounterTarget = FVector2D::ZERO);
 
 	virtual void Tick(float _DeltaTime) override;
 protected:
@@ -30,6 +31,8 @@ private:
 	float Elapsed = 0.0f;
 	float Duration;
 	int AttackAmount = 0;
+	int Color = 0;
+	bool IsCounter = false;
 	APuyoWarn* Target = nullptr;
 	std::vector<std::string> ColorSprites;
 	USpriteRendererComponent* Sr;

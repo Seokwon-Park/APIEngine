@@ -525,10 +525,14 @@ void APuyoBoard::PuyoCheckLogic()
 {
 	// Place한 각 점에 대해서 BFS 기반탐색을 돌려서 4개 이상인 경우를 찾고 파괴할 리스트를 만든다.
 	// 원래 있던 점들은 조사할 필요가 없다.
+	int PC = 0;
+	std::vector<std::vector<bool>> Checked(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
+
 	for (FIntPoint Point : PuyoCheckList)
 	{
-		// 추후 BFS 함수로 추출
 		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
+		if(Checked[Point.Y][Point.X] == true) continue;
+		// 추후 BFS 함수로 추출
 		std::queue<FIntPoint> Queue;
 
 		// Todo : 룰에따라 4대신 다른값도 쓰일 수 있게 할 예정
@@ -537,6 +541,7 @@ void APuyoBoard::PuyoCheckLogic()
 		std::vector<FIntPoint> Temp;
 		// 근처의 방해뿌요도 같이 저장해놓고 임시 저장 목록이 4보다 크면 같이 지운다.
 		std::vector<FIntPoint> Garbages;
+
 
 		Queue.push(Point);
 		Temp.push_back(Point);
@@ -575,8 +580,10 @@ void APuyoBoard::PuyoCheckLogic()
 		// Todo: 4대신 다른값 넣으세우
 		if (Temp.size() >= 4)
 		{
+			PC += static_cast<int>(Temp.size());
 			for (FIntPoint Point : Temp)
 			{
+				Checked[Point.Y][Point.X] = true;
 				PuyoDestroyList.insert(Point);
 				//PuyoDestroyList.push_back(Point);
 			}
@@ -592,7 +599,6 @@ void APuyoBoard::PuyoCheckLogic()
 	if (!PuyoDestroyList.empty())
 	{
 		Rensa++;
-		int PC = static_cast<int>(PuyoDestroyList.size());
 		int CP = SingleCPTable[Rensa];
 		//TODO : 컬러보너스 계산해야함
 		int CB = ColorBonusTable[1];
@@ -665,22 +671,35 @@ void APuyoBoard::PuyoDestroyLogic()
 		NL += NP - static_cast<float>(NC);
 
 		//공격할 양
-		int AttackAmount = static_cast<int>(NP)*3;
+		//int AttackAmount = static_cast<int>(NP);
+		int AttackAmount = rand() % 10 + 6;
 
 		// Todo: 로직이 굉장히 꼬이는데 아직 모르겠음
 
 		// 내가 가진 예고 뿌요가 있으면
 		if (WarnActor->HasWarn())
 		{
-			//일단 계산된 양만큼 줄인다.
-			WarnActor->SubWarnNum(-AttackAmount);
-			SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), false);
+			if (WarnActor->GetWarnNum() < AttackAmount)
+			{
+				SpawnAttack(WarnActor->GetWarnNum()-AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), true);
+				CounterBoardActor->WarnActor->SubWarnNum(WarnActor->GetWarnNum() - AttackAmount);
+				WarnActor->SetWarnNum(0);
+
+			}
+			else
+			{
+				//자기한테 스폰을 보내서 상쇄시킨다.
+				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), true);
+				//계산된 양만큼 줄인다.
+				WarnActor->SubWarnNum(AttackAmount);
+			}
+			
 		}
 		else
 		{
-			CounterBoardActor->WarnActor->AddWarnNum(AttackAmount);
-			//이 위치에서 상대 보드에 공격을 보내는 이펙트를 스폰한다.
+			//위치에서 상대 보드에 공격을 보내는 이펙트를 스폰한다.
 			SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), false);
+			CounterBoardActor->WarnActor->AddWarnNum(AttackAmount);
 		}
 
 		int ix = 0;
@@ -733,18 +752,19 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
-	if (WarnActor->HasWarn() && CounterBoardActor->IsChaining == false && IsChaining == false)
-	{
-		SpawnNuisancePuyo();
-		WarnActor->UpdateWarning();
-		ShakePostProcess->SetEnable();
-		CurStep = EPuyoLogicStep::PuyoPlace;
-		return;
-	}
-
 	if (PuyoUpdateColumns.empty())
 	{
 		IsChaining = false;
+		if (WarnActor->HasWarn() && CounterBoardActor->IsChaining == false && IsChaining == false && IsNuiSpawned == false)
+		{
+			IsNuiSpawned = true;
+			SpawnNuisancePuyo();
+			WarnActor->UpdateWarning();
+			ShakePostProcess->SetEnable();
+			CurStep = EPuyoLogicStep::PuyoPlace;
+			return;
+		}
+		IsNuiSpawned = false;
 		CurStep = EPuyoLogicStep::PuyoCreate;
 		return;
 	}
@@ -968,18 +988,26 @@ void APuyoBoard::SpawnChainText()
 }
 
 
-void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos, bool IsOffset) // 방해뿌요 몇개 보낼껀지
+void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos, bool _IsOffset) // 방해뿌요 몇개 보낼껀지
 {
 	APuyoChainFX* ChainFX = GetWorld()->SpawnActor<APuyoChainFX>();
 	ChainFX->SetActorLocation(_StartPos);
-	APuyoWarn* Target = CounterBoardActor->WarnActor;
-	FVector2D TargetLocation = CounterBoardActor->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
-	if (WarnActor->HasWarn())
+	APuyoWarn* Target = nullptr;
+	FVector2D MyLocation = GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+	FVector2D OpLocation= CounterBoardActor->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+	bool IsCounter = _Amount < 0;
+	
+	if (_IsOffset)
 	{
 		Target = this->WarnActor;
-		TargetLocation = GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+		ChainFX->SetupChainFX(Target, _StartPos, MyLocation, BoardColor, IsCounter, 0.5f, CounterBoardActor->WarnActor, OpLocation);
 	}
-	ChainFX->SetupChainFX(Target, _StartPos, TargetLocation, 0.5f);
+	else
+	{
+		Target = CounterBoardActor->WarnActor;
+		ChainFX->SetupChainFX(Target, _StartPos, OpLocation, BoardColor, IsCounter, 0.5f);
+
+	}
 }
 
 void APuyoBoard::SpawnNuisancePuyo()

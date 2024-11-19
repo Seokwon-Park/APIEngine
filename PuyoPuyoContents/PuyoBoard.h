@@ -207,8 +207,10 @@ private:
 	// 만약 방해뿌요가 있으면 상쇄가 가능할때까지 미루는 용도(?) 아오 복잡
 	//bool CheckOffset = false;
 
-	//내가 놓았어도 상대 연쇄가 진행중이면 방해뿌요를 놓지 않는다.
+	//내가 연쇄중이거나 상대 연쇄가 진행중이면 방해뿌요를 놓지 않는다.
 	bool IsChaining = false;
+	//방해뿌요한번 뿌리고 나면 다음 블럭 생성 후에 뿌리도록 한다.
+	bool IsNuiSpawned= false;
 
 	//연쇄 카운트
 	int Rensa = 0;

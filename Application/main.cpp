@@ -17,6 +17,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
+	srand(time(nullptr));
 	PuyoPuyoContentsCore User;
 	return UEngineAPICore::EngineStart(hInstance, &User);
 }
