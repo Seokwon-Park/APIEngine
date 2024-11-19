@@ -19,18 +19,8 @@ APuyoBoard::APuyoBoard()
 	CurStep(EPuyoLogicStep::PuyoCreate), Block(std::vector<APuyo*>(2))
 	//,Board(std::vector<std::vector<APuyo*>>(13, std::vector<APuyo*>(6, nullptr)))
 {
-	// 예고 뿌요
-	Warnings.resize(6, nullptr);
-	for (int i = 0; i < 6; i++)
-	{
-		Warnings[i] = CreateDefaultSubobject<USpriteRendererComponent>("Warn" + std::to_string(i));
-		Warnings[i]->SetRemoveBackground(true);
-		Warnings[i]->SetOrder(100);
-		Warnings[i]->SetActive(false);
-	}
-
 	PauseText = CreateDefaultSubobject<USpriteRendererComponent>("PauseText");
-	PauseText->SetSprite("Pause", static_cast<int>(TextColor));
+	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
 	PauseText->SetRemoveBackground(true);
 	PauseText->SetComponentScale({ 128, 48 });
 	PauseText->SetComponentLocation({ 32, 96 });
@@ -51,7 +41,6 @@ void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, f
 	float AngleInRadians = FEngineMath::DegreesToRadians(dAngle);
 	float CosTheta = std::cos(AngleInRadians);
 	float SinTheta = std::sin(AngleInRadians);
-
 
 	// 원점 기준 회전 후 Main Puyo 위치로 이동
 	FVector2D RelativePosition = _SlavePuyoPos - _MainPuyoPos;
@@ -150,6 +139,14 @@ void APuyoBoard::Tick(float _DeltaTime)
 
 	if (true == IsPaused)
 	{
+		PuyoDropTimer -= _DeltaTime;
+		if (PuyoDropTimer <= 0.0f)
+		{
+			PuyoDropTimer = PuyoDropDelay;
+			PauseText->SwitchActive();
+		}
+
+
 		return;
 	}
 
@@ -234,13 +231,14 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	BoardSize = _Settings.BoardSize;
 	NextBlockCoord = _Settings.NextBlockCoord;
 	NextNextBlockCoord = _Settings.NextNextBlockCoord;
-	Score = _Settings.Score;
-	CounterBoard = _Settings.CounterBoard;
-	Shaker = _Settings.Shaker;
-	TextColor = _Settings.TextColor;
+	ScoreActor = _Settings.ScoreActor;
+	CounterBoardActor = _Settings.CounterBoardActor;
+	ShakePostProcess = _Settings.ShakePostProcess;
+	BoardColor = _Settings.BoardColor;
+	WarnActor = _Settings.WarnActor;
 	Board.clear();
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
-	PauseText->SetSprite("Pause", static_cast<int>(TextColor));
+	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
 }
 
 void APuyoBoard::SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right)
@@ -280,7 +278,7 @@ void APuyoBoard::PuyoCreateLogic()
 	}
 
 	//더해야될 점수가 있으면 더해
-	Score->Add(ScoreToAdd);
+	ScoreActor->Add(ScoreToAdd);
 	ScoreToAdd = 0;
 
 
@@ -368,7 +366,7 @@ void APuyoBoard::PuyoMoveLogic()
 
 		//Todo : 방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
 		//일단 방해뿌요가 내보드에 존재하면 파괴 로직 단계에서 상쇄검사를 하십쇼.
-		if (WarnNums > 0 && !CounterBoard->IsChaining)
+		if (WarnActor->HasWarn()&& !CounterBoardActor->IsChaining)
 		{
 			CheckOffset = true;
 			//SpawnNuisancePuyo();
@@ -599,7 +597,7 @@ void APuyoBoard::PuyoCheckLogic()
 		std::string PCText = std::to_string(PC * 10);
 		std::string BonusText = std::to_string(CP + CB + GB);
 		std::string Display = std::string(4 - PCText.size(), ' ') + PCText + '*' + std::string(3 - BonusText.size(), ' ') + BonusText;
-		Score->SetText(Display);
+		ScoreActor->SetText(Display);
 		ScoreToAdd += PC * 10 * (CP + CB + GB);
 	}
 	PuyoCheckList.clear();
@@ -654,21 +652,21 @@ void APuyoBoard::PuyoDestroyLogic()
 			// Todo: WarnNums에 따른 순서때문에 따로 적어야함 나중에 고칠것.
 			// +추가 지금 로직에도 문제가 좀 있음,
 			//내가 상쇄하는 양이 더 적으면
-			if (AttackAmount < WarnNums)
+			if (AttackAmount < WarnActor->GetWarnNum())
 			{
 				//Todo: 이경우에는 
-				WarnNums -= AttackAmount;
+				//WarnNums -= AttackAmount;
 				AttackAmount = 0;
 				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
 			}
 			//내가 상쇄하는 양이 더 많으면
 			else
 			{
-				AttackAmount -= WarnNums;
+				AttackAmount -= WarnActor->GetWarnNum();
 				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-				WarnNums = 0;
+				//WarnNums = 0;
 			}
-			UpdateWarning();
+			//UpdateWarning();
 		}
 		else
 		{
@@ -709,7 +707,7 @@ void APuyoBoard::PuyoDestroyLogic()
 		APuyo* Puyo = Board[Y][X];
 		Puyo->Destroy();
 		Board[Y][X] = nullptr;
-		PuyoUpdateColumns.push_back(X);
+		PuyoUpdateColumns.insert(X);
 	}
 
 	FlickCount = 0;
@@ -722,11 +720,11 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
-	if (WarnNums > 0 && CounterBoard->IsChaining == false)
+	if (WarnActor->HasWarn()&& CounterBoardActor->IsChaining == false)
 	{
 		// Todo: 현재 직관성이 좀 떨어지는거 같음.
 		SpawnNuisancePuyo();
-		Shaker->SetEnable();
+		ShakePostProcess->SetEnable();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
@@ -772,8 +770,6 @@ void APuyoBoard::PuyoUpdateLogic()
 
 void APuyoBoard::PuyoGameOverLogic()
 {
-
-
 	for (int i = 0; i < BoardSize.Y; i++)
 	{
 		for (int j = 0; j < BoardSize.X; j++)
@@ -786,7 +782,7 @@ void APuyoBoard::PuyoGameOverLogic()
 	}
 }
 
-bool APuyoBoard::IsInBoard(int TargetX, int TargetY)
+bool APuyoBoard::IsInBoard(const int TargetX, const int TargetY)
 {
 	return false == (TargetX < 0 || TargetY < 0 || TargetX >= BoardSize.X || TargetY >= BoardSize.Y);
 }
@@ -944,7 +940,7 @@ void APuyoBoard::PuyoForceDown()
 		ForceDownTimer = 0.05f;
 		if (PuyoTick % 2 == 0)
 		{
-			Score->Add(1);
+			ScoreActor->Add(1);
 		}
 	}
 }
@@ -953,7 +949,7 @@ void APuyoBoard::SpawnChainText()
 {
 	APuyoChainText* Text = GetWorld()->SpawnActor<APuyoChainText>();
 	Text->SetActorLocation(GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-	Text->SetupChainText(Rensa, TextColor);
+	Text->SetupChainText(Rensa, BoardColor);
 }
 
 
@@ -962,19 +958,19 @@ void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos) // 방해뿌요 몇개 
 	// Todo: 대충 머 구슬같은거 날라가는 모션 추가해
 	APuyoChainFX* ChainFX = GetWorld()->SpawnActor<APuyoChainFX>();
 	ChainFX->SetActorLocation(_StartPos);
-	FVector2D TargetLocation = CounterBoard->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
-	if (WarnNums > 0)
+	FVector2D TargetLocation = CounterBoardActor->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+	if (WarnActor->HasWarn())
 	{
 		TargetLocation = GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
 	}
-	CounterBoard->AddWarnNums(_Amount);
-	ChainFX->SetupChainFX(CounterBoard, _StartPos, TargetLocation, _Amount);
+	CounterBoardActor->WarnActor->AddWarnNums(_Amount);
+	ChainFX->SetupChainFX(CounterBoardActor->WarnActor, _StartPos, TargetLocation, _Amount);
 }
 
 void APuyoBoard::SpawnNuisancePuyo()
 {
-	int DropAmount = FEngineMath::Min(WarnNums, 30); // 최대 5줄씩떨어뜨릴 수 있다.
-	WarnNums -= DropAmount;
+	int DropAmount = FEngineMath::Min(WarnActor->GetWarnNum(), 30); // 최대 5줄씩떨어뜨릴 수 있다.
+	//WarnNums -= DropAmount;
 	std::vector<APuyo*> DropList;
 	//떨어뜨려야 하는 개수만큼 생성한다.
 	for (int i = 0; i < DropAmount; i++)
@@ -1033,48 +1029,7 @@ void APuyoBoard::SpawnNuisancePuyo()
 		Index++;
 	}
 
-	UpdateWarning();
+	WarnActor->UpdateWarning();
 }
 
-void APuyoBoard::UpdateWarning()
-{
-	int CurIndex = 0;
-	int Temp = WarnNums;
-	FVector2D CurLocation = FVector2D(0.0f, PuyoSize.Y);
-	for (int i = 0; i < 6; i++)
-	{
-		Warnings[i]->SetActive(false);
-	}
-	// i = WarUnitIndex ?머라할지 모르겠다 코드 복잡해짐.
-	for (int i = 5; i >= 0; i--)
-	{
-		if (CalcWarn(i, CurLocation, CurIndex, Temp))
-		{
-			break;
-		}
-	}
-}
 
-// 만약 6자리가 다찼으면 true를 리턴한다.
-bool APuyoBoard::CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex, int& _Left)
-{
-	while (_Left >= WarnUnit[_SpriteIndex])
-	{
-		UEngineSprite::USpriteData CurData = UImageManager::GetInstance().FindSprite("Warning")->GetSpriteData(_SpriteIndex);
-		Warnings[_CurIndex]->SetSprite("Warning", _SpriteIndex);
-		Warnings[_CurIndex]->SetPivot(EPivotType::BottomLeft);
-		Warnings[_CurIndex]->SetComponentLocation(_Offset);
-		Warnings[_CurIndex]->SetComponentScale(CurData.Transform.Scale);
-		Warnings[_CurIndex]->SetActive(true);
-		_Left -= WarnUnit[_SpriteIndex];
-		_CurIndex++;
-		_Offset += FVector2D(CurData.Transform.Scale.X, 0.0f);
-		if (_CurIndex == 6)
-		{
-			return true;
-			break;
-		}
-	}
-	return false;
-
-}

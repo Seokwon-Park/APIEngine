@@ -27,7 +27,7 @@ APuyoChainFX::~APuyoChainFX()
 }
 
 
-void APuyoChainFX::SetupChainFX(APuyoBoard* _Target, FVector2D _Start, FVector2D _End, int _Amount, float _Duration)
+void APuyoChainFX::SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, int _Amount, float _Duration)
 {
 	Target = _Target;
 	StartLocation = _Start;
@@ -48,9 +48,8 @@ void APuyoChainFX::Tick(float _DeltaTime)
 		return;
 	}
 	Animator->ChangeAnimation("Pop");
-
-
 }
+
 void APuyoChainFX::BeginPlay()
 {
 	Super::BeginPlay();
@@ -61,6 +60,4 @@ void APuyoChainFX::ChangeScaleAndAnimation()
 	Sr->SetComponentScale({ 64,64 });
 	Sr->SetSprite(ColorSprites[0], 2);
 	Animator->ChangeAnimation("Loop");
-
-
 }

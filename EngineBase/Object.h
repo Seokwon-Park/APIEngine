@@ -26,6 +26,7 @@ public:
 		IsDestroyed = true;
 	}
 	inline virtual void SetActive(bool _Value) { IsActive = _Value; }
+	inline virtual void SwitchActive() { IsActive = !IsActive; }
 	//inline void SetActorTickEnabled(bool _IsActive) { Tickable = _IsActive; }
 	// 현재 객체의 타입과 비교
 	inline virtual bool IsA(const std::type_info& type) const { return typeid(*this) == type; }

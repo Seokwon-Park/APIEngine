@@ -37,8 +37,9 @@ void AIntroGameMode::BeginPlay()
 	AOpeningArle* OPArle= GetWorld()->SpawnActor<AOpeningArle>();
 	Fader = GetWorld()->SpawnActor<AFader>();
 
-	//인트로 애니메이션 설정 ㅋㅋ
+	// 인트로 애니메이션 설정
 	// 이렇게 해도 되는지는 모름.
+	// 
 	// 페이드 아웃 델리게이트
 	UEngineDelegate FadeOutDelegate;
 	FadeOutDelegate += std::bind(&AFader::SetActive, Fader, true);

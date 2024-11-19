@@ -1,7 +1,8 @@
 #pragma once
 #include "Puyo.h"
+#include "PuyoWarn.h"
 #include "PuyoText.h"
-#include "PuyoBoardShake.h"
+#include "PuyoBoardShakePostProcess.h"
 
 #include <set>
 #include <EngineCore/Actor.h>
@@ -26,15 +27,18 @@ class APuyoBoard : public AActor
 public:
 	struct PuyoBoardSettings
 	{
-		FVector2D PuyoSize;
 		int Difficulty;
+		FVector2D PuyoSize;
+		EPuyoBoardColor BoardColor;
+
+		FIntPoint BoardSize;
 		FIntPoint NextBlockCoord;
 		FIntPoint NextNextBlockCoord;
-		FIntPoint BoardSize;
-		UPuyoBoardShake* Shaker;
-		APuyoText* Score;
-		APuyoBoard* CounterBoard;
-		EPuyoBoardColor TextColor;
+
+		APuyoWarn* WarnActor;
+		APuyoText* ScoreActor;
+		APuyoBoard* CounterBoardActor;
+		UPuyoBoardShakePostProcess* ShakePostProcess;
 
 	};
 	// constrcuter destructer
@@ -91,10 +95,7 @@ public:
 		SetPuyoOnBoard(_XY.X, _XY.Y, _Puyo);
 	}
 
-	inline void AddWarnNums(int _Amount)
-	{
-		WarnNums += _Amount;
-	}
+
 	//움직일 수 있는지 검사하는 함수
 	// 아래 움직임
 	// 왜 2개로 나눴는지는 아무튼 필요해서 나눔
@@ -109,26 +110,21 @@ public:
 
 	void SpawnChainText();
 	void SpawnAttack(int _Amount, FVector2D _StartPos);
-	void UpdateWarning();
-	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex, int& _Left);
+
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 
 	//Todo: Effect라는 클래스로 추상화필수적
-	void SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay);
+	void SpawnDestroyFX(FVector2D _StartPos, EPuyoColor _Color, float _Delay);
 
 	//일시정지
 	void PauseGame();
-
-	
 protected:
 	void BeginPlay() override;
 private:
 	//위쪽 방향부터 반시계 방향으로 -> 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
 	const int Dx[4] = { 0, -1, 0, 1 };
 	const int Dy[4] = { -1, 0, 1, 0 };
-	//예고 뿌요 단위
-	const int WarnUnit[6] = { 1,6,30, 200, 300, 420 };
 
 	// 난수 생성기
 	UEngineRandom RandomDevice;
@@ -139,6 +135,7 @@ private:
 	FIntPoint BoardSize; // 게임판의 칸수
 	FIntPoint NextBlockCoord; // 게임판의 칸수
 	FIntPoint NextNextBlockCoord; // 게임판의 칸수
+	EPuyoBoardColor BoardColor;
 
 	//Key코드 값 정보를 받는 변수
 	int CWRotateKey = 0;
@@ -159,6 +156,8 @@ private:
 	// 뿌요를 몇초마다 떨어뜨릴 것인가?
 	float PuyoDropDelay;
 	float PuyoDropTimer;
+
+	// 키 조작 딜레이(꾹 누를 때 딜레이)
 	float ForceDownDelay;
 	float ForceDownTimer;
 	float LRMoveDelay;
@@ -190,20 +189,19 @@ private:
 	std::vector<APuyo*> PuyoConnectList;
 	std::vector<FIntPoint> PuyoCheckList;
 	//std::set<std::pair<int, int>> PuyoDestroyList;
-	std::set < FIntPoint, decltype([](const auto a, const auto b) {
+	std::set<FIntPoint, decltype([](const auto a, const auto b) {
 		if (a.Y == b.Y)
 		{
 			return a.X < b.X;
 		}
 		return a.Y < b.Y;
-		}) > PuyoDestroyList;
-	std::vector<int> PuyoUpdateColumns;
+		})> PuyoDestroyList;
+	std::set<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
 
 	//방해뿌요?
-	std::vector<USpriteRendererComponent*> Warnings;
-	int WarnNums = 0;
+	
 	// 만약 방해뿌요가 있으면 상쇄가 가능할때까지 미루는 용도(?) 아오 복잡
 	bool CheckOffset = false;
 
@@ -214,12 +212,14 @@ private:
 	int Rensa = 0;
 	int ScoreToAdd = 0;
 
-
-	APuyoText* Score;
-	UPuyoBoardShake* Shaker;
+	// 예고 뿌요
+	APuyoWarn* WarnActor;
+	//점수
+	APuyoText* ScoreActor;
 	// 상대 게임판 객체 포인터
-	APuyoBoard* CounterBoard;
-	EPuyoBoardColor TextColor;
+	APuyoBoard* CounterBoardActor;
+	//화면 흔들림 포스트프로세스
+	UPuyoBoardShakePostProcess* ShakePostProcess;
 
 	//게임 일시정지
 	USpriteRendererComponent* PauseText;

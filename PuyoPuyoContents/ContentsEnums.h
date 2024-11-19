@@ -5,6 +5,7 @@ enum class ERenderLayer
 	BACKGROUND = -1000,
 	PLAY = 0,
 	FRAME = 100,
+	WARN = 105,
 };
 
 //»Ñ¿ä»Ñ¿ä »ö

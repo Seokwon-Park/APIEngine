@@ -1,10 +1,11 @@
 #include "aepch.h"
 #include "PlayGameMode.h"
 
-#include "TogetherBackground.h"
-#include "PuyoBoardShake.h"
-#include "PuyoBoard.h"
 #include "PuyoText.h"
+#include "PuyoWarn.h"
+#include "PuyoBoard.h"
+#include "PuyoBoardShakePostProcess.h"
+#include "TogetherBackground.h"
 #include <EnginePlatform/KeyCode.h>
 
 APlayGameMode::APlayGameMode()
@@ -32,6 +33,9 @@ void APlayGameMode::BeginPlay()
 	Next->SetActorLocation({ 9 * 32,32 });
 	Next->SetText("NEXT");
 
+	APuyoWarn* P1Warn = GetWorld()->SpawnActor<APuyoWarn>();
+	APuyoWarn* P2Warn = GetWorld()->SpawnActor<APuyoWarn>();
+
 	APuyoText* P1Score = GetWorld()->SpawnActor<APuyoText>();
 	P1Score->SetupText(8, EPuyoBoardColor::Red, ETextAlign::Right);
 	P1Score->SetActorLocation({ 7 * 32 + 16, 11 * 32 });
@@ -45,9 +49,9 @@ void APlayGameMode::BeginPlay()
 	//PuyoBoardP1->SetActive(false);
 	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
 
-	UPuyoBoardShake* ShakerP1 = GetWorld()->AddPostProcess<UPuyoBoardShake>();
+	UPuyoBoardShakePostProcess* ShakerP1 = GetWorld()->AddPostProcess<UPuyoBoardShakePostProcess>();
 	ShakerP1->SetupProcess({ 32,0 });
-	UPuyoBoardShake* ShakerP2 = GetWorld()->AddPostProcess<UPuyoBoardShake>();
+	UPuyoBoardShakePostProcess* ShakerP2 = GetWorld()->AddPostProcess<UPuyoBoardShakePostProcess>();
 	ShakerP2->SetupProcess({ 416,0 });
 
 	//Player1 Setting
@@ -55,15 +59,16 @@ void APlayGameMode::BeginPlay()
 	APuyoBoard::PuyoBoardSettings Settings;
 	{
 		//Settings.Offset = FVector2D(48, 16);
+		Settings.Difficulty = 3;
 		Settings.PuyoSize = FVector2D(32, 32);
 		Settings.BoardSize = FIntPoint(6, 13);
-		Settings.Difficulty = 3;
 		Settings.NextBlockCoord = FIntPoint(8, 4);
 		Settings.NextNextBlockCoord = FIntPoint(9, 5);
-		Settings.CounterBoard = PuyoBoardP2;
-		Settings.Score = P1Score;
-		Settings.Shaker = ShakerP1;
-		Settings.TextColor = EPuyoBoardColor::Red;
+		Settings.BoardColor = EPuyoBoardColor::Red;
+		Settings.WarnActor = P1Warn;
+		Settings.ScoreActor = P1Score;
+		Settings.CounterBoardActor = PuyoBoardP2;
+		Settings.ShakePostProcess = ShakerP1;
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
 	PuyoBoardP1->SetKey(EKey::G, EKey::H, EKey::S, EKey::A, EKey::D);
@@ -74,18 +79,22 @@ void APlayGameMode::BeginPlay()
 	//Player2 Setting
 	PuyoBoardP2->SetActorLocation(FVector2D(416, 0));
 	{
-		Settings.BoardSize = FIntPoint(6, 13);
 		Settings.Difficulty = 3;
+		Settings.BoardSize = FIntPoint(6, 13);
 		Settings.NextBlockCoord = FIntPoint(11, 4);
 		Settings.NextNextBlockCoord = FIntPoint(10, 5);
-		Settings.CounterBoard = PuyoBoardP1;
-		Settings.Score = P2Score;
-		Settings.Shaker = ShakerP2;
-		Settings.TextColor = EPuyoBoardColor::Blue;
+		Settings.BoardColor = EPuyoBoardColor::Blue;
+		Settings.WarnActor = P2Warn;
+		Settings.ScoreActor = P2Score;
+		Settings.CounterBoardActor = PuyoBoardP1;
+		Settings.ShakePostProcess = ShakerP2;
 	}
 	PuyoBoardP2->SetupPuyoBoard(Settings);
 	PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
 
+	//예고뿌요 세팅
+	P1Warn->SetActorLocation(PuyoBoardP1->GetActorLocation());
+	P2Warn->SetActorLocation(PuyoBoardP2->GetActorLocation());
 
 	//test2->SetEnable();
 }

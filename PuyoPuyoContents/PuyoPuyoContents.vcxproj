@@ -194,6 +194,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PuyoWarn.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TogetherBackground.h">
       <SubType>
       </SubType>
@@ -207,7 +211,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PuyoBoardShake.h">
+    <ClInclude Include="PuyoBoardShakePostProcess.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -327,6 +331,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PuyoWarn.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TogetherBackground.cpp">
       <SubType>
       </SubType>
@@ -343,7 +351,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PuyoBoardShake.cpp">
+    <ClCompile Include="PuyoBoardShakePostProcess.cpp">
       <SubType>
       </SubType>
     </ClCompile>

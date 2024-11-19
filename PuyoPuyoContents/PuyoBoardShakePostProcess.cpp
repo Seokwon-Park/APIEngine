@@ -1,7 +1,7 @@
 #include "aepch.h"
-#include "PuyoBoardShake.h"
+#include "PuyoBoardShakePostProcess.h"
 
-UPuyoBoardShake::UPuyoBoardShake()
+UPuyoBoardShakePostProcess::UPuyoBoardShakePostProcess()
 {
 	for (int i = 0; i < 6; i++)
 	{
@@ -10,7 +10,7 @@ UPuyoBoardShake::UPuyoBoardShake()
 	}
 }
 
-UPuyoBoardShake::~UPuyoBoardShake()
+UPuyoBoardShakePostProcess::~UPuyoBoardShakePostProcess()
 {
 	for (int i = 0; i < 6; i++)
 	{
@@ -18,7 +18,7 @@ UPuyoBoardShake::~UPuyoBoardShake()
 	}
 }
 
-void UPuyoBoardShake::EffectTick()
+void UPuyoBoardShakePostProcess::EffectTick()
 {
 	if (false == IsEnabled) return;
 
@@ -57,14 +57,14 @@ void UPuyoBoardShake::EffectTick()
 	//CopyTrans = { { 100,100 }, { 100,100 } };
 }
 
-void UPuyoBoardShake::CaptureBoardState()
+void UPuyoBoardShakePostProcess::CaptureBoardState()
 {
 	auto BackBuffer = UEngineAPICore::GetBackBuffer();
 
 
 }
 
-void UPuyoBoardShake::SetEnable()
+void UPuyoBoardShakePostProcess::SetEnable()
 {
 	IsEnabled = true;
 	Timer = 0.0f;

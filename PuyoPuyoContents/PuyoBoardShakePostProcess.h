@@ -2,18 +2,18 @@
 #include <EngineCore/EnginePostProcess.h>
 
 // 클래스 설명 :
-class UPuyoBoardShake : public UEnginePostProcess
+class UPuyoBoardShakePostProcess : public UEnginePostProcess
 {
 public:
 	// Constrcuter Destructer
-	UPuyoBoardShake();
-	~UPuyoBoardShake();
+	UPuyoBoardShakePostProcess();
+	~UPuyoBoardShakePostProcess();
 
 	// Delete Function
-	UPuyoBoardShake(const UPuyoBoardShake& _Other) = delete;
-	UPuyoBoardShake(UPuyoBoardShake&& _Other) noexcept = delete;
-	UPuyoBoardShake& operator=(const UPuyoBoardShake& _Other) = delete;
-	UPuyoBoardShake& operator=(UPuyoBoardShake&& _Other) noexcept = delete;
+	UPuyoBoardShakePostProcess(const UPuyoBoardShakePostProcess& _Other) = delete;
+	UPuyoBoardShakePostProcess(UPuyoBoardShakePostProcess&& _Other) noexcept = delete;
+	UPuyoBoardShakePostProcess& operator=(const UPuyoBoardShakePostProcess& _Other) = delete;
+	UPuyoBoardShakePostProcess& operator=(UPuyoBoardShakePostProcess&& _Other) noexcept = delete;
 
 	void EffectTick() override;
 	void CaptureBoardState();

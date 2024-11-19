@@ -102,9 +102,6 @@
     <ClCompile Include="MenuBackground.cpp">
       <Filter>ContentsObject\Menu\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="SoloMenuBackground.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
-    </ClCompile>
     <ClCompile Include="PuyoChainText.cpp">
       <Filter>ContentsObject\Text</Filter>
     </ClCompile>
@@ -126,7 +123,7 @@
     <ClCompile Include="OpeningRoll.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="PuyoBoardShake.cpp">
+    <ClCompile Include="PuyoBoardShakePostProcess.cpp">
       <Filter>ContentsObject\Global\PostProcess</Filter>
     </ClCompile>
     <ClCompile Include="OpeningCar.cpp">
@@ -161,6 +158,12 @@
     </ClCompile>
     <ClCompile Include="TogetherBackground.cpp">
       <Filter>ContentsObject\Play\Together\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoWarn.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloMenuBackground.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,9 +209,6 @@
     <ClInclude Include="MenuBackground.h">
       <Filter>ContentsObject\Menu\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="SoloMenuBackground.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnums.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
@@ -233,7 +233,7 @@
     <ClInclude Include="OpeningRoll.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="PuyoBoardShake.h">
+    <ClInclude Include="PuyoBoardShakePostProcess.h">
       <Filter>ContentsObject\Global\PostProcess</Filter>
     </ClInclude>
     <ClInclude Include="ScoringTable.h">
@@ -271,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="TogetherBackground.h">
       <Filter>ContentsObject\Play\Together\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoWarn.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloMenuBackground.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
