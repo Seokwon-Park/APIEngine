@@ -145,9 +145,12 @@ void APuyoBoard::Tick(float _DeltaTime)
 			PuyoDropTimer = PuyoDropDelay;
 			PauseText->SwitchActive();
 		}
-
-
 		return;
+	}
+
+	if (CounterBoardActor->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
+	{
+		CurStep = EPuyoLogicStep::PuyoGameWin;
 	}
 
 	if (true == IsKicking)
@@ -218,6 +221,9 @@ void APuyoBoard::Tick(float _DeltaTime)
 	case EPuyoLogicStep::PuyoGameOver:
 		PuyoGameOverLogic();
 		break;
+	case EPuyoLogicStep::PuyoGameWin:
+		PuyoGameWinLogic();
+		break;
 	default:
 		break;
 	}
@@ -256,8 +262,8 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		//Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
-		Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
+		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
+		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 5);
 		NewBlock[i] = Puyo;
 	}
@@ -419,7 +425,14 @@ void APuyoBoard::PuyoPlaceLogic()
 						Board[CurPuyo->GetTargetXY().Y][CurPuyo->GetTargetXY().X] = CurPuyo;
 						CurPuyo->SetCurXY(CurPuyo->GetTargetXY());
 						CurPuyo->SetActorLocation(GetLocationByIndexOnBoard(CurPuyo->GetTargetXY()));
-						CurPuyo->PlayAnimation("PlaceComplete");
+						if (CurPuyo->GetColor() != EPuyoColor::Garbage)
+						{
+							CurPuyo->PlayAnimation("PlaceComplete");
+						}
+						else
+						{
+							CurPuyo->SetIsAnimationEnd(true);
+						}
 						CurPuyo->SetIsDropComplete(true);
 					}
 				}
@@ -656,7 +669,6 @@ void APuyoBoard::PuyoDestroyLogic()
 		//여기서부터 파괴시작
 		//연쇄 텍스트를 표시한다.
 		SpawnChainText();
-		//Todo : 방해뿌요량계산공식 추가하십쇼 두번하십쇼 이것도 코드위치 여기 맞는지 확신X
 		// SC = 연쇄 배율 (이건 싱글 멀티 구분없이 똑같은 멀티플레이 CP테이블을 쓰는듯
 
 		//NP = SC / TP + NL
@@ -671,11 +683,10 @@ void APuyoBoard::PuyoDestroyLogic()
 		NL += NP - static_cast<float>(NC);
 
 		//공격할 양
-		//int AttackAmount = static_cast<int>(NP);
-		int AttackAmount = rand() % 10 + 6;
+		int AttackAmount = static_cast<int>(NP);
+		//int AttackAmount = rand() % 10 + 6;
 
 		// Todo: 로직이 굉장히 꼬이는데 아직 모르겠음
-
 		// 내가 가진 예고 뿌요가 있으면
 		if (WarnActor->HasWarn())
 		{
@@ -814,6 +825,10 @@ void APuyoBoard::PuyoGameOverLogic()
 			}
 		}
 	}
+}
+
+void APuyoBoard::PuyoGameWinLogic()
+{
 }
 
 bool APuyoBoard::IsInBoard(const int TargetX, const int TargetY)

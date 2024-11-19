@@ -198,6 +198,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SoloBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SoloFrame.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TogetherBackground.h">
       <SubType>
       </SubType>
@@ -332,6 +340,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PuyoWarn.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SoloBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SoloFrame.cpp">
       <SubType>
       </SubType>
     </ClCompile>
