@@ -27,8 +27,8 @@ ATogetherFrame::ATogetherFrame()
 	InnerLeftSideSr = CreateDefaultSubobject<USpriteRendererComponent>("PlayBackground");
 	InnerLeftSideSr->SetOrder(ERenderLayer::FRAME);
 	InnerLeftSideSr->SetSprite("VSIL", 0);
-	InnerLeftSideSr->SetComponentScale({ 32, 384 });
-	InnerLeftSideSr->SetComponentLocation({ 0, 32 });
+	InnerLeftSideSr->SetComponentScale({ 16, 384 });
+	InnerLeftSideSr->SetComponentLocation({ 224, 32 });
 	InnerLeftSideSr->SetPivot(EPivotType::TopLeft);
 
 	RightSideSr = CreateDefaultSubobject<USpriteRendererComponent>("PlayBackground");
@@ -41,8 +41,8 @@ ATogetherFrame::ATogetherFrame()
 	InnerRightSideSr = CreateDefaultSubobject<USpriteRendererComponent>("PlayBackground");
 	InnerRightSideSr->SetOrder(ERenderLayer::FRAME);
 	InnerRightSideSr->SetSprite("VSIR", 0);
-	InnerRightSideSr->SetComponentScale({ 32, 384 });
-	InnerRightSideSr->SetComponentLocation({ 384, 32 });
+	InnerRightSideSr->SetComponentScale({ 16, 384 });
+	InnerRightSideSr->SetComponentLocation({ 400, 32 });
 	InnerRightSideSr->SetPivot(EPivotType::TopLeft);
 
 	TailSr = CreateDefaultSubobject<USpriteRendererComponent>("PlayBackground");

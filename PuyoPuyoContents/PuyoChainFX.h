@@ -17,7 +17,7 @@ public:
 	APuyoChainFX& operator=(const APuyoChainFX& _Other) = delete;
 	APuyoChainFX& operator=(APuyoChainFX&& _Other) noexcept = delete;
 
-	void SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, int _Amount, float _Duration = 1.0f);
+	void SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, float _Duration = 1.0f);
 
 	virtual void Tick(float _DeltaTime) override;
 protected:

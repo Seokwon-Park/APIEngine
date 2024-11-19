@@ -18,13 +18,10 @@ public:
 	virtual void Tick(float _DeltaTime) override;
 	void UpdateWarning();
 	bool CalcWarn(const int _SpriteIndex, FVector2D& _Offset, int& _CurIndex, int& _Left);
-	inline void AddWarnNums(int _Amount)
-	{
-		WarnNum += _Amount;
-	}
 	bool HasWarn() { return WarnNum > 0; }
 	void SetWarnNum(int _Value) { WarnNum = _Value; }
 	void AddWarnNum(int _Value) { WarnNum += _Value; }
+	void SubWarnNum(int _Value) { WarnNum -= _Value; }
 	int GetWarnNum() const { return WarnNum; }
 
 protected:

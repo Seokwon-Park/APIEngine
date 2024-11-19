@@ -32,9 +32,9 @@ APuyo::APuyo()
 		Animator->SetAnimationEvent("PlaceComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
 		Animator->SetAnimationEvent("Boom" + std::to_string(i), 6, std::bind(&APuyo::AnimationEndTrigger, this));
 	}
-	Animator->CreateAnimation("PlaceComplete5", "GARBAGE", 0, 0, 0.1f);
+	Animator->CreateAnimation("PlaceComplete5", "GARBAGE", { 0, 0 }, 0.1f, false);
 	Animator->CreateAnimation("Boom5", "GARBAGE", 0, 3, .05f, false);
-	Animator->SetAnimationEvent("PlaceComplete5", 0, std::bind(&APuyo::AnimationEndTrigger, this));
+	Animator->SetAnimationEvent("PlaceComplete5", 1, std::bind(&APuyo::AnimationEndTrigger, this));
 	Animator->SetAnimationEvent("Boom5", 3, std::bind(&APuyo::AnimationEndTrigger, this));
 
 

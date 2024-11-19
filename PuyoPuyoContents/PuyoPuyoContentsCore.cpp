@@ -129,11 +129,11 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("VSR", "VS_N.CNS.BMP",	{ { 608,32 }, { 32,384 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSR", "VS_S.CNS.BMP",	{ { 608,32 }, { 32,384 } });
 
-	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_2K.CNS.BMP", { { 384,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_6K.CNS.BMP", { { 384,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_H.CNS.BMP",  { { 384,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_N.CNS.BMP",  { { 384,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_S.CNS.BMP",  { { 384,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_2K.CNS.BMP", { { 400,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_6K.CNS.BMP", { { 400,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_H.CNS.BMP",  { { 400,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_N.CNS.BMP",  { { 400,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSIR", "VS_S.CNS.BMP",  { { 400,32 }, { 16,384 } });
 
 	UImageManager::GetInstance().InsertCustomSpriteData("LVHEAD", "L1_F.CNS.BMP", { { 0,0 }, { 640, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("LVCENTER", "L1_F.CNS.BMP", { { 304,64 }, { 32, 128 } });

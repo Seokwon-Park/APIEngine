@@ -27,14 +27,13 @@ APuyoChainFX::~APuyoChainFX()
 }
 
 
-void APuyoChainFX::SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, int _Amount, float _Duration)
+void APuyoChainFX::SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D _End, float _Duration)
 {
 	Target = _Target;
 	StartLocation = _Start;
 	TargetLocation = _End;
 	Duration = _Duration;
 	Elapsed = 0.0f;
-	AttackAmount = _Amount;
 }
 
 void APuyoChainFX::Tick(float _DeltaTime)

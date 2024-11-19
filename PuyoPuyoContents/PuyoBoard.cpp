@@ -256,8 +256,8 @@ std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 	for (int i = 0; i < 2; i++)
 	{
 		APuyo* Puyo = GetWorld()->SpawnActor<APuyo>();
-		Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
-		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
+		//Puyo->SetupPuyo(GetLocationByIndexOnBoard((BoardSize.X - 1) / 2 + Dx[BlockDir] * i, 1 + Dy[BlockDir] * i), static_cast<EPuyoColor>(RandomDevice.GetRandomInt(0, Difficulty)));
+		Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), EPuyoColor::Red);
 		//Puyo->SetupPuyo(GetLocationByIndex(MainPuyoCoord.X + Dx[BlockDir] * i, MainPuyoCoord.Y + Dy[BlockDir] * i), 5);
 		NewBlock[i] = Puyo;
 	}
@@ -364,13 +364,13 @@ void APuyoBoard::PuyoMoveLogic()
 			PuyoTick = 0;
 		}
 
-		//Todo : 방해뿌요 떨구는 로직 (상대방의 연쇄가 진행중이 아닐때) 상쇄랑 관련해서 이 코드의 위치를 아직 모르겠음...
-		//일단 방해뿌요가 내보드에 존재하면 파괴 로직 단계에서 상쇄검사를 하십쇼.
-		if (WarnActor->HasWarn()&& !CounterBoardActor->IsChaining)
-		{
-			CheckOffset = true;
-			//SpawnNuisancePuyo();
-		}
+		//내가 뿌요를 놓았을 때, 상대가 연쇄중이 아님(연쇄 끝), 내가 예고뿌요가 남아 있으면, 상쇄체크를 진행한다.
+		// 애초에 이건 필요없는듯.
+		//if (WarnActor->HasWarn() && !CounterBoardActor->IsChaining)
+		//{
+		//	CheckOffset = true;
+		//	//SpawnNuisancePuyo();
+		//}
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
@@ -396,9 +396,9 @@ void APuyoBoard::PuyoPlaceLogic()
 		//	}
 		//);
 
-		// 보드에서 떨어져야 할 블럭이 있는지 체크해서 업데이트 하는 부분.
-		// 체크해야할 모든 블럭에 대해 돌리자.
-		// 블록은 반칸씩 떨어졌다면 여기서는 좀더 스무스하게 떨어지는 느낌임.
+		// 보드에서 떨어져야 할 뿌요가 있는지 체크해서 업데이트 하는 부분.
+		// 체크해야할 모든 뿌요에 대해 돌리자.
+		// 드롭상태에서는 반칸씩 떨어졌다면 여기서는 좀더 부드럽게 떨어지도록
 		for (APuyo* CurPuyo : PlaceCheckList)
 		{
 			if (false == CurPuyo->GetIsDropComplete())
@@ -425,7 +425,7 @@ void APuyoBoard::PuyoPlaceLogic()
 				}
 			}
 		}
-		// 모든 블럭에 대해 위치 완료 애니메이션이 끝나야 넘어간다.
+		// 모든 블럭에 대해 위치 완료 애니메이션이 끝나면 넘어간다.
 		bool CheckAllFinished = true;
 		for (APuyo* CurPuyo : PlaceCheckList)
 		{
@@ -442,7 +442,10 @@ void APuyoBoard::PuyoPlaceLogic()
 	{
 		CurPuyo->SetIsDropComplete(false);
 		CurPuyo->SetIsAnimationEnd(false);
-		PuyoConnectList.push_back(CurPuyo);
+		if (CurPuyo->GetColor() != EPuyoColor::Garbage)
+		{
+			PuyoConnectList.push_back(CurPuyo);
+		}
 	}
 
 	PlaceCheckList.clear();
@@ -455,7 +458,6 @@ void APuyoBoard::PuyoConnectLogic()
 	//SetConnection
 	for (APuyo* CurPuyo : PuyoConnectList)
 	{
-		if (CurPuyo->GetColor() == EPuyoColor::Garbage) continue;
 		int X = CurPuyo->GetCurXY().X;
 		int Y = CurPuyo->GetCurXY().Y;
 		int SpriteIndex = 0;
@@ -464,7 +466,7 @@ void APuyoBoard::PuyoConnectLogic()
 			int Dir = i;
 			int TargetX = X + Dx[Dir];
 			int TargetY = Y + Dy[Dir];
-			// 범위가 보드 밖이면 조사하면 안된다.
+			// 범위가 보드 밖이면 안된다.
 			if (!IsInBoard(TargetX, TargetY))
 			{
 				continue;
@@ -533,7 +535,7 @@ void APuyoBoard::PuyoCheckLogic()
 		// 현재 위치의 뿌요와 색상이 같은 뿌요의 좌표들이 저장되는 
 		// 임시 벡터 사이즈가 4보다 크면 제거목록에 넣음
 		std::vector<FIntPoint> Temp;
-		// 근처의 방해뿌요도 같이 저장해놓고 4보다 크면 지우자
+		// 근처의 방해뿌요도 같이 저장해놓고 임시 저장 목록이 4보다 크면 같이 지운다.
 		std::vector<FIntPoint> Garbages;
 
 		Queue.push(Point);
@@ -586,11 +588,12 @@ void APuyoBoard::PuyoCheckLogic()
 		}
 	}
 
+	// 여기서 점수와 연쇄량을 계산한다.
 	if (!PuyoDestroyList.empty())
 	{
 		Rensa++;
 		int PC = static_cast<int>(PuyoDestroyList.size());
-		int CP = ChainPowerTable[Rensa];
+		int CP = SingleCPTable[Rensa];
 		//TODO : 컬러보너스 계산해야함
 		int CB = ColorBonusTable[1];
 		int GB = GroupBonusTable[PC];
@@ -599,6 +602,7 @@ void APuyoBoard::PuyoCheckLogic()
 		std::string Display = std::string(4 - PCText.size(), ' ') + PCText + '*' + std::string(3 - BonusText.size(), ' ') + BonusText;
 		ScoreActor->SetText(Display);
 		ScoreToAdd += PC * 10 * (CP + CB + GB);
+		SC = static_cast<float>(PC * 10 * (SingleCPTable[Rensa] + CB + GB));
 	}
 	PuyoCheckList.clear();
 
@@ -616,8 +620,8 @@ void APuyoBoard::PuyoDestroyLogic()
 		return;
 	}
 
-	IsChaining = true;
-	//파괴할게 있어
+	//파괴할게 있는 경우
+	//일단 연쇄 시작
 	if (FlickCount < 10)
 	{
 		FlickDelay -= UEngineAPICore::GetEngineDeltaTime();
@@ -639,46 +643,53 @@ void APuyoBoard::PuyoDestroyLogic()
 		return;
 	}
 
+	//파괴시작 안했으면
 	if (!IsDestroying)
 	{
+		IsChaining = true;
+		//여기서부터 파괴시작
+		//연쇄 텍스트를 표시한다.
 		SpawnChainText();
 		//Todo : 방해뿌요량계산공식 추가하십쇼 두번하십쇼 이것도 코드위치 여기 맞는지 확신X
+		// SC = 연쇄 배율 (이건 싱글 멀티 구분없이 똑같은 멀티플레이 CP테이블을 쓰는듯
+
+		//NP = SC / TP + NL
 		//NP : 계산된 방해 뿌요 (=AttackAmount)
-		int AttackAmount = RandomDevice.GetRandomInt(6, 12);
-		//상쇄 검사가 필요하다면
-		if (CheckOffset)
+		//NC = NP 내림
+		//NL = NP-NC
+
+		float CheckNL = FEngineMath::Floor(NL);
+		NL -= CheckNL;
+		float NP = (SC / TP + CheckNL);
+		float NC = FEngineMath::Floor(NP);
+		NL += NP - static_cast<float>(NC);
+
+		//공격할 양
+		int AttackAmount = static_cast<int>(NP)*3;
+
+		// Todo: 로직이 굉장히 꼬이는데 아직 모르겠음
+
+		// 내가 가진 예고 뿌요가 있으면
+		if (WarnActor->HasWarn())
 		{
-			CheckOffset = false;
-			// Todo: WarnNums에 따른 순서때문에 따로 적어야함 나중에 고칠것.
-			// +추가 지금 로직에도 문제가 좀 있음,
-			//내가 상쇄하는 양이 더 적으면
-			if (AttackAmount < WarnActor->GetWarnNum())
-			{
-				//Todo: 이경우에는 
-				//WarnNums -= AttackAmount;
-				AttackAmount = 0;
-				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-			}
-			//내가 상쇄하는 양이 더 많으면
-			else
-			{
-				AttackAmount -= WarnActor->GetWarnNum();
-				SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
-				//WarnNums = 0;
-			}
-			//UpdateWarning();
+			//일단 계산된 양만큼 줄인다.
+			WarnActor->SubWarnNum(-AttackAmount);
+			SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), false);
 		}
 		else
 		{
-			SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()));
+			CounterBoardActor->WarnActor->AddWarnNum(AttackAmount);
+			//이 위치에서 상대 보드에 공격을 보내는 이펙트를 스폰한다.
+			SpawnAttack(AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), false);
 		}
+
 		int ix = 0;
 		for (auto [X, Y] : PuyoDestroyList)
 		{
 			APuyo* CurPuyo = Board[Y][X];
+			CurPuyo->PlayAnimation("Boom");
 			if (CurPuyo->GetColor() != EPuyoColor::Garbage)
 			{
-				CurPuyo->PlayAnimation("Boom");
 				SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);
 				ix++;
 			}
@@ -707,7 +718,9 @@ void APuyoBoard::PuyoDestroyLogic()
 		APuyo* Puyo = Board[Y][X];
 		Puyo->Destroy();
 		Board[Y][X] = nullptr;
+		if (X - 1 >= 0) PuyoUpdateColumns.insert(X - 1);
 		PuyoUpdateColumns.insert(X);
+		if (X + 1 < BoardSize.X) PuyoUpdateColumns.insert(X + 1);
 	}
 
 	FlickCount = 0;
@@ -720,14 +733,15 @@ void APuyoBoard::PuyoDestroyLogic()
 
 void APuyoBoard::PuyoUpdateLogic()
 {
-	if (WarnActor->HasWarn()&& CounterBoardActor->IsChaining == false)
+	if (WarnActor->HasWarn() && CounterBoardActor->IsChaining == false && IsChaining == false)
 	{
-		// Todo: 현재 직관성이 좀 떨어지는거 같음.
 		SpawnNuisancePuyo();
+		WarnActor->UpdateWarning();
 		ShakePostProcess->SetEnable();
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
+
 	if (PuyoUpdateColumns.empty())
 	{
 		IsChaining = false;
@@ -937,9 +951,10 @@ void APuyoBoard::PuyoForceDown()
 	if (ForceDownTimer < 0.0f)
 	{
 		PuyoDropTimer = 0.0f;
-		ForceDownTimer = 0.05f;
+		ForceDownTimer = 0.03f;
 		if (PuyoTick % 2 == 0)
 		{
+			DropBonus++;
 			ScoreActor->Add(1);
 		}
 	}
@@ -953,24 +968,25 @@ void APuyoBoard::SpawnChainText()
 }
 
 
-void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos) // 방해뿌요 몇개 보낼껀지
+void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos, bool IsOffset) // 방해뿌요 몇개 보낼껀지
 {
-	// Todo: 대충 머 구슬같은거 날라가는 모션 추가해
 	APuyoChainFX* ChainFX = GetWorld()->SpawnActor<APuyoChainFX>();
 	ChainFX->SetActorLocation(_StartPos);
+	APuyoWarn* Target = CounterBoardActor->WarnActor;
 	FVector2D TargetLocation = CounterBoardActor->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
 	if (WarnActor->HasWarn())
 	{
+		Target = this->WarnActor;
 		TargetLocation = GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
 	}
-	CounterBoardActor->WarnActor->AddWarnNums(_Amount);
-	ChainFX->SetupChainFX(CounterBoardActor->WarnActor, _StartPos, TargetLocation, _Amount);
+	ChainFX->SetupChainFX(Target, _StartPos, TargetLocation, 0.5f);
 }
 
 void APuyoBoard::SpawnNuisancePuyo()
 {
-	int DropAmount = FEngineMath::Min(WarnActor->GetWarnNum(), 30); // 최대 5줄씩떨어뜨릴 수 있다.
-	//WarnNums -= DropAmount;
+
+	int DropAmount = FEngineMath::Min(30, WarnActor->GetWarnNum()); // 최대 5줄씩떨어뜨릴 수 있다.
+	WarnActor->SubWarnNum(DropAmount);
 	std::vector<APuyo*> DropList;
 	//떨어뜨려야 하는 개수만큼 생성한다.
 	for (int i = 0; i < DropAmount; i++)
@@ -1029,7 +1045,6 @@ void APuyoBoard::SpawnNuisancePuyo()
 		Index++;
 	}
 
-	WarnActor->UpdateWarning();
 }
 
 

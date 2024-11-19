@@ -60,7 +60,7 @@ public:
 	//LogicStep
 	void PuyoCreateLogic();
 	void PuyoMoveLogic();
-	void SpawnNuisancePuyo();
+	
 	void PuyoPlaceLogic();
 	void PuyoConnectLogic();
 	void PuyoCheckLogic();
@@ -108,14 +108,17 @@ public:
 	void Rotate(bool _IsClockwise);
 	void PuyoForceDown();
 
+	//Spawn Actor
 	void SpawnChainText();
-	void SpawnAttack(int _Amount, FVector2D _StartPos);
+	void SpawnAttack(int _Amount, FVector2D _StartPos, bool _IsOffset);
+	void SpawnNuisancePuyo();
+	//Todo: Effect라는 클래스로 추상화필수적
+	void SpawnDestroyFX(FVector2D _StartPos, EPuyoColor _Color, float _Delay);
 
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 
-	//Todo: Effect라는 클래스로 추상화필수적
-	void SpawnDestroyFX(FVector2D _StartPos, EPuyoColor _Color, float _Delay);
+	
 
 	//일시정지
 	void PauseGame();
@@ -201,9 +204,8 @@ private:
 	std::vector<std::vector<APuyo*>> Board;
 
 	//방해뿌요?
-	
 	// 만약 방해뿌요가 있으면 상쇄가 가능할때까지 미루는 용도(?) 아오 복잡
-	bool CheckOffset = false;
+	//bool CheckOffset = false;
 
 	//내가 놓았어도 상대 연쇄가 진행중이면 방해뿌요를 놓지 않는다.
 	bool IsChaining = false;
@@ -211,9 +213,14 @@ private:
 	//연쇄 카운트
 	int Rensa = 0;
 	int ScoreToAdd = 0;
+	float SC = 0;
+	float TP = 70.0f;
+	float NL = 0.0f;
 
 	// 예고 뿌요
 	APuyoWarn* WarnActor;
+	int DropBonus;
+
 	//점수
 	APuyoText* ScoreActor;
 	// 상대 게임판 객체 포인터

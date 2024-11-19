@@ -354,6 +354,12 @@ public:
 		return _Start + (_End - _Start) * _T;
 	}
 
+	inline static float Floor(float _Value)
+	{
+		return std::floor(_Value);
+	}
+
+
 	template <typename T>
 	static T Max(T A, T B)
 	{
