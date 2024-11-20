@@ -34,6 +34,10 @@ void AActor::Tick(float _DeltaTime)
 
 	for (auto Component : Components)
 	{
+		if (false == Component->IsActivated())
+		{
+			continue;
+		}
 		if (nullptr != Component)
 		{
 			Component->TickComponent(_DeltaTime);

@@ -16,10 +16,10 @@ public:
 	UInputComponent& operator=(UInputComponent&& _Other) noexcept = delete;
 
 	virtual void TickComponent(float _DeltaTime) override;
+	void BindAction(KeyCode _KeyCode, KeyEvent _EventType, std::function<void()> _Function);
 protected:
 	virtual void BeginPlay() override;
-
 private:
-
+	std::map<KeyCode, UEngineKeyEvent> KeyEvents;
 };
 

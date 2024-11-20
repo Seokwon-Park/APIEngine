@@ -6,7 +6,7 @@ class EKey
 public:
 	enum : KeyCode
 	{
-		Mouseleft = 0x01, // Left mouse button
+		MouseLeft = 0x01, // Left mouse button
 		MouseRight = 0x02, // Right mouse button
 		Cancel = 0x03, // Control-break processing
 		Mousemiddle = 0x04, // Middle mouse button (three-button mouse)

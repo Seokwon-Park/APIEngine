@@ -6,6 +6,8 @@
 
 #include <set>
 #include <EngineCore/Actor.h>
+#include <EngineCore/InputComponent.h>
+
 
 
 //Todo : 
@@ -238,6 +240,8 @@ private:
 	//게임 일시정지
 	USpriteRendererComponent* PauseText;
 	bool IsPaused = false;
+	float PauseTimer= 0.5f;
+	float PauseDelay = 0.5f;
 
 
 
@@ -246,5 +250,6 @@ private:
 
 
 	//여기 밑으로는 실험실 변수
+	UInputComponent* Input;
 };
 

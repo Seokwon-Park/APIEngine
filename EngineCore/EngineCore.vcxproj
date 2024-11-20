@@ -153,7 +153,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AController.h">
+    <ClInclude Include="Controller.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -203,6 +203,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineKeyEvent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Level.h">
       <SubType>
       </SubType>
@@ -229,7 +233,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AController.cpp">
+    <ClCompile Include="Controller.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -275,6 +279,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineKeyEvent.cpp">
       <SubType>
       </SubType>
     </ClCompile>

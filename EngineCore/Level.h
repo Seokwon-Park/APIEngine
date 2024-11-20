@@ -1,6 +1,7 @@
 #pragma once
 #include "GameMode.h"
 #include "EnginePostProcess.h"
+#include "EngineKeyEvent.h"
 
 
 enum class KeyEvent
@@ -10,18 +11,6 @@ enum class KeyEvent
 	Free,
 	Up,
 };
-
-class UEngineKeyEvent
-{
-public:
-	std::vector<std::function<void()>> PressEvents;
-	std::vector<std::function<void()>> DownEvents;
-	std::vector<std::function<void()>> UpEvents;
-	std::vector<std::function<void()>> FreeEvents;
-
-	void EventCheck(int _Key);
-};
-
 
 // 설명 :
 class ULevel : public UObject
@@ -134,6 +123,7 @@ private:
 	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
 
+	//레벨 단에서 이벤트 설정은 여기다가 한다.
 	std::map<int, UEngineKeyEvent> KeyEvents;
 
 	std::vector<class UEnginePostProcess*> PostProcesses;

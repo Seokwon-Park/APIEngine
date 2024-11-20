@@ -55,8 +55,11 @@
     <ClCompile Include="EnginePostProcess.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="AController.cpp">
+    <ClCompile Include="Controller.cpp">
       <Filter>Object\Actor\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineKeyEvent.cpp">
+      <Filter>KeyEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,8 +120,11 @@
     <ClInclude Include="EnginePostProcess.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="AController.h">
+    <ClInclude Include="Controller.h">
       <Filter>Object\Actor\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineKeyEvent.h">
+      <Filter>KeyEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,9 @@
     </Filter>
     <Filter Include="Object\Actor\Controller">
       <UniqueIdentifier>{6ba62f5f-6797-4287-af5b-daca9d18f024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KeyEvent">
+      <UniqueIdentifier>{a5e68de3-f761-4b38-a01b-72646931920e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

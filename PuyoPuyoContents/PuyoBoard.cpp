@@ -28,6 +28,9 @@ APuyoBoard::APuyoBoard()
 	PauseText->SetOrder(100);
 	PauseText->SetActive(false);
 
+	Input = CreateDefaultSubobject<UInputComponent>("");
+
+
 }
 
 void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, float _DeltaTime, bool _IsClockwise) {
@@ -98,20 +101,21 @@ void APuyoBoard::BeginPlay()
 	Super::BeginPlay();
 	PuyoDropTimer = PuyoDropDelay;
 
+
 	// 회전
-	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
-	GetWorld()->BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
-	GetWorld()->BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
+// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
+	Input->BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
+	Input->BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
 
 	// 빠른 낙하
-	GetWorld()->BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
+	Input->BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
 
 	// 좌우 이동
-	GetWorld()->BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
-	GetWorld()->BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
+	Input->BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
+	Input->BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
 
 	// 일시 정지
-	GetWorld()->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, this));
+	Input->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, this));
 
 	// Todo : BeginPlay는 임시위치, 게임시작 애니메이션이 끝나고 렌더링 되어야 함.
 	NextBlock = CreatePuyoBlock();
@@ -137,12 +141,14 @@ void APuyoBoard::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	//Input->SetActive(false);
+
 	if (true == IsPaused)
 	{
-		PuyoDropTimer -= _DeltaTime;
-		if (PuyoDropTimer <= 0.0f)
+		PauseTimer -= _DeltaTime;
+		if (PauseTimer <= 0.0f)
 		{
-			PuyoDropTimer = PuyoDropDelay;
+			PauseTimer = PauseDelay;
 			PauseText->SwitchActive();
 		}
 		return;

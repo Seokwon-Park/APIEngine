@@ -2,41 +2,9 @@
 #include "Level.h"
 #include "EngineAPICore.h"
 #include "SpriteRendererComponent.h"
-#include <EnginePlatform/EngineInputSystem.h>
+#include "EngineKeyEvent.h"
 
-void UEngineKeyEvent::EventCheck(int _Key)
-{
-	if (true == UEngineInputSystem::GetInstance().GetIsKeyDown(_Key))
-	{
-		for (size_t i = 0; i < DownEvents.size(); i++)
-		{
-			DownEvents[i]();
-		}
-	}
-	else if (true == UEngineInputSystem::GetInstance().GetIsKeyPress(_Key))
-	{
-		for (size_t i = 0; i < PressEvents.size(); i++)
-		{
-			PressEvents[i]();
-		}
-	}
 
-	if (true == UEngineInputSystem::GetInstance().GetIsKeyFree(_Key))
-	{
-		for (size_t i = 0; i < FreeEvents.size(); i++)
-		{
-			FreeEvents[i]();
-		}
-	}
-
-	if (true == UEngineInputSystem::GetInstance().GetIsKeyUp(_Key))
-	{
-		for (size_t i = 0; i < UpEvents.size(); i++)
-		{
-			UpEvents[i]();
-		}
-	}
-}
 
 void ULevel::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function)
 {
@@ -114,7 +82,7 @@ ULevel::~ULevel()
 
 void ULevel::BeginPlay()
 {
-
+	BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&EngineDebugHelper::PivotDebugSwitch));
 
 	// 이게 안되는 이유는 게임 중간에 스폰하는 액터에 대해서는 BeginPlay실행이 안돼
 	//for (AActor* Actor : AllActors)
@@ -132,10 +100,6 @@ void ULevel::EndPlay()
 
 void ULevel::Tick(float _DeltaTime)
 {
-	if (UEngineInputSystem::GetInstance().GetIsKeyDown(EKey::MouseRight))
-	{
-		EngineDebugHelper::PivotDebugSwitch();
-	}
 
 	//새로 스폰되는 액터에 대해서도 확인해줘야 하므로
 	while (false == WaitForBeginPlay.empty())
