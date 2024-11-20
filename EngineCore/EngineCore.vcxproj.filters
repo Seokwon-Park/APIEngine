@@ -64,6 +64,9 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>Object\Actor\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="AIController.cpp">
+      <Filter>Object\Actor\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -130,6 +133,9 @@
       <Filter>KeyEvent</Filter>
     </ClInclude>
     <ClInclude Include="PlayerController.h">
+      <Filter>Object\Actor\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="AIController.h">
       <Filter>Object\Actor\Controller</Filter>
     </ClInclude>
   </ItemGroup>

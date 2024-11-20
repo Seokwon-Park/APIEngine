@@ -20,7 +20,7 @@ void APuyoPlayerController::BeginPlay()
 
 	Board = GetActor<APuyoBoard>();
 	// 회전
-// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
+	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
 	InputComponent->BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, Board, true));
 	InputComponent->BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, Board, false));
 

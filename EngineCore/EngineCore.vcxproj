@@ -153,6 +153,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIController.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Controller.h">
       <SubType>
       </SubType>
@@ -237,6 +241,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIController.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <SubType>
       </SubType>

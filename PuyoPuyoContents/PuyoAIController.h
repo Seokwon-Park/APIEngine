@@ -1,7 +1,9 @@
 #pragma once
+#include <EngineCore/AIController.h>
+
 
 // Ό³Έν :
-class APuyoAIController : public AActor
+class APuyoAIController : public AAIController
 {
 public:
 	// constrcuter destructer

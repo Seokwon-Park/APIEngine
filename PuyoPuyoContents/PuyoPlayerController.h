@@ -23,7 +23,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	APuyoBoard* Board;
+	APuyoBoard* Board = nullptr;
 	//Key코드 값 정보를 받는 변수
 	int CWRotateKey = 0;
 	int CCWRotateKey = 0;
