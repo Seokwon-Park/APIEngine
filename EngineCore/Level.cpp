@@ -96,6 +96,7 @@ void ULevel::BeginPlay()
 
 void ULevel::EndPlay()
 {
+	UEngineEventSystem::ClearEvents();
 }
 
 void ULevel::Tick(float _DeltaTime)

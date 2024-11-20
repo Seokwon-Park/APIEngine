@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineCore/SpriteRendererComponent.h>
 
 // Ό³Έν :
 class ASoloFrame : public AActor
@@ -19,6 +20,13 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	USpriteRendererComponent* HeadSr;
+	USpriteRendererComponent* CenterSr;
+	USpriteRendererComponent* LeftSideSr;
+	USpriteRendererComponent* InnerLeftSideSr;
+	USpriteRendererComponent* RightSideSr;
+	USpriteRendererComponent* InnerRightSideSr;
+	USpriteRendererComponent* TailSr;
 
 };
 

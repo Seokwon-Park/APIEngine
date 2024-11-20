@@ -1,14 +1,17 @@
 #include "aepch.h"
 #include "PuyoPuyoContentsCore.h"
 
+#include "DummyPawn.h"
+#include "IntroGameMode.h"
+
 #include "MenuGameMode.h"
 #include "SoloMenuGameMode.h"
 #include "TogetherMenuGameMode.h"
+
+#include "SoloPlayGameMode.h"
+#include "TogetherPlayGameMode.h"
 #include "TrainingPlayGameMode.h"
 
-#include "TogetherPlayGameMode.h"
-#include "IntroGameMode.h"
-#include "DummyPawn.h"
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/ImageManager.h>
@@ -189,12 +192,13 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 640, 480 });
 	UEngineAPICore::GetCore()->CreateLevel<AIntroGameMode, ADummyPawn>("Intro");
 	UEngineAPICore::GetCore()->CreateLevel<AMenuGameMode, ADummyPawn>("Menu");
+	UEngineAPICore::GetCore()->CreateLevel<ASoloPlayGameMode, ADummyPawn>("SoloPlay");
 	UEngineAPICore::GetCore()->CreateLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
+	UEngineAPICore::GetCore()->CreateLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
 	UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("TogetherMenu");
 	UEngineAPICore::GetCore()->CreateLevel<ATrainingPlayGameMode, ADummyPawn>("TrainingPlay");
 	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("PuzzlePlay");
 	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("Options");
-	UEngineAPICore::GetCore()->CreateLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
 	//UEngineAPICore::GetCore()->CreateLevel("End");
 
 	UEngineAPICore::GetCore()->OpenLevel("Intro");

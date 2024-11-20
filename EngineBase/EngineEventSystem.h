@@ -16,19 +16,24 @@ public:
 	UEngineEventSystem& operator=(const UEngineEventSystem& _Other) = delete;
 	UEngineEventSystem& operator=(UEngineEventSystem&& _Other) noexcept = delete;
 
-	static void AddEvent(float _Time, std::function<void()> _Callback)
+	inline static void AddEvent(float _Time, std::function<void()> _Callback)
 	{
 		UEngineEvent Event(_Time, _Callback);
 		Events.push_back(Event);
 	}
 
-	static void AddEvent(float _Time, UEngineDelegate _Callback)
+	inline static void AddEvent(float _Time, UEngineDelegate _Callback)
 	{
 		UEngineEvent Event(_Time, _Callback);
 		Events.push_back(Event);
 	}
 
-	static void UpdateEvents(float _DeltaTime)
+	inline static void ClearEvents()
+	{
+		Events.clear();
+	}
+
+	inline static void UpdateEvents(float _DeltaTime)
 	{
 		std::list<UEngineEvent>::iterator CurItr = Events.begin();
 		for (; CurItr != Events.end(); )

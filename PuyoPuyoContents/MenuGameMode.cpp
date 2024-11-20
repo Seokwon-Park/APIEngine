@@ -24,7 +24,7 @@ void AMenuGameMode::BeginPlay()
 
 	GetWorld()->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "Intro"));
 	GetWorld()->BindAction(EKey::Rshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "TogetherPlay"));
-	GetWorld()->BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "SoloMenu"));
+	GetWorld()->BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "SoloPlay"));
 	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AMenuGameMode::SelectMenu, this));
 	GetWorld()->BindAction(EKey::Left, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, 1));
 	GetWorld()->BindAction(EKey::Right, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, -1));

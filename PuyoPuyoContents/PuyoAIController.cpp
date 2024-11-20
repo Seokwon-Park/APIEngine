@@ -14,15 +14,30 @@ void APuyoAIController::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	ThinkDelay -= _DeltaTime;
-	if (ThinkDelay <= 0.0f)
+	State= static_cast<EPuyoAIState>(RandomDevice.GetRandomInt(0, 3));
+	//Do Sth
+	switch (State)
 	{
-		ThinkDelay = 0.5f;
-		//Do Sth
-
+	case EPuyoAIState::Down:
+		Board->PuyoForceDown();
+		break;
+	case EPuyoAIState::Left:
+		Board->PuyoMoveLR({-1,0});
+		break;
+	case EPuyoAIState::Right:
+		Board->PuyoMoveLR({ 1,0});
+		break;
+	case EPuyoAIState::Rotate:
+		Board->Rotate(true);
+		break;
+	default:
+		break;
 	}
+
 }
 void APuyoAIController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Board = GetActor<APuyoBoard>();
 }

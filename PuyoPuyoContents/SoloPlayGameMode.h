@@ -1,6 +1,8 @@
 #pragma once
 #include "PlayGameMode.h"
 
+#include "SoloFrame.h"
+#include "SoloBackground.h"
 // Ό³Έν :
 class ASoloPlayGameMode : public APlayGameMode
 {
@@ -20,6 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
+	class APuyoPlayerController* ControllerP1;
+	class APuyoAIController* ControllerP2;
 };
 

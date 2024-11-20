@@ -189,6 +189,9 @@
     <ClCompile Include="PuyoPlayerController.cpp">
       <Filter>ContentsObject\Play\Actor\Controller\Player</Filter>
     </ClCompile>
+    <ClCompile Include="OffsetText.cpp">
+      <Filter>ContentsObject\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="PuyoPlayerController.h">
       <Filter>ContentsObject\Play\Actor\Controller\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="OffsetText.h">
+      <Filter>ContentsObject\Text</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

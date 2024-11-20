@@ -7,7 +7,7 @@ ASoloBackground::ASoloBackground()
 {
 	Sr = CreateDefaultSubobject<USpriteRendererComponent>("SoloBackground");
 	Sr->SetOrder(ERenderLayer::BACKGROUND);
-	Sr->SetSprite("VSBG", 0);
+	Sr->SetSprite("LVBG", 0);
 	Sr->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 	Sr->SetPivot(EPivotType::TopLeft);
 }

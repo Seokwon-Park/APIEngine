@@ -20,6 +20,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
+	class APuyoPlayerController* ControllerP1;
+	class APuyoPlayerController* ControllerP2;
 };
 
