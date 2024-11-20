@@ -123,9 +123,11 @@ private:
 	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
 
-	//레벨 단에서 이벤트 설정은 여기다가 한다.
+	//Todo : 디버깅 기능땜에 만들어놓음
+	//레벨 단에서 이벤트 설정을 해야하나? 여기다가 한다.
 	std::map<int, UEngineKeyEvent> KeyEvents;
 
 	std::vector<class UEnginePostProcess*> PostProcesses;
 };
 
+  

@@ -177,6 +177,12 @@
     <ClCompile Include="PuyoAIController.cpp">
       <Filter>ContentsObject\Play\Solo\AI</Filter>
     </ClCompile>
+    <ClCompile Include="SoloPlayGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoPlayerController.cpp">
+      <Filter>ContentsObject\Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -298,6 +304,12 @@
     </ClInclude>
     <ClInclude Include="PuyoAIController.h">
       <Filter>ContentsObject\Play\Solo\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloPlayGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoPlayerController.h">
+      <Filter>ContentsObject\Play</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

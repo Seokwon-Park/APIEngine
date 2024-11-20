@@ -3,7 +3,6 @@
 
 #include "PuyoText.h"
 #include "PuyoWarn.h"
-#include "PuyoBoard.h"
 #include "PuyoBoardShakePostProcess.h"
 #include "TogetherBackground.h"
 #include <EnginePlatform/KeyCode.h>
@@ -28,6 +27,12 @@ void APlayGameMode::BeginPlay()
 // 
 	// APlayBackground* Background = GetWorld()->SpawnActor<APlayBackground>();
 
+
+	PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
+	//PuyoBoardP1->SetActive(false);
+	PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
+
+	//어차피 PuyoBoard에 종속적인 애들임
 	APuyoText* Next = GetWorld()->SpawnActor<APuyoText>();
 	Next->SetupText(4, EPuyoBoardColor::Green);
 	Next->SetActorLocation({ 9 * 32,32 });
@@ -44,10 +49,6 @@ void APlayGameMode::BeginPlay()
 	P2Score->SetupText(8, EPuyoBoardColor::Blue, ETextAlign::Right);
 	P2Score->SetActorLocation({ 8 * 32 + 16, 12 * 32 });
 	P2Score->SetText(0);
-
-	APuyoBoard* PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
-	//PuyoBoardP1->SetActive(false);
-	APuyoBoard* PuyoBoardP2 = GetWorld()->SpawnActor<APuyoBoard>();
 
 	UPuyoBoardShakePostProcess* ShakerP1 = GetWorld()->AddPostProcess<UPuyoBoardShakePostProcess>();
 	ShakerP1->SetupProcess({ 32,0 });
@@ -71,7 +72,7 @@ void APlayGameMode::BeginPlay()
 		Settings.ShakePostProcess = ShakerP1;
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
-	PuyoBoardP1->SetKey(EKey::G, EKey::H, EKey::S, EKey::A, EKey::D);
+	//PuyoBoardP1->SetKey(EKey::G, EKey::H, EKey::S, EKey::A, EKey::D);
 	//PuyoBoardP1->SetKey(EKey::Up, EKey::Down, EKey::Left, EKey::Right);
 
 	//test1->SetEnable();
@@ -90,7 +91,7 @@ void APlayGameMode::BeginPlay()
 		Settings.ShakePostProcess = ShakerP2;
 	}
 	PuyoBoardP2->SetupPuyoBoard(Settings);
-	PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
+	//PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
 
 	//예고뿌요 세팅
 	P1Warn->SetActorLocation(PuyoBoardP1->GetActorLocation());

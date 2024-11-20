@@ -56,13 +56,12 @@ public:
 	void Tick(float _DeltaTime) override;
 
 	void SetupPuyoBoard(const PuyoBoardSettings& _Settings);
-	void SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right);
 	std::vector<APuyo*> CreatePuyoBlock();
 
 	//LogicStep
 	void PuyoCreateLogic();
 	void PuyoMoveLogic();
-	
+
 	void PuyoPlaceLogic();
 	void PuyoConnectLogic();
 	void PuyoCheckLogic();
@@ -125,7 +124,7 @@ public:
 
 	void SmoothRotate(FVector2D _SlavePuyoPosition, FVector2D _MainPuyoPosition, float _DeltaTime, bool _IsClockwise);
 
-	
+
 
 	//일시정지
 	void PauseGame();
@@ -146,13 +145,6 @@ private:
 	FIntPoint NextBlockCoord; // 게임판의 칸수
 	FIntPoint NextNextBlockCoord; // 게임판의 칸수
 	EPuyoBoardColor BoardColor;
-
-	//Key코드 값 정보를 받는 변수
-	int CWRotateKey = 0;
-	int CCWRotateKey = 0;
-	int DownKey = 0;
-	int LeftKey = 0;
-	int RightKey = 0;
 
 	//부드러운 움직임을 위한 회전 관련 처리 변수
 	bool IsRotating = false;
@@ -199,13 +191,13 @@ private:
 	std::vector<APuyo*> PuyoConnectList;
 	std::vector<FIntPoint> PuyoCheckList;
 	//std::set<std::pair<int, int>> PuyoDestroyList;
-	std::set<FIntPoint, decltype([](const auto a, const auto b) {
+	std::set < FIntPoint, decltype([](const auto a, const auto b) {
 		if (a.Y == b.Y)
 		{
 			return a.X < b.X;
 		}
 		return a.Y < b.Y;
-		})> PuyoDestroyList;
+		}) > PuyoDestroyList;
 	std::set<int> PuyoUpdateColumns;
 	// 뿌요뿌요 게임판 - 2차원 배열
 	std::vector<std::vector<APuyo*>> Board;
@@ -217,7 +209,7 @@ private:
 	//내가 연쇄중이거나 상대 연쇄가 진행중이면 방해뿌요를 놓지 않는다.
 	bool IsChaining = false;
 	//방해뿌요한번 뿌리고 나면 다음 블럭 생성 후에 뿌리도록 한다.
-	bool IsNuiSpawned= false;
+	bool IsNuiSpawned = false;
 
 	//연쇄 카운트
 	int Rensa = 0;
@@ -240,7 +232,7 @@ private:
 	//게임 일시정지
 	USpriteRendererComponent* PauseText;
 	bool IsPaused = false;
-	float PauseTimer= 0.5f;
+	float PauseTimer = 0.5f;
 	float PauseDelay = 0.5f;
 
 
@@ -250,6 +242,6 @@ private:
 
 
 	//여기 밑으로는 실험실 변수
-	UInputComponent* Input;
+	//UInputComponent* Input;
 };
 

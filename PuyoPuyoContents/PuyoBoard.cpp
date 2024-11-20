@@ -27,10 +27,6 @@ APuyoBoard::APuyoBoard()
 	PauseText->SetPivot(EPivotType::TopLeft);
 	PauseText->SetOrder(100);
 	PauseText->SetActive(false);
-
-	Input = CreateDefaultSubobject<UInputComponent>("");
-
-
 }
 
 void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, float _DeltaTime, bool _IsClockwise) {
@@ -100,22 +96,6 @@ void APuyoBoard::BeginPlay()
 {
 	Super::BeginPlay();
 	PuyoDropTimer = PuyoDropDelay;
-
-
-	// 회전
-// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
-	Input->BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
-	Input->BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
-
-	// 빠른 낙하
-	Input->BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
-
-	// 좌우 이동
-	Input->BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
-	Input->BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
-
-	// 일시 정지
-	Input->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, this));
 
 	// Todo : BeginPlay는 임시위치, 게임시작 애니메이션이 끝나고 렌더링 되어야 함.
 	NextBlock = CreatePuyoBlock();
@@ -253,14 +233,7 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
 }
 
-void APuyoBoard::SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right)
-{
-	CWRotateKey = _CWRotate;
-	CCWRotateKey = _CCWRotate;
-	DownKey = _Down;
-	LeftKey = _Left;
-	RightKey = _Right;
-}
+
 
 std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 {

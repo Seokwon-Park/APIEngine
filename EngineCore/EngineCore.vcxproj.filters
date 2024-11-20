@@ -61,6 +61,9 @@
     <ClCompile Include="EngineKeyEvent.cpp">
       <Filter>KeyEvent</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Object\Actor\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="EngineKeyEvent.h">
       <Filter>KeyEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Object\Actor\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 #pragma once
+#include "PuyoBoard.h"
 
 // Ό³Έν :
 class APlayGameMode : public AGameMode
@@ -18,6 +19,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	APuyoBoard* PuyoBoardP1;
+	APuyoBoard* PuyoBoardP2;
 private:
 
 };

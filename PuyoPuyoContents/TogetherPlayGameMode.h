@@ -22,6 +22,8 @@ public:
 protected:
 	void Tick(float _DeltaTime) override;
 private:
+	class APuyoPlayerController* ControllerP1;
+	class APuyoPlayerController* ControllerP2;
 
 };
 

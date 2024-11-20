@@ -1,20 +1,30 @@
 #include "aepch.h"
 #include "Controller.h"
 
-AAController::AAController()
+AController::AController()
 {
 }
 
-AAController::~AAController()
+AController::~AController()
 {
 }
 
 
-void AAController::Tick(float _DeltaTime)
+void AController::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 }
-void AAController::BeginPlay()
+
+void AController::Possess(AActor* InActor)
+{
+	if (InActor == nullptr)
+	{
+		return;
+	}
+	SetActor(InActor);
+}
+
+void AController::BeginPlay()
 {
 	Super::BeginPlay();
 }
