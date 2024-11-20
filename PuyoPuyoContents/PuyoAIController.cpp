@@ -38,7 +38,7 @@ void APuyoAIController::CalculateBoard()
 	}
 
 	std::vector<int> BlockColors = Board->GetBlockInfo();
-	std::vector<int> MaxY(6);
+	std::vector<int> BottomY(6);
 	for (int i = BoardState.size() - 1; i >= 0; i--)
 	{
 		for (int j = 0; j < BoardState[0].size(); j++)
@@ -51,7 +51,7 @@ void APuyoAIController::CalculateBoard()
 			//}
 			if (BoardState[i][j] == -1)
 			{
-				MaxY[j] = FEngineMath::Max(MaxY[j], i);
+				BottomY[j] = FEngineMath::Max(BottomY[j], i);
 				for (int dir = 0; dir < 4; dir++)
 				{
 					int tx = j + dx[dir];
@@ -67,6 +67,29 @@ void APuyoAIController::CalculateBoard()
 	}
 
 	int EvaluateScore = 0;
+	// 세로 케이스 먼저
+	for (int X = 0; X < BoardState[0].size(); X++)
+	{
+		int Result = 0;
+		int Y = BottomY[X];
+		Result = EvaluateBoard[Y][X][BlockColors[0]] + EvaluateBoard[Y - 1][X][BlockColors[1]];
+		if (Result > EvaluateScore)
+		{
+			EvaluateScore = Result;
+			TargetX = X;
+			TargetY = Y;
+			TargetDir = 0;
+		}
+		Result = EvaluateBoard[Y][X][BlockColors[1]] + EvaluateBoard[Y - 1][X][BlockColors[0]];
+		if (Result > EvaluateScore)
+		{
+			EvaluateScore = Result;
+			TargetX = X;
+			TargetY = Y;
+			TargetDir = 2;
+		}
+	}
+
 
 
 }
@@ -83,11 +106,11 @@ void APuyoAIController::BeginPlay()
 void APuyoAIController::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-		
-	/*if (Board->GetMainPuyoCoord().Y >= TargetY)
+
+	if (Board->GetMainPuyoCoord().Y >= TargetY)
 	{
 		State = EPuyoAIState::Calculation;
-	}*/
+	}
 
 	if (State == EPuyoAIState::Calculation)
 	{
@@ -96,13 +119,13 @@ void APuyoAIController::Tick(float _DeltaTime)
 		State = static_cast<EPuyoAIState>(RandomDevice.GetRandomInt(1, 4));
 		return;
 	}
-	
+
 
 	if (Board->GetMainPuyoCoord().X < TargetX)
 	{
 		Board->PuyoMoveLR({ 1,0 });
 	}
-	else if(Board->GetMainPuyoCoord().X >TargetX)
+	else if (Board->GetMainPuyoCoord().X > TargetX)
 	{
 		Board->PuyoMoveLR({ -1,0 });
 	}
