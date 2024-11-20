@@ -151,7 +151,6 @@ void APuyoBoard::Tick(float _DeltaTime)
 	if (CounterBoardActor->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
 		CurStep = EPuyoLogicStep::PuyoGameWin;
-		return;
 	}
 
 	if (true == IsKicking)
