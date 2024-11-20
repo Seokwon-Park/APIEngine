@@ -157,7 +157,7 @@
     <ClInclude Include="EngineSound.h" />
     <ClInclude Include="EngineWinDebug.h" />
     <ClInclude Include="EngineWindow.h" />
-    <ClInclude Include="EngineInput.h">
+    <ClInclude Include="EngineInputSystem.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -179,7 +179,7 @@
     <ClCompile Include="EngineSound.cpp" />
     <ClCompile Include="EngineWinDebug.cpp" />
     <ClCompile Include="EngineWindow.cpp" />
-    <ClCompile Include="EngineInput.cpp">
+    <ClCompile Include="EngineInputSystem.cpp">
       <SubType>
       </SubType>
     </ClCompile>

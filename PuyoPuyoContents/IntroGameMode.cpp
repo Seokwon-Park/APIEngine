@@ -8,9 +8,9 @@
 #include "IntroGameMode.h"
 #include "IntroBackground.h"
 #include "Fader.h"
-#include <EnginePlatform/EngineInput.h>
+#include <EnginePlatform/EngineInputSystem.h>
 #include <EnginePlatform/EngineSound.h>
-#include <EngineCore/SoundManager.h>
+#include <EngineCore/AudioManager.h>
 //테스트 용
 #include "PuyoBoomFX.h"
 
@@ -25,8 +25,8 @@ AIntroGameMode::~AIntroGameMode()
 void AIntroGameMode::BeginPlay()
 {
 	// Todo : PressAnyKey로 바꿀것
-	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
-	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&UEngineSound::Stop, USoundManager::GetInstance().FindSound("OPTheme.MP3")));
+	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
+	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&UEngineSound::Stop, UAudioManager::GetInstance().FindSound("OPTheme.MP3")));
 
 	APublisherLogo* Logo = GetWorld()->SpawnActor<APublisherLogo>();
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();
@@ -63,7 +63,7 @@ void AIntroGameMode::BeginPlay()
 	OPPuyoDelegate += std::bind(&AFader::SetActive, Fader, false);
 	OPPuyoDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
 	OPPuyoDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, true);
-	OPPuyoDelegate += std::bind(&UEngineSound::Play, USoundManager::GetInstance().FindSound("OPTheme.MP3"));
+	OPPuyoDelegate += std::bind(&UEngineSound::Play, UAudioManager::GetInstance().FindSound("OPTheme.MP3"));
 
 	UEngineDelegate OPCarDelegate;
 	OPCarDelegate += std::bind(&AFader::SetActive, Fader, false);

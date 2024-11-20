@@ -1,25 +1,25 @@
 #include "aepch.h"
-#include "SoundManager.h"
+#include "AudioManager.h"
 #include <EngineBase/EngineStringHelper.h>
 
-USoundManager::USoundManager()
+UAudioManager::UAudioManager()
 {
 }
 
-USoundManager::~USoundManager()
+UAudioManager::~UAudioManager()
 {
 
 }
 
 
-void USoundManager::Load(std::string_view _Path)
+void UAudioManager::Load(std::string_view _Path)
 {
 	UEnginePath Path = UEnginePath(_Path);
 	std::string FileName = Path.GetPathName();
 	Load(FileName, _Path);
 }
 
-void USoundManager::Load(std::string_view _KeyName, std::string_view _Path)
+void UAudioManager::Load(std::string_view _KeyName, std::string_view _Path)
 {
 	UEnginePath Path = UEnginePath(_Path);
 
@@ -50,7 +50,7 @@ void USoundManager::Load(std::string_view _KeyName, std::string_view _Path)
 	Sounds.insert({ UpperName, NewSound });
 }
 
-void USoundManager::ReleaseSounds()
+void UAudioManager::ReleaseSounds()
 {
 	for (auto& Sound : Sounds)
 	{
@@ -63,7 +63,7 @@ void USoundManager::ReleaseSounds()
 	}
 }
 
-UEngineSound* USoundManager::FindSound(std::string_view _KeyName)
+UEngineSound* UAudioManager::FindSound(std::string_view _KeyName)
 {
 	std::string UpperName = UEngineStringHelper::ToUpper(_KeyName);
 

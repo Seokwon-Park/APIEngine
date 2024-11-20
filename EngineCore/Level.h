@@ -1,8 +1,26 @@
 #pragma once
 #include "GameMode.h"
 #include "EnginePostProcess.h"
-#include <EnginePlatform/EngineInput.h>
 
+
+enum class KeyEvent
+{
+	Down,
+	Press,
+	Free,
+	Up,
+};
+
+class UEngineKeyEvent
+{
+public:
+	std::vector<std::function<void()>> PressEvents;
+	std::vector<std::function<void()>> DownEvents;
+	std::vector<std::function<void()>> UpEvents;
+	std::vector<std::function<void()>> FreeEvents;
+
+	void EventCheck(int _Key);
+};
 
 
 // Ό³Έν :
@@ -23,9 +41,13 @@ public:
 
 	virtual void BeginPlay();
 	virtual void EndPlay();
+	void EventCheck();
 	void Tick(float _DeltaTime);
 	void Render();
 	void Release();
+
+	void BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function);
+
 
 	template <typename ActorType>
 	ActorType* SpawnActor()
@@ -74,7 +96,6 @@ public:
 	}
 	inline FVector2D GetCameraPivot() const { return CameraPivot; }
 	inline FVector2D GetCameraPos() const { return CameraPos; }
-	inline UEngineInput& GetInputSystem() { return InputSystem; }
 protected:
 
 private:
@@ -101,7 +122,6 @@ private:
 	}
 
 
-
 	AGameMode* GameMode;
 	AActor* MainPawn;
 
@@ -113,9 +133,9 @@ private:
 	std::list<AActor*> AllActors;
 	std::queue<AActor*> WaitForBeginPlay;
 	std::map<int, std::list<class USpriteRendererComponent*>> AllRenderers;
-	UEngineInput InputSystem;
 
-	//temp 
+	std::map<int, UEngineKeyEvent> KeyEvents;
+
 	std::vector<class UEnginePostProcess*> PostProcesses;
 };
 

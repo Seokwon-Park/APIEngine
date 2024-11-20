@@ -9,7 +9,7 @@
 
 
 #include <algorithm>
-#include <EnginePlatform/EngineInput.h>
+#include <EnginePlatform/EngineInputSystem.h>
 #include <EngineCore/Level.h>
 #include <EngineCore/ImageManager.h>
 
@@ -100,18 +100,18 @@ void APuyoBoard::BeginPlay()
 
 	// 회전
 	// Todo : 인자 받아서 회전방향 시계방향, 반시계방향 결정하기, 추가키설정 허용?
-	GetWorld()->GetInputSystem().BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
-	GetWorld()->GetInputSystem().BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
+	GetWorld()->BindAction(CWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, true));
+	GetWorld()->BindAction(CCWRotateKey, KeyEvent::Down, std::bind(&APuyoBoard::Rotate, this, false));
 
 	// 빠른 낙하
-	GetWorld()->GetInputSystem().BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
+	GetWorld()->BindAction(DownKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoForceDown, this));
 
 	// 좌우 이동
-	GetWorld()->GetInputSystem().BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
-	GetWorld()->GetInputSystem().BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
+	GetWorld()->BindAction(LeftKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::LEFT));
+	GetWorld()->BindAction(RightKey, KeyEvent::Press, std::bind(&APuyoBoard::PuyoMoveLR, this, FVector2D::RIGHT));
 
 	// 일시 정지
-	GetWorld()->GetInputSystem().BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, this));
+	GetWorld()->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, this));
 
 	// Todo : BeginPlay는 임시위치, 게임시작 애니메이션이 끝나고 렌더링 되어야 함.
 	NextBlock = CreatePuyoBlock();

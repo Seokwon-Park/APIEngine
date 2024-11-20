@@ -90,7 +90,7 @@ void ACarbuncleMenu::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//GetWorld()->GetInputSystem().BindAction(EKey::Mouseleft, KeyEvent::Down, std::bind(&ACarbuncleMenu::Test, this));
+	//GetWorld()->BindAction(EKey::Mouseleft, KeyEvent::Down, std::bind(&ACarbuncleMenu::Test, this));
 
 }
 

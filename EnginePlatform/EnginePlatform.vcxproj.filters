@@ -27,7 +27,7 @@
     <ClCompile Include="aepch.cpp">
       <Filter>PrecompiledHeader</Filter>
     </ClCompile>
-    <ClCompile Include="EngineInput.cpp">
+    <ClCompile Include="EngineInputSystem.cpp">
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="EngineWinImage.cpp">
@@ -50,7 +50,7 @@
     <ClInclude Include="aepch.h">
       <Filter>PrecompiledHeader</Filter>
     </ClInclude>
-    <ClInclude Include="EngineInput.h">
+    <ClInclude Include="EngineInputSystem.h">
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="KeyCode.h">

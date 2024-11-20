@@ -3,23 +3,24 @@
 #include <EnginePlatform/EngineSound.h>
 
 // 설명 :
-class USoundManager : public UObject
+class UAudioManager : public UObject
 {
 public:
 	// constrcuter destructer
-	~USoundManager();
+	~UAudioManager();
 
 	// delete Function
-	USoundManager(const USoundManager& _Other) = delete;
-	USoundManager(USoundManager&& _Other) noexcept = delete;
-	USoundManager& operator=(const USoundManager& _Other) = delete;
-	USoundManager& operator=(USoundManager&& _Other) noexcept = delete;
+	UAudioManager(const UAudioManager& _Other) = delete;
+	UAudioManager(UAudioManager&& _Other) noexcept = delete;
+	UAudioManager& operator=(const UAudioManager& _Other) = delete;
+	UAudioManager& operator=(UAudioManager&& _Other) noexcept = delete;
 
-	static USoundManager& GetInstance()
+	static UAudioManager& GetInstance()
 	{
-		static USoundManager Instance;
+		static UAudioManager Instance;
 		return Instance;
 	}
+
 	static void SoundPlay(std::string_view _KeyName)
 	{
 		GetInstance().FindSound(_KeyName)->Play();
@@ -33,7 +34,7 @@ public:
 protected:
 
 private:
-	USoundManager();
+	UAudioManager();
 	// API에 대한 정보는 몰라야 하는거 같음
 	// FMOD::System* FMODSystem = nullptr;
 	std::map<std::string, UEngineSound*> Sounds;

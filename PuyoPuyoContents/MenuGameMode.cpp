@@ -2,7 +2,7 @@
 #include "MenuGameMode.h"
 #include "CarbuncleMenu.h"
 #include "MenuBackground.h"
-#include <EnginePlatform/EngineInput.h>
+#include <EnginePlatform/EngineInputSystem.h>
 
 AMenuGameMode::AMenuGameMode()
 {
@@ -22,12 +22,12 @@ void AMenuGameMode::BeginPlay()
 	LevelNames.push_back("PuzzlePlay");
 	LevelNames.push_back("Options");
 
-	GetWorld()->GetInputSystem().BindAction(EKey::Esc, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "Intro"));
-	GetWorld()->GetInputSystem().BindAction(EKey::Rshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "TogetherPlay"));
-	GetWorld()->GetInputSystem().BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "SoloMenu"));
-	GetWorld()->GetInputSystem().BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AMenuGameMode::SelectMenu, this));
-	GetWorld()->GetInputSystem().BindAction(EKey::Left, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, 1));
-	GetWorld()->GetInputSystem().BindAction(EKey::Right, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, -1));
+	GetWorld()->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "Intro"));
+	GetWorld()->BindAction(EKey::Rshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "TogetherPlay"));
+	GetWorld()->BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuGameMode::MoveToScene, this, "SoloMenu"));
+	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AMenuGameMode::SelectMenu, this));
+	GetWorld()->BindAction(EKey::Left, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, 1));
+	GetWorld()->BindAction(EKey::Right, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, -1));
 
 	AMenuBackground* Background = GetWorld()->SpawnActor<AMenuBackground>();
 	for (int i = 0; i < MenuSize; i++)

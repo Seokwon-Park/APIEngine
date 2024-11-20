@@ -4,38 +4,41 @@
 #include <EngineBase/EngineDebug.h>
 
 
-enum class KeyEvent
-{
-	Down,
-	Press,
-	Free,
-	Up,
-};
+
 
 
 // 설명 :
-class UEngineInput
+class UEngineInputSystem : public UObject
 {
 public:
 
-	UEngineInput();
+	UEngineInputSystem();
 	// constrcuter destructer
-	~UEngineInput();
+	~UEngineInputSystem();
 
 	// delete Function
-	UEngineInput(const UEngineInput& _Other) = delete;
-	UEngineInput(UEngineInput&& _Other) noexcept = delete;
-	UEngineInput& operator=(const UEngineInput& _Other) = delete;
-	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
+	UEngineInputSystem(const UEngineInputSystem& _Other) = delete;
+	UEngineInputSystem(UEngineInputSystem&& _Other) noexcept = delete;
+	UEngineInputSystem& operator=(const UEngineInputSystem& _Other) = delete;
+	UEngineInputSystem& operator=(UEngineInputSystem&& _Other) noexcept = delete;
 
-	/*static UEngineInput& GetInstance()
+	static UEngineInputSystem& GetInstance()
 	{
-		static UEngineInput Inst = UEngineInput();
+		static UEngineInputSystem Inst = UEngineInputSystem();
 		return Inst;
-	}*/
+	}
 
 	void KeyCheck(float _DeltaTime);
-	void EventCheck();
+	bool GetIsKeyDown(int _KeyIndex)
+	{
+		if (false == Keys.contains(_KeyIndex))
+		{
+			MSGASSERT("아직도 등록되지 않은 키가 존재합니다.");
+			return false;
+		}
+
+		return Keys[_KeyIndex].IsDown;
+	}
 
 	bool GetIsKeyUp(int _KeyIndex)
 	{
@@ -82,7 +85,6 @@ public:
 		return Keys[_KeyIndex].IsFree;
 	}
 
-	void BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function);
 
 protected:
 
@@ -98,17 +100,10 @@ private:
 
 		float PressTime = 0.0f;
 
-		std::vector<std::function<void()>> PressEvents;
-		std::vector<std::function<void()>> DownEvents;
-		std::vector<std::function<void()>> UpEvents;
-		std::vector<std::function<void()>> FreeEvents;
-
-
-		UEngineKey() {}
+	UEngineKey() {}
 		UEngineKey(int _Key)
 			:Key(_Key) {}
 
-		void EventCheck();
 		void KeyCheck(float _DeltaTime);
 	};
 

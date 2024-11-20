@@ -12,7 +12,7 @@
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/ImageManager.h>
-#include <EngineCore/SoundManager.h>
+#include <EngineCore/AudioManager.h>
 #include <EnginePlatform/EngineSound.h>
 
 

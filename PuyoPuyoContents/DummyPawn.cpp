@@ -2,7 +2,7 @@
 #include "DummyPawn.h"
 
 #include "EngineCore/EngineAPICore.h"
-#include "EnginePlatform/EngineInput.h"
+#include "EnginePlatform/EngineInputSystem.h"
 
 ADummyPawn::ADummyPawn()
 {

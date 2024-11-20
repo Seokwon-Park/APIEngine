@@ -46,10 +46,18 @@
     <ClCompile Include="ImageManager.cpp">
       <Filter>Resources\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
+    <ClCompile Include="AudioManager.cpp">
       <Filter>Resources\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="EnginePostProcess.cpp" />
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>Object\Component\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePostProcess.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="AController.cpp">
+      <Filter>Object\Actor\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineAPICore.h">
@@ -97,11 +105,21 @@
     <ClInclude Include="ImageManager.h">
       <Filter>Resources\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="SoundManager.h">
+    <ClInclude Include="AudioManager.h">
       <Filter>Resources\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="EnginePostProcess.h" />
-    <ClInclude Include="ContentsCore.h" />
+    <ClInclude Include="InputComponent.h">
+      <Filter>Object\Component\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePostProcess.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="AController.h">
+      <Filter>Object\Actor\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -157,6 +175,12 @@
     </Filter>
     <Filter Include="ThirdParty\FMOD\Release">
       <UniqueIdentifier>{a5e348dc-be36-4dc4-9c02-8a37953c153c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Input">
+      <UniqueIdentifier>{b2124a53-0325-4450-b7b9-cc080b813ec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Controller">
+      <UniqueIdentifier>{6ba62f5f-6797-4287-af5b-daca9d18f024}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

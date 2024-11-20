@@ -2,8 +2,77 @@
 #include "Level.h"
 #include "EngineAPICore.h"
 #include "SpriteRendererComponent.h"
+#include <EnginePlatform/EngineInputSystem.h>
 
+void UEngineKeyEvent::EventCheck(int _Key)
+{
+	if (true == UEngineInputSystem::GetInstance().GetIsKeyDown(_Key))
+	{
+		for (size_t i = 0; i < DownEvents.size(); i++)
+		{
+			DownEvents[i]();
+		}
+	}
+	else if (true == UEngineInputSystem::GetInstance().GetIsKeyPress(_Key))
+	{
+		for (size_t i = 0; i < PressEvents.size(); i++)
+		{
+			PressEvents[i]();
+		}
+	}
 
+	if (true == UEngineInputSystem::GetInstance().GetIsKeyFree(_Key))
+	{
+		for (size_t i = 0; i < FreeEvents.size(); i++)
+		{
+			FreeEvents[i]();
+		}
+	}
+
+	if (true == UEngineInputSystem::GetInstance().GetIsKeyUp(_Key))
+	{
+		for (size_t i = 0; i < UpEvents.size(); i++)
+		{
+			UpEvents[i]();
+		}
+	}
+}
+
+void ULevel::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function)
+{
+	//if (false == Keys.contains(_KeyIndex))
+	//{
+	//	MSGASSERT("아직도 등록되지 않은 키가 존재합니다.");
+	//	return;
+	//}
+
+	switch (_EventType)
+	{
+	case KeyEvent::Down:
+		KeyEvents[_KeyIndex].DownEvents.push_back(_Function);
+		break;
+	case KeyEvent::Press:
+		KeyEvents[_KeyIndex].PressEvents.push_back(_Function);
+		break;
+	case KeyEvent::Free:
+		KeyEvents[_KeyIndex].FreeEvents.push_back(_Function);
+		break;
+	case KeyEvent::Up:
+		KeyEvents[_KeyIndex].UpEvents.push_back(_Function);
+		break;
+	default:
+		break;
+	}
+}
+
+void ULevel::EventCheck()
+{
+	for (auto& Itr : KeyEvents)
+	{
+		UEngineKeyEvent& CurEvent = Itr.second;
+		CurEvent.EventCheck(Itr.first);
+	}
+}
 
 ULevel::ULevel()
 	:GameMode(nullptr), MainPawn(nullptr)
@@ -45,7 +114,7 @@ ULevel::~ULevel()
 
 void ULevel::BeginPlay()
 {
-	GetInputSystem().BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&EngineDebugHelper::PivotDebugSwitch));
+
 
 	// 이게 안되는 이유는 게임 중간에 스폰하는 액터에 대해서는 BeginPlay실행이 안돼
 	//for (AActor* Actor : AllActors)
@@ -63,8 +132,13 @@ void ULevel::EndPlay()
 
 void ULevel::Tick(float _DeltaTime)
 {
+	if (UEngineInputSystem::GetInstance().GetIsKeyDown(EKey::MouseRight))
+	{
+		EngineDebugHelper::PivotDebugSwitch();
+	}
+
 	//새로 스폰되는 액터에 대해서도 확인해줘야 하므로
-	while(false == WaitForBeginPlay.empty())
+	while (false == WaitForBeginPlay.empty())
 	{
 		AActor* SpawnedActor = WaitForBeginPlay.front();
 		WaitForBeginPlay.pop();
@@ -72,8 +146,7 @@ void ULevel::Tick(float _DeltaTime)
 		AllActors.push_back(SpawnedActor);
 	}
 
-	InputSystem.KeyCheck(_DeltaTime);
-
+	EventCheck();
 	for (AActor* Actor : AllActors)
 	{
 		if (false == Actor->IsActivated())
@@ -85,7 +158,6 @@ void ULevel::Tick(float _DeltaTime)
 			Actor->Tick(_DeltaTime);
 		}
 	}
-	InputSystem.EventCheck();
 
 }
 

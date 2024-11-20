@@ -1,13 +1,13 @@
 #include "aepch.h"
 #include "EngineAPICore.h"
 #include "ImageManager.h"
-#include "SoundManager.h"
+#include "AudioManager.h"
 
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDebug.h>
 #include <EngineBase/EngineDelegate.h>
 #include <EngineBase/EngineDirectory.h>
-#include <EnginePlatform/EngineInput.h>
+#include <EnginePlatform/EngineInputSystem.h>
 #include <EnginePlatform/EngineWindow.h>
 
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
@@ -34,7 +34,7 @@ UEngineAPICore::~UEngineAPICore()
 	Levels.clear();
 
 	//사운드를 먼저 할당해제시켜줘야 경고가 안뜸
-	USoundManager::GetInstance().ReleaseSounds();
+	UAudioManager::GetInstance().ReleaseSounds();
 	UEngineAudio::Release();
 }
 
@@ -122,7 +122,7 @@ void UEngineAPICore::LoadSoundResources(std::string_view _FolderName, std::strin
 	for (size_t i = 0; i < SoundFiles.size(); i++)
 	{
 		std::string FilePath = SoundFiles[i].ToString();
-		USoundManager::GetInstance().Load(FilePath);
+		UAudioManager::GetInstance().Load(FilePath);
 	}
 }
 
@@ -143,12 +143,15 @@ void UEngineAPICore::Tick()
 	DeltaTimer.TimeCheck();
 	float DeltaTime = DeltaTimer.GetDeltaTime();
 	CheckLevel();
+	
+	UEngineInputSystem::GetInstance().KeyCheck(DeltaTime);
 
 	if (nullptr == CurLevel)
 	{
 		MSGASSERT("엔진 코어에 현재 레벨이 지정되지 않았습니다.");
 		return;
 	}
+
 	UEngineAudio::AudioUpdate();
 	UEngineEventSystem::UpdateEvents(DeltaTime);
 	CurLevel->Tick(DeltaTime);
