@@ -174,6 +174,9 @@ void APuyoBoard::Tick(float _DeltaTime)
 		SmoothRotate(Block[1]->GetActorLocation(), Block[0]->GetActorLocation(), UEngineAPICore::GetEngineDeltaTime(), IsRotatedClockWise);
 	}
 
+	ForceDownTimer -= _DeltaTime;
+	LRMoveTimer -= _DeltaTime;
+
 
 	// Todo : 여기서 시작 애니메이션이 안끝났으면 계속 Return하도록 설정?
 	//UEngineDebugHelper::PushString("X = " + std::to_string(MainPuyoCoord.X) + ", Y = " + std::to_string(MainPuyoCoord.Y));
@@ -232,8 +235,6 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
 	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
 }
-
-
 
 std::vector<APuyo*> APuyoBoard::CreatePuyoBlock()
 {
@@ -344,6 +345,12 @@ void APuyoBoard::PuyoMoveLogic()
 				int PlaceY = Y;
 				while (PlaceY + 1 < BoardSize.Y && Board[PlaceY + 1][X] == nullptr) { PlaceY++; }
 				Block[i]->SetTargetXY({ X,PlaceY });
+			}
+			if (Block[i]->GetTargetXY().Y < 0)
+			{
+				PlaceCheckList.pop_back();
+				Block[i]->Destroy();
+				continue;
 			}
 			SetPuyoOnBoard(Block[i]->GetTargetXY(), Block[i]);
 			PuyoTick = 0;
@@ -820,6 +827,27 @@ void APuyoBoard::PuyoGameWinLogic()
 	}
 }
 
+std::vector<std::vector<int>> APuyoBoard::GetBoardState()
+{
+	std::vector<std::vector<int>> Return(BoardSize.Y, std::vector<int>(BoardSize.X, 0));
+
+	for (int i = 0; i < BoardSize.Y; i++)
+	{
+		for (int j = 0; j < BoardSize.X; j++)
+		{
+			if (Board[i][j] == nullptr)
+			{
+				Return[i][j] = -1;
+			}
+			else
+			{
+				Return[i][j] = static_cast<int>(Board[i][j]->GetColor());
+			}
+		}
+	}
+	return Return;
+}
+
 bool APuyoBoard::IsInBoard(const int TargetX, const int TargetY)
 {
 	return false == (TargetX < 0 || TargetY < 0 || TargetX >= BoardSize.X || TargetY >= BoardSize.Y);
@@ -877,7 +905,6 @@ void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 	}
 
 	//좌우 움직임 꾹 눌렀을때 딜레이
-	LRMoveTimer -= UEngineAPICore::GetEngineDeltaTime();
 	if (LRMoveTimer > 0.0f)
 	{
 		return;
@@ -971,7 +998,6 @@ void APuyoBoard::PuyoForceDown()
 	{
 		return;
 	}
-	ForceDownTimer -= UEngineAPICore::GetEngineDeltaTime();
 	if (ForceDownTimer < 0.0f)
 	{
 		PuyoDropTimer = 0.0f;

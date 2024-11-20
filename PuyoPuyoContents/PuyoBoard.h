@@ -59,8 +59,6 @@ public:
 	//보드 설정 세팅
 	void SetupPuyoBoard(const PuyoBoardSettings& _Settings);
 	
-	
-
 	//LogicStep
 	void PuyoCreateLogic();
 	void PuyoMoveLogic();
@@ -72,7 +70,6 @@ public:
 	void PuyoGameOverLogic();
 	void PuyoGameWinLogic();
 
-	bool IsInBoard(int TargetX, int TargetY);
 	inline FVector2D GetLocationByIndex(int _X, int _Y) const
 	{
 		return FVector2D(_X * PuyoSize.iX(), _Y * PuyoSize.iY());
@@ -90,6 +87,21 @@ public:
 	{
 		return GetLocationByIndexOnBoard(_XY.X, _XY.Y);
 	}
+	inline FIntPoint GetPuyoBoardSize()
+	{
+		return BoardSize;
+	}
+
+	inline std::vector<int> GetBlockInfo()
+	{
+		// Todo: 솔직히 스태틱 캐스트 적기가 귀찮음.
+		return { (int)Block[0]->GetColor(), (int)Block[1]->GetColor()};
+	}
+
+	inline FIntPoint GetMainPuyoCoord()
+	{
+		return MainPuyoCoord;
+	}
 	inline void SetPuyoOnBoard(int _X, int _Y, APuyo* _Puyo)
 	{
 		Board[_Y][_X] = _Puyo;
@@ -103,6 +115,10 @@ public:
 		return CurStep;
 	}
 
+	//AI용 함수
+	std::vector<std::vector<int>> GetBoardState();
+
+	bool IsInBoard(int TargetX, int TargetY); 
 	//Create 로직 관련 함수
 	std::vector<APuyo*> CreatePuyoBlock();
 	
@@ -131,6 +147,8 @@ public:
 
 	//일시정지
 	void PauseGame();
+
+	
 protected:
 	void BeginPlay() override;
 private:

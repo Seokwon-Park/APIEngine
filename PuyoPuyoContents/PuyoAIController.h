@@ -5,6 +5,7 @@
 
 enum class EPuyoAIState
 {
+	Calculation,
 	Down,
 	Left,
 	Right,
@@ -32,11 +33,14 @@ protected:
 
 private:
 	APuyoBoard* Board = nullptr;
-
-	std::vector<std::vector<int>> WeightBoard;
-
 	UEngineRandom RandomDevice;
+	EPuyoAIState State = EPuyoAIState::Calculation;
+	std::vector<std::vector<int>> BoardState;
+	std::vector<std::vector<std::vector<int>>> EvaluateBoard;
+	float Delay = 0.0f;
 
-	EPuyoAIState State = EPuyoAIState::Down;
+	int TargetX;
+	int TargetY;
+	int TargetDir;
 };
 
