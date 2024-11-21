@@ -17,11 +17,12 @@ void ASoloPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
+	Background->SetBackground(EPuyoGameMode::Solo, 0);
+
 	GetWorld()->SpawnActor<ASoloFrame>();
-	GetWorld()->SpawnActor<ASoloBackground>();
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);
-	ControllerP1->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
+	ControllerP1->SetKey(EKey::X, EKey::Z, EKey::Down, EKey::Left, EKey::Right);
 
 	ControllerP2 = GetWorld()->SpawnActor<APuyoAIController>();
 	ControllerP2->Possess(PuyoBoardP2);

@@ -304,7 +304,10 @@ void APuyoBoard::PuyoCreateLogic()
 	Puyo1->SetupPuyo(GetPosByIndex(MainPuyoCoord.X, MainPuyoCoord.Y), UEngineRandom::GetRandomInt(0, 4));
 	APuyo* Puyo2 = GetWorld()->SpawnActor<APuyo>();
 	Puyo2->SetupPuyo(GetPosByIndex(MainPuyoCoord.X + Dx[Dir], MainPuyoCoord.Y + Dy[Dir]), UEngineRandom::GetRandomInt(0, 4));*/
-
+	if (PuyoCreateDelegate.IsBind() == true)
+	{
+		PuyoCreateDelegate();
+	}
 	CurStep = EPuyoLogicStep::PuyoMove;
 }
 
@@ -801,6 +804,10 @@ void APuyoBoard::PuyoUpdateLogic()
 
 void APuyoBoard::PuyoGameOverLogic()
 {
+	int L = 2;
+	int R = 3;
+	
+
 	for (int i = 0; i < BoardSize.Y; i++)
 	{
 		for (int j = 0; j < BoardSize.X; j++)

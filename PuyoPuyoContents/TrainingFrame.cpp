@@ -9,7 +9,7 @@ ATrainingFrame::ATrainingFrame()
 	Sr1->SetComponentScale({ 640, 480 });
 	Sr1->SetPivot(EPivotType::TopLeft);
 	Sr1->SetRemoveBackground(true);
-	Sr1->SetOrder(ERenderLayer::FRAME);
+	Sr1->SetOrder(ERenderLayer::Frame);
 
 
 	Sr2->SetSprite("TOKO_2A.CNS.BMP");
@@ -18,7 +18,7 @@ ATrainingFrame::ATrainingFrame()
 	Sr2->SetComponentScale({ 640, 480 });
 	Sr2->SetPivot(EPivotType::TopLeft);
 	Sr2->SetRemoveBackground(true);
-	Sr2->SetOrder(ERenderLayer::FRAME);
+	Sr2->SetOrder(ERenderLayer::Frame);
 }
 
 ATrainingFrame::~ATrainingFrame()

@@ -98,9 +98,9 @@ public:
 		return { (int)Block[0]->GetColor(), (int)Block[1]->GetColor()};
 	}
 
-	inline FIntPoint GetMainPuyoCoord()
+	inline std::pair<FIntPoint, int> GetMainPuyoInfo() 
 	{
-		return MainPuyoCoord;
+		return std::make_pair(MainPuyoCoord, BlockDir);
 	}
 	inline void SetPuyoOnBoard(int _X, int _Y, APuyo* _Puyo)
 	{
@@ -121,6 +121,7 @@ public:
 	bool IsInBoard(int TargetX, int TargetY); 
 	//Create 로직 관련 함수
 	std::vector<APuyo*> CreatePuyoBlock();
+	UEngineDelegate PuyoCreateDelegate;
 	
 	// Move 로직 관련 함수
 	// 
@@ -257,6 +258,10 @@ private:
 	bool IsPaused = false;
 	float PauseTimer = 0.5f;
 	float PauseDelay = 0.5f;
+
+	std::vector<USpriteRendererComponent*> GameOverBlock;
+	USpriteRendererComponent* GameOverBG;
+
 
 	//여기 밑으로는 실험실 변수
 };

@@ -1,11 +1,18 @@
 #pragma once
 
+enum class EPuyoGameMode
+{
+	Solo,
+	Versus,
+	Training
+};
+
 enum class ERenderLayer
 {
-	BACKGROUND = -1000,
-	PLAY = 0,
-	FRAME = 100,
-	WARN = 105,
+	Background = -1000,
+	Play = 0,
+	Frame = 100,
+	Warn = 105,
 };
 
 //»Ñ¿ä»Ñ¿ä »ö
@@ -26,3 +33,4 @@ enum class EPuyoBoardColor
 	Blue,
 	Green,
 };
+

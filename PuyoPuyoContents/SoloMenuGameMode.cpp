@@ -13,7 +13,6 @@ ASoloMenuGameMode::~ASoloMenuGameMode()
 void ASoloMenuGameMode::BeginPlay()
 {
 	ASoloMenuBackground* Background = GetWorld()->SpawnActor<ASoloMenuBackground>();
-
 }
 
 void ASoloMenuGameMode::Tick(float _DeltaTime)

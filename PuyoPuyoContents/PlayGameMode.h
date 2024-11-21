@@ -1,5 +1,7 @@
 #pragma once
 #include "PuyoBoard.h"
+#include "PlayFrame.h"
+#include "PlayBackground.h"
 
 // Ό³Έν :
 class APlayGameMode : public AGameMode
@@ -21,6 +23,9 @@ protected:
 
 	APuyoBoard* PuyoBoardP1;
 	APuyoBoard* PuyoBoardP2;
+
+	APlayFrame* Frame;
+	APlayBackground* Background;
 private:
 
 };

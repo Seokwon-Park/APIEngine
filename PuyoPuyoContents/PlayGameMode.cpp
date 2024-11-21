@@ -4,7 +4,6 @@
 #include "PuyoText.h"
 #include "PuyoWarn.h"
 #include "PuyoBoardShakePostProcess.h"
-#include "TogetherBackground.h"
 #include <EnginePlatform/KeyCode.h>
 
 APlayGameMode::APlayGameMode()
@@ -20,13 +19,13 @@ void APlayGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	// Actor
-// 배경 게임판.
-// 블록뿌요
-// 점수텍스트(TextMesh?) 몇개?
-// 솔로모드 << 상대방 이미지를 그리는 이미지?
-// 
-	// APlayBackground* Background = GetWorld()->SpawnActor<APlayBackground>();
+	// 배경 게임판.
+	// 블록뿌요
+	// 점수텍스트(TextMesh?) 몇개?
+	// 솔로모드 << 상대방 이미지를 그리는 이미지?
 
+	Frame = GetWorld()->SpawnActor<APlayFrame>();
+	Background = GetWorld()->SpawnActor<APlayBackground>();
 
 	PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
 	//PuyoBoardP1->SetActive(false);

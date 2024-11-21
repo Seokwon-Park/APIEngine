@@ -10,7 +10,7 @@ APuyoWarn::APuyoWarn()
 	{
 		Warnings[i] = CreateDefaultSubobject<USpriteRendererComponent>("Warn" + std::to_string(i));
 		Warnings[i]->SetRemoveBackground(true);
-		Warnings[i]->SetOrder(ERenderLayer::WARN);
+		Warnings[i]->SetOrder(ERenderLayer::Warn);
 		Warnings[i]->SetActive(false);
 	}
 }

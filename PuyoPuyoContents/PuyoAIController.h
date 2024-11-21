@@ -25,22 +25,30 @@ public:
 	APuyoAIController& operator=(const APuyoAIController& _Other) = delete;
 	APuyoAIController& operator=(APuyoAIController&& _Other) noexcept = delete;
 
+	void ReceiveBlockColors();
 	void CalculateBoard();
+	void DebugEvaluateBoard();
+	int CalculateBFS(int x, int y);
 
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	const int Dx[4] = { 0,-1,0,1 };
+	const int Dy[4] = { -1,0,1,0 };
+
 	APuyoBoard* Board = nullptr;
 	UEngineRandom RandomDevice;
 	EPuyoAIState State = EPuyoAIState::Calculation;
 	std::vector<std::vector<int>> BoardState;
 	std::vector<std::vector<std::vector<int>>> EvaluateBoard;
 	float Delay = 0.0f;
+	std::vector<int> BlockColors;
 
-	int TargetX;
-	int TargetY;
+
+	int TargetX = 0;
+	int TargetY = 12;
 	int TargetDir;
 };
 

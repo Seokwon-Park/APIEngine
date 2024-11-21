@@ -19,8 +19,9 @@ void ATogetherPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
+	Background->SetBackground(EPuyoGameMode::Versus, 0);
+
 	GetWorld()->SpawnActor<ATogetherFrame>();
-	GetWorld()->SpawnActor<ATogetherBackground>();
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);
 	ControllerP1->SetKey(EKey::G, EKey::H, EKey::S, EKey::A, EKey::D);

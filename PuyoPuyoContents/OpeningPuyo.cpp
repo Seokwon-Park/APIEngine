@@ -39,6 +39,11 @@ AOpeningPuyo::~AOpeningPuyo()
 void AOpeningPuyo::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+	if (Time / 0.5f >= 1.0f)return;
+	Time += _DeltaTime;
+	OPPuyoEyeL->SetComponentLocation(FVector2D::Lerp({448,416}, {368,336}, Time/0.5f));
+	OPPuyoEyeR->SetComponentLocation(FVector2D::Lerp({ 624,464 }, { 544,384 }, Time / 0.5f));
+
 }
 void AOpeningPuyo::BeginPlay()
 {

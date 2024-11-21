@@ -2,7 +2,6 @@
 #include "PlayGameMode.h"
 
 #include "SoloFrame.h"
-#include "SoloBackground.h"
 // Ό³Έν :
 class ASoloPlayGameMode : public APlayGameMode
 {

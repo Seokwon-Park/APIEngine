@@ -20,7 +20,7 @@ void ATrainingPlayGameMode::BeginPlay()
 	APlayGameMode::BeginPlay();
 
 	GetWorld()->SpawnActor<ATrainingFrame>();
-	GetWorld()->SpawnActor<ATrainingBackground>();
+	Background->SetBackground(EPuyoGameMode::Training, 0);
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);

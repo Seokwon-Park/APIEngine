@@ -52,12 +52,6 @@
     <Filter Include="ContentsObject\Play\Training">
       <UniqueIdentifier>{f6e39146-538b-43ad-a131-18778094088f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Play\Together\Play">
-      <UniqueIdentifier>{62f17a15-110f-476a-aee8-7c1ec2915e3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Play\Solo\Play">
-      <UniqueIdentifier>{c1572549-02fa-4a7b-ba21-f2c7a4f9115d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Play\Actor\Controller">
       <UniqueIdentifier>{24032538-9618-48d8-8085-0ee677a34115}</UniqueIdentifier>
     </Filter>
@@ -66,6 +60,9 @@
     </Filter>
     <Filter Include="ContentsObject\Play\Actor\Controller\Player">
       <UniqueIdentifier>{6ac51884-fc77-45c4-9a51-cb5d398ea792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Background">
+      <UniqueIdentifier>{2524e2c3-a94c-4920-a3a3-94658a4c700e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,35 +147,17 @@
     <ClCompile Include="TrainingPlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="TrainingBackground.cpp">
-      <Filter>ContentsObject\Play\Training</Filter>
-    </ClCompile>
-    <ClCompile Include="TrainingFrame.cpp">
-      <Filter>ContentsObject\Play\Training</Filter>
-    </ClCompile>
     <ClCompile Include="PlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="GameOverText.cpp">
       <Filter>ContentsObject\Text</Filter>
     </ClCompile>
-    <ClCompile Include="TogetherFrame.cpp">
-      <Filter>ContentsObject\Play\Together\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="TogetherBackground.cpp">
-      <Filter>ContentsObject\Play\Together\Play</Filter>
-    </ClCompile>
     <ClCompile Include="PuyoWarn.cpp">
       <Filter>ContentsObject\Play\Actor</Filter>
     </ClCompile>
     <ClCompile Include="SoloMenuBackground.cpp">
       <Filter>ContentsObject\Play\Solo</Filter>
-    </ClCompile>
-    <ClCompile Include="SoloBackground.cpp">
-      <Filter>ContentsObject\Play\Solo\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="SoloFrame.cpp">
-      <Filter>ContentsObject\Play\Solo\Play</Filter>
     </ClCompile>
     <ClCompile Include="PuyoAIController.cpp">
       <Filter>ContentsObject\Play\Actor\Controller\AI</Filter>
@@ -191,6 +170,21 @@
     </ClCompile>
     <ClCompile Include="OffsetText.cpp">
       <Filter>ContentsObject\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloFrame.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="TogetherFrame.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainingFrame.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBackground.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayFrame.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,7 +257,7 @@
     <ClInclude Include="PuyoBoardShakePostProcess.h">
       <Filter>ContentsObject\Global\PostProcess</Filter>
     </ClInclude>
-    <ClInclude Include="ScoringTable.h">
+    <ClInclude Include="ConstData.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
     <ClInclude Include="OpeningCar.h">
@@ -281,35 +275,17 @@
     <ClInclude Include="TrainingPlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="TrainingBackground.h">
-      <Filter>ContentsObject\Play\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="TrainingFrame.h">
-      <Filter>ContentsObject\Play\Training</Filter>
-    </ClInclude>
     <ClInclude Include="PlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="GameOverText.h">
       <Filter>ContentsObject\Text</Filter>
     </ClInclude>
-    <ClInclude Include="TogetherFrame.h">
-      <Filter>ContentsObject\Play\Together\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="TogetherBackground.h">
-      <Filter>ContentsObject\Play\Together\Play</Filter>
-    </ClInclude>
     <ClInclude Include="PuyoWarn.h">
       <Filter>ContentsObject\Play\Actor</Filter>
     </ClInclude>
     <ClInclude Include="SoloMenuBackground.h">
       <Filter>ContentsObject\Play\Solo</Filter>
-    </ClInclude>
-    <ClInclude Include="SoloBackground.h">
-      <Filter>ContentsObject\Play\Solo\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="SoloFrame.h">
-      <Filter>ContentsObject\Play\Solo\Play</Filter>
     </ClInclude>
     <ClInclude Include="PuyoAIController.h">
       <Filter>ContentsObject\Play\Actor\Controller\AI</Filter>
@@ -322,6 +298,21 @@
     </ClInclude>
     <ClInclude Include="OffsetText.h">
       <Filter>ContentsObject\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloFrame.h">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="TogetherFrame.h">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainingFrame.h">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBackground.h">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayFrame.h">
+      <Filter>ContentsObject\Play\Background</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

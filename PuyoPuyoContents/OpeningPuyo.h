@@ -24,5 +24,7 @@ private:
 	USpriteRendererComponent* OPPuyoBot;
 	USpriteRendererComponent* OPPuyoEyeL;
 	USpriteRendererComponent* OPPuyoEyeR;
+
+	float Time = 0.0f;
 };
 
