@@ -21,6 +21,5 @@ protected:
 
 private:
 	USpriteRendererComponent* Sr;
-
 };
 

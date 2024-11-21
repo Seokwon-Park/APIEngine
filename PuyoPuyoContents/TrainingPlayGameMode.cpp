@@ -2,7 +2,6 @@
 #include "TrainingPlayGameMode.h"
 
 #include "TrainingFrame.h"
-#include "TrainingBackground.h"
 
 #include "PuyoPlayerController.h"
 
@@ -19,8 +18,8 @@ void ATrainingPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
-	GetWorld()->SpawnActor<ATrainingFrame>();
 	Background->SetBackground(EPuyoGameMode::Training, 0);
+	Frame->SetFrame(EPuyoGameMode::Training, 0);
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);

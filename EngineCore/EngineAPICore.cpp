@@ -59,14 +59,14 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 
 void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 {
-	std::string LevelName = _LevelName.data();
+	std::string UpperName = UEngineStringHelper::ToUpper(_LevelName);
 
-	if (false == Levels.contains(LevelName))
+	if (false == Levels.contains(UpperName))
 	{
-		MSGASSERT(LevelName + "라는 이름의 레벨이 존재하지 않습니다.");
+		MSGASSERT(UpperName + "라는 이름의 레벨이 존재하지 않습니다.");
 	}
 
-	NextLevel = Levels[LevelName];
+	NextLevel = Levels[UpperName];
 	//CurLevel->BeginPlay();
 }
 

@@ -28,7 +28,6 @@ void AMenuGameMode::BeginPlay()
 	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AMenuGameMode::SelectMenu, this));
 	GetWorld()->BindAction(EKey::Left, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, 1));
 	GetWorld()->BindAction(EKey::Right, KeyEvent::Down, std::bind(&AMenuGameMode::MoveMenu, this, -1));
-
 	AMenuBackground* Background = GetWorld()->SpawnActor<AMenuBackground>();
 	for (int i = 0; i < MenuSize; i++)
 	{

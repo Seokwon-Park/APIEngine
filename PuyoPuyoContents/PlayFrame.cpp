@@ -8,51 +8,31 @@ APlayFrame::APlayFrame()
 	for (int i = 0; i < 7; i++)
 	{
 		FrameSr[i] = CreateDefaultSubobject<USpriteRendererComponent>("PlayFrame" + std::to_string(i));
+		FrameSr[i]->SetSprite("LV"+FramePartName[i], 0);
 		FrameSr[i]->SetOrder(ERenderLayer::Frame);
 		FrameSr[i]->SetComponentScale(FrameScale[i]);
 		FrameSr[i]->SetComponentLocation(FrameLocation[i]);
 		FrameSr[i]->SetPivot(EPivotType::TopLeft);
 	}
 
-	HeadSr->SetOrder(ERenderLayer::Frame);
-	HeadSr->SetSprite("LVHEAD", 0);
-	HeadSr->SetComponentScale({ 640, 32 });
+	Sr1 = CreateDefaultSubobject<USpriteRendererComponent>("");
+	Sr2 = CreateDefaultSubobject<USpriteRendererComponent>("");
+	Sr1->SetSprite("TOKO_1A.CNS.BMP");
+	Sr1->SetComponentScale({ 640, 480 });
+	Sr1->SetPivot(EPivotType::TopLeft);
+	Sr1->SetRemoveBackground(true);
+	Sr1->SetOrder(ERenderLayer::Frame);
+	Sr1->SetActive(false);
 
-	CenterSr->SetOrder(ERenderLayer::Frame);
-	CenterSr->SetSprite("LVCenter", 0);
-	CenterSr->SetComponentScale({ 32, 128 });
-	CenterSr->SetComponentLocation({ 304, 64 });
-	CenterSr->SetPivot(EPivotType::TopLeft);
 
-	LeftSideSr->SetOrder(ERenderLayer::Frame);
-	LeftSideSr->SetSprite("LVL", 0);
-	LeftSideSr->SetComponentScale({ 32, 384 });
-	LeftSideSr->SetComponentLocation({ 0, 32 });
-	LeftSideSr->SetPivot(EPivotType::TopLeft);
-
-	InnerLeftSideSr->SetOrder(ERenderLayer::Frame);
-	InnerLeftSideSr->SetSprite("LVIL", 0);
-	InnerLeftSideSr->SetComponentScale({ 16, 384 });
-	InnerLeftSideSr->SetComponentLocation({ 224, 32 });
-	InnerLeftSideSr->SetPivot(EPivotType::TopLeft);
-
-	RightSideSr->SetOrder(ERenderLayer::Frame);
-	RightSideSr->SetSprite("LVR", 0);
-	RightSideSr->SetComponentScale({ 32, 384 });
-	RightSideSr->SetComponentLocation({ 608, 32 });
-	RightSideSr->SetPivot(EPivotType::TopLeft);
-
-	InnerRightSideSr->SetOrder(ERenderLayer::Frame);
-	InnerRightSideSr->SetSprite("LVIR", 0);
-	InnerRightSideSr->SetComponentScale({ 16, 384 });
-	InnerRightSideSr->SetComponentLocation({ 400, 32 });
-	InnerRightSideSr->SetPivot(EPivotType::TopLeft);
-
-	TailSr->SetOrder(ERenderLayer::Frame);
-	TailSr->SetSprite("LVtail", 0);
-	TailSr->SetComponentScale({ 640, 64 });
-	TailSr->SetComponentLocation({ 0, 416 });
-	TailSr->SetPivot(EPivotType::TopLeft);
+	Sr2->SetSprite("TOKO_2A.CNS.BMP");
+	Sr2->SetRemoveBackground(true);
+	Sr2->SetRemoveColor({ 64,64 });
+	Sr2->SetComponentScale({ 640, 480 });
+	Sr2->SetPivot(EPivotType::TopLeft);
+	Sr2->SetRemoveBackground(true);
+	Sr2->SetOrder(ERenderLayer::Frame);
+	Sr2->SetActive(false);
 }
 
 APlayFrame::~APlayFrame()
@@ -69,11 +49,24 @@ void APlayFrame::SetFrame(EPuyoGameMode _Mode, int _StageIndex)
 	switch (_Mode)
 	{
 	case EPuyoGameMode::Solo:
-
+		for (int i = 0; i < 7; i++)
+		{
+			FrameSr[i]->SetSprite("LV" + FramePartName[i], _StageIndex);
+		}
 		break;
 	case EPuyoGameMode::Versus:
+		for (int i = 0; i < 7; i++)
+		{
+			FrameSr[i]->SetSprite("VS" + FramePartName[i], _StageIndex);
+		}
 		break;
 	case EPuyoGameMode::Training:
+		for (int i = 0; i < 7; i++)
+		{
+			FrameSr[i]->SetActive(false);
+		}
+		Sr1->SetActive(true);
+		Sr2->SetActive(true);
 		break;
 	default:
 		break;

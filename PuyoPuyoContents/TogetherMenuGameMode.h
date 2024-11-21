@@ -1,4 +1,6 @@
 #pragma once
+#include "TogetherMenu.h"
+#include "TogetherMenuBackground.h"
 
 // Ό³Έν :
 class ATogetherMenuGameMode : public AGameMode
@@ -19,6 +21,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
+	ATogetherMenu* Menu;
 };
 

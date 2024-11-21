@@ -12,6 +12,8 @@
 #include "TogetherPlayGameMode.h"
 #include "TrainingPlayGameMode.h"
 
+#include "OptionsGameMode.h"
+
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/ImageManager.h>
@@ -35,11 +37,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	//USoundManager::GetInstance().FindSound("OPTheme.mp3")->Play();
 
-	//인게임 뿌요 관련 스프라이트
-	SetupPuyoSprite();
-	//뿌요 터질 때 파티클
-	SetupPuyoBoomParticleSprite();
-
 	//Intro
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOEYE", "OP_PUYO.CNS.BMP", { {0,0 }, { 144, 144 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOBOT", "OP_PUYO.CNS.BMP", { {0,240 }, { 640, 240 } });
@@ -53,15 +50,42 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {0,480 }, { 144, 104 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {0,480 }, { 176, 104 } });
 
-
 	//인트로 동전
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {0,0 }, { 224, 224 } });
+
+	//너랑나랑 뿌요뿌요 메뉴 화면
+	// 너랑나랑뿌요뿌요 메뉴 텍스트
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,0 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,96 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,128 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,32 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,64 }, { 512,32 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,0 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,96 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,128 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,32 }, { 512,32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,64 }, { 512,32 } });
+
+	//솔로모드 메뉴 스프라이트
+	UImageManager::GetInstance().CuttingSprite("ARLE", "KAO_ARLE.CNS.BMP", {160,112});
+	// 캐릭터 프레임
+	UImageManager::GetInstance().CuttingSprite("FRAME", "KAO_WAKU.CNS.BMP", { 176,128 });
+	// 탑?같이 생긴거
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 }, {256,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 256,0 }, {224,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 480,0 }, {160,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,80 }, {192,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 }, {128,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 }, {96,80} });
+	// 적 선택 리스트
+	UImageManager::GetInstance().CuttingSprite("EnemySelect", "SELECT_D.CNS.BMP", { 48,48 });
 
 	//단색 스프라이트(+페이더용)
 	UImageManager::GetInstance().CreateColorImage("Black");
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
-	//Cut Text
+	//인게임 Text
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_RY.CNS.BMP", { 16,32 });
@@ -76,9 +100,13 @@ void PuyoPuyoContentsCore::BeginPlay()
 	// 상쇄 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("Offset", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
 
-	// 너랑나랑뿌요뿌요 메뉴 텍스트
-	UImageManager::GetInstance().CuttingSpriteCustom("VSMenuText", "SEL_0.CNS.BMP", { 0,0 }, { 512,192 }, { 512,32 });
+	
 
+	// 게임 플레이 관련
+	// 인게임 뿌요 관련 스프라이트
+	SetupPuyoSprite();
+	//뿌요 터질 때 파티클
+	SetupPuyoBoomParticleSprite();
 
 	//Cut Menu Bg
 	for (int i = 0; i <= 9; i++)
@@ -94,73 +122,67 @@ void PuyoPuyoContentsCore::BeginPlay()
 		//Solo play Frame
 		UImageManager::GetInstance().InsertCustomSpriteData("LVHEAD", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,0 }, { 640, 32 } });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVCENTER", "L" + std::to_string(i) + "_F.CNS.BMP", { { 304,64 }, { 32, 128 } });
-		UImageManager::GetInstance().InsertCustomSpriteData("LVTAIL", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,416 }, { 640, 64 } });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVLEFT", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,32 },	{ 32,384} });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVINNERLEFT", "L" + std::to_string(i) + "_F.CNS.BMP", { { 224,32 }, { 16,384} });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVRIGHT", "L" + std::to_string(i) + "_F.CNS.BMP", { { 608,32 }, { 32,384 } });
 		UImageManager::GetInstance().InsertCustomSpriteData("LVINNERRIGHT", "L" + std::to_string(i) + "_F.CNS.BMP", { { 400,32 }, { 16,384 } });
+		UImageManager::GetInstance().InsertCustomSpriteData("LVTAIL", "L" + std::to_string(i) + "_F.CNS.BMP", { { 0,416 }, { 640, 64 } });
 	}
 
 
 	//Multi Play Bg
+	UImageManager::GetInstance().InsertCustomSpriteData("VSBG", "VS_N.CNS.BMP", { { 0,0 }, { 640,480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSBG", "VS_2K.CNS.BMP", { { 0,0 },{ 640,480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSBG", "VS_6K.CNS.BMP", { { 0,0 },{ 640,480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSBG", "VS_H.CNS.BMP", { { 0,0 }, { 640,480 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSBG", "VS_N.CNS.BMP", { { 0,0 }, { 640,480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSBG", "VS_S.CNS.BMP", { { 0,0 }, { 640,480 } });
 
 	//Multi play Frame
+	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_N.CNS.BMP", { { 0,0 }, { 640, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_2K.CNS.BMP", { { 0,0 }, { 640, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_6K.CNS.BMP", { { 0,0 }, { 640, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_H.CNS.BMP",  { { 0,0 }, { 640, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_N.CNS.BMP",  { { 0,0 }, { 640, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_S.CNS.BMP",  { { 0,0 }, { 640, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_H.CNS.BMP", { { 0,0 }, { 640, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSHEAD", "VS_S.CNS.BMP", { { 0,0 }, { 640, 32 } });
 
+	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_N.CNS.BMP", { { 304,64 }, { 32, 128 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_2K.CNS.BMP", { { 304,64 }, { 32, 128 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_6K.CNS.BMP", { { 304,64 }, { 32, 128 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_H.CNS.BMP",  { { 304,64 }, { 32, 128 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_N.CNS.BMP",  { { 304,64 }, { 32, 128 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_S.CNS.BMP",  { { 304,64 }, { 32, 128 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_H.CNS.BMP", { { 304,64 }, { 32, 128 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSCENTER", "VS_S.CNS.BMP", { { 304,64 }, { 32, 128 } });
 
+	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_N.CNS.BMP", { { 0,416 }, { 640, 64 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_2K.CNS.BMP", { { 0,416 }, { 640, 64 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_6K.CNS.BMP", { { 0,416 }, { 640, 64 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_H.CNS.BMP",  { { 0,416 }, { 640, 64 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_N.CNS.BMP",  { { 0,416 }, { 640, 64 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_S.CNS.BMP",  { { 0,416 }, { 640, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_H.CNS.BMP", { { 0,416 }, { 640, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSTAIL", "VS_S.CNS.BMP", { { 0,416 }, { 640, 64 } });
 
+	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_N.CNS.BMP", { { 0,32 }, { 32,384} });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_2K.CNS.BMP", { { 0,32 },	{ 32,384} });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_6K.CNS.BMP", { { 0,32 },	{ 32,384} });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_H.CNS.BMP",	{ { 0,32 }, { 32,384} });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_N.CNS.BMP",	{ { 0,32 }, { 32,384} });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_S.CNS.BMP",	{ { 0,32 }, { 32,384} });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_H.CNS.BMP", { { 0,32 }, { 32,384} });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSLEFT", "VS_S.CNS.BMP", { { 0,32 }, { 32,384} });
 
-	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_2K.CNS.BMP",{ { 224,32 }, { 16,384} });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_6K.CNS.BMP",{ { 224,32 }, { 16,384} });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_H.CNS.BMP", { { 224,32 }, { 16,384} });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_N.CNS.BMP", { { 224,32 }, { 16,384} });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_2K.CNS.BMP", { { 224,32 }, { 16,384} });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_6K.CNS.BMP", { { 224,32 }, { 16,384} });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_H.CNS.BMP", { { 224,32 }, { 16,384} });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERLEFT", "VS_S.CNS.BMP", { { 224,32 }, { 16,384} });
 
+	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_N.CNS.BMP", { { 608,32 }, { 32,384 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_2K.CNS.BMP", { { 608,32 }, { 32,384 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_6K.CNS.BMP", { { 608,32 }, { 32,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_H.CNS.BMP",	{ { 608,32 }, { 32,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_N.CNS.BMP",	{ { 608,32 }, { 32,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_S.CNS.BMP",	{ { 608,32 }, { 32,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_H.CNS.BMP", { { 608,32 }, { 32,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSRIGHT", "VS_S.CNS.BMP", { { 608,32 }, { 32,384 } });
 
+	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_N.CNS.BMP", { { 400,32 }, { 16,384 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_2K.CNS.BMP", { { 400,32 }, { 16,384 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_6K.CNS.BMP", { { 400,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_H.CNS.BMP",  { { 400,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_N.CNS.BMP",  { { 400,32 }, { 16,384 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_S.CNS.BMP",  { { 400,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_H.CNS.BMP", { { 400,32 }, { 16,384 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSINNERRIGHT", "VS_S.CNS.BMP", { { 400,32 }, { 16,384 } });
 
 	UImageManager::GetInstance().InsertCustomSpriteData("TRBG", "TOKO_BG2.CNS.BMP", { { 0,0 }, { 640, 480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("TRHEAD", "TOKO_1A.CNS.BMP", { { 0,0 }, { 640, 480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("TRTAIL", "TOKO_2A.CNS.BMP", { { 0,0 }, { 640, 480 } });
-
-	//
-
-	//Solo Play Bg
-	UImageManager::GetInstance().CuttingSprite("L1_F.CNS.BMP", { 640,480 });
-
 
 	//Cut Menu Image
 
@@ -194,6 +216,20 @@ void PuyoPuyoContentsCore::BeginPlay()
 	//GameOver
 	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "PUYO_BP.CNS.BMP", { { 448,32 },{ 192, 96 } });
 
+	//옵션 관련
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,0},{ 288, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,32},{ 256, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,64},{ 192, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,96},{ 192, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,128},{ 128, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,160},{ 288, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,192},{ 352, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,224},{ 224, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,0},{ 288, 32 } });
+
+	///////////////////옵션 관련
+
+
 
 	// 여기서부터 게임 구성을 만든다.
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 
@@ -209,7 +245,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
 	UEngineAPICore::GetCore()->CreateLevel<ATrainingPlayGameMode, ADummyPawn>("TrainingPlay");
 	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("PuzzlePlay");
-	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("Options");
+	UEngineAPICore::GetCore()->CreateLevel<AOptionsGameMode, ADummyPawn>("Options");
 	//UEngineAPICore::GetCore()->CreateLevel("End");
 
 	UEngineAPICore::GetCore()->OpenLevel("Intro");

@@ -5,7 +5,7 @@
 #include "PuyoChainText.h"
 #include "GameOverText.h"
 #include "PuyoChainFX.h"
-#include "ScoringTable.h"
+#include "ConstData.h"
 
 
 #include <algorithm>
@@ -23,7 +23,7 @@ APuyoBoard::APuyoBoard()
 	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
 	PauseText->SetRemoveBackground(true);
 	PauseText->SetComponentScale({ 128, 48 });
-	PauseText->SetComponentLocation({ 32, 96 });
+	PauseText->SetComponentLocation({ 32, 128 });
 	PauseText->SetPivot(EPivotType::TopLeft);
 	PauseText->SetOrder(100);
 	PauseText->SetActive(false);

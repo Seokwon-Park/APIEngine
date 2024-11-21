@@ -20,7 +20,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	USpriteRendererComponent* Sr1;
-	USpriteRendererComponent* Sr2;
+
 };
 

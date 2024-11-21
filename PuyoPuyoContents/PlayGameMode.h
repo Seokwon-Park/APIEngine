@@ -17,6 +17,7 @@ public:
 	APlayGameMode& operator=(const APlayGameMode& _Other) = delete;
 	APlayGameMode& operator=(APlayGameMode&& _Other) noexcept = delete;
 
+	inline std::pair<APlayFrame*, APlayBackground*> GetMapPtr() { return { Frame, Background }; }
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;

@@ -73,10 +73,13 @@ public:
 	inline void SetCameraToMainPawn(bool _IsCameraToMainPawn) { IsCameraToMainPawn = _IsCameraToMainPawn; }
 	inline void SetCameraPivot(FVector2D _Pivot) { CameraPivot = _Pivot; }
 	inline void SetCameraPos(FVector2D _Pos) { CameraPos = _Pos; }
-	AGameMode* GetGameMode()
+
+	template<typename GameModeType>
+	GameModeType* GetGameMode()
 	{
-		return GameMode;
+		return dynamic_cast<GameModeType*>(GameMode);
 	}
+
 	template<typename ActorType>
 	ActorType* GetMainPawn()
 	{

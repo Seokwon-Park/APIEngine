@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "TogetherMenuGameMode.h"
 
-#include "TogetherMenuBackground.h"
+
 
 ATogetherMenuGameMode::ATogetherMenuGameMode()
 {
@@ -15,7 +15,8 @@ void ATogetherMenuGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ATogetherMenuBackground* Bg = GetWorld()->SpawnActor<ATogetherMenuBackground>();
+	GetWorld()->SpawnActor<ATogetherMenuBackground>();
+	Menu = GetWorld()->SpawnActor<ATogetherMenu>();
 }
 
 void ATogetherMenuGameMode::Tick(float _DeltaTime)

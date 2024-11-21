@@ -19,9 +19,6 @@
     <Filter Include="ContentsObject\Intro">
       <UniqueIdentifier>{be6e8079-d32f-4750-9174-07037cb598bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Text">
-      <UniqueIdentifier>{51ab49ce-8988-4e0d-9684-0c8bdb7fb779}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Menu">
       <UniqueIdentifier>{b5760ea0-8dfe-4995-b518-93692df60794}</UniqueIdentifier>
     </Filter>
@@ -49,9 +46,6 @@
     <Filter Include="ContentsObject\Global\PostProcess">
       <UniqueIdentifier>{4d6f9629-dee1-42e1-b3bc-32daef29c538}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Play\Training">
-      <UniqueIdentifier>{f6e39146-538b-43ad-a131-18778094088f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Play\Actor\Controller">
       <UniqueIdentifier>{24032538-9618-48d8-8085-0ee677a34115}</UniqueIdentifier>
     </Filter>
@@ -63,6 +57,18 @@
     </Filter>
     <Filter Include="ContentsObject\Play\Background">
       <UniqueIdentifier>{2524e2c3-a94c-4920-a3a3-94658a4c700e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Background\ToBeDeleted">
+      <UniqueIdentifier>{30d8a89c-c3f6-478f-a73c-018af5762c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Text">
+      <UniqueIdentifier>{51ab49ce-8988-4e0d-9684-0c8bdb7fb779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Option">
+      <UniqueIdentifier>{5667ffe1-d0df-4993-a9a9-89bb542c4476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Puzzle">
+      <UniqueIdentifier>{4f1d5c39-d2b0-4126-9ce1-a1d176e1d716}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +96,6 @@
     <ClCompile Include="MenuGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="PuyoText.cpp">
-      <Filter>ContentsObject\Text</Filter>
-    </ClCompile>
     <ClCompile Include="SoloMenuGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
@@ -109,7 +112,7 @@
       <Filter>ContentsObject\Menu\Actor</Filter>
     </ClCompile>
     <ClCompile Include="PuyoChainText.cpp">
-      <Filter>ContentsObject\Text</Filter>
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClCompile>
     <ClCompile Include="Fader.cpp">
       <Filter>ContentsObject\Global</Filter>
@@ -151,7 +154,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="GameOverText.cpp">
-      <Filter>ContentsObject\Text</Filter>
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClCompile>
     <ClCompile Include="PuyoWarn.cpp">
       <Filter>ContentsObject\Play\Actor</Filter>
@@ -169,22 +172,43 @@
       <Filter>ContentsObject\Play\Actor\Controller\Player</Filter>
     </ClCompile>
     <ClCompile Include="OffsetText.cpp">
-      <Filter>ContentsObject\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="SoloFrame.cpp">
-      <Filter>ContentsObject\Play\Background</Filter>
-    </ClCompile>
-    <ClCompile Include="TogetherFrame.cpp">
-      <Filter>ContentsObject\Play\Background</Filter>
-    </ClCompile>
-    <ClCompile Include="TrainingFrame.cpp">
-      <Filter>ContentsObject\Play\Background</Filter>
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClCompile>
     <ClCompile Include="PlayBackground.cpp">
       <Filter>ContentsObject\Play\Background</Filter>
     </ClCompile>
     <ClCompile Include="PlayFrame.cpp">
       <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloFrame.cpp">
+      <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
+    </ClCompile>
+    <ClCompile Include="TogetherFrame.cpp">
+      <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainingFrame.cpp">
+      <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
+    </ClCompile>
+    <ClCompile Include="TogetherMenu.cpp">
+      <Filter>ContentsObject\Play\Together</Filter>
+    </ClCompile>
+    <ClCompile Include="PuyoText.cpp">
+      <Filter>ContentsObject\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsBackground.cpp">
+      <Filter>ContentsObject\Play\Option</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterFrame.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettings.cpp">
+      <Filter>ContentsObject\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsMenu.cpp">
+      <Filter>ContentsObject\Play\Option</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +236,6 @@
     <ClInclude Include="MenuGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="PuyoText.h">
-      <Filter>ContentsObject\Text</Filter>
-    </ClInclude>
     <ClInclude Include="SoloMenuGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
@@ -234,7 +255,7 @@
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
     <ClInclude Include="PuyoChainText.h">
-      <Filter>ContentsObject\Text</Filter>
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClInclude>
     <ClInclude Include="Fader.h">
       <Filter>ContentsObject\Global</Filter>
@@ -279,7 +300,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="GameOverText.h">
-      <Filter>ContentsObject\Text</Filter>
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClInclude>
     <ClInclude Include="PuyoWarn.h">
       <Filter>ContentsObject\Play\Actor</Filter>
@@ -297,22 +318,43 @@
       <Filter>ContentsObject\Play\Actor\Controller\Player</Filter>
     </ClInclude>
     <ClInclude Include="OffsetText.h">
-      <Filter>ContentsObject\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="SoloFrame.h">
-      <Filter>ContentsObject\Play\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="TogetherFrame.h">
-      <Filter>ContentsObject\Play\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="TrainingFrame.h">
-      <Filter>ContentsObject\Play\Background</Filter>
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClInclude>
     <ClInclude Include="PlayBackground.h">
       <Filter>ContentsObject\Play\Background</Filter>
     </ClInclude>
     <ClInclude Include="PlayFrame.h">
       <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloFrame.h">
+      <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
+    </ClInclude>
+    <ClInclude Include="TogetherFrame.h">
+      <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainingFrame.h">
+      <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
+    </ClInclude>
+    <ClInclude Include="TogetherMenu.h">
+      <Filter>ContentsObject\Play\Together</Filter>
+    </ClInclude>
+    <ClInclude Include="PuyoText.h">
+      <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsBackground.h">
+      <Filter>ContentsObject\Play\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterFrame.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettings.h">
+      <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsMenu.h">
+      <Filter>ContentsObject\Play\Option</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

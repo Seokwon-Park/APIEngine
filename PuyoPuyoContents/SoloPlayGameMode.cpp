@@ -19,7 +19,6 @@ void ASoloPlayGameMode::BeginPlay()
 
 	Background->SetBackground(EPuyoGameMode::Solo, 0);
 
-	GetWorld()->SpawnActor<ASoloFrame>();
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);
 	ControllerP1->SetKey(EKey::X, EKey::Z, EKey::Down, EKey::Left, EKey::Right);

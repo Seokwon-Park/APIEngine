@@ -1,7 +1,9 @@
 #pragma once
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineTimer.h>
+#include <EngineBase/EngineStringHelper.h>
 #include "ContentsCore.h"
+
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
@@ -47,7 +49,7 @@ public:
 	{
 		return MainCore->EngineMainWindow.GetWindowImage();
 	}
-	
+
 	static float GetEngineDeltaTime()
 	{
 		return MainCore->GetDeltaTime();
@@ -58,7 +60,7 @@ public:
 		return EngineMainWindow;
 	}
 
-	float GetDeltaTime() 
+	float GetDeltaTime()
 	{
 		return DeltaTimer.GetDeltaTime();
 	}
@@ -70,16 +72,63 @@ public:
 
 	template <typename GameModeType, typename MainPawnType>
 	ULevel* CreateLevel(std::string_view _LevelName)
-	{
+	{ 
+		std::string UpperName = UEngineStringHelper::ToUpper(_LevelName);
+
+		if (false != Levels.contains(UpperName))
+		{
+			MSGASSERT("이미 존재하는 레벨명입니다." + UpperName);
+			return nullptr;
+		}
+
 		ULevel* NewLevel = new ULevel();
 
 		// GameMode = 레벨의 특성을 설정하는 객체
 		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
 
-		Levels.insert(std::make_pair(_LevelName.data(), NewLevel));
+		Levels.insert(std::make_pair(UpperName.data(), NewLevel));
 
 		return NewLevel;
 	}
+
+	template<typename GameModeType, typename MainPawnType>
+	void ResetLevel(std::string_view _LevelName)
+	{
+		std::string UpperName = UEngineStringHelper::ToUpper(_LevelName);
+
+
+
+		// 지금 당장 이녀석을 지우면 안된다.
+		if (CurLevel->GetName() != UpperName)
+		{
+			DestroyLevel(_LevelName);
+			CreateLevel<GameModeType, MainPawnType>(UpperName);
+			return;
+		}
+
+		Levels.erase(UpperName);
+		NextLevel = CreateLevel<GameModeType, MainPawnType>(UpperName);
+	}
+
+	void DestroyLevel(std::string_view _LevelName)
+	{
+		std::string UpperName = UEngineStringHelper::ToUpper(_LevelName);
+
+		if (false == Levels.contains(UpperName))
+		{
+			// MSGASSERT("존재하지 않는 레벨을 리셋할수 없습니다." + UpperName);
+			return;
+		}
+
+		if (nullptr != Levels[UpperName])
+		{
+			delete Levels[UpperName];
+			Levels[UpperName] = nullptr;
+		}
+
+		Levels.erase(UpperName);
+	}
+
 
 	void OpenLevel(std::string_view _LevelName);
 	void LoadResources(std::string_view _FolderName = DefaultResourceFolder);
@@ -100,7 +149,7 @@ private:
 	void Tick();
 
 	void CheckLevel();
-	
+
 	UEngineTimer DeltaTimer;
 	UEngineWindow EngineMainWindow; // 엔진 메인 윈도우
 
