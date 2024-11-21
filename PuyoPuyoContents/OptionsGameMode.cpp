@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "OptionsGameMode.h"
 
+#include "OptionsMenu.h"
 #include "OptionsBackground.h"
 
 AOptionsGameMode::AOptionsGameMode()
@@ -15,6 +16,7 @@ void AOptionsGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetWorld()->SpawnActor<AOptionsMenu>();
 	GetWorld()->SpawnActor<AOptionsBackground>();
 }
 

@@ -7,6 +7,7 @@ AOptionsBackground::AOptionsBackground()
 	Sr->SetSprite("OPTION.CNS.BMP");
 	Sr->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 	Sr->SetPivot(EPivotType::TopLeft);
+	Sr->SetOrder(ERenderLayer::Background);
 
 }
 

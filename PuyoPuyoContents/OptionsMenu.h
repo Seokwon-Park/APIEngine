@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineCore/SpriteRendererComponent.h>
 
 // Ό³Έν :
 class AOptionsMenu : public AActor
@@ -19,6 +20,8 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	USpriteRendererComponent* OptMenuTitle;
+	std::vector<USpriteRendererComponent*> OptMenuSr;
 
 };
 
