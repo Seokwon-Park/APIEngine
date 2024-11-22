@@ -16,6 +16,12 @@ public:
 	AOptionsItem& operator=(AOptionsItem&& _Other) noexcept = delete;
 
 	void SetupItem(std::string_view _SpriteName, int _Index);
+	void AddSelectAction(std::function<void()> _Function)
+	{
+		SelectActions.push_back(_Function);
+	}
+	void Select();
+	void ChangeValue();
 
 	virtual void Tick(float _DeltaTime) override;
 protected:
@@ -24,7 +30,7 @@ protected:
 private:
 	std::string SpriteName;
 	USpriteRendererComponent* OptItemRenderer;
-	std::list<std::function<void()>> Actions;
+	std::list<std::function<void()>> SelectActions;
 
 	
 };

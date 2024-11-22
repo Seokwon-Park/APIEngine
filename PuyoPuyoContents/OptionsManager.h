@@ -18,12 +18,18 @@ public:
 	AOptionsManager& operator=(const AOptionsManager& _Other) = delete;
 	AOptionsManager& operator=(AOptionsManager&& _Other) noexcept = delete;
 
+	static inline AOptionsManager& GetInstance()
+	{
+		static AOptionsManager Instance = AOptionsManager();
+		return Instance;
+	}
 	inline void SetList(class AOptionsList* _List) { CurList = _List; }
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
+
 	USpriteRendererComponent* OptSelector;
 
 	AOptionsList* CurList = nullptr;

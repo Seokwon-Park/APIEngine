@@ -216,6 +216,9 @@
     <ClCompile Include="OptionsList.cpp">
       <Filter>ContentsObject\Option</Filter>
     </ClCompile>
+    <ClCompile Include="OptionsValue.cpp">
+      <Filter>ContentsObject\Option</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -366,6 +369,9 @@
       <Filter>ContentsObject\Option</Filter>
     </ClInclude>
     <ClInclude Include="OptionsList.h">
+      <Filter>ContentsObject\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsValue.h">
       <Filter>ContentsObject\Option</Filter>
     </ClInclude>
   </ItemGroup>

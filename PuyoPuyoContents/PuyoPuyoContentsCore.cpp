@@ -68,7 +68,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,64 }, { 512,32 } });
 
 	//솔로모드 메뉴 스프라이트
-	UImageManager::GetInstance().CuttingSprite("ARLE", "KAO_ARLE.CNS.BMP", {160,112});
+	UImageManager::GetInstance().CuttingSprite("ARLE", "KAO_ARLE.CNS.BMP", { 160,112 });
 	// 캐릭터 프레임
 	UImageManager::GetInstance().CuttingSprite("FRAME", "KAO_WAKU.CNS.BMP", { 176,128 });
 	// 탑?같이 생긴거
@@ -100,7 +100,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	// 상쇄 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("Offset", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
 
-	
+
 
 	// 게임 플레이 관련
 	// 인게임 뿌요 관련 스프라이트
@@ -232,6 +232,12 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,480},{ 288, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,512},{ 192, 32 } });
 
+
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTDIFF", "OPT_STR.CNS.BMP", { { 0,256},{ 184, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTDIFF", "OPT_STR.CNS.BMP", { { 96,256},{ 72, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTDIFF", "OPT_STR.CNS.BMP", { { 224,256},{ 64, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTDIFF", "OPT_STR.CNS.BMP", { { 192,288},{ 128, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPTDIFF", "OPT_STR.CNS.BMP", { { 0,288},{ 184, 32 } });
 	///////////////////옵션 관련
 
 

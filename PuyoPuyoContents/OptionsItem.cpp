@@ -27,6 +27,17 @@ void AOptionsItem::SetupItem(std::string_view _SpriteName, int _Index)
 	OptItemRenderer->SetComponentScale(Sprite->GetSpriteData(_Index).Transform.Scale);
 }
 
+void AOptionsItem::Select()
+{
+	if (!SelectActions.empty())
+	{
+		for (auto Action : SelectActions)
+		{
+			Action();
+		}
+	}
+}
+
 void AOptionsItem::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);

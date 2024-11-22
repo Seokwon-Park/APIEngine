@@ -19,6 +19,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
+	class AOptionsList* OptionsList;
+	class AOptionsList* SoundOptionsList;
 };
 

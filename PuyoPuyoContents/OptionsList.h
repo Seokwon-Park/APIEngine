@@ -15,9 +15,10 @@ public:
 	AOptionsList& operator=(const AOptionsList& _Other) = delete;
 	AOptionsList& operator=(AOptionsList&& _Other) noexcept = delete;
 
+	inline void InitList() { CurIndex = 0; }
 	void SetupList(float _ItemHeight, FVector2D _Offset);
 	
-	void operator+=(class AOptionsItem* _Item)
+	void AddItem(class AOptionsItem* _Item)
 	{
 		ItemList.push_back(_Item);
 	}
@@ -35,6 +36,11 @@ public:
 	inline AOptionsItem* GetSelectedItem()
 	{
 		return ItemList[CurIndex];
+	}
+	
+	inline void Execute()
+	{
+		ItemList[CurIndex]->Select();
 	}
 
 	inline void PrevItem()
