@@ -173,7 +173,15 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="OptionsMenu.h">
+    <ClInclude Include="OptionsList.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="OptionsManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="OptionsItem.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -355,7 +363,15 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="OptionsMenu.cpp">
+    <ClCompile Include="OptionsList.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OptionsManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OptionsItem.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -64,11 +64,11 @@
     <Filter Include="ContentsObject\Play\Text">
       <UniqueIdentifier>{51ab49ce-8988-4e0d-9684-0c8bdb7fb779}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Play\Option">
-      <UniqueIdentifier>{5667ffe1-d0df-4993-a9a9-89bb542c4476}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Play\Puzzle">
       <UniqueIdentifier>{4f1d5c39-d2b0-4126-9ce1-a1d176e1d716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Option">
+      <UniqueIdentifier>{5667ffe1-d0df-4993-a9a9-89bb542c4476}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -196,7 +196,7 @@
       <Filter>ContentsObject\Global</Filter>
     </ClCompile>
     <ClCompile Include="OptionsBackground.cpp">
-      <Filter>ContentsObject\Play\Option</Filter>
+      <Filter>ContentsObject\Option</Filter>
     </ClCompile>
     <ClCompile Include="OptionsGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
@@ -207,8 +207,14 @@
     <ClCompile Include="GameSettings.cpp">
       <Filter>ContentsObject\Global</Filter>
     </ClCompile>
-    <ClCompile Include="OptionsMenu.cpp">
-      <Filter>ContentsObject\Play\Option</Filter>
+    <ClCompile Include="OptionsItem.cpp">
+      <Filter>ContentsObject\Option</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsManager.cpp">
+      <Filter>ContentsObject\Option</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsList.cpp">
+      <Filter>ContentsObject\Option</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -342,7 +348,7 @@
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
     <ClInclude Include="OptionsBackground.h">
-      <Filter>ContentsObject\Play\Option</Filter>
+      <Filter>ContentsObject\Option</Filter>
     </ClInclude>
     <ClInclude Include="OptionsGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
@@ -353,8 +359,14 @@
     <ClInclude Include="GameSettings.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
-    <ClInclude Include="OptionsMenu.h">
-      <Filter>ContentsObject\Play\Option</Filter>
+    <ClInclude Include="OptionsItem.h">
+      <Filter>ContentsObject\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsManager.h">
+      <Filter>ContentsObject\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsList.h">
+      <Filter>ContentsObject\Option</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

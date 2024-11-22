@@ -48,6 +48,7 @@ public:
 	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }
 	void SetPivot(EPivotType _Type);
 	inline void SetPivot(FVector2D _Pivot) { Pivot = _Pivot; }
+	void UpdatePivot();
 
 	inline void SetAlpha(int _Value)
 	{
@@ -74,6 +75,7 @@ private:
 	bool RemoveBackground;
 	UColor RemoveColor;
 	FIntPoint RemoveCoord = FIntPoint::ZERO;
+	EPivotType PivotType = EPivotType::MiddleCenter;
 	FVector2D Pivot;
 
 	int Alpha = 255;

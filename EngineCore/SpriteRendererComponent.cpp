@@ -122,6 +122,8 @@ void USpriteRendererComponent::Render()
 		Transform.Location = Transform.Location - (Level->CameraPos);
 	}
 
+	UpdatePivot();
+
 	Transform.Location += Pivot;
 
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
@@ -177,12 +179,16 @@ FVector2D USpriteRendererComponent::SetSpriteScale(float _Ratio, int _Index)
 
 void USpriteRendererComponent::SetPivot(EPivotType _Type)
 {
-	if (EPivotType::MiddleCenter == _Type)
+	PivotType = _Type;
+}
+
+void USpriteRendererComponent::UpdatePivot()
+{
+	if (EPivotType::MiddleCenter == PivotType)
 	{
 		SetPivot(FVector2D::ZERO);
 		return;
 	}
-
 	if (nullptr == Sprite)
 	{
 		MSGASSERT("이미지를 기반으로한 피봇설정은 스프라이트가 세팅되지 않은 상태에서는 호출할수 없습니다");
@@ -191,7 +197,7 @@ void USpriteRendererComponent::SetPivot(EPivotType _Type)
 
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
-	switch (_Type)
+	switch (PivotType)
 	{
 	case EPivotType::TopLeft:
 		Pivot = CurData.Transform.Scale.Half();
@@ -230,7 +236,6 @@ void USpriteRendererComponent::SetPivot(EPivotType _Type)
 	default:
 		break;
 	}
-
 }
 
 

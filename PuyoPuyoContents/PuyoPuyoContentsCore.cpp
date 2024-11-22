@@ -225,7 +225,12 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,160},{ 288, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,192},{ 352, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,224},{ 224, 32 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,0},{ 288, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,352},{ 320, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,384},{ 352, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,416},{ 224, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,448},{ 192, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,480},{ 288, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("SOUNDMENU", "OPT_STR.CNS.BMP", { { 0,512},{ 192, 32 } });
 
 	///////////////////옵션 관련
 
