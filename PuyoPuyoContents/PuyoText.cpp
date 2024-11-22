@@ -10,7 +10,7 @@ APuyoText::APuyoText()
 	ColorSprites.push_back("PUYO_BP.CNS.BMP");
 	ColorSprites.push_back("PUYO_G_.CNS.BMP");
 	TextSpriteRenderers.reserve(MAXLEN);
-	for (size_t i = 0; i < MAXLEN; i++)
+	for (int i = 0; i < MAXLEN; i++)
 	{
 		USpriteRendererComponent* Sr = CreateDefaultSubobject<USpriteRendererComponent>("TextRenderer" + std::to_string(i));
 		Sr->SetSprite(ColorSprites[0], 36);
@@ -18,6 +18,8 @@ APuyoText::APuyoText()
 		Sr->SetRemoveBackground(true);
 		Sr->SetPivot(EPivotType::TopLeft);
 		TextSpriteRenderers.push_back(Sr);
+		TextSpriteRenderers[i]->SetComponentLocation({ i * 16,0 });
+
 	}
 	ChMap.resize(127, 0);
 	for (int i = 0; i < 10; i++)
@@ -63,7 +65,6 @@ void APuyoText::SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign
 
 	for (int i = 0; i < TextLength; i++)
 	{
-		TextSpriteRenderers[i]->SetComponentLocation({ i * 16,0 });
 	}
 
 	for (size_t i = 0; i < MAXLEN; i++)

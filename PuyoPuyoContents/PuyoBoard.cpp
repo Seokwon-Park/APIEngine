@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "PuyoBoard.h"
 #include "PuyoText.h"
+#include "OffsetText.h"
 #include "PuyoBoomFX.h"
 #include "PuyoChainText.h"
 #include "GameOverText.h"
@@ -679,6 +680,9 @@ void APuyoBoard::PuyoDestroyLogic()
 		// 내가 가진 예고 뿌요가 있으면
 		if (WarnActor->HasWarn())
 		{
+			AOffsetText* OffText = GetWorld()->SpawnActor<AOffsetText>();
+			OffText->SetActorLocation(GetActorLocation() + FVector2D(96.0f, 0.0f));
+
 			if (WarnActor->GetWarnNum() < AttackAmount)
 			{
 				SpawnAttack(WarnActor->GetWarnNum()-AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), true);

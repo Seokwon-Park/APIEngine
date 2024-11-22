@@ -32,7 +32,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 private:
-	const size_t MAXLEN = 18;
+	const int MAXLEN = 18;
 	std::vector<int> ChMap;
 	size_t TextLength;
 	std::vector<USpriteRendererComponent*> TextSpriteRenderers;

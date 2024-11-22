@@ -21,6 +21,5 @@ public:
 protected:
 
 private:
-	int CurLevel = 1;
 };
 

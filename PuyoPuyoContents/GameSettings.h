@@ -5,7 +5,6 @@ class GameSettings
 {
 public:
 	// constrcuter destructer
-	GameSettings();
 	~GameSettings();
 
 	// delete Function
@@ -22,11 +21,12 @@ public:
 
 	EPuyoGameMode GameMode;
 	int MapIndex = 0;
-	
-
+	int CurLevel = 4;
+	std::vector<std::vector<bool>> ClearState;
 protected:
 
 private:
+	GameSettings();
 
 };
 

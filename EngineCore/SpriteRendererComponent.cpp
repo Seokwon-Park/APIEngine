@@ -127,14 +127,14 @@ void USpriteRendererComponent::Render()
 	Transform.Location += Pivot;
 
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	if (true == RemoveBackground)
+	/*if (true == RemoveBackground)
 	{
 		RemoveColor = CurData.Image->GetPixelColor(RemoveCoord, { 0,0,0,0 });
 	}
 	else
 	{
 		RemoveColor = UColor(255, 0, 255, 0);
-	}
+	}*/
 
 	if (Alpha == 255)
 	{
@@ -175,6 +175,12 @@ FVector2D USpriteRendererComponent::SetSpriteScale(float _Ratio, int _Index)
 	SetComponentScale(CurData.Transform.Scale * _Ratio);
 
 	return Scale;
+}
+
+void USpriteRendererComponent::SetRemoveColor(FIntPoint _Coord)
+{
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	RemoveColor = CurData.Image->GetPixelColor(_Coord, { 0,0,0,0 });
 }
 
 void USpriteRendererComponent::SetPivot(EPivotType _Type)

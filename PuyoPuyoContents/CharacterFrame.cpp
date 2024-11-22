@@ -10,9 +10,9 @@ ACharacterFrame::ACharacterFrame()
 	FrameRenderer->SetPivot(EPivotType::TopLeft);
 	
 	CharacterImage = CreateDefaultSubobject<USpriteRendererComponent>("");
-	CharacterImage->SetRemoveBackground(true);
-	CharacterImage->SetRemoveColor({ 150,108 });
 	CharacterImage->SetSprite("ARLE");
+	CharacterImage->SetRemoveBackground(true);
+	CharacterImage->SetRemoveColor(UColor(6, 7, 6, 255)); 
 	CharacterImage->SetComponentScale({ 160,112 });
 	CharacterImage->SetComponentLocation({ 8,8});
 	CharacterImage->SetPivot(EPivotType::TopLeft);
@@ -29,6 +29,13 @@ ACharacterFrame::~ACharacterFrame()
 {
 }
 
+
+void ACharacterFrame::SetSprite(std::string_view SpriteName, int Index)
+{
+	CharacterImage->SetSprite(SpriteName, Index);
+	
+
+}
 
 void ACharacterFrame::Tick(float _DeltaTime)
 {

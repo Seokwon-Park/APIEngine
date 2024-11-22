@@ -31,10 +31,10 @@ void AIntroGameMode::BeginPlay()
 	APublisherLogo* Logo = GetWorld()->SpawnActor<APublisherLogo>();
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();
 	AThunderBackground* ThunderBackground = GetWorld()->SpawnActor<AThunderBackground>();
-	AOpeningPuyo* OPPuyo= GetWorld()->SpawnActor<AOpeningPuyo>();
-	AOpeningRoll* OPRoll= GetWorld()->SpawnActor<AOpeningRoll>();
-	AOpeningCar* OPCar= GetWorld()->SpawnActor<AOpeningCar>();
-	AOpeningArle* OPArle= GetWorld()->SpawnActor<AOpeningArle>();
+	AOpeningPuyo* OPPuyo = GetWorld()->SpawnActor<AOpeningPuyo>();
+	AOpeningRoll* OPRoll = GetWorld()->SpawnActor<AOpeningRoll>();
+	AOpeningCar* OPCar = GetWorld()->SpawnActor<AOpeningCar>();
+	AOpeningArle* OPArle = GetWorld()->SpawnActor<AOpeningArle>();
 	Fader = GetWorld()->SpawnActor<AFader>();
 
 	// 인트로 애니메이션 설정
@@ -43,12 +43,15 @@ void AIntroGameMode::BeginPlay()
 	// 페이드 아웃 델리게이트
 	UEngineDelegate FadeOutDelegate;
 	FadeOutDelegate += std::bind(&AFader::SetActive, Fader, true);
-	FadeOutDelegate += std::bind(&AFader::FadeOut, Fader, 1.0f);
+	FadeOutDelegate += std::bind(&AFader::FadeOut, Fader, 0.5f);
 
 	// 페이드 인 델리게이트
 	UEngineDelegate FadeInDelegate;
 	FadeInDelegate += std::bind(&AFader::SetActive, Fader, true);
-	FadeInDelegate += std::bind(&AFader::FadeIn, Fader, 1.0f);
+	FadeInDelegate += std::bind(&AFader::FadeIn, Fader, 0.5f);
+
+	UEngineDelegate FaderActivate;
+	FadeInDelegate += std::bind(&AFader::SetActive, Fader, true);
 
 	UEngineDelegate InitDelegate;
 	InitDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, false);
@@ -78,50 +81,51 @@ void AIntroGameMode::BeginPlay()
 	UEngineDelegate OPRollDelegate;
 	OPRollDelegate += std::bind(&AFader::SetActive, Fader, false);
 	OPRollDelegate += std::bind(&AIntroBackground::SetActive, Background, true);
-	OPRollDelegate += std::bind(&AOpeningRoll::SetActorLocation, OPRoll, FVector2D(0,0));
+	OPRollDelegate += std::bind(&AOpeningRoll::SetActorLocation, OPRoll, FVector2D(0, 0));
 	OPRollDelegate += std::bind(&AOpeningRoll::SetActive, OPRoll, true);
+	OPRollDelegate += std::bind(&AOpeningRoll::Init, OPRoll);
 
 	//게임 켰을때 페이드인하고 화면 초기화
 	UEngineEventSystem::AddEvent(0.0f, std::bind(&AFader::FadeIn, Fader, 1.0f));
 	UEngineEventSystem::AddEvent(0.0f, InitDelegate);
 	UEngineEventSystem::AddEvent(0.0f, std::bind(&APublisherLogo::SetActive, Logo, true));
 	//로고 화면 종료
-	UEngineEventSystem::AddEvent(2.0f, FadeOutDelegate);
+	UEngineEventSystem::AddEvent(1.5f, FadeOutDelegate);
 
-	//오프닝 뿌요 나옴
-	UEngineEventSystem::AddEvent(3.0f, InitDelegate);
-	UEngineEventSystem::AddEvent(3.0f, OPPuyoDelegate);
+	//오프닝 뿌요 나옴	
+	UEngineEventSystem::AddEvent(2.0f, InitDelegate);
+	UEngineEventSystem::AddEvent(2.0f, OPPuyoDelegate);
 	//오프닝 뿌요 화면 종료
-	UEngineEventSystem::AddEvent(3.5f, FadeOutDelegate);
+	UEngineEventSystem::AddEvent(3.0f, FadeOutDelegate);
 
 	//오프닝 롤 나옴
-	UEngineEventSystem::AddEvent(4.5f, InitDelegate);
-	UEngineEventSystem::AddEvent(4.5f, OPRollDelegate);
+	UEngineEventSystem::AddEvent(3.5f, InitDelegate);
+	UEngineEventSystem::AddEvent(3.5f, OPRollDelegate);
 	//오프닝 롤 화면 종료
-	UEngineEventSystem::AddEvent(5.5f, FadeOutDelegate);
+	UEngineEventSystem::AddEvent(4.5f, FadeOutDelegate);
 
 	//오프닝 카벙클
-	UEngineEventSystem::AddEvent(6.5f, InitDelegate);
-	UEngineEventSystem::AddEvent(6.5f, OPCarDelegate);
+	UEngineEventSystem::AddEvent(5.0f, InitDelegate);
+	UEngineEventSystem::AddEvent(5.0f, OPCarDelegate);
 	//오프닝 카벙클 화면 종료
-	UEngineEventSystem::AddEvent(7.5f, FadeOutDelegate);
+	UEngineEventSystem::AddEvent(5.5f, FadeOutDelegate);
 
 
 	//오프닝 롤 다시 나옴
-	UEngineEventSystem::AddEvent(8.5f, InitDelegate);
-	UEngineEventSystem::AddEvent(8.5f, OPRollDelegate);
+	UEngineEventSystem::AddEvent(6.0f, InitDelegate);
+	UEngineEventSystem::AddEvent(6.0f, OPRollDelegate);
 	//오프닝 롤 화면 종료
-	UEngineEventSystem::AddEvent(9.0f, FadeOutDelegate);
+	UEngineEventSystem::AddEvent(7.0f, FadeOutDelegate);
 
 	//오프닝 아르르
-	UEngineEventSystem::AddEvent(10.0f, InitDelegate);
-	UEngineEventSystem::AddEvent(10.0f, OPArleDelegate);
+	UEngineEventSystem::AddEvent(7.5f, InitDelegate);
+	UEngineEventSystem::AddEvent(7.5f, OPArleDelegate);
 	//오프닝 아르르 화면 종료
-	UEngineEventSystem::AddEvent(11.0f, FadeOutDelegate);
+	UEngineEventSystem::AddEvent(9.5f, FadeOutDelegate);
 
 	//오프닝 롤 마지막
-	UEngineEventSystem::AddEvent(12.0f, InitDelegate);
-	UEngineEventSystem::AddEvent(12.0f, OPRollDelegate);
+	UEngineEventSystem::AddEvent(10.0f, InitDelegate);
+	UEngineEventSystem::AddEvent(10.0f, OPRollDelegate);
 }
 
 

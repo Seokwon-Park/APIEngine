@@ -157,6 +157,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EnemySelect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EnemySelector.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameOverText.h">
       <SubType>
       </SubType>
@@ -296,6 +304,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SoloText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ThunderBackground.h">
       <SubType>
       </SubType>
@@ -337,6 +349,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Tower.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TrainingFrame.h">
       <SubType>
       </SubType>
@@ -348,6 +364,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharacterFrame.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EnemySelect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EnemySelector.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -491,6 +515,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SoloText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ThunderBackground.cpp">
       <SubType>
       </SubType>
@@ -529,6 +557,10 @@
     </ClCompile>
     <ClCompile Include="DummyPawn.cpp" />
     <ClCompile Include="IntroGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
       <SubType>
       </SubType>
     </ClCompile>

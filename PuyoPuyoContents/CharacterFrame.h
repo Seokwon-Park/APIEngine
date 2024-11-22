@@ -15,6 +15,7 @@ public:
 	ACharacterFrame& operator=(const ACharacterFrame& _Other) = delete;
 	ACharacterFrame& operator=(ACharacterFrame&& _Other) noexcept = delete;
 
+	void SetSprite(std::string_view SpriteName, int Index);
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;

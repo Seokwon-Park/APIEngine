@@ -4,4 +4,5 @@
 
 #include "DummyPawn.h"	
 #include "ContentsEnums.h"
+#include "ConstData.h"
 #include "GameSettings.h"

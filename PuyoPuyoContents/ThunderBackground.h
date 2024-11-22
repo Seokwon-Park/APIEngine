@@ -23,5 +23,6 @@ private:
 	USpriteRendererComponent* Sr;
 	USpriteRendererComponent* YellowSr;
 	bool Temp = false;
+	float Timer = 0.0f;
 };
 

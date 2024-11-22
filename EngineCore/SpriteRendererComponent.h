@@ -43,8 +43,9 @@ public:
 	inline std::string GetCurSpriteName()const { return Sprite->GetName(); }
 	template <typename EnumType>
 	inline void SetOrder(EnumType _Order) { SetOrder(static_cast<int>(_Order)); }
-	inline void SetRemoveBackground(bool _Value) { RemoveBackground = _Value; }
-	inline void SetRemoveColor(FIntPoint _Coord) { RemoveCoord = _Coord; }
+	inline void SetRemoveBackground(bool _Value) { SetRemoveColor(FIntPoint::ZERO); RemoveBackground = _Value; }
+	void SetRemoveColor(FIntPoint _Coord);
+	inline void SetRemoveColor(UColor _Color) { RemoveColor = _Color; };
 	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }
 	void SetPivot(EPivotType _Type);
 	inline void SetPivot(FVector2D _Pivot) { Pivot = _Pivot; }

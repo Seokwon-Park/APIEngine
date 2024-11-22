@@ -219,6 +219,18 @@
     <ClCompile Include="OptionsValue.cpp">
       <Filter>ContentsObject\Option</Filter>
     </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySelect.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloText.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySelector.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -373,6 +385,18 @@
     </ClInclude>
     <ClInclude Include="OptionsValue.h">
       <Filter>ContentsObject\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySelect.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloText.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySelector.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,3 +9,8 @@ const int MultiCPTable[25] = { 0, 1, 8 ,16, 32, 64 ,96 ,128 ,160 ,192 ,224 ,256 
 const int ColorBonusTable[6] = { 0,0,3,6,12,24 };
 const int GroupBonusTable[12] = { 0,0,0,0,0,2,3,4,5,6,7,10 };
 
+const int LevelEnemies[7] = { 0,8,6,5,4,2,1 };
+const int LevelEnemiesPfsum[7] = { 0,8,14,19,23,25,26 };
+
+
+

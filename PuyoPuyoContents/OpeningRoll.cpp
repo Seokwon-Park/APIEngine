@@ -20,10 +20,12 @@ void AOpeningRoll::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	Timer += _DeltaTime;
 	if (GetActorLocation().Y + Sr->GetComponentLocation().Y <= 0.0f)
 	{
-		AddActorLocation(FVector2D::DOWN * _DeltaTime * 50.0f);
+		Sr->SetComponentLocation(FVector2D::Lerp({ 0,-160 }, { 0,0 }, Timer/1.0f));
 	}
+	
 }
 void AOpeningRoll::BeginPlay()
 {

@@ -26,16 +26,22 @@ void AThunderBackground::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	if (Temp)
+	Timer -= _DeltaTime;
+	
+	if (Timer < 0.0f)
 	{
-		Sr->SetRemoveColor({ 639,479 });
-	}
-	else
-	{
+		if (Temp)
+		{
+			Sr->SetRemoveColor({ 639,479 });
+		}
+		else
+		{
 
-		Sr->SetRemoveColor({ 0,0 });
+			Sr->SetRemoveColor({ 0,0 });
+		}
+		Temp = !Temp;
+		Timer = 0.2f;
 	}
-	Temp = !Temp;
 }
 void AThunderBackground::BeginPlay()
 {

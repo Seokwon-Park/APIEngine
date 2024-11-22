@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineCore/AnimatorComponent.h>
 #include <EngineCore/SpriteRendererComponent.h>
 
 // 클래스 설명 :
@@ -20,6 +21,7 @@ protected:
 	void BeginPlay()override;
 
 private:
+	UAnimatorComponent* Anim;
 	USpriteRendererComponent* OPCar;
 	USpriteRendererComponent* OPCarJewel;
 };
