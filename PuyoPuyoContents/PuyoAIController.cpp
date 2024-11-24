@@ -10,8 +10,6 @@ APuyoAIController::~APuyoAIController()
 }
 
 
-
-
 void APuyoAIController::ReceiveBlockColors()
 {
 	BlockColors = Board->GetBlockInfo();

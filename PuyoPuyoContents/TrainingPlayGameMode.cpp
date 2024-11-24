@@ -18,8 +18,10 @@ void ATrainingPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
-	Background->SetBackground(EPuyoGameMode::Training, 0);
 	Frame->SetFrame(EPuyoGameMode::Training, 0);
+	Background->SetBackground(EPuyoGameMode::Training, 0);
+	BotBackgroundL->SetBackground(EPuyoGameMode::Training, 0);
+	BotBackgroundR->SetBackground(EPuyoGameMode::Training, 1);
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);

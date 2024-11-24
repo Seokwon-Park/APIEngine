@@ -26,6 +26,21 @@ void APlayGameMode::BeginPlay()
 
 	Frame = GetWorld()->SpawnActor<APlayFrame>();
 	Background = GetWorld()->SpawnActor<APlayBackground>();
+	BotBackgroundL = GetWorld()->SpawnActor<ABottomBackground>();
+	BotBackgroundL->SetActorLocation({ 32,416 });
+	BotBackgroundR = GetWorld()->SpawnActor<ABottomBackground>();
+	BotBackgroundR->SetActorLocation({ 416,416 });
+
+	BotFrameL.resize(6, nullptr);
+	BotFrameR.resize(6, nullptr);
+	for (int i = 0; i < 6; i++)
+	{
+		BotFrameL[i] = GetWorld()->SpawnActor<ABottomFrame>();
+		BotFrameL[i]->SetActorLocation(FVector2D(32, 416) + FVector2D(i*32, 0));
+
+		BotFrameR[i] = GetWorld()->SpawnActor<ABottomFrame>();
+		BotFrameR[i]->SetActorLocation(FVector2D(416, 416) + FVector2D(i * 32, 0));
+	}
 
 	PuyoBoardP1 = GetWorld()->SpawnActor<APuyoBoard>();
 	//PuyoBoardP1->SetActive(false);
@@ -69,6 +84,7 @@ void APlayGameMode::BeginPlay()
 		Settings.ScoreActor = P1Score;
 		Settings.CounterBoardActor = PuyoBoardP2;
 		Settings.ShakePostProcess = ShakerP1;
+		Settings.BottomFrames = BotFrameL;
 	}
 	PuyoBoardP1->SetupPuyoBoard(Settings);
 	//PuyoBoardP1->SetKey(EKey::G, EKey::H, EKey::S, EKey::A, EKey::D);
@@ -88,6 +104,7 @@ void APlayGameMode::BeginPlay()
 		Settings.ScoreActor = P2Score;
 		Settings.CounterBoardActor = PuyoBoardP1;
 		Settings.ShakePostProcess = ShakerP2;
+		Settings.BottomFrames = BotFrameR;
 	}
 	PuyoBoardP2->SetupPuyoBoard(Settings);
 	//PuyoBoardP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);

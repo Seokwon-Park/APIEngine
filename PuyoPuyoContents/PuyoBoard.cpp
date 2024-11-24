@@ -28,6 +28,9 @@ APuyoBoard::APuyoBoard()
 	PauseText->SetPivot(EPivotType::TopLeft);
 	PauseText->SetOrder(100);
 	PauseText->SetActive(false);
+
+	IsDrop.resize(6, false);
+
 }
 
 void APuyoBoard::SmoothRotate(FVector2D _SlavePuyoPos, FVector2D _MainPuyoPos, float _DeltaTime, bool _IsClockwise) {
@@ -94,7 +97,7 @@ APuyoBoard::~APuyoBoard()
 {
 }
 
-void APuyoBoard::BeginPlay() 
+void APuyoBoard::BeginPlay()
 {
 	Super::BeginPlay();
 	PuyoDropTimer = PuyoDropDelay;
@@ -233,6 +236,7 @@ void APuyoBoard::SetupPuyoBoard(const PuyoBoardSettings& _Settings)
 	ShakePostProcess = _Settings.ShakePostProcess;
 	BoardColor = _Settings.BoardColor;
 	WarnActor = _Settings.WarnActor;
+	BottomFrames = _Settings.BottomFrames;
 	Board.clear();
 	Board.resize(BoardSize.Y, std::vector<APuyo*>(BoardSize.X, nullptr));
 	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
@@ -535,7 +539,7 @@ void APuyoBoard::PuyoCheckLogic()
 	for (FIntPoint Point : PuyoCheckList)
 	{
 		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
-		if(Checked[Point.Y][Point.X] == true) continue;
+		if (Checked[Point.Y][Point.X] == true) continue;
 		// 추후 BFS 함수로 추출
 		std::queue<FIntPoint> Queue;
 
@@ -686,7 +690,7 @@ void APuyoBoard::PuyoDestroyLogic()
 
 			if (WarnActor->GetWarnNum() < AttackAmount)
 			{
-				SpawnAttack(WarnActor->GetWarnNum()-AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), true);
+				SpawnAttack(WarnActor->GetWarnNum() - AttackAmount, GetLocationByIndexOnBoard(*PuyoDestroyList.rbegin()), true);
 				CounterBoardActor->WarnActor->SubWarnNum(WarnActor->GetWarnNum() - AttackAmount);
 				WarnActor->SetWarnNum(0);
 
@@ -698,7 +702,7 @@ void APuyoBoard::PuyoDestroyLogic()
 				//계산된 양만큼 줄인다.
 				WarnActor->SubWarnNum(AttackAmount);
 			}
-			
+
 		}
 		else
 		{
@@ -809,17 +813,25 @@ void APuyoBoard::PuyoUpdateLogic()
 
 void APuyoBoard::PuyoGameOverLogic()
 {
-	int L = 2;
-	int R = 3;
-	
-
-	for (int i = 0; i < BoardSize.Y; i++)
+	Timer += UEngineAPICore::GetEngineDeltaTime();
+	if (Timer > Delay)
 	{
-		for (int j = 0; j < BoardSize.X; j++)
+		Timer = 0.0f;
+		if (DropIndex < 6)
+		{
+			IsDrop[DropOrder[DropIndex++]] = true;
+		}
+	}
+	for (int j = 0; j < BottomFrames.size(); j++)
+	{
+		if (!IsDrop[j]) continue;
+		BottomFrames[j]->SetActorLocation(BottomFrames[j]->GetActorLocation() + FVector2D(0, 1) * UEngineAPICore::GetEngineDeltaTime() * 200.0f);
+		for (int i = 0; i < BoardSize.Y; i++)
 		{
 			if (Board[i][j] != nullptr)
 			{
-				Board[i][j]->AddActorLocation(FVector2D::DOWN);
+				Board[i][j]->AddActorLocation(FVector2D::DOWN* UEngineAPICore::GetEngineDeltaTime()*200.0f);
+
 			}
 		}
 	}
@@ -1036,9 +1048,9 @@ void APuyoBoard::SpawnAttack(int _Amount, FVector2D _StartPos, bool _IsOffset) /
 	ChainFX->SetActorLocation(_StartPos);
 	APuyoWarn* Target = nullptr;
 	FVector2D MyLocation = GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
-	FVector2D OpLocation= CounterBoardActor->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
+	FVector2D OpLocation = CounterBoardActor->GetActorLocation() + FVector2D(PuyoSize.X * 3.0f, 32.0f);
 	bool IsCounter = _Amount < 0;
-	
+
 	if (_IsOffset)
 	{
 		Target = this->WarnActor;

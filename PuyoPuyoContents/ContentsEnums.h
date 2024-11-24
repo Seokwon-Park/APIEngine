@@ -10,9 +10,14 @@ enum class EPuyoGameMode
 enum class ERenderLayer
 {
 	Background = -1000,
+	BottomBackground = -150,
+	BottomCover = -100,
 	Play = 0,
 	Frame = 100,
-	Warn = 105,
+	
+	
+	
+	Warn = 110,
 };
 
 //»Ñ¿ä»Ñ¿ä »ö
@@ -32,5 +37,6 @@ enum class EPuyoBoardColor
 	Red,
 	Blue,
 	Green,
+	Black
 };
 

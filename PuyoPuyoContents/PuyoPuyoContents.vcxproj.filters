@@ -231,6 +231,18 @@
     <ClCompile Include="EnemySelector.cpp">
       <Filter>ContentsObject\Play\Solo</Filter>
     </ClCompile>
+    <ClCompile Include="BottomBackground.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <Filter>ContentsObject\Menu\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomFrame.cpp">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="NameText.cpp">
+      <Filter>ContentsObject\Play\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -397,6 +409,18 @@
     </ClInclude>
     <ClInclude Include="EnemySelector.h">
       <Filter>ContentsObject\Play\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomBackground.h">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
+      <Filter>ContentsObject\Menu\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomFrame.h">
+      <Filter>ContentsObject\Play\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="NameText.h">
+      <Filter>ContentsObject\Play\Text</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

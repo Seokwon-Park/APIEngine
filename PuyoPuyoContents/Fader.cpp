@@ -8,7 +8,6 @@ AFader::AFader()
 	FadeRenderer->SetComponentScale(UEngineAPICore::GetEngineWindow().GetWindowSize());
 	FadeRenderer->SetAlpha(0);
 	FadeRenderer->SetPivot(EPivotType::TopLeft);
-
 }
 
 AFader::~AFader()

@@ -17,16 +17,10 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void MoveToScene(std::string _SceneName);
-	void SelectMenu();
-	void MoveMenu(int _Dir);
+
 protected:
 
 private:
-	const int MenuSize = 5;
-	float InputDelay = 0.5f;
-	int CurMenuIndex = 0;
-	std::vector<class ACarbuncleMenu*> Menus;
-	std::vector<std::string> LevelNames;
+
 };
 

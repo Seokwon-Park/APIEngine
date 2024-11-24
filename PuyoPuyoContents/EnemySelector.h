@@ -27,6 +27,7 @@ private:
 	int CurIndex = 0;
 	float Timer = 0.0f;
 	float Delay = 0.01f;
+	float SelectTimer = 0.0f;
 	std::vector<AEnemySelect*> EnemyList;
 	ACharacterFrame* Frame;
 };

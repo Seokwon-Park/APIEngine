@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/SpriteRendererComponent.h>
 
-// 설명 : 레벨 5까지만 나온다. ?
+// 설명 : 적을 선택하세요를 표시하는 텍스트 액터
 class ASoloText : public AActor
 {
 public:

@@ -5,7 +5,7 @@ APlayFrame::APlayFrame()
 {
 	FrameSr.resize(7, nullptr);
 
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		FrameSr[i] = CreateDefaultSubobject<USpriteRendererComponent>("PlayFrame" + std::to_string(i));
 		FrameSr[i]->SetSprite("LV"+FramePartName[i], 0);
@@ -47,19 +47,19 @@ void APlayFrame::SetFrame(EPuyoGameMode _Mode, int _StageIndex)
 	switch (_Mode)
 	{
 	case EPuyoGameMode::Solo:
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			FrameSr[i]->SetSprite("LV" + FramePartName[i], _StageIndex);
 		}
 		break;
 	case EPuyoGameMode::Versus:
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			FrameSr[i]->SetSprite("VS" + FramePartName[i], _StageIndex);
 		}
 		break;
 	case EPuyoGameMode::Training:
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			FrameSr[i]->SetActive(false);
 		}

@@ -2,6 +2,9 @@
 #include "PuyoBoard.h"
 #include "PlayFrame.h"
 #include "PlayBackground.h"
+#include "BottomFrame.h"
+#include "BottomBackground.h"
+
 
 // Ό³Έν :
 class APlayGameMode : public AGameMode
@@ -27,6 +30,10 @@ protected:
 
 	APlayFrame* Frame;
 	APlayBackground* Background;
+	ABottomBackground* BotBackgroundL;
+	ABottomBackground* BotBackgroundR;
+	std::vector<ABottomFrame*> BotFrameL;
+	std::vector<ABottomFrame*> BotFrameR;
 private:
 
 };

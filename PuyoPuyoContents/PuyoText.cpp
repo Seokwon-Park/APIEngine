@@ -35,6 +35,8 @@ APuyoText::APuyoText()
 	}
 	ChMap[' '] = 10 + 26;
 	ChMap['*'] = 40;
+	ChMap['-'] = 38;
+
 }
 
 APuyoText::~APuyoText()

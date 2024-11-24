@@ -17,7 +17,16 @@ void ASoloPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
-	Background->SetBackground(EPuyoGameMode::Solo, 0);
+	Frame->SetFrame(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
+	Background->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel-1);
+	BotBackgroundL->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel-1);
+	BotBackgroundR->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel-1);
+
+	for (int i = 0; i < 6; i++)
+	{
+		BotFrameL[i]->SetFrame(EPuyoGameMode::Solo, 12 * (GameSettings::GetInstance().CurLevel - 1) + i);
+		BotFrameR[i]->SetFrame(EPuyoGameMode::Solo, 12 * (GameSettings::GetInstance().CurLevel - 1) + i + 6);
+	}
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);

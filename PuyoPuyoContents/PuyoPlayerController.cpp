@@ -33,6 +33,11 @@ void APuyoPlayerController::BeginPlay()
 
 	// 일시 정지
 	InputComponent->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, Board));
+
+	if (GameSettings::GetInstance().GameMode == EPuyoGameMode::Solo)
+	{
+		InputComponent->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, Board->GetCounterBoard()));
+	}
 	//InputComponent->BindAction();
 }
 

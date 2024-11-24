@@ -1,6 +1,12 @@
 #pragma once
 #include <EngineCore/SpriteRendererComponent.h>
 
+enum class EWarningState {
+	Idle,        // 대기 상태
+	Gathering,   // 특정 위치로 이동 중
+	Calculate,     // 모인 상태 유지
+	Returning    // 원래 자리로 복귀 중
+};
 // 설명 :
 class APuyoWarn : public AActor
 {
@@ -32,8 +38,11 @@ private:
 	const int WarnUnit[6] = { 1,6,30, 200, 300, 420 };
 	FVector2D TargetPos[6];
 	FVector2D StartPos[6];
+	EWarningState State = EWarningState::Idle;
 
 	int WarnNum = 0;
+	float Timer = 0.0f;
+	float Duration = 0.2f;
 
 	std::vector<USpriteRendererComponent*> Warnings;
 

@@ -23,4 +23,6 @@ protected:
 
 private:
 	USpriteRendererComponent* OPArle;
+	std::vector<USpriteRendererComponent*> OPArleFinger;
+		
 };

@@ -3,6 +3,7 @@
 #include "PuyoWarn.h"
 #include "PuyoText.h"
 #include "PuyoBoardShakePostProcess.h"
+#include "BottomFrame.h"
 
 #include <set>
 #include <EngineCore/Actor.h>
@@ -41,7 +42,7 @@ public:
 		APuyoText* ScoreActor;
 		APuyoBoard* CounterBoardActor;
 		UPuyoBoardShakePostProcess* ShakePostProcess;
-
+		std::vector<ABottomFrame*> BottomFrames;
 	};
 	// constrcuter destructer
 	APuyoBoard();
@@ -114,6 +115,10 @@ public:
 	{
 		return CurStep;
 	}
+	inline APuyoBoard* GetCounterBoard()
+	{
+		return CounterBoardActor;
+	}
 
 	//AI용 함수
 	std::vector<std::vector<int>> GetBoardState();
@@ -148,6 +153,7 @@ public:
 
 	//일시정지
 	void PauseGame();
+	
 
 	
 protected:
@@ -156,6 +162,8 @@ private:
 	//위쪽 방향부터 반시계 방향으로 -> 위쪽 -> 왼쪽 -> 아래쪽 -> 오른쪽
 	const int Dx[4] = { 0, -1, 0, 1 };
 	const int Dy[4] = { -1, 0, 1, 0 };
+	const int DropOrder[6] = { 2,3,1,4,0,5 };
+	int DropIndex = 0;
 
 	// 난수 생성기
 	UEngineRandom RandomDevice;
@@ -259,9 +267,12 @@ private:
 	float PauseTimer = 0.5f;
 	float PauseDelay = 0.5f;
 
-	std::vector<USpriteRendererComponent*> GameOverBlock;
 	USpriteRendererComponent* GameOverBG;
 
+	std::vector<ABottomFrame*> BottomFrames;
+	std::vector<bool> IsDrop;
+	float Delay = 0.05f;
+	float Timer = 0.0f;
 
 	//여기 밑으로는 실험실 변수
 };

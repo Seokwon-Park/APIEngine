@@ -118,9 +118,9 @@ void UEngineWinImage::ChangeToGrayscale()
 			{
 				int index = y * bmp.bmWidthBytes + x;
 				BYTE gray = static_cast<BYTE>(
-					0.299 * pPixels[index] +
-					0.587 * pPixels[index + 1] +
-					0.114 * pPixels[index + 2]);
+					0.333 * pPixels[index] +
+					0.333 * pPixels[index + 1] +
+					0.334 * pPixels[index + 2]);
 				pPixels[index] =gray;
 				pPixels[index + 1] = gray;
 				pPixels[index + 2] = gray;

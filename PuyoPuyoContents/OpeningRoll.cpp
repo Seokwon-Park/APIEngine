@@ -21,9 +21,9 @@ void AOpeningRoll::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	Timer += _DeltaTime;
-	if (GetActorLocation().Y + Sr->GetComponentLocation().Y <= 0.0f)
+	if (GetActorLocation().Y + Sr->GetComponentLocation().Y <= 160.0f)
 	{
-		Sr->SetComponentLocation(FVector2D::Lerp({ 0,-160 }, { 0,0 }, Timer/1.0f));
+		Sr->SetComponentLocation(FVector2D::Lerp({ 0,-160 }, { 0,160 }, Timer/1.0f));
 	}
 	
 }

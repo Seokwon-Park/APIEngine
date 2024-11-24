@@ -153,6 +153,14 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BottomBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BottomFrame.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CharacterFrame.h">
       <SubType>
       </SubType>
@@ -170,6 +178,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="NameText.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -363,6 +379,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BottomBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BottomFrame.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CharacterFrame.cpp">
       <SubType>
       </SubType>
@@ -380,6 +404,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="NameText.cpp">
       <SubType>
       </SubType>
     </ClCompile>

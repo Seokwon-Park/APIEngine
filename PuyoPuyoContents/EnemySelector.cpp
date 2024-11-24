@@ -40,7 +40,7 @@ void AEnemySelector::Tick(float _DeltaTime)
 			CurIndex %= Size;
 			Delay *= 2.0f;
 		}
-		Frame->SetSprite("LV" + std::to_string(Level), CurIndex);
+		Frame->SetFrameState("LV" + std::to_string(Level), CurIndex);
 		EnemyList[CurIndex]->SetOn();
 		Timer = Delay;
 	}

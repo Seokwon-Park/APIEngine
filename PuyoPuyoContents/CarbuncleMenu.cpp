@@ -52,7 +52,7 @@ ACarbuncleMenu::ACarbuncleMenu()
 	LArrowRenderer = CreateDefaultSubobject<USpriteRendererComponent>("CarLArrow");
 	LArrowRenderer->SetSprite("CARLEFTARROW");
 	LArrowRenderer->SetComponentScale({ 16, 24 });
-	LArrowRenderer->SetComponentLocation({ -104, 124 }); // 72 + 24
+	LArrowRenderer->SetComponentLocation({ -100, 124 }); // 72 + 24
 	LArrowRenderer->SetRemoveBackground(true);
 	LArrowRenderer->SetPivot(EPivotType::MiddleRight);
 	LArrowRenderer->SetAnimator(LArrowAnimator);
@@ -64,7 +64,7 @@ ACarbuncleMenu::ACarbuncleMenu()
 	RArrowRenderer = CreateDefaultSubobject<USpriteRendererComponent>("CarRArrow");
 	RArrowRenderer->SetSprite("CARRIGHTARROW");
 	RArrowRenderer->SetComponentScale({ 16, 24 });
-	RArrowRenderer->SetComponentLocation({ 104, 124 }); // 72 + 24
+	RArrowRenderer->SetComponentLocation({ 100, 124 }); // 72 + 24
 	RArrowRenderer->SetRemoveBackground(true);
 	RArrowRenderer->SetPivot(EPivotType::MiddleLeft);
 	RArrowRenderer->SetAnimator(RArrowAnimator);
@@ -91,7 +91,6 @@ void ACarbuncleMenu::BeginPlay()
 	Super::BeginPlay();
 
 	//GetWorld()->BindAction(EKey::Mouseleft, KeyEvent::Down, std::bind(&ACarbuncleMenu::Test, this));
-
 }
 
 void ACarbuncleMenu::Test()
@@ -133,53 +132,9 @@ void ACarbuncleMenu::SetMenuActive()
 	RArrowAnimator->ChangeAnimation("CarFlicker");
 }
 
-void ACarbuncleMenu::PlayAnimation()
+void ACarbuncleMenu::PlayCloseAnimation()
 {
-	Timer += UEngineAPICore::GetEngineDeltaTime();
-
-	if (Timer > 0.0f && Timer < 0.33f)
-	{
-		int Index = 10 + MenuIndex;
-		HeadRenderer->SetSprite("CARHEAD", 1);
-		UBodyRenderer->SetSprite("CARUBODY", Index);
-		UBodyRenderer->SetComponentScale({ 144,40 });
-		UBodyRenderer->SetPivot(EPivotType::TopCenter);
-		DBodyRenderer->SetSprite("CARDBODY", Index);
-		DBodyRenderer->SetComponentScale({ 144,48 });
-		DBodyRenderer->SetComponentLocation({ 0, 192 });
-		DBodyRenderer->SetPivot(EPivotType::TopCenter);
-		LHandRenderer->SetSprite("CARLEFT", 3);
-		RHandRenderer->SetSprite("CARRIGHT", 3);
-		LegRenderer->SetSprite("CARLEG", 1);
-		JewelRenderer->SetActive(false);
-	}
-	else if (Timer > 0.33f && Timer < 0.66f)
-	{
-		int Index = 15 + MenuIndex;
-		HeadRenderer->SetSprite("CARHEAD", 1);
-		UBodyRenderer->SetSprite("CARUBODY", Index);
-		UBodyRenderer->SetComponentScale({ 144,56 });
-		UBodyRenderer->SetPivot(EPivotType::TopCenter);
-		DBodyRenderer->SetSprite("CARDBODY", Index);
-		DBodyRenderer->SetComponentScale({ 144,32 });
-		DBodyRenderer->SetComponentLocation({ 0, 208 });
-		DBodyRenderer->SetPivot(EPivotType::TopCenter);
-		LHandRenderer->SetSprite("CARLEFT", 3);
-		RHandRenderer->SetSprite("CARRIGHT", 3);
-		LegRenderer->SetSprite("CARLEG", 1);
-	}
-	else if (Timer > .66f)
-	{
-		int Index = 20;
-		HeadRenderer->SetSprite("CARHEAD", 1);
-		UBodyRenderer->SetSprite("CARUBODY", Index);
-		UBodyRenderer->SetComponentScale({ 144,88 });
-		UBodyRenderer->SetPivot(EPivotType::TopCenter);
-		DBodyRenderer->SetActive(false);
-		LHandRenderer->SetSprite("CARLEFT", 3);
-		RHandRenderer->SetSprite("CARRIGHT", 3);
-		LegRenderer->SetSprite("CARLEG", 1);
-	}
+	IsPlaying = true;
 }
 
 
@@ -197,14 +152,79 @@ void ACarbuncleMenu::SetupCarbuncleMenu(int _MenuIndex)
 	}
 	UBodyRenderer->SetSprite("CARUBODY", MenuIndex);
 	DBodyRenderer->SetSprite("CARDBODY", MenuIndex);
+}
 
-
-
+void ACarbuncleMenu::MoveTo(float _Amount, int _Dir)
+{
+	if (IsMoving == false)
+	{
+		IsMoving = true;
+		MoveAmount = _Amount;
+		Dir = _Dir;
+	}
 }
 
 void ACarbuncleMenu::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	/*static int i = 0;
-	BodyRenderer->SetSprite("CARBODY", 0);*/
+
+	if (IsPlaying)
+	{
+		Timer += _DeltaTime;
+		if (Timer < 0.1f)
+		{
+			int Index = 10 + MenuIndex;
+			HeadRenderer->SetSprite("CARHEAD", 1);
+			UBodyRenderer->SetSprite("CARUBODY", Index);
+			UBodyRenderer->SetComponentScale({ 144,40 });
+			UBodyRenderer->SetPivot(EPivotType::TopCenter);
+			DBodyRenderer->SetSprite("CARDBODY", Index);
+			DBodyRenderer->SetComponentScale({ 144,48 });
+			DBodyRenderer->SetComponentLocation({ 0, 192 });
+			DBodyRenderer->SetPivot(EPivotType::TopCenter);
+			LHandRenderer->SetSprite("CARLEFT", 3);
+			RHandRenderer->SetSprite("CARRIGHT", 3);
+			LegRenderer->SetSprite("CARLEG", 1);
+			JewelRenderer->SetActive(false);
+		}
+		else if(Timer < 0.2f)
+		{
+			int Index = 15 + MenuIndex;
+			HeadRenderer->SetSprite("CARHEAD", 1);
+			UBodyRenderer->SetSprite("CARUBODY", Index);
+			UBodyRenderer->SetComponentScale({ 144,56 });
+			UBodyRenderer->SetPivot(EPivotType::TopCenter);
+			DBodyRenderer->SetSprite("CARDBODY", Index);
+			DBodyRenderer->SetComponentScale({ 144,32 });
+			DBodyRenderer->SetComponentLocation({ 0, 208 });
+			DBodyRenderer->SetPivot(EPivotType::TopCenter);
+			LHandRenderer->SetSprite("CARLEFT", 3);
+			RHandRenderer->SetSprite("CARRIGHT", 3);
+			LegRenderer->SetSprite("CARLEG", 1);
+		}
+		else if (Timer < .3f)
+		{
+			int Index = 20;
+			HeadRenderer->SetSprite("CARHEAD", 1);
+			UBodyRenderer->SetSprite("CARUBODY", Index);
+			UBodyRenderer->SetComponentScale({ 144,88 });
+			UBodyRenderer->SetPivot(EPivotType::TopCenter);
+			DBodyRenderer->SetActive(false);
+			LHandRenderer->SetSprite("CARLEFT", 3);
+			RHandRenderer->SetSprite("CARRIGHT", 3);
+			LegRenderer->SetSprite("CARLEG", 1);
+		}
+		return;
+	}
+
+	if (MoveAmount > 0)
+	{
+		MoveAmount -= _DeltaTime*1000.0f;
+		SetActorLocation(GetActorLocation() + FVector2D(Dir * _DeltaTime * 1000.0f, 0.0f));
+		return;
+	}
+
+	
+	IsMoving = false;
+
 }

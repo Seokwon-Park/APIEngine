@@ -49,7 +49,6 @@ AMenuBackground::AMenuBackground()
 			BgRenderers[i][j]->SetPivot(EPivotType::TopLeft);
 			//BgRenderers[i][j]->SetRemoveBackground(true);
 			BgAnimators[i]->ChangeAnimation("Loop" + std::to_string(Selected[i]));
-
 		}
 	}
 
