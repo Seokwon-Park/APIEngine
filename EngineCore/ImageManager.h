@@ -21,7 +21,10 @@ public:
 		return Instance;
 	}
 
+
 	void ClearSpriteData(std::string_view _SpriteName, UEngineSprite* _Sprite);
+
+	void ImageToGrayScale(std::string_view _NewName, std::string_view _SpriteName);
 	
 	void Load(std::string_view _Path);
 	void Load(std::string_view _KeyName, std::string_view _Path);

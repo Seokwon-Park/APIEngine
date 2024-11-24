@@ -109,9 +109,11 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
 	//¿Œ∞‘¿” Text
+	UImageManager::GetInstance().ImageToGrayScale("GrayText", "Puyo_BP.cns.bmp");
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_RY.CNS.BMP", { 16,32 });
+	UImageManager::GetInstance().CuttingSprite("GrayText", { 16,32 });
 	UImageManager::GetInstance().CuttingSpriteCustom("NameText", "PUYO_RY.CNS.BMP", { 0,208 }, { 640,240 }, { 16,16 });
 	UImageManager::GetInstance().InsertCustomSpriteData("ChainString", "PUYO_RY.CNS.BMP", { { 240,32 }, { 48, 16 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("ChainString", "PUYO_BP.CNS.BMP", { { 240,32 }, { 48, 16 } });

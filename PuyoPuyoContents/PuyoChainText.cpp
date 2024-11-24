@@ -59,5 +59,6 @@ void APuyoChainText::SetupChainText(int _Amount, EPuyoBoardColor _Color)
 		NumberText[i]->SetActive(true);
 	}
 	ChainText->SetSprite("ChainString", ColorIndex);
+	ChainText->SetRemoveBackground(true);
 	ChainText->SetComponentLocation({ Size * 16, 16});
 }

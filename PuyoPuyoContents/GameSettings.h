@@ -21,7 +21,7 @@ public:
 
 	EPuyoGameMode GameMode;
 	int MapIndex = 0;
-	int CurLevel = 4;
+	int CurLevel = 1;
 	std::vector<std::vector<bool>> ClearState;
 protected:
 

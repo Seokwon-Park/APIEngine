@@ -90,6 +90,50 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _Target, const FTransform& _Tra
 
 }
 
+void UEngineWinImage::ChangeToGrayscale()
+{
+	// 비트맵 정보 가져오기
+    BITMAP bmp;
+    GetObject(hBitmap, sizeof(BITMAP), &bmp);
+
+    // 비트맵 데이터 저장을 위한 구조체 준비
+    BITMAPINFO bmi = { 0 };
+    bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bmi.bmiHeader.biWidth = bmp.bmWidth;
+    bmi.bmiHeader.biHeight = -bmp.bmHeight; // 상하 반전을 위해 음수
+    bmi.bmiHeader.biPlanes = 1;
+    bmi.bmiHeader.biBitCount = bmp.bmBitsPixel; // 24비트(RGB)
+    bmi.bmiHeader.biCompression = BI_RGB;
+
+    // 픽셀 데이터를 저장할 메모리 할당
+    int pixelArraySize = bmp.bmWidthBytes* bmp.bmHeight;
+    BYTE* pPixels = new BYTE[pixelArraySize];
+
+    // 비트맵 데이터를 가져오기
+    if (GetDIBits(ImageDC, hBitmap, 0, bmp.bmHeight, pPixels, &bmi, DIB_RGB_COLORS)) 
+	{
+		for (int y = 0; y < bmp.bmHeight; ++y) 
+		{
+			for (int x = 0; x < bmp.bmWidthBytes; x+=4)
+			{
+				int index = y * bmp.bmWidthBytes + x;
+				BYTE gray = static_cast<BYTE>(
+					0.299 * pPixels[index] +
+					0.587 * pPixels[index + 1] +
+					0.114 * pPixels[index + 2]);
+				pPixels[index] =gray;
+				pPixels[index + 1] = gray;
+				pPixels[index + 2] = gray;
+				pPixels[index + 3] = 0;
+			}
+		}
+		SetDIBits(ImageDC, hBitmap, 0, bmp.bmHeight, pPixels, &bmi, DIB_RGB_COLORS);
+    }
+
+    // 메모리 해제
+    delete[] pPixels;
+}
+
 void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _TargetTransform,
 	const FTransform& _CopyTransform, UColor _Color)
 {

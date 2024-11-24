@@ -24,13 +24,11 @@ APlayFrame::APlayFrame()
 	Sr1->SetOrder(ERenderLayer::Frame);
 	Sr1->SetActive(false);
 
-
 	Sr2->SetSprite("TOKO_2A.CNS.BMP");
-	Sr2->SetRemoveBackground(true);
-	Sr2->SetRemoveColor({ 64,64 });
 	Sr2->SetComponentScale({ 640, 480 });
 	Sr2->SetPivot(EPivotType::TopLeft);
 	Sr2->SetRemoveBackground(true);
+	Sr2->SetRemoveColor({ 64,64 });
 	Sr2->SetOrder(ERenderLayer::Frame);
 	Sr2->SetActive(false);
 }

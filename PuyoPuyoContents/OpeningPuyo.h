@@ -14,7 +14,8 @@ public:
 	AOpeningPuyo(AOpeningPuyo&& _Other) noexcept = delete;
 	AOpeningPuyo& operator=(const AOpeningPuyo& _Other) = delete;
 	AOpeningPuyo& operator=(AOpeningPuyo&& _Other) noexcept = delete;
-
+	
+	void Init();
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;

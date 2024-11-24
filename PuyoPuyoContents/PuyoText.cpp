@@ -9,6 +9,7 @@ APuyoText::APuyoText()
 	ColorSprites.push_back("PUYO_RY.CNS.BMP");
 	ColorSprites.push_back("PUYO_BP.CNS.BMP");
 	ColorSprites.push_back("PUYO_G_.CNS.BMP");
+	ColorSprites.push_back("GrayText");
 	TextSpriteRenderers.reserve(MAXLEN);
 	for (int i = 0; i < MAXLEN; i++)
 	{
@@ -70,7 +71,9 @@ void APuyoText::SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign
 	for (size_t i = 0; i < MAXLEN; i++)
 	{
 		TextSpriteRenderers[i]->SetSprite(ColorSprites[Color], ChMap[' ']);
+		TextSpriteRenderers[i]->SetRemoveBackground(true);
 	}
+
 }
 
 void APuyoText::SetText(std::string _TextValue)
@@ -87,7 +90,7 @@ void APuyoText::SetText(std::string _TextValue)
 	{
 		for (int i = 0; i < _TextValue.size(); i++)
 		{
-			TextSpriteRenderers[TextLength-1-i]->SetSprite(ColorSprites[Color], ChMap[_TextValue[_TextValue.size()-1-i]]);
+			TextSpriteRenderers[TextLength - 1 - i]->SetSprite(ColorSprites[Color], ChMap[_TextValue[_TextValue.size() - 1 - i]]);
 		}
 	}
 }

@@ -32,6 +32,7 @@ UImageManager::~UImageManager()
 	}
 }
 
+
 void UImageManager::ClearSpriteData(std::string_view _SpriteName, UEngineSprite* _Sprite)
 {
 	std::string UpperSpriteName = UEngineStringHelper::ToUpper(_SpriteName);
@@ -41,6 +42,36 @@ void UImageManager::ClearSpriteData(std::string_view _SpriteName, UEngineSprite*
 	}
 	Sprites[UpperSpriteName]->ClearSpriteData();
 
+}
+
+void UImageManager::ImageToGrayScale(std::string_view _NewName, std::string_view _SpriteName)
+{
+	std::string UpperName = UEngineStringHelper::ToUpper(_SpriteName);
+	std::string NewName = UEngineStringHelper::ToUpper(_NewName);
+
+	if (false != Images.contains(_SpriteName.data()))
+	{
+		MSGASSERT(std::string(_SpriteName) + "라는 이름의 이미지가 존재하지 않습니다.");
+	}
+	UEngineWinImage* Image = FindImage(UpperName);
+
+	UEngineWinImage* NewImage = new UEngineWinImage();
+	NewImage->Create(UEngineAPICore::GetWindowBuffer(), Image->GetImageSize());
+	Image->CopyToBit(NewImage, FTransform(Image->GetImageSize().Half(),Image->GetImageSize()));
+	NewImage->ChangeToGrayscale();
+	NewImage->SetName(NewName);
+	Images.insert({ NewName, NewImage });
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	NewSprite->SetName(NewName);
+
+	FTransform Transform;
+	Transform.Location = { 0,0 };
+	Transform.Scale = NewImage->GetImageSize();
+
+	NewSprite->PushData(NewImage, Transform);
+
+	Sprites.insert({ NewName, NewSprite });
 }
 
 void UImageManager::Load(std::string_view _Path)
@@ -82,10 +113,12 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 	NewImage->SetName(UpperName);
 	NewImage->Load(WindowImage, _Path);
 
+	//NewImage->ChangeToGrayscale();
+
 	Images.insert({ UpperName, NewImage });
 
 	UEngineSprite* NewSprite = new UEngineSprite();
-	NewImage->SetName(UpperName);
+	NewSprite->SetName(UpperName);
 
 	FTransform Transform;
 	Transform.Location = { 0,0 };

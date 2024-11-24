@@ -36,6 +36,14 @@ AOpeningPuyo::~AOpeningPuyo()
 }
 
 
+void AOpeningPuyo::Init()
+{
+	Time = 0.0f;
+	OPPuyoEyeL->SetComponentLocation({ 448,416 });
+	OPPuyoEyeR->SetComponentLocation({ 624,464 });
+
+}
+
 void AOpeningPuyo::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);

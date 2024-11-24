@@ -22,9 +22,9 @@ APuyoBoard::APuyoBoard()
 {
 	PauseText = CreateDefaultSubobject<USpriteRendererComponent>("PauseText");
 	PauseText->SetSprite("Pause", static_cast<int>(BoardColor));
-	PauseText->SetRemoveBackground(true);
 	PauseText->SetComponentScale({ 128, 48 });
 	PauseText->SetComponentLocation({ 32, 128 });
+	PauseText->SetRemoveBackground(true);
 	PauseText->SetPivot(EPivotType::TopLeft);
 	PauseText->SetOrder(100);
 	PauseText->SetActive(false);
@@ -70,6 +70,7 @@ void APuyoBoard::PauseGame()
 {
 	IsPaused = !IsPaused;
 	PauseText->SetActive(IsPaused);
+	PauseText->SetRemoveBackground(true);
 	for (int i = 0; i < BoardSize.Y; i++)
 	{
 		for (int j = 0; j < BoardSize.X; j++)

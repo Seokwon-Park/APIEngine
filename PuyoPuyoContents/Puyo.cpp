@@ -70,6 +70,7 @@ void APuyo::SetupPuyo(FVector2D _Location, EPuyoColor _Color)
 	{
 		Sr->SetSprite("GARBAGE", 0);
 	}
+	Sr->SetRemoveBackground(true);
 }
 
 

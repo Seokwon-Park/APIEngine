@@ -47,6 +47,7 @@ void APuyoChainFX::SetupChainFX(APuyoWarn* _Target, FVector2D _Start, FVector2D 
 			});
 	}
 	Sr->SetSprite(ColorSprites[Color]);
+	Sr->SetRemoveBackground(true);
 	Animator->ChangeAnimation("Start"+std::to_string(Color));
 }
 
@@ -71,6 +72,6 @@ void APuyoChainFX::BeginPlay()
 void APuyoChainFX::ChangeScaleAndAnimation()
 {
 	Sr->SetComponentScale({ 64,64 });
-	Sr->SetSprite(ColorSprites[0], 2);
+	Sr->SetSprite(ColorSprites[Color], 2);
 	Animator->ChangeAnimation("Loop" + std::to_string(Color));
 }

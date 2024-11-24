@@ -66,6 +66,7 @@ void AIntroGameMode::BeginPlay()
 	OPPuyoDelegate += std::bind(&AFader::SetActive, Fader, false);
 	OPPuyoDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
 	OPPuyoDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, true);
+	OPPuyoDelegate += std::bind(&AOpeningPuyo::Init, OPPuyo);
 	OPPuyoDelegate += std::bind(&UEngineSound::Play, UAudioManager::GetInstance().FindSound("OPTheme.MP3"));
 
 	UEngineDelegate OPCarDelegate;

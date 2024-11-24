@@ -54,6 +54,7 @@ void APuyoBoomFX::Tick(float _DeltaTime)
 
 		Particles[i]->SetSprite(SpriteName, 1);
 		Particles[i]->SetActive(true);
+		Particles[i]->SetRemoveColor(FIntPoint::ZERO);
 		Particles[i]->SetComponentLocation(Loc + Dir[i] * _DeltaTime);
 	}
 
@@ -104,6 +105,7 @@ void APuyoBoomFX::SetupBoomFX(EPuyoColor _Color, float _Delay)
 {
 	SpriteName = ColorSprites[static_cast<int>(_Color)];
 	FXDelay = _Delay;
+
 }
 
 void APuyoBoomFX::BeginPlay()

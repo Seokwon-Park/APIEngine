@@ -20,10 +20,12 @@ void AOffsetText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	
 	AddActorLocation(FVector2D::DOWN * _DeltaTime * 50.0f);
 	
 }
 void AOffsetText::BeginPlay()
 {
 	Super::BeginPlay();
+	UEngineEventSystem::AddEvent(1.0f, [this]() {Destroy(); });
 }

@@ -9,9 +9,10 @@ APuyoWarn::APuyoWarn()
 	for (int i = 0; i < 6; i++)
 	{
 		Warnings[i] = CreateDefaultSubobject<USpriteRendererComponent>("Warn" + std::to_string(i));
+		Warnings[i]->SetSprite("Warning");
+		Warnings[i]->SetActive(false);
 		Warnings[i]->SetRemoveBackground(true);
 		Warnings[i]->SetOrder(ERenderLayer::Warn);
-		Warnings[i]->SetActive(false);
 	}
 }
 
