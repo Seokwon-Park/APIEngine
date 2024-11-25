@@ -14,6 +14,7 @@ enum class ERenderLayer
 	BottomCover = -100,
 	Play = 0,
 	Frame = 100,
+	Text = 105,
 	
 	
 	

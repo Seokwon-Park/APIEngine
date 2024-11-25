@@ -18,6 +18,7 @@ APuyoText::APuyoText()
 		Sr->SetComponentScale({ 16,32 });
 		Sr->SetRemoveBackground(true);
 		Sr->SetPivot(EPivotType::TopLeft);
+		Sr->SetOrder(ERenderLayer::Text);
 		TextSpriteRenderers.push_back(Sr);
 		TextSpriteRenderers[i]->SetComponentLocation({ i * 16,0 });
 
@@ -36,6 +37,7 @@ APuyoText::APuyoText()
 	ChMap[' '] = 10 + 26;
 	ChMap['*'] = 40;
 	ChMap['-'] = 38;
+	ChMap['.'] = 39;
 
 }
 
@@ -88,7 +90,7 @@ void APuyoText::SetText(std::string _TextValue)
 			TextSpriteRenderers[i]->SetSprite(ColorSprites[Color], ChMap[_TextValue[i]]);
 		}
 	}
-	else
+	else if(TextAlign == ETextAlign::Right)
 	{
 		for (int i = 0; i < _TextValue.size(); i++)
 		{

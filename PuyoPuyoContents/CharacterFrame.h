@@ -19,7 +19,8 @@ public:
 	ACharacterFrame& operator=(ACharacterFrame&& _Other) noexcept = delete;
 
 	inline void SetupFrame(bool _IsPlayer) { IsPlayer = _IsPlayer; }
-	void SetFrameState(std::string_view _SpriteName, int _Index);
+	void SetFrameStateEnemy(std::string_view _SpriteName, int _Index);
+	void SetFrameStatePlayer();
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
@@ -31,7 +32,7 @@ private:
 	USpriteRendererComponent* InfoFrameRenderer;
 
 	std::vector<APuyoText*> Text;
-	std::vector<APuyoText*> PlayerbleText;
+	std::vector<APuyoText*> PlayerText;
 
 };
 

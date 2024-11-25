@@ -70,6 +70,12 @@
     <Filter Include="ContentsObject\Option">
       <UniqueIdentifier>{5667ffe1-d0df-4993-a9a9-89bb542c4476}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Play\Enemies">
+      <UniqueIdentifier>{8cd481a8-5342-4f66-bf3d-cb7a4e9212ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Enemies\LV1">
+      <UniqueIdentifier>{76ac8257-d6e6-4d3a-ad34-1f9d554fb3dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aepch.cpp">
@@ -242,6 +248,24 @@
     </ClCompile>
     <ClCompile Include="NameText.cpp">
       <Filter>ContentsObject\Play\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningCoin.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniCarbuncle.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="StarParticle.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyImage.cpp">
+      <Filter>ContentsObject\Play\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletonTImage.cpp">
+      <Filter>ContentsObject\Play\Enemies\LV1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +445,24 @@
     </ClInclude>
     <ClInclude Include="NameText.h">
       <Filter>ContentsObject\Play\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningCoin.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniCarbuncle.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="StarParticle.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
+      <Filter>ContentsObject\Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyImage.h">
+      <Filter>ContentsObject\Play\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletonTImage.h">
+      <Filter>ContentsObject\Play\Enemies\LV1</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

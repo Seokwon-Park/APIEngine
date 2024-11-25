@@ -33,6 +33,9 @@ void ATogetherPlayGameMode::BeginPlay()
 	}
 
 
+	NameTextL->SetText(" P1");
+	NameTextR->SetText(" P2");
+
 	GameSettings::GetInstance().GameMode = EPuyoGameMode::Versus;
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
@@ -42,6 +45,17 @@ void ATogetherPlayGameMode::BeginPlay()
 	ControllerP2 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP2->Possess(PuyoBoardP2);
 	ControllerP2->SetKey(EKey::Slash, EKey::Period, EKey::Down, EKey::Left, EKey::Right);
+
+	MiniCar = GetWorld()->SpawnActor<AMiniCarbuncle>();
+	MiniCar->SetActorLocation({ 336,272 });
+	MiniCar->AddEvent([=]()
+		{
+			PuyoBoardP1->StartGame();
+			PuyoBoardP2->StartGame();
+		});
+	P1Score->SetText("1P SCORE");
+	P2Score->SetText("2P SCORE");
+	P2Score;
 }
 
 void ATogetherPlayGameMode::Tick(float _DeltaTime)

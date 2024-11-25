@@ -5,7 +5,7 @@
 enum class ETextAlign
 {
 	Left,
-	//Center? 어케만들지 몰?루, 필요한지도 몰?루
+	Center,
 	Right,
 };
 // 설명 :
@@ -25,7 +25,7 @@ public:
 	virtual void Tick(float _DeltaTime) override;
 
 	void SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign _TextAlign = ETextAlign::Left);
-	void SetText(std::string _SpriteName);
+	void SetText(std::string _TextValue);
 	void SetText(long long _Value);
 	inline void Add(long long _Value) { Score += _Value; SetText(Score); }
 	void ClearText();

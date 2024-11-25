@@ -37,22 +37,41 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	//USoundManager::GetInstance().FindSound("OPTheme.mp3")->Play();
 
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {0,0 }, { 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {32,0 }, { 32, 32 } });
+	//
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {0,160 }, { 48, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {48,160 }, { 48, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {96,160 }, { 40, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {136,160 }, { 40, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {176,160 }, { 48, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {224,160 }, { 56, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {280,160 }, { 56, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {272,192 }, { 32, 32 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("MiniCar", "KAR.CNS.BMP", { {304,192 }, { 32, 32 } });
+
+	//Star
+	UImageManager::GetInstance().InsertCustomSpriteData("Star", "PUYO_RY.CNS.BMP", { {384,32 }, { 16, 16 } });
+
+
 	//Intro
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOEYE", "OP_PUYO.CNS.BMP", { {0,0 }, { 144, 144 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOBOT", "OP_PUYO.CNS.BMP", { {0,240 }, { 640, 240 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOTOP", "OP_PUYO.CNS.BMP", { {160,0 }, { 480, 240 } });
 
+	//인트로 카벙클
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCAR", "OP_KAR.CNS.BMP", { {0,0 }, { 448, 480 } });
 	UImageManager::GetInstance().CuttingSpriteCustom("OPCARJEWEL", "OP_KAR.CNS.BMP", { 448,0 }, { 640,72 }, { 48,72 });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCARJEWEL", "OP_KAR.CNS.BMP", { { 0,220 }, { 48,72 } });
 
-	//Todo: 나중에 다시 생각해봄
+	//인트로 아르르 나쟈
 	UImageManager::GetInstance().InsertCustomSpriteData("OPARLE", "OP_ARLE.CNS.BMP", { {0,0 }, { 640, 480 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {0,480 }, { 144, 104 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {144,480 }, { 176, 104 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {320,480 }, { 144, 104 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPFINGER", "OP_ARLE.CNS.BMP", { {464,480 }, { 176, 104 } });
 
+	//Todo:순서 어케?
 	//인트로 동전
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {0,0 }, { 224, 224 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {224,0 }, { 160, 224 } });
@@ -81,6 +100,14 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,32 }, { 512,32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,64 }, { 512,32 } });
 
+
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuLArrow", "SEL_0.CNS.BMP", { { 512,0 }, { 16,24 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuLArrow", "SEL_0.CNS.BMP", { { 528,0 }, { 16,24 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuRArrow", "SEL_0.CNS.BMP", { { 544,0 }, { 16,24 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuRArrow", "SEL_0.CNS.BMP", { { 560,0 }, { 16,24 } });
+
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrame", "SEL_0.CNS.BMP", { { 192,0 }, { 304,16 } });
+
 	//솔로모드 메뉴 스프라이트
 	UImageManager::GetInstance().CuttingSprite("ARLE", "KAO_ARLE.CNS.BMP", { 160,112 });
 	for (int i = 1; i <= 6; i++)
@@ -102,6 +129,8 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	UImageManager::GetInstance().CuttingSpriteCustom("EnemySelectText", "SELECT_L.CNS.BMP", { 384, 96 }, { 640, 128 }, { 32,32 });
 
+	UImageManager::GetInstance().CuttingSpriteCustom("EnemySelectText", "SELECT_L.CNS.BMP", { 384, 96 }, { 640, 128 }, { 32,32 });
+
 
 
 	//단색 스프라이트(+페이더용)
@@ -109,7 +138,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
 	//인게임 Text
-	UImageManager::GetInstance().ImageToGrayScale("GrayText", "Puyo_BP.cns.bmp");
+	UImageManager::GetInstance().ImageToGrayScale("GrayText", "Puyo_G_.cns.bmp");
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_G_.CNS.BMP", { 16,32 });
 	UImageManager::GetInstance().CuttingSprite("PUYO_RY.CNS.BMP", { 16,32 });
@@ -125,13 +154,27 @@ void PuyoPuyoContentsCore::BeginPlay()
 	// 상쇄 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("OffsetText", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
 
+	// 상쇄 텍스트
+	UImageManager::GetInstance().InsertCustomSpriteData("OffsetText", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
 
+	// LV 끝나고 프레임
+	UImageManager::GetInstance().CuttingSprite("LVFrame", "LV_Waku.cns.bmp", { 16,16 });
 
 	// 게임 플레이 관련
 	// 인게임 뿌요 관련 스프라이트
 	SetupPuyoSprite();
 	//뿌요 터질 때 파티클
 	SetupPuyoBoomParticleSprite();
+
+	for (int i = 1; i <= 34; i++)
+	{
+		std::string Postfix = std::to_string(i);
+		if (Postfix.size() < 2)
+		{
+			Postfix = "0" + Postfix;
+		}
+		UImageManager::GetInstance().InsertCustomSpriteData("FaceIdle", "FACE" + Postfix + ".CNS.BMP", { {0,0}, { 160, 112 } });
+	}
 
 	//Cut Menu Bg
 	for (int i = 0; i <= 9; i++)

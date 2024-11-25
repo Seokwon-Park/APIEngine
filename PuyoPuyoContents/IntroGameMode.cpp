@@ -67,7 +67,7 @@ void AIntroGameMode::BeginPlay()
 	OPPuyoDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
 	OPPuyoDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, true);
 	OPPuyoDelegate += std::bind(&AOpeningPuyo::Init, OPPuyo);
-	OPPuyoDelegate += std::bind(&UEngineSound::Play, UAudioManager::GetInstance().FindSound("OPTheme.MP3"));
+	OPPuyoDelegate += std::bind(&UEngineSound::Play, UAudioManager::GetInstance().FindSound("PUYO2000.MID"));
 
 	UEngineDelegate OPCarDelegate;
 	OPCarDelegate += std::bind(&AFader::SetActive, Fader, false);
@@ -127,6 +127,9 @@ void AIntroGameMode::BeginPlay()
 	//오프닝 롤 마지막
 	UEngineEventSystem::AddEvent(10.0f, InitDelegate);
 	UEngineEventSystem::AddEvent(10.0f, OPRollDelegate);
+
+	UEngineEventSystem::AddEvent(11.0f, [this]() {Fader->SetOrder(ERenderLayer::BottomBackground); });
+	UEngineEventSystem::AddEvent(11.0f, FadeOutDelegate);
 }
 
 

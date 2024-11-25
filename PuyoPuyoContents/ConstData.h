@@ -12,6 +12,10 @@ const int GroupBonusTable[12] = { 0,0,0,0,0,2,3,4,5,6,7,10 };
 const int LevelEnemies[7] = { 0,8,6,5,4,2,1 };
 const int LevelEnemiesPfsum[7] = { 0,8,14,19,23,25,26 };
 
+const int DestroyRule[5] = { 4,2,6,4,4 };
+
+const int ScoreToNextLevel[9] = { 0, 15000,45000,80000,120000,150000 };
+
 const std::vector<std::vector<std::string>> EnemyNameData = {
 {"Skeleton", "   -T", ""},
 {"  Will","   o","  Wisp"},
@@ -41,4 +45,34 @@ const std::vector<std::vector<std::string>> EnemyNameData = {
 {" Schezo"," Wegey",""},
 {" Rulue","",""},
 {" Satan","",""},
+};
+
+const std::vector<std::string> EnemyNameShort = {
+"Skel",
+"Wisp",
+"Pode",
+"Bans",
+"Nomi",
+"Momo",
+"Baro",
+"MZon",
+"Pano",
+"Merm",
+"Noho",
+"Cait",
+"Fufu",
+"Mumy",
+"Scop",
+"Mole",
+"Hapy",
+"Para",
+"Gazi",
+"Tara",
+"Mons",
+"Paki",
+"Drag",
+"Mino",
+"Shez",
+"Rulu",
+"Sata",
 };

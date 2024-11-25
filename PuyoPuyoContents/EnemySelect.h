@@ -15,15 +15,18 @@ public:
 	AEnemySelect& operator=(const AEnemySelect& _Other) = delete;
 	AEnemySelect& operator=(AEnemySelect&& _Other) noexcept = delete;
 
-	void SetOn() { Sr->SetSprite("EnemySelectOn", Index); }
-	void SetOff() { Sr->SetSprite("EnemySelectOff", Index); }
-	void Setup(int _Index) { Index = _Index; }
+	inline int GetIndex() { return Index; }
+	inline void SetOn() { Sr->SetSprite("EnemySelectOn", Index); }
+	inline void SetOff() { Sr->SetSprite("EnemySelectOff", Index); }
+	inline void Setup(int _Index) { Index = _Index; }
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	bool IsOn = false;
 	int Index = 0;
 	USpriteRendererComponent* Sr;
+	
 };
 

@@ -14,6 +14,7 @@
 //Todo : 
 enum class EPuyoLogicStep
 {
+	PuyoIdle, // 대기상태
 	PuyoCreate, // 뿌요 블럭 생성
 	PuyoMove, // 뿌요 움직임
 	PuyoPlace, // 뿌요 위치 조정 로직
@@ -153,6 +154,8 @@ public:
 
 	//일시정지
 	void PauseGame();
+
+	inline void StartGame() { CurStep = EPuyoLogicStep::PuyoCreate; }
 	
 
 	
@@ -271,7 +274,7 @@ private:
 
 	std::vector<ABottomFrame*> BottomFrames;
 	std::vector<bool> IsDrop;
-	float Delay = 0.05f;
+	float Delay = 0.15f;
 	float Timer = 0.0f;
 
 	//여기 밑으로는 실험실 변수

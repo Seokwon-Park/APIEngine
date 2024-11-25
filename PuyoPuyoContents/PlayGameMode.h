@@ -1,10 +1,11 @@
 #pragma once
+#include "NameText.h"
 #include "PuyoBoard.h"
 #include "PlayFrame.h"
 #include "PlayBackground.h"
 #include "BottomFrame.h"
 #include "BottomBackground.h"
-
+#include "MiniCarbuncle.h"
 
 // Ό³Έν :
 class APlayGameMode : public AGameMode
@@ -34,6 +35,13 @@ protected:
 	ABottomBackground* BotBackgroundR;
 	std::vector<ABottomFrame*> BotFrameL;
 	std::vector<ABottomFrame*> BotFrameR;
+	AMiniCarbuncle* MiniCar;
+
+	APuyoText* P1Score;
+	APuyoText* P2Score;
+
+	ANameText* NameTextL;
+	ANameText* NameTextR;
 private:
 
 };

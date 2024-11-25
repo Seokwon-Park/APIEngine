@@ -5,6 +5,8 @@
 #include "PuyoWarn.h"
 #include "PuyoBoardShakePostProcess.h"
 #include <EnginePlatform/KeyCode.h>
+#include "Star.h"
+
 
 APlayGameMode::APlayGameMode()
 {
@@ -55,14 +57,23 @@ void APlayGameMode::BeginPlay()
 	APuyoWarn* P1Warn = GetWorld()->SpawnActor<APuyoWarn>();
 	APuyoWarn* P2Warn = GetWorld()->SpawnActor<APuyoWarn>();
 
-	APuyoText* P1Score = GetWorld()->SpawnActor<APuyoText>();
+	P1Score = GetWorld()->SpawnActor<APuyoText>();
 	P1Score->SetupText(8, EPuyoBoardColor::Red, ETextAlign::Right);
 	P1Score->SetActorLocation({ 7 * 32 + 16, 11 * 32 });
 	P1Score->SetText(0);
-	APuyoText* P2Score = GetWorld()->SpawnActor<APuyoText>();
+
+	P2Score = GetWorld()->SpawnActor<APuyoText>();
 	P2Score->SetupText(8, EPuyoBoardColor::Blue, ETextAlign::Right);
 	P2Score->SetActorLocation({ 8 * 32 + 16, 12 * 32 });
 	P2Score->SetText(0);
+
+	NameTextL = GetWorld()->SpawnActor<ANameText>();
+	NameTextL->SetText("ARLE");
+	NameTextL->SetActorLocation({ 240, 80 });
+
+	NameTextR = GetWorld()->SpawnActor<ANameText>();
+	NameTextR->SetText("NAJA");
+	NameTextR->SetActorLocation({ 336, 80 });
 
 	UPuyoBoardShakePostProcess* ShakerP1 = GetWorld()->AddPostProcess<UPuyoBoardShakePostProcess>();
 	ShakerP1->SetupProcess({ 32,0 });

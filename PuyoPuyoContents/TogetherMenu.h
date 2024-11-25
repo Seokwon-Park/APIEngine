@@ -25,8 +25,21 @@ private:
 	void MoveMenu(int _Dir);
 	int CurIndex = 0;
 
+	const std::vector<FVector2D> Locations= {
+	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X, 224.0f },
+	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X + 400.0f, 224.0f },
+	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X + 800.0f, 224.0 },
+	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X - 800, 224.0f },
+	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X - 400, 224.0f }
+	};
 	USpriteRendererComponent* TextRenderer;
-	USpriteRendererComponent* MapRenderer;
+
+	USpriteRendererComponent* LArrowRenderer;
+	USpriteRendererComponent* RArrowRenderer;
+	UAnimatorComponent* LArrowAnim;
+	UAnimatorComponent* RArrowAnim;
+
+	std::vector<USpriteRendererComponent*> MapRenderer;
 	UInputComponent* MenuInput;
 };
 

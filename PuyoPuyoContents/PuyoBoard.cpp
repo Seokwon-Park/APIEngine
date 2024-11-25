@@ -17,7 +17,7 @@
 APuyoBoard::APuyoBoard()
 	:Difficulty(3), PuyoSize(FVector2D::ZERO), BoardSize(FIntPoint::ZERO),
 	MainPuyoCoord(FIntPoint::ZERO), PuyoDropDelay(.5f), PuyoDropTimer(0.0f), PuyoTick(0), BlockDir(0),
-	CurStep(EPuyoLogicStep::PuyoCreate), Block(std::vector<APuyo*>(2))
+	CurStep(EPuyoLogicStep::PuyoIdle), Block(std::vector<APuyo*>(2))
 	//,Board(std::vector<std::vector<APuyo*>>(13, std::vector<APuyo*>(6, nullptr)))
 {
 	PauseText = CreateDefaultSubobject<USpriteRendererComponent>("PauseText");
@@ -92,6 +92,7 @@ void APuyoBoard::PauseGame()
 		NextNextBlock[i]->SetActive(!IsPaused);
 	}
 }
+
 
 APuyoBoard::~APuyoBoard()
 {
@@ -191,6 +192,8 @@ void APuyoBoard::Tick(float _DeltaTime)
 	//UEngineDebugHelper::PushString("CurStep = " + std::to_string(static_cast<int>(CurStep)));
 	switch (CurStep)
 	{
+	case EPuyoLogicStep::PuyoIdle:
+		break;
 	case EPuyoLogicStep::PuyoCreate:
 		PuyoCreateLogic();
 		break;
@@ -272,7 +275,6 @@ void APuyoBoard::PuyoCreateLogic()
 	//더해야될 점수가 있으면 더해
 	ScoreActor->Add(ScoreToAdd);
 	ScoreToAdd = 0;
-
 
 	Rensa = 0; // 여기로 오게되면 연쇄는 0
 
@@ -585,8 +587,7 @@ void APuyoBoard::PuyoCheckLogic()
 				}
 			}
 		}
-		// Todo: 4대신 다른값 넣으세우
-		if (Temp.size() >= 4)
+		if (Temp.size() >= GameSettings::GetInstance().DestroyRule)
 		{
 			PC += static_cast<int>(Temp.size());
 			for (FIntPoint Point : Temp)

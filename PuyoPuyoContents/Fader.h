@@ -20,7 +20,7 @@ public:
 	void FadeIn(float _Duration);
 	// Darker and Darker
 	void FadeOut(float _Duration);
-
+	void SetOrder(ERenderLayer _Layer) { FadeRenderer->SetOrder(_Layer); }
 	void Tick(float _DeltaTime) override;
 protected:
 	void BeginPlay() override;

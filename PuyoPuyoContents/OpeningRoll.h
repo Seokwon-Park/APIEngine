@@ -19,12 +19,14 @@ public:
 		Timer = 0.0f;
 		Sr->SetComponentLocation({ 0,-160 }); 
 	}
+	void SetDuration(float _Time) { Duration = _Time; }
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	float Timer = 0.0f;
+	float Duration = 1.0f;
 	USpriteRendererComponent* Sr;
 };
 

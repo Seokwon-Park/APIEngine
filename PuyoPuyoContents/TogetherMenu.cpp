@@ -6,10 +6,14 @@
 
 ATogetherMenu::ATogetherMenu()
 {
-	MapRenderer = CreateDefaultSubobject<USpriteRendererComponent>("");
-	MapRenderer->SetSprite("VSBG");
-	MapRenderer->SetComponentLocation({ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X, 224.0f });
-	MapRenderer->SetComponentScale({ 304, 224 });
+	MapRenderer.resize(5, nullptr);
+	for (int i = 0; i < 5; i++)
+	{
+		MapRenderer[i] = CreateDefaultSubobject<USpriteRendererComponent>("");
+		MapRenderer[i]->SetSprite("VSBG",i);
+		MapRenderer[i]->SetComponentLocation(Locations[i]);
+		MapRenderer[i]->SetComponentScale({ 304, 224 });
+	}
 
 	TextRenderer = CreateDefaultSubobject<USpriteRendererComponent>("");
 	TextRenderer->SetSprite("VSMenuText");
@@ -28,10 +32,10 @@ void ATogetherMenu::StartPlay()
 {
 	GameSettings::GetInstance().GameMode = EPuyoGameMode::Versus;
 	GameSettings::GetInstance().MapIndex = CurIndex;
+	GameSettings::GetInstance().DestroyRule = DestroyRule[CurIndex];
 
 	UEngineAPICore::GetCore()->ResetLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
 	UEngineAPICore::GetCore()->OpenLevel("TogetherPlay");//
-
 }
 
 void ATogetherMenu::MoveMenu(int _Dir)
@@ -44,7 +48,20 @@ void ATogetherMenu::MoveMenu(int _Dir)
 	CurIndex %= 5;
 
 	TextRenderer->SetSprite("VSMenuText", CurIndex);
-	MapRenderer->SetSprite("VSBG", CurIndex);
+
+	for (int i = 0; i < 5; i++)
+	{
+		MapRenderer[i]->SetComponentLocation(MapRenderer[i]->GetComponentLocation() + FVector2D(-400.0f * _Dir, 0.0f));
+	}
+	if (_Dir == 1)
+	{
+		MapRenderer[(CurIndex + 2) % 5]->SetComponentLocation(Locations[2]);
+	}
+	else
+	{
+		MapRenderer[(CurIndex + 3) % 5]->SetComponentLocation(Locations[3]);
+	}
+	
 }
 
 void ATogetherMenu::Tick(float _DeltaTime)

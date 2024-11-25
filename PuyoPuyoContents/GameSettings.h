@@ -20,8 +20,16 @@ public:
 	}
 
 	EPuyoGameMode GameMode;
+	//1인용
+	int EnemyIndex = 0;
+	int CurLevel = 2;
+	int CurStage = 1;
+	int CurExp = 0;
+	int RestToNextLevel = ScoreToNextLevel[1];
+
+	//2인용
 	int MapIndex = 0;
-	int CurLevel = 1;
+	int DestroyRule = 4;
 	std::vector<std::vector<bool>> ClearState;
 protected:
 

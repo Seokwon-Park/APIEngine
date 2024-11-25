@@ -32,7 +32,7 @@ ACharacterFrame::~ACharacterFrame()
 }
 
 
-void ACharacterFrame::SetFrameState(std::string_view _SpriteName, int _Index)
+void ACharacterFrame::SetFrameStateEnemy(std::string_view _SpriteName, int _Index)
 {
 	CharacterImage->SetSprite(_SpriteName, _Index);
 	CharacterImage->SetRemoveColor(UColor(6, 7, 6, 0));
@@ -44,6 +44,10 @@ void ACharacterFrame::SetFrameState(std::string_view _SpriteName, int _Index)
 	}
 }
 
+void ACharacterFrame::SetFrameStatePlayer()
+{
+}
+
 void ACharacterFrame::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
@@ -52,10 +56,35 @@ void ACharacterFrame::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (int i = 0; i < 3; i++)
+	if (false == IsPlayer)
 	{
-		Text[i] = GetWorld()->SpawnActor<APuyoText>();
-		Text[i]->SetupText(8, EPuyoBoardColor::Black);
-		Text[i]->SetActorLocation(InfoFrameRenderer->GetWorldTransform().Location + FVector2D(24,16 + 32*i));
+		for (int i = 0; i < 3; i++)
+		{
+			Text[i] = GetWorld()->SpawnActor<APuyoText>();
+			Text[i]->SetupText(8, EPuyoBoardColor::Black);
+			Text[i]->SetActorLocation(InfoFrameRenderer->GetWorldTransform().Location + FVector2D(24, 16 + 32 * i));
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			Text[i] = GetWorld()->SpawnActor<APuyoText>();
+			Text[i]->SetupText(4, EPuyoBoardColor::Black);
+			Text[i]->SetActorLocation(InfoFrameRenderer->GetWorldTransform().Location + FVector2D(8, 16 + 32 * i));
+		}
+		Text[0]->SetText("EXP.");
+		Text[1]->SetText("NEXT");
+		Text[2]->SetText("REST");
+
+		for (int i = 0; i < 3; i++)
+		{
+			Text[i] = GetWorld()->SpawnActor<APuyoText>();
+			Text[i]->SetupText(6, EPuyoBoardColor::Red, ETextAlign::Right);
+			Text[i]->SetActorLocation(InfoFrameRenderer->GetWorldTransform().Location + FVector2D(72, 16 + 32 * i));
+		}
+		Text[0]->SetText(GameSettings::GetInstance().CurExp);
+		Text[1]->SetText(ScoreToNextLevel[GameSettings::GetInstance().CurLevel]);
+		Text[2]->SetText(GameSettings::GetInstance().RestToNextLevel);
 	}
 }

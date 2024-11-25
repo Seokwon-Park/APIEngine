@@ -21,6 +21,7 @@ void ASoloMenuGameMode::BeginPlay()
 
 	ACharacterFrame* MyFrame = GetWorld()->SpawnActor<ACharacterFrame>();
 	MyFrame->SetActorLocation({ 8,40 });
+	MyFrame->SetupFrame(true);
 
 	ACharacterFrame* EnemyFrame = GetWorld()->SpawnActor<ACharacterFrame>();
 	//632-8-

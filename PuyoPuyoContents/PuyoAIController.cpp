@@ -31,8 +31,10 @@ void APuyoAIController::ReceiveBlockColors()
 //º° Â÷ÀÌ ¾øÀ¸¸é ¾îÄ¯ ? °Á ´ëÃæ ÇÏ¼À.
 void APuyoAIController::CalculateBoard()
 {
-	auto [Rows, Cols] = Board->GetPuyoBoardSize();
+	if (true == BlockColors.empty())return;
 
+	auto [Rows, Cols] = Board->GetPuyoBoardSize();
+	
 	for (int i = Cols - 1; i >= 0; i--)
 	{
 		for (int j = 0; j < Rows; j++)
@@ -206,6 +208,7 @@ void APuyoAIController::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	if (Board->GetCurStep() == EPuyoLogicStep::PuyoIdle) return;
 	BoardState = Board->GetBoardState();
 	//DebugEvaluateBoard();
 	auto [Point, Dir] = Board->GetMainPuyoInfo();
