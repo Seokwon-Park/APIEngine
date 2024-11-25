@@ -27,7 +27,7 @@ void AIntroGameMode::BeginPlay()
 {
 	// Todo : PressAnyKey·Î ¹Ù²Ü°Í
 	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
-	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&UEngineSound::Stop, UAudioManager::GetInstance().FindSound("OPTheme.MP3")));
+	//GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&UEngineSound::Stop, UAudioManager::GetInstance().FindSound("OPTheme.MP3")));
 
 	APublisherLogo* Logo = GetWorld()->SpawnActor<APublisherLogo>();
 	AIntroBackground* Background = GetWorld()->SpawnActor<AIntroBackground>();

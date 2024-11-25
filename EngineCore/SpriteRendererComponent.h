@@ -44,6 +44,7 @@ public:
 	template <typename EnumType>
 	inline void SetOrder(EnumType _Order) { SetOrder(static_cast<int>(_Order)); }
 	inline void SetRemoveBackground(bool _Value) { SetRemoveColor(FIntPoint::ZERO); RemoveBackground = _Value; }
+	//주의: 해당 스프라이트 범위에서 아니라 스프라이트 이미지의 좌표에서 추출하는 것
 	void SetRemoveColor(FIntPoint _Coord);
 	inline void SetRemoveColor(UColor _Color) { RemoveColor = _Color; };
 	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }

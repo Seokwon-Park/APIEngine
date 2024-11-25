@@ -26,6 +26,11 @@ public:
 		GetInstance().FindSound(_KeyName)->Play();
 	}
 
+	static void StopAllSounds()
+	{
+		UEngineAudio::GetInstance()->StopAllSounds();
+	}
+
 	void Load(std::string_view _Path);
 	void Load(std::string_view _KeyName, std::string_view _Path);
 	void ReleaseSounds();

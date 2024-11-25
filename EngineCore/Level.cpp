@@ -4,7 +4,7 @@
 #include "SpriteRendererComponent.h"
 #include "EngineKeyEvent.h"
 
-
+#include "AudioManager.h"
 
 void ULevel::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function)
 {
@@ -97,6 +97,8 @@ void ULevel::BeginPlay()
 void ULevel::EndPlay()
 {
 	UEngineEventSystem::ClearEvents();
+	UAudioManager::StopAllSounds();
+
 }
 
 void ULevel::Tick(float _DeltaTime)

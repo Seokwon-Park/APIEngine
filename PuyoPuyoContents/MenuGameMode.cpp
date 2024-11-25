@@ -3,6 +3,7 @@
 
 #include "MenuBackground.h"
 #include "MenuManager.h"
+#include <EngineCore/AudioManager.h>
 
 AMenuGameMode::AMenuGameMode()
 {
@@ -19,6 +20,7 @@ void AMenuGameMode::BeginPlay()
 	AMenuBackground* Background = GetWorld()->SpawnActor<AMenuBackground>();
 	AMenuManager* Manager = GetWorld()->SpawnActor<AMenuManager>();
 	Manager->SetActorLocation({ 32,160 });
+	//UAudioManager::SoundPlay();
 }
 
 void AMenuGameMode::Tick(float _DeltaTime)

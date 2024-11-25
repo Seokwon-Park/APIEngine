@@ -21,6 +21,30 @@ ATogetherMenu::ATogetherMenu()
 	TextRenderer->SetComponentScale({ 512, 32 });
 	TextRenderer->SetRemoveBackground(true);
 
+	LArrowAnim = CreateDefaultSubobject<UAnimatorComponent>("");
+	LArrowRenderer = CreateDefaultSubobject<USpriteRendererComponent>("");
+	LArrowRenderer->SetSprite("VSMenuLArrow", 0);
+	LArrowRenderer->SetRemoveBackground(true);
+	LArrowRenderer->SetRemoveColor(UColor(136,102,102,0));
+	LArrowRenderer->SetComponentScale({ 16, 24 });
+	LArrowRenderer->SetComponentLocation({ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X-100, 224.0f });
+	LArrowRenderer->SetAnimator(LArrowAnim);
+
+	LArrowAnim->CreateAnimation("Flick", "VSMenuLArrow", { 0,1 }, 0.1f);
+	LArrowAnim->ChangeAnimation("Flick");
+
+	RArrowAnim = CreateDefaultSubobject<UAnimatorComponent>("");
+	RArrowRenderer = CreateDefaultSubobject<USpriteRendererComponent>("");
+	RArrowRenderer->SetSprite("VSMenuRArrow", 0);
+	RArrowRenderer->SetRemoveBackground(true);
+	RArrowRenderer->SetRemoveColor(UColor(136, 102, 102, 0));
+	RArrowRenderer->SetComponentScale({ 16, 24 });
+	RArrowRenderer->SetComponentLocation({ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X +100, 224.0f });
+	RArrowRenderer->SetAnimator(RArrowAnim);
+
+	RArrowAnim->CreateAnimation("Flick", "VSMenuRArrow", { 0,1 }, 0.1f);
+	RArrowAnim->ChangeAnimation("Flick");
+
 	MenuInput = CreateDefaultSubobject<UInputComponent>("");
 }
 
@@ -40,6 +64,8 @@ void ATogetherMenu::StartPlay()
 
 void ATogetherMenu::MoveMenu(int _Dir)
 {
+	if (MoveAmount > 0) return;
+	TextRenderer->SetActive(false);
 	CurIndex += _Dir;
 	if (CurIndex < 0)
 	{
@@ -49,17 +75,17 @@ void ATogetherMenu::MoveMenu(int _Dir)
 
 	TextRenderer->SetSprite("VSMenuText", CurIndex);
 
-	for (int i = 0; i < 5; i++)
-	{
-		MapRenderer[i]->SetComponentLocation(MapRenderer[i]->GetComponentLocation() + FVector2D(-400.0f * _Dir, 0.0f));
-	}
+	MoveAmount = 400;
+	Dir = _Dir;
+	//오른쪽 키 눌렀을 때
+	float HalfX = UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X;
 	if (_Dir == 1)
 	{
-		MapRenderer[(CurIndex + 2) % 5]->SetComponentLocation(Locations[2]);
+		MapRenderer[(CurIndex + 2) % 5]->SetComponentLocation({ HalfX + 1200.0f,224.0f });
 	}
 	else
 	{
-		MapRenderer[(CurIndex + 3) % 5]->SetComponentLocation(Locations[3]);
+		MapRenderer[(CurIndex + 3) % 5]->SetComponentLocation({HalfX -1200.0f, 224.0f	});
 	}
 	
 }
@@ -67,12 +93,25 @@ void ATogetherMenu::MoveMenu(int _Dir)
 void ATogetherMenu::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+	if (MoveAmount > 0)
+	{
+		MoveAmount -= _DeltaTime * 1000.0f;
+		for (int i = 0; i < 5; i++)
+		{
+			MapRenderer[i]->SetComponentLocation(MapRenderer[i]->GetComponentLocation() + FVector2D(_DeltaTime* -Dir, 0.0f)*1000.0f);
+		}
+		if (MoveAmount <= 0)
+		{
+			TextRenderer->SetActive(true);
+		}
+	}
+
 }
 void ATogetherMenu::BeginPlay()
 {
 	Super::BeginPlay();
-	MenuInput->BindAction(EKey::Right, KeyEvent::Down, std::bind(&ATogetherMenu::MoveMenu, this, 1));
-	MenuInput->BindAction(EKey::Left, KeyEvent::Down, std::bind(&ATogetherMenu::MoveMenu, this, -1));
+	MenuInput->BindAction(EKey::Right, KeyEvent::Press, std::bind(&ATogetherMenu::MoveMenu, this, 1));
+	MenuInput->BindAction(EKey::Left, KeyEvent::Press, std::bind(&ATogetherMenu::MoveMenu, this, -1));
 	MenuInput->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&ATogetherMenu::StartPlay, this));
 	
 }

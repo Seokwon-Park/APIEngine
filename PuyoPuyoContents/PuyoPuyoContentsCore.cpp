@@ -129,7 +129,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CuttingSprite("EnemySelectOff", "SELECT_D.CNS.BMP", { 48,48 });
 
 	UImageManager::GetInstance().CuttingSpriteCustom("EnemySelectText", "SELECT_L.CNS.BMP", { 384, 96 }, { 640, 128 }, { 32,32 });
-
 	UImageManager::GetInstance().CuttingSpriteCustom("EnemySelectText", "SELECT_L.CNS.BMP", { 384, 96 }, { 640, 128 }, { 32,32 });
 
 

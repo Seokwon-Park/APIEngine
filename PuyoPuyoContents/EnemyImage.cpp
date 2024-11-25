@@ -23,7 +23,7 @@ void AEnemyImage::SetLose()
 
 void AEnemyImage::SetWin()
 {
-	Sr->SetSprite("FaceLose", GameSettings::GetInstance().EnemyIndex);
+	Sr->SetSprite("FaceWin", GameSettings::GetInstance().EnemyIndex);
 	Sr->SetRemoveBackground(true);
 	Sr->SetRemoveColor({ 2,2 });
 }

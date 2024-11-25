@@ -18,6 +18,12 @@ UEngineAudio::UEngineAudio()
 		MSGASSERT("FMOD 시스템 초기화에 실패했습니다.");
 		return;
 	}
+
+	Result = FMODSystem->getMasterChannelGroup(&FMODChannelGroup);
+	if (Result != FMOD_OK) {
+		std::cerr << "FMOD: Failed to get master channel group. Error: " << Result << std::endl;
+		return;
+	}
 }
 
 UEngineAudio::~UEngineAudio()

@@ -25,6 +25,9 @@ private:
 	void MoveMenu(int _Dir);
 	int CurIndex = 0;
 
+	float MoveAmount = 0;
+	int Dir = 0;
+
 	const std::vector<FVector2D> Locations= {
 	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X, 224.0f },
 	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X + 400.0f, 224.0f },
