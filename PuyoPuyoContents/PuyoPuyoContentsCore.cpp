@@ -85,6 +85,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {224,224 }, { 160, 224 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {384,224 }, { 160, 224 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {544,224 }, { 96, 224 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_ETC.CNS.BMP", { {0,0 }, { 224, 224 } });
 
 	//³Ê¶û³ª¶û »Ñ¿ä»Ñ¿ä ¸Þ´º È­¸é
 	// ³Ê¶û³ª¶û»Ñ¿ä»Ñ¿ä ¸Þ´º ÅØ½ºÆ®
@@ -173,7 +174,9 @@ void PuyoPuyoContentsCore::BeginPlay()
 		{
 			Postfix = "0" + Postfix;
 		}
+		if (i == 9 || i == 16 || i == 22 || i == 27 || i == 30 || i == 33)continue;
 		UImageManager::GetInstance().InsertCustomSpriteData("FaceIdle", "FACE" + Postfix + ".CNS.BMP", { {0,0}, { 160, 112 } });
+		UImageManager::GetInstance().InsertCustomSpriteData("FaceLose", "FACE" + Postfix + ".CNS.BMP", { {0,128}, { 160, 112 } });
 	}
 
 	//Cut Menu Bg

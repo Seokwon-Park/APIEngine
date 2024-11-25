@@ -54,12 +54,21 @@ void ASoloPlayGameMode::BeginPlay()
 			PuyoBoardP2->StartGame();
 		});
 
-	AEnemyImage* Image = GetWorld()->SpawnActor<AEnemyImage>();
+	Image = GetWorld()->SpawnActor<AEnemyImage>();
 	Image->SetActorLocation({ 240, 224 });
+
 }
 
 void ASoloPlayGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	APlayGameMode::Tick(_DeltaTime);
+	if (PuyoBoardP2->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
+	{
+		Image->SetLose();
+	}
+	if (PuyoBoardP1->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
+	{
+		Image->SetWin();
+	}
 }

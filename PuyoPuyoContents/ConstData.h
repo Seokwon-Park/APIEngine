@@ -16,6 +16,28 @@ const int DestroyRule[5] = { 4,2,6,4,4 };
 
 const int ScoreToNextLevel[9] = { 0, 15000,45000,80000,120000,150000 };
 
+const FIntPoint RemoveColor[28] = 
+{
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+};
+
 const std::vector<std::vector<std::string>> EnemyNameData = {
 {"Skeleton", "   -T", ""},
 {"  Will","   o","  Wisp"},

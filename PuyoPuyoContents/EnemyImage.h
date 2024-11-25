@@ -16,6 +16,8 @@ public:
 	AEnemyImage& operator=(const AEnemyImage& _Other) = delete;
 	AEnemyImage& operator=(AEnemyImage&& _Other) noexcept = delete;
 
+	void SetWin();
+	void SetLose();
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
