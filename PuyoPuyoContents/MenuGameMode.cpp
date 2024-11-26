@@ -21,6 +21,8 @@ void AMenuGameMode::BeginPlay()
 	AMenuManager* Manager = GetWorld()->SpawnActor<AMenuManager>();
 	Manager->SetActorLocation({ 32,160 });
 	//UAudioManager::SoundPlay();
+
+
 }
 
 void AMenuGameMode::Tick(float _DeltaTime)

@@ -4,6 +4,8 @@
 #include "PuyoAIController.h"
 #include "PuyoPlayerController.h"
 #include "EnemyImage.h"
+#include "ResultFrame.h"
+#include "ResultUI.h"
 
 ASoloPlayGameMode::ASoloPlayGameMode()
 {
@@ -19,9 +21,9 @@ void ASoloPlayGameMode::BeginPlay()
 	APlayGameMode::BeginPlay();
 
 	Frame->SetFrame(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
-	Background->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel-1);
-	BotBackgroundL->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel-1);
-	BotBackgroundR->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel-1);
+	Background->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
+	BotBackgroundL->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
+	BotBackgroundR->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -44,31 +46,61 @@ void ASoloPlayGameMode::BeginPlay()
 	std::string StageStr = "Stage " + std::to_string(GameSettings::GetInstance().CurStage);
 	//StageStr = "Final Stage";
 	StageText->SetText(StageStr);
-	StageText->SetActorLocation({320-StageStr.size() * 8.0f,192.0f});
-	
+	StageText->SetActorLocation({ 320 - StageStr.size() * 8.0f,192.0f });
+
 	MiniCar = GetWorld()->SpawnActor<AMiniCarbuncle>();
 	MiniCar->SetActorLocation({ 256,384 });
-	MiniCar->AddEvent([=]()
+	MiniCar->AddPopEvent([=]()
 		{
 			PuyoBoardP1->StartGame();
 			PuyoBoardP2->StartGame();
+			Timer = 0.0f;
 		});
 
 	Image = GetWorld()->SpawnActor<AEnemyImage>();
 	Image->SetActorLocation({ 240, 224 });
 
+
+
+
+	AResultFrame* Result1 = GetWorld()->SpawnActor<AResultFrame>();
+	Result1->SetActorLocation(PuyoBoardP1->GetActorLocation() + FVector2D(0, 32));
+	Result1->SetActive(false);
+	AResultFrame* Result2 = GetWorld()->SpawnActor<AResultFrame>();
+	Result2->SetActorLocation(PuyoBoardP2->GetActorLocation() + FVector2D(0, 32));
+	Result2->SetActive(false);
+
+	Result = GetWorld()->SpawnActor<AResultUI>();
+
+	PuyoBoardP1->PuyoGameWinDelegate += [=]()
+		{
+			Result1->SetActive(true);
+			Result1->OpenFrame();
+			UEngineEventSystem::AddEvent(1.0f, [=]()
+				{
+					Result2->SetActive(true);
+					Result2->OpenFrame();
+					Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
+				});
+		};
 }
 
 void ASoloPlayGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	APlayGameMode::Tick(_DeltaTime);
+
 	if (PuyoBoardP2->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
 		Image->SetLose();
+
 	}
 	if (PuyoBoardP1->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
 		Image->SetWin();
+	}
+	else
+	{
+		Timer += _DeltaTime;
 	}
 }

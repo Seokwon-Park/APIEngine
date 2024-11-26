@@ -15,7 +15,7 @@ public:
 	AMiniCarbuncle& operator=(const AMiniCarbuncle& _Other) = delete;
 	AMiniCarbuncle& operator=(AMiniCarbuncle&& _Other) noexcept = delete;
 
-	void AddEvent(std::function<void()> _Func)
+	void AddPopEvent(std::function<void()> _Func)
 	{
 		Event += _Func;
 	}

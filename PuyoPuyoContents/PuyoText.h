@@ -29,6 +29,7 @@ public:
 	void SetText(long long _Value);
 	inline void Add(long long _Value) { Score += _Value; SetText(Score); }
 	void ClearText();
+	inline long long GetScore() const { return Score; }
 protected:
 	virtual void BeginPlay() override;
 private:

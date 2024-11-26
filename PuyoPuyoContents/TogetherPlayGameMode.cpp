@@ -48,7 +48,7 @@ void ATogetherPlayGameMode::BeginPlay()
 
 	MiniCar = GetWorld()->SpawnActor<AMiniCarbuncle>();
 	MiniCar->SetActorLocation({ 336,272 });
-	MiniCar->AddEvent([=]()
+	MiniCar->AddPopEvent([=]()
 		{
 			PuyoBoardP1->StartGame();
 			PuyoBoardP2->StartGame();
