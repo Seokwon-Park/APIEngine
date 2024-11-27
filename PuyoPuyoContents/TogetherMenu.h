@@ -2,6 +2,8 @@
 #include <EngineCore/InputComponent.h>
 #include <EngineCore/SpriteRendererComponent.h>
 
+#include "VSMenuMap.h"
+
 // Ό³Έν :
 class ATogetherMenu : public AActor
 {
@@ -28,12 +30,13 @@ private:
 	float MoveAmount = 0;
 	int Dir = 0;
 
-	const std::vector<FVector2D> Locations= {
-	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X, 224.0f },
-	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X + 400.0f, 224.0f },
-	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X + 800.0f, 224.0 },
-	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X - 800, 224.0f },
-	{ UEngineAPICore::GetEngineWindow().GetWindowSize().Half().X - 400, 224.0f }
+	const std::vector<FVector2D> Locations =
+	{
+	{ 152.0f, 96.0f },
+	{ 536.0f, 96.0f },
+	{ 152.0f + 768.0f, 96.0f },
+	{ 152.0f - 768.0f, 96.0f },
+	{ 152.0f - 384.0f, 96.0f }
 	};
 	USpriteRendererComponent* TextRenderer;
 
@@ -42,7 +45,7 @@ private:
 	UAnimatorComponent* LArrowAnim;
 	UAnimatorComponent* RArrowAnim;
 
-	std::vector<USpriteRendererComponent*> MapRenderer;
+	std::vector<AVSMenuMap*> MenuItems;
 	UInputComponent* MenuInput;
 };
 

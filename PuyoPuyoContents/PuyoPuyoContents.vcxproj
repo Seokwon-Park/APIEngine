@@ -185,6 +185,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ResultFrame.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ResultUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="VSMenuMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MenuManager.h">
       <SubType>
       </SubType>
@@ -432,6 +444,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ResultFrame.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ResultUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="VSMenuMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>

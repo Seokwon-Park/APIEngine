@@ -201,43 +201,83 @@ void USpriteRendererComponent::UpdatePivot()
 		return;
 	}
 
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	//UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+
+	//switch (PivotType)
+	//{
+	//case EPivotType::TopLeft:
+	//	Pivot = CurData.Transform.Scale.Half();
+	//	break;
+	//case EPivotType::TopCenter:
+	//	Pivot.X = 0.0f;
+	//	Pivot.Y = CurData.Transform.Scale.Half().Y;
+	//	break;
+	//case EPivotType::TopRight:
+	//	Pivot.X = -CurData.Transform.Scale.Half().X;
+	//	Pivot.Y = CurData.Transform.Scale.Half().Y;
+	//	break;
+	//case EPivotType::MiddleLeft:
+	//	Pivot.X = CurData.Transform.Scale.Half().X;
+	//	Pivot.Y = 0.0f;
+	//	break;
+	//case EPivotType::MiddleCenter:
+	//	SetPivot(FVector2D::ZERO);
+	//	break;
+	//case EPivotType::MiddleRight:
+	//	Pivot.X = -CurData.Transform.Scale.Half().X;
+	//	Pivot.Y = 0.0f;
+	//	break;
+	//case EPivotType::BottomLeft:
+	//	Pivot.X = CurData.Transform.Scale.Half().X;
+	//	Pivot.Y = -CurData.Transform.Scale.Half().Y;
+	//	break;
+	//case EPivotType::BottomCenter:
+	//	Pivot.X = 0.0f;
+	//	Pivot.Y = -CurData.Transform.Scale.Half().Y;
+	//	break;
+	//case EPivotType::BottomRight:
+	//	Pivot.X = -CurData.Transform.Scale.Half().X;
+	//	Pivot.Y = -CurData.Transform.Scale.Half().Y;
+	//	break;
+	//default:
+	//	break;
+	//}
 
 	switch (PivotType)
 	{
 	case EPivotType::TopLeft:
-		Pivot = CurData.Transform.Scale.Half();
+		Pivot = Transform.Scale.Half();
 		break;
 	case EPivotType::TopCenter:
 		Pivot.X = 0.0f;
-		Pivot.Y = CurData.Transform.Scale.Half().Y;
+		Pivot.Y = Transform.Scale.Half().Y;
 		break;
 	case EPivotType::TopRight:
-		Pivot.X = -CurData.Transform.Scale.Half().X;
-		Pivot.Y = CurData.Transform.Scale.Half().Y;
+		Pivot.X = -Transform.Scale.Half().X;
+		Pivot.Y = Transform.Scale.Half().Y;
 		break;
 	case EPivotType::MiddleLeft:
-		Pivot.X = CurData.Transform.Scale.Half().X;
+		Pivot.X = Transform.Scale.Half().X;
 		Pivot.Y = 0.0f;
 		break;
 	case EPivotType::MiddleCenter:
 		SetPivot(FVector2D::ZERO);
 		break;
 	case EPivotType::MiddleRight:
-		Pivot.X = -CurData.Transform.Scale.Half().X;
+		Pivot.X = -Transform.Scale.Half().X;
 		Pivot.Y = 0.0f;
 		break;
 	case EPivotType::BottomLeft:
-		Pivot.X = CurData.Transform.Scale.Half().X;
-		Pivot.Y = -CurData.Transform.Scale.Half().Y;
+		Pivot.X = Transform.Scale.Half().X;
+		Pivot.Y = -Transform.Scale.Half().Y;
 		break;
 	case EPivotType::BottomCenter:
 		Pivot.X = 0.0f;
-		Pivot.Y = -CurData.Transform.Scale.Half().Y;
+		Pivot.Y = -Transform.Scale.Half().Y;
 		break;
 	case EPivotType::BottomRight:
-		Pivot.X = -CurData.Transform.Scale.Half().X;
-		Pivot.Y = -CurData.Transform.Scale.Half().Y;
+		Pivot.X = -Transform.Scale.Half().X;
+		Pivot.Y = -Transform.Scale.Half().Y;
 		break;
 	default:
 		break;

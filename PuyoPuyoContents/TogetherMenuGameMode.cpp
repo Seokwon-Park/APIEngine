@@ -1,8 +1,6 @@
 #include "aepch.h"
 #include "TogetherMenuGameMode.h"
 
-
-
 ATogetherMenuGameMode::ATogetherMenuGameMode()
 {
 }

@@ -21,8 +21,10 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	float Timer = 0.0f;
 	class APuyoPlayerController* ControllerP1;
 	class APuyoAIController* ControllerP2;
 	class AEnemyImage* Image;
+	class AResultUI* Result;
 };
 

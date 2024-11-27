@@ -267,6 +267,15 @@
     <ClCompile Include="SkeletonTImage.cpp">
       <Filter>ContentsObject\Play\Enemies\LV1</Filter>
     </ClCompile>
+    <ClCompile Include="VSMenuMap.cpp">
+      <Filter>ContentsObject\Play\Together</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultFrame.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultUI.cpp">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -463,6 +472,15 @@
     </ClInclude>
     <ClInclude Include="SkeletonTImage.h">
       <Filter>ContentsObject\Play\Enemies\LV1</Filter>
+    </ClInclude>
+    <ClInclude Include="VSMenuMap.h">
+      <Filter>ContentsObject\Play\Together</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultFrame.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultUI.h">
+      <Filter>ContentsObject\Play\Solo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -107,7 +107,19 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuRArrow", "SEL_0.CNS.BMP", { { 544,0 }, { 16,24 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuRArrow", "SEL_0.CNS.BMP", { { 560,0 }, { 16,24 } });
 
-	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrame", "SEL_0.CNS.BMP", { { 192,0 }, { 304,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 544,32 }, { 16,16 } }); //TopLEft
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 304,192 }, { 304,16 } }); // Up
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 560,32 }, { 16,16 } }); // TopRight
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 624,0 }, { 8,224 } }); //Left
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 632,0 }, { 8,224 } }); //Right
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 544,48 }, { 16,16 } }); // BotLeft
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 304,208 }, { 304,16 } }); // Down
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 560,48 }, { 16,16 } }); // BotRight
+
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 512,32 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 528,32 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 512,48 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 528,48 }, { 16,16 } });
 
 	//솔로모드 메뉴 스프라이트
 	UImageManager::GetInstance().CuttingSprite("ARLE", "KAO_ARLE.CNS.BMP", { 160,112 });
@@ -137,6 +149,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CreateColorImage("Black");
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
+	UImageManager::GetInstance().CreateColorImage("GameOverBack", { 0, 0, 0, 32 });
 	//인게임 Text
 	UImageManager::GetInstance().ImageToGrayScale("GrayText", "Puyo_G_.cns.bmp");
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
@@ -176,6 +189,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 		if (i == 9 || i == 16 || i == 22 || i == 27 || i == 30 || i == 33)continue;
 		UImageManager::GetInstance().InsertCustomSpriteData("FaceIdle", "FACE" + Postfix + ".CNS.BMP", { {0,0}, { 160, 112 } });
 		UImageManager::GetInstance().InsertCustomSpriteData("FaceLose", "FACE" + Postfix + ".CNS.BMP", { {0,128}, { 160, 112 } });
+		UImageManager::GetInstance().InsertCustomSpriteData("FaceWin", "FACE" + Postfix + ".CNS.BMP", { {160,128}, { 160, 112 } });
 	}
 
 	//Cut Menu Bg

@@ -6,7 +6,8 @@
 #include "PuyoChainText.h"
 #include "GameOverText.h"
 #include "PuyoChainFX.h"
-#include "ConstData.h"
+#include "ResultFrame.h"
+
 
 
 #include <algorithm>
@@ -140,11 +141,6 @@ void APuyoBoard::Tick(float _DeltaTime)
 		return;
 	}
 
-	if (CounterBoardActor->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
-	{
-		CurStep = EPuyoLogicStep::PuyoGameWin;
-	}
-
 	if (true == IsKicking)
 	{
 		if (BlockDir == 1)
@@ -266,9 +262,18 @@ void APuyoBoard::PuyoCreateLogic()
 	//게임오벌,,,
 	if (Board[1][2] != nullptr)
 	{
-		AGameOverText* Test = GetWorld()->SpawnActor<AGameOverText>();
-		Test->SetActorLocation(GetActorLocation());
+		//AGameOverText* Test = GetWorld()->SpawnActor<AGameOverText>();
+		//Test->SetActorLocation(GetActorLocation());
 		CurStep = EPuyoLogicStep::PuyoGameOver;
+		CounterBoardActor->CurStep = EPuyoLogicStep::PuyoGameWin;
+		if(CounterBoardActor->PuyoGameWinDelegate.IsBind() == true)
+		{
+			CounterBoardActor->PuyoGameWinDelegate();
+		}
+		if (PuyoGameOverDelegate.IsBind() == true)
+		{
+			PuyoGameOverDelegate();
+		}
 		return;
 	}
 
@@ -282,7 +287,6 @@ void APuyoBoard::PuyoCreateLogic()
 	BlockDir = 0;
 	MainPuyoCoord.X = (BoardSize.X - 1) / 2;
 	MainPuyoCoord.Y = 0;
-	// 대충 생각해본 로직
 
 	Block = NextBlock;
 	for (int i = 0; i < 2; i++)
@@ -826,12 +830,12 @@ void APuyoBoard::PuyoGameOverLogic()
 	for (int j = 0; j < BottomFrames.size(); j++)
 	{
 		if (!IsDrop[j]) continue;
-		BottomFrames[j]->SetActorLocation(BottomFrames[j]->GetActorLocation() + FVector2D(0, 1) * UEngineAPICore::GetEngineDeltaTime() * 200.0f);
+		BottomFrames[j]->SetActorLocation(BottomFrames[j]->GetActorLocation() + FVector2D(0, 1) * UEngineAPICore::GetEngineDeltaTime() * 500.0f);
 		for (int i = 0; i < BoardSize.Y; i++)
 		{
 			if (Board[i][j] != nullptr)
 			{
-				Board[i][j]->AddActorLocation(FVector2D::DOWN* UEngineAPICore::GetEngineDeltaTime()*200.0f);
+				Board[i][j]->AddActorLocation(FVector2D::DOWN * UEngineAPICore::GetEngineDeltaTime() * 500.0f);
 
 			}
 		}
@@ -840,6 +844,10 @@ void APuyoBoard::PuyoGameOverLogic()
 
 void APuyoBoard::PuyoGameWinLogic()
 {
+	for (int i = 0; i < 2; i++)
+	{
+		Block[i]->SetActive(false);
+	}
 	for (int i = 0; i < BoardSize.Y; i++)
 	{
 		for (int j = 0; j < BoardSize.X; j++)

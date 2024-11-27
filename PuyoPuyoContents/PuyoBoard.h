@@ -128,6 +128,8 @@ public:
 	//Create 로직 관련 함수
 	std::vector<APuyo*> CreatePuyoBlock();
 	UEngineDelegate PuyoCreateDelegate;
+	UEngineDelegate PuyoGameOverDelegate;
+	UEngineDelegate PuyoGameWinDelegate;
 	
 	// Move 로직 관련 함수
 	// 
