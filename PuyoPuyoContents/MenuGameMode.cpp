@@ -20,7 +20,8 @@ void AMenuGameMode::BeginPlay()
 	AMenuBackground* Background = GetWorld()->SpawnActor<AMenuBackground>();
 	AMenuManager* Manager = GetWorld()->SpawnActor<AMenuManager>();
 	Manager->SetActorLocation({ 32,160 });
-	//UAudioManager::SoundPlay();
+	
+	UAudioManager::ChangeBGM("SelectMenu.MID");
 }
 
 void AMenuGameMode::Tick(float _DeltaTime)

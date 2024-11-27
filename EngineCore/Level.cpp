@@ -97,7 +97,7 @@ void ULevel::BeginPlay()
 void ULevel::EndPlay()
 {
 	UEngineEventSystem::ClearEvents();
-	UAudioManager::StopAllSounds();
+	//UAudioManager::StopAllSounds();
 
 }
 

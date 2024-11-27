@@ -70,7 +70,8 @@ void AIntroGameMode::BeginPlay()
 	OPPuyoDelegate += std::bind(&AThunderBackground::SetActive, ThunderBackground, true);
 	OPPuyoDelegate += std::bind(&AOpeningPuyo::SetActive, OPPuyo, true);
 	OPPuyoDelegate += std::bind(&AOpeningPuyo::Init, OPPuyo);
-	OPPuyoDelegate += std::bind(&UEngineSound::Play, UAudioManager::GetInstance().FindSound("PUYO2000.MID"));
+	OPPuyoDelegate += std::bind(&UAudioManager::ChangeBGM, "PUYO2000.MID");
+	OPPuyoDelegate += std::bind(&UAudioManager::PlayBGM);
 
 	UEngineDelegate OPCarDelegate;
 	OPCarDelegate += std::bind(&AFader::SetActive, Fader, false);

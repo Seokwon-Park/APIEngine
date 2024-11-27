@@ -21,6 +21,31 @@ public:
 		return Instance;
 	}
 
+	static void ChangeBGM(std::string_view _KeyName)
+	{
+		if (GetInstance().BGM != nullptr)
+		{
+			GetInstance().BGM->Stop();
+		}
+		GetInstance().BGM = GetInstance().FindSound(_KeyName);
+		GetInstance().BGM->Play();
+	}
+
+	static void PlayBGM()
+	{
+		GetInstance().BGM->Play();
+	}
+
+	static void StopBGM(std::string_view _KeyName)
+	{
+		GetInstance().BGM->Stop();
+	}
+
+	static void SetBGMVolume(float _Value)
+	{
+		GetInstance().BGM->SetVolume(_Value);
+	}
+
 	static void SoundPlay(std::string_view _KeyName)
 	{
 		GetInstance().FindSound(_KeyName)->Play();
@@ -43,6 +68,6 @@ private:
 	// API에 대한 정보는 몰라야 하는거 같음
 	// FMOD::System* FMODSystem = nullptr;
 	std::map<std::string, UEngineSound*> Sounds;
-
+	UEngineSound* BGM;
 }; 
 
