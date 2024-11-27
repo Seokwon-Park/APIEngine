@@ -22,8 +22,8 @@ public:
 	AResultUI& operator=(const AResultUI& _Other) = delete;
 	AResultUI& operator=(AResultUI&& _Other) noexcept = delete;
 
-	int CalculateBonusScore(int _Time);
-	void SetupResult(long long _ElapsedTime, APuyoText* _PlayerScore);
+	long long CalculateBonusScore(int _Time);
+	void SetupResult(int _ElapsedTime, APuyoText* _PlayerScore);
 	void Idle();
 	void ShowText();
 	void AdjustScore();

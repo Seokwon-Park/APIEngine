@@ -12,7 +12,7 @@ AResultUI::~AResultUI()
 }
 
 
-int AResultUI::CalculateBonusScore(int _Time)
+long long AResultUI::CalculateBonusScore(int _Time)
 {
 	if (_Time >= 140)
 	{
@@ -36,7 +36,7 @@ int AResultUI::CalculateBonusScore(int _Time)
 	}
 }
 
-void AResultUI::SetupResult(long long _ElapsedTime, APuyoText* _PlayerScore)
+void AResultUI::SetupResult(int _ElapsedTime, APuyoText* _PlayerScore)
 {
 	CurStep = EResultStep::Show;
 	Elapsed = _ElapsedTime;
@@ -195,7 +195,7 @@ void AResultUI::BeginPlay()
 
 	LevelUp = GetWorld()->SpawnActor<APuyoText>();
 	LevelUp->SetActorLocation(RightOffset + FVector2D(32, 288));
-	LevelUp->SetupText(7, EPuyoBoardColor::Red, ETextAlign::Right);
+	LevelUp->SetupText(8, EPuyoBoardColor::Red, ETextAlign::Right);
 	LevelUp->SetText("Level Up");
 
 

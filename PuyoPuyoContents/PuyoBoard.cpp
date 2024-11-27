@@ -541,7 +541,7 @@ void APuyoBoard::PuyoCheckLogic()
 	// 원래 있던 점들은 조사할 필요가 없다.
 	int PC = 0;
 	std::vector<std::vector<bool>> Checked(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
-
+	std::set<EPuyoColor> ColorSet;
 	for (FIntPoint Point : PuyoCheckList)
 	{
 		std::vector<std::vector<bool>> Visited(BoardSize.Y, std::vector<bool>(BoardSize.X, false));
@@ -596,6 +596,7 @@ void APuyoBoard::PuyoCheckLogic()
 			PC += static_cast<int>(Temp.size());
 			for (FIntPoint Point : Temp)
 			{
+				ColorSet.insert(Board[Point.Y][Point.X]->GetColor());
 				Checked[Point.Y][Point.X] = true;
 				PuyoDestroyList.insert(Point);
 				//PuyoDestroyList.push_back(Point);
@@ -614,7 +615,7 @@ void APuyoBoard::PuyoCheckLogic()
 		Rensa++;
 		int CP = SingleCPTable[Rensa];
 		//TODO : 컬러보너스 계산해야함
-		int CB = ColorBonusTable[1];
+		int CB = ColorBonusTable[ColorSet.size()];
 		int GB = GroupBonusTable[PC];
 		std::string PCText = std::to_string(PC * 10);
 		std::string BonusText = std::to_string(CP + CB + GB);
