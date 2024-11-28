@@ -5,6 +5,7 @@
 #include "OpeningCar.h"
 #include "OpeningArle.h"
 #include "OpeningCoin.h"
+#include "OpeningTitle.h"
 #include "ThunderBackground.h"
 #include "IntroGameMode.h"
 #include "IntroBackground.h"
@@ -37,6 +38,7 @@ void AIntroGameMode::BeginPlay()
 	AOpeningCar* OPCar = GetWorld()->SpawnActor<AOpeningCar>();
 	AOpeningArle* OPArle = GetWorld()->SpawnActor<AOpeningArle>();
 	AOpeningCoin* OPCoin = GetWorld()->SpawnActor<AOpeningCoin>();
+	AOpeningTitle* OPTitle= GetWorld()->SpawnActor<AOpeningTitle>();
 	Fader = GetWorld()->SpawnActor<AFader>();
 
 	// 인트로 애니메이션 설정

@@ -291,6 +291,9 @@
     <ClCompile Include="GameOverPuyoText.cpp">
       <Filter>ContentsObject\Global</Filter>
     </ClCompile>
+    <ClCompile Include="OpeningTitle.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="GameOverPuyoText.h">
       <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningTitle.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
