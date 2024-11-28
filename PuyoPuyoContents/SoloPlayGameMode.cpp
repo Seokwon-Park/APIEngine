@@ -59,10 +59,8 @@ void ASoloPlayGameMode::BeginPlay()
 			Timer = 0.0f;
 		});
 
-	Image = GetWorld()->SpawnActor<AEnemyImage>();
-	Image->SetActorLocation({ 240, 224 });
-
-
+	EnemyImage = GetWorld()->SpawnActor<AEnemyImage>();
+	EnemyImage->SetActorLocation({ 240, 224 });
 
 
 	AResultFrame* Result1 = GetWorld()->SpawnActor<AResultFrame>();
@@ -73,19 +71,24 @@ void ASoloPlayGameMode::BeginPlay()
 	Result2->SetActive(false);
 
 	Result = GetWorld()->SpawnActor<AResultUI>();
-	Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
+	//Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
 
-	//PuyoBoardP1->PuyoGameWinDelegate += [=]()
-	//	{
-	//		Result1->SetActive(true);
-	//		Result1->OpenFrame();
-	//		UEngineEventSystem::AddEvent(1.0f, [=]()
-	//			{
-	//				Result2->SetActive(true);
-	//				Result2->OpenFrame();
-	//				Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
-	//			});
-	//	};
+	PuyoBoardP1->PuyoGameWinDelegate += [=]()
+		{
+			Result1->SetActive(true);
+			Result1->OpenFrame();
+			UEngineEventSystem::AddEvent(1.0f, [=]()
+				{
+					Result2->SetActive(true);
+					Result2->OpenFrame();
+					Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
+				});
+		};
+
+	PuyoBoardP2->PuyoGameWinDelegate += [=]()
+		{
+			
+		};
 }
 
 void ASoloPlayGameMode::Tick(float _DeltaTime)
@@ -95,12 +98,12 @@ void ASoloPlayGameMode::Tick(float _DeltaTime)
 
 	if (PuyoBoardP2->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
-		Image->SetLose();
+		EnemyImage->SetLose();
 
 	}
 	if (PuyoBoardP1->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
-		Image->SetWin();
+		EnemyImage->SetWin();
 	}
 	else
 	{

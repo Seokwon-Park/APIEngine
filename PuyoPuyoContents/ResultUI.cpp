@@ -121,29 +121,26 @@ void AResultUI::AdjustScore()
 	{
 		StagePoint -= DExp;
 		RestPoint -= DExp;
-		StagePointText->AddScoreAndUpdate(-DExp);
 		if (RestPoint > 0)
 		{
 			RestPointText->AddScoreAndUpdate(-DExp);
 		}
+		StagePointText->AddScoreAndUpdate(-DExp);
+		//stage 포인트 정산 끝남
 		if (StagePoint <= 0)
 		{
-			RestPointText->AddScoreAndUpdate(-DExp);
+			if (RestPoint > 0)
+			{
+				RestPointText->SetScoreAndUpdate(ScoreToNextLevel[GameSettings::GetInstance().CurLevel] - GameSettings::GetInstance().CurExp);
+			}
 			StagePointText->SetScoreAndUpdate(0);
 		}
 		return;
 	}
-	if (RestPoint < 0)
+	//레벨 업 했을때
+	if (RestPoint <= 0)
 	{
 		GameSettings::GetInstance().CurLevel += 1;
-		if (ScoreNeedToLevel[GameSettings::GetInstance().CurLevel] <= GameSettings::GetInstance().CurExp)
-		{
-			GameSettings::GetInstance().RestToNextLevel = 1;
-		}
-		else
-		{
-			GameSettings::GetInstance().RestToNextLevel = ScoreNeedToLevel[GameSettings::GetInstance().CurLevel] - GameSettings::GetInstance().CurExp;
-		}
 		LevelUpText->SetActive(true);
 	}
 	CurStep = EResultStep::Wait;
@@ -154,6 +151,17 @@ void AResultUI::NextGame()
 	if (CurStep != EResultStep::Wait)
 	{
 		return;
+	}
+
+	if (ScoreToNextLevel[GameSettings::GetInstance().CurLevel] <= GameSettings::GetInstance().CurExp)
+	{
+		GameSettings::GetInstance().RestToNextLevel = 1;
+		GameSettings::GetInstance().NeedToNextLevel = GameSettings::GetInstance().CurExp + 1;
+	}
+	else
+	{
+		GameSettings::GetInstance().RestToNextLevel = ScoreToNextLevel[GameSettings::GetInstance().CurLevel] - GameSettings::GetInstance().CurExp;
+		GameSettings::GetInstance().NeedToNextLevel = ScoreToNextLevel[GameSettings::GetInstance().CurLevel];
 	}
 
 	int CurEnemyIndex = GameSettings::GetInstance().EnemyIndex;

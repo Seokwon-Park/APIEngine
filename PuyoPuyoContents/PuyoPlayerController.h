@@ -19,6 +19,7 @@ public:
 
 	virtual void Tick(float _DeltaTime) override;
 	void SetKey(int _CWRotate, int _CCWRotate, int _Down, int _Left, int _Right);
+	void OpenGameOver();
 protected:
 	virtual void BeginPlay() override;
 

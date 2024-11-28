@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "PuyoPlayerController.h"
 
+#include "GameOverGameMode.h"
 APuyoPlayerController::APuyoPlayerController()
 {
 }
@@ -38,6 +39,8 @@ void APuyoPlayerController::BeginPlay()
 	{
 		InputComponent->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&APuyoBoard::PauseGame, Board->GetCounterBoard()));
 	}
+
+	InputComponent->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&APuyoPlayerController::OpenGameOver, this));
 	//InputComponent->BindAction();
 }
 
@@ -48,4 +51,13 @@ void APuyoPlayerController::SetKey(int _CWRotate, int _CCWRotate, int _Down, int
 	DownKey = _Down;
 	LeftKey = _Left;
 	RightKey = _Right;
+}
+
+void APuyoPlayerController::OpenGameOver()
+{
+	if (Board->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
+	{
+		UEngineAPICore::GetCore()->ResetLevel<AGameOverGameMode, ADummyPawn>("GameOver");
+		UEngineAPICore::GetCore()->OpenLevel("GameOver");//
+	}
 }

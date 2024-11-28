@@ -33,7 +33,6 @@ public:
 		GetInstance().BGM = GetInstance().FindSound(_KeyName);
 	}
 
-
 	inline static void PlayBGM()
 	{
 		if (GetInstance().BGM != nullptr)

@@ -31,6 +31,7 @@ void AOptionsItem::Select()
 {
 	if (!SelectActions.empty())
 	{
+		UAudioManager::SoundPlay("PuyoSelect.wav");
 		for (auto Action : SelectActions)
 		{
 			Action();

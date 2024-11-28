@@ -34,6 +34,7 @@ ACharacterFrame::~ACharacterFrame()
 
 void ACharacterFrame::SetFrameStateEnemy(std::string_view _SpriteName, int _Index)
 {
+	
 	CharacterImage->SetSprite(_SpriteName, _Index);
 	CharacterImage->SetRemoveColor(UColor(6, 7, 6, 0));
 	int StartIndex = LevelEnemiesPfsum[GameSettings::GetInstance().CurLevel-1];
@@ -84,7 +85,7 @@ void ACharacterFrame::BeginPlay()
 			Text[i]->SetActorLocation(InfoFrameRenderer->GetWorldTransform().Location + FVector2D(72, 16 + 32 * i));
 		}
 		Text[0]->SetText(GameSettings::GetInstance().CurExp);
-		Text[1]->SetText(ScoreToNextLevel[GameSettings::GetInstance().CurLevel]);
+		Text[1]->SetText(GameSettings::GetInstance().NeedToNextLevel);
 		Text[2]->SetText(GameSettings::GetInstance().RestToNextLevel);
 	}
 }

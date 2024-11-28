@@ -15,7 +15,8 @@ const int LevelEnemiesPfsum[9] = { 0,8,14,19,23,25,26,27,28 };
 const int DestroyRule[5] = { 4,2,6,4,4 };
 
 const int ScoreToNextLevel[9] = { 0, 15000,45000,80000,120000,150000 };
-const int ScoreNeedToLevel[9] = { 0, 15000,60000,140000,260000,410000 };
+
+const std::vector<std::string> LevelBGM = { "" };
 
 const FIntPoint EnemyRemoveColor[28] = 
 {
@@ -63,7 +64,7 @@ const std::vector<std::vector<std::string>> EnemyNameData = {
 {" Monster", "",""},
 {" Witch","",""},
 {"Pakista","",""},
-{"Drago","Centaur","",""},
+{"Drago","Centaur",""},
 {"Minotaur","",""},
 {" Schezo"," Wegey",""},
 {" Rulue","",""},

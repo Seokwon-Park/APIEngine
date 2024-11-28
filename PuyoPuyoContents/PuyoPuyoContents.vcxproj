@@ -177,11 +177,27 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameOverText.h">
+    <ClInclude Include="GameEndText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameOverBackground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameOverGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameOverPuyoText.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PuzzleGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -439,11 +455,27 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameOverText.cpp">
+    <ClCompile Include="GameEndText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameOverBackground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameOverGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameOverPuyoText.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PuzzleGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

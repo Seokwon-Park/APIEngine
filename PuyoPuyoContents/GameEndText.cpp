@@ -1,7 +1,7 @@
 #include "aepch.h"
-#include "GameOverText.h"
+#include "GameEndText.h"
 
-AGameOverText::AGameOverText()
+AGameEndText::AGameEndText()
 {
 	Sr = CreateDefaultSubobject<USpriteRendererComponent>("GameOver");
 	Sr->SetSprite("Gameovertext");
@@ -10,12 +10,12 @@ AGameOverText::AGameOverText()
 	Sr->SetPivot(EPivotType::TopLeft);
 }
 
-AGameOverText::~AGameOverText()
+AGameEndText::~AGameEndText()
 {
 }
 
 
-void AGameOverText::Tick(float _DeltaTime)
+void AGameEndText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	if (GetActorLocation().Y < 96.0f)
@@ -25,7 +25,7 @@ void AGameOverText::Tick(float _DeltaTime)
 	ElapsedTime += _DeltaTime;
 	SetActorLocation({ GetActorLocation().X +0.1f* sin(ElapsedTime*5.0f), GetActorLocation().Y});
 }
-void AGameOverText::BeginPlay()
+void AGameEndText::BeginPlay()
 {
 	Super::BeginPlay();
 }

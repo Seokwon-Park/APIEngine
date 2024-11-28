@@ -38,6 +38,7 @@ void AEnemySelector::SetupSelector(int _Size, int _StartRange, ACharacterFrame* 
 
 void AEnemySelector::SelectEnemy()
 {
+	UAudioManager::SoundPlay("PuyoSelect.wav");
 	IsSelectEnd = true;
 	Delay = 0.05f;
 	Timer = 0.0f;
@@ -50,6 +51,7 @@ void AEnemySelector::StartPlay()
 	GameSettings::GetInstance().EnemyIndex = EnemyList[CurIndex]->GetIndex();
 	GameSettings::GetInstance().DestroyRule = 4;
 
+	//UAudioManager::SetBGM();
 	UEngineAPICore::GetCore()->ResetLevel<ASoloPlayGameMode, ADummyPawn>("SoloPlay");
 	UEngineAPICore::GetCore()->OpenLevel("SoloPlay");//
 }
@@ -90,12 +92,13 @@ void AEnemySelector::Tick(float _DeltaTime)
 		if (CurIndex >= Size)
 		{
 			CurIndex %= Size;
-			Delay *= 2.0f;
+			Delay += 0.05f;
 		}
 		while (EnemyList[CurIndex]->GetIndex() == 33)
 		{
 			CurIndex = (CurIndex + 1) % Size;
 		}
+		UAudioManager::SoundPlay("PuyoEnemyChange.wav");
 		Frame->SetFrameStateEnemy("LV" + std::to_string(Level), CurIndex);
 		EnemyList[CurIndex]->SetOn();
 		Timer = Delay;
@@ -116,6 +119,4 @@ void AEnemySelector::BeginPlay()
 	Input = CreateDefaultSubobject<UInputComponent>("");
 	Input->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AEnemySelector::SelectEnemy, this));
 	Input->BindAction(EKey::Space, KeyEvent::Down, std::bind(&AEnemySelector::SelectEnemy, this));
-
-
 }

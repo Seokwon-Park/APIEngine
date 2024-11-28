@@ -24,8 +24,8 @@ void AOptionsManager::BeginPlay()
 	Super::BeginPlay();
 	OptInput->BindAction(EKey::Up, KeyEvent::Down, std::bind(&AOptionsList::PrevItem, std::ref(CurList)));
 	OptInput->BindAction(EKey::Down, KeyEvent::Down, std::bind(&AOptionsList::NextItem, std::ref(CurList)));
-	OptInput->BindAction(EKey::Left, KeyEvent::Down, std::bind(&AOptionsList::NextItem, std::ref(CurList)));
-	OptInput->BindAction(EKey::Right, KeyEvent::Down, std::bind(&AOptionsList::NextItem, std::ref(CurList)));
+	//OptInput->BindAction(EKey::Left, KeyEvent::Down, std::bind(&AOptionsList::NextItem, std::ref(CurList)));
+	//OptInput->BindAction(EKey::Right, KeyEvent::Down, std::bind(&AOptionsList::NextItem, std::ref(CurList)));
 	OptInput->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AOptionsList::Execute, std::ref(CurList)));
 }
 

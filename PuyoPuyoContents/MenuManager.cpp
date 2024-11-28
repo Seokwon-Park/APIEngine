@@ -67,6 +67,7 @@ void AMenuManager::SelectMenu()
 			Menus[i]->PlayCloseAnimation();
 			LockControl = true;
 		}
+		UAudioManager::SoundPlay("PuyoSelect.wav");
 		UEngineEventSystem::AddEvent(0.4f, std::bind(&UEngineAPICore::OpenLevel, UEngineAPICore::GetCore(), LevelNames[CurMenuIndex]));
 		InputTimer = 0.0f;
 	}
@@ -78,11 +79,12 @@ void AMenuManager::MoveMenu(int _Dir)
 	if (LockControl == true) return;
 	for (int i = 0; i < MenuSize; i++)
 	{
-		IsMoving = Menus[i]->GetIsMoving();
+		IsMoving |= Menus[i]->GetIsMoving();
 	}
 	// 메뉴 최대값일때 더 못밀게
 	if ((CurMenuIndex == 0 && _Dir == 1) || (CurMenuIndex == MenuSize - 1 && _Dir == -1)) return;
 	if (IsMoving == true) return;
+	UAudioManager::SoundPlay("PuyoMoveMenu.wav");
 	Menus[CurMenuIndex]->SetMenuInactive();
 	CurMenuIndex -= _Dir;
 	Menus[CurMenuIndex]->SetMenuActive();

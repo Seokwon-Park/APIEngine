@@ -3,6 +3,7 @@
 
 #include "IntroGameMode.h"
 
+#include <EngineCore/AudioManager.h>
 #include "OptionsItem.h"
 #include "OptionsList.h"
 #include "OptionsManager.h"
@@ -25,6 +26,7 @@ void AOptionsGameMode::BeginPlay()
 	AOptionsItem* SoundTitle = GetWorld()->SpawnActor<AOptionsItem>();
 	SoundTitle->SetupItem("OPTMENU", 5);
 
+	UAudioManager::StopBGM();
 
 
 	OptionsList = GetWorld()->SpawnActor<AOptionsList>();

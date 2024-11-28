@@ -1,6 +1,5 @@
 #pragma once
 #include <EngineBase/EngineRandom.h>
-#include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRendererComponent.h>
 
 // Ό³Έν :

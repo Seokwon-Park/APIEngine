@@ -35,16 +35,16 @@ public:
 	inline long long GetScore() const { return Score; }
 protected:
 	virtual void BeginPlay() override;
-private:
-	const int MAXLEN = 18;
 	std::vector<int> ChMap;
-	size_t TextLength;
 	std::vector<USpriteRendererComponent*> TextSpriteRenderers;
+	size_t TextLength;
+	const int MAXLEN = 18;
 	std::vector<std::string> ColorSprites;
 	ETextAlign TextAlign = ETextAlign::Left;
 	int Color = 0;
 	bool RemoveZero;
 	long long Score = 0;
+private:
 	
 };
 

@@ -4,11 +4,8 @@
 #include "OffsetText.h"
 #include "PuyoBoomFX.h"
 #include "PuyoChainText.h"
-#include "GameOverText.h"
 #include "PuyoChainFX.h"
 #include "ResultFrame.h"
-
-
 
 #include <algorithm>
 #include <EnginePlatform/EngineInputSystem.h>

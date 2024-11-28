@@ -45,6 +45,7 @@ public:
 
 	inline void PrevItem()
 	{
+		UAudioManager::GetInstance().SoundPlay("PuyoMoveMenu.wav");
 		if (CurIndex - 1 >= 0)
 		{
 			CurIndex--;
@@ -53,6 +54,7 @@ public:
 
 	inline void NextItem()
 	{
+		UAudioManager::GetInstance().SoundPlay("PuyoMoveMenu.wav");
 		if (CurIndex + 1 < ItemList.size())
 		{
 			CurIndex++;

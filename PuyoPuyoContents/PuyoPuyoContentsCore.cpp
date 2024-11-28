@@ -8,6 +8,7 @@
 #include "SoloMenuGameMode.h"
 #include "TogetherMenuGameMode.h"
 
+#include "PuzzleGameMode.h"
 #include "SoloPlayGameMode.h"
 #include "TogetherPlayGameMode.h"
 #include "TrainingPlayGameMode.h"
@@ -87,6 +88,15 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_COIN.CNS.BMP", { {544,224 }, { 96, 224 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPCOIN", "OP_ETC.CNS.BMP", { {0,0 }, { 224, 224 } });
 
+	//게임 타이틀
+	UImageManager::GetInstance().InsertCustomSpriteData("PU", "OP_ETC.CNS.BMP", { {224,0 }, { 108, 96 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Yo", "OP_ETC.CNS.BMP", { {332,0 }, { 116, 96 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Tsu", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Particle", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Particle", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Particle", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
+
+
 	//너랑나랑 뿌요뿌요 메뉴 화면
 	// 너랑나랑뿌요뿌요 메뉴 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuText", "SEL_0.CNS.BMP", { { 0,0 }, { 512,32 } });
@@ -149,7 +159,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().CreateColorImage("Black");
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
-	UImageManager::GetInstance().CreateColorImage("GameOverBack", { 0, 0, 0, 32 });
+	UImageManager::GetInstance().CreateColorImage("GameOverBack", { 0, 0,32, 0 });
 	//인게임 Text
 	UImageManager::GetInstance().ImageToGrayScale("GrayText", "Puyo_G_.cns.bmp");
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
@@ -163,9 +173,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 	// 일시정지(휴식) 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("Pause", "PUYO_RY.CNS.BMP", { { 512,128 }, { 128, 48 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Pause", "PUYO_BP.CNS.BMP", { { 512,128 }, { 128, 48 } });
-
-	// 상쇄 텍스트
-	UImageManager::GetInstance().InsertCustomSpriteData("OffsetText", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
 
 	// 상쇄 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("OffsetText", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
@@ -322,7 +329,10 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("OPTDIFF", "OPT_STR.CNS.BMP", { { 0,288},{ 184, 32 } });
 	///////////////////옵션 관련
 
-
+	//////////여기서 부터 오디오 설정
+	UAudioManager::GetInstance().FindSound("PuyoMoveMenu.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("PuyoEnemyChange.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("PUYOselect.wav")->SetLoop(false);
 
 	// 여기서부터 게임 구성을 만든다.
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 
@@ -337,8 +347,9 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<ASoloPlayGameMode, ADummyPawn>("SoloPlay");
 	UEngineAPICore::GetCore()->CreateLevel<ATogetherPlayGameMode, ADummyPawn>("TogetherPlay");
 	UEngineAPICore::GetCore()->CreateLevel<ATrainingPlayGameMode, ADummyPawn>("TrainingPlay");
-	//UEngineAPICore::GetCore()->CreateLevel<ATogetherMenuGameMode, ADummyPawn>("PuzzlePlay");
+	UEngineAPICore::GetCore()->CreateLevel<APuzzleGameMode, ADummyPawn>("PuzzlePlay");
 	UEngineAPICore::GetCore()->CreateLevel<AOptionsGameMode, ADummyPawn>("Options");
+	UEngineAPICore::GetCore()->CreateLevel<AOptionsGameMode, ADummyPawn>("GameOver");
 	//UEngineAPICore::GetCore()->CreateLevel("End");
 
 	UEngineAPICore::GetCore()->OpenLevel("Intro");

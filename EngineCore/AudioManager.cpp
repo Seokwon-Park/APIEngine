@@ -52,6 +52,7 @@ void UAudioManager::Load(std::string_view _KeyName, std::string_view _Path)
 
 void UAudioManager::ReleaseSounds()
 {
+	UEngineAudio::GetInstance()->StopAllSounds();
 	for (auto& Sound : Sounds)
 	{
 		UEngineSound* CurSound = Sound.second;
@@ -61,6 +62,7 @@ void UAudioManager::ReleaseSounds()
 			CurSound = nullptr;
 		}
 	}
+	Sounds.clear();
 }
 
 UEngineSound* UAudioManager::FindSound(std::string_view _KeyName)

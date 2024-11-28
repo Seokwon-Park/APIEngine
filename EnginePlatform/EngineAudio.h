@@ -42,7 +42,7 @@ public:
 	}
 	static void AudioUpdate() { Instance->Update(); }
 
-	static void StopAllSounds() { Instance->FMODChannelGroup->stop(); }
+	static void StopAllSounds() { Instance->FMODChannelGroup->stop();}
 
 protected:
 

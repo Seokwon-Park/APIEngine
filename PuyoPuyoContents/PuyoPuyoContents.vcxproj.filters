@@ -31,12 +31,6 @@
     <Filter Include="ContentsObject\Menu\Actor">
       <UniqueIdentifier>{b5e42502-ae70-4dbd-90a2-ebd68bf500a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Play\Solo">
-      <UniqueIdentifier>{f5f9a8a9-50f6-4d57-8082-fd9e12b2f65b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Play\Together">
-      <UniqueIdentifier>{dc593e12-f4c7-4dfc-a384-5d57d4db523f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Play\Actor">
       <UniqueIdentifier>{07d994fd-2f3f-4c43-8682-1cf2addabfd8}</UniqueIdentifier>
     </Filter>
@@ -75,6 +69,15 @@
     </Filter>
     <Filter Include="ContentsObject\Play\Enemies\LV1">
       <UniqueIdentifier>{76ac8257-d6e6-4d3a-ad34-1f9d554fb3dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\GameOver">
+      <UniqueIdentifier>{503b504d-17cc-4574-853a-404bb17d7dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Solo">
+      <UniqueIdentifier>{f5f9a8a9-50f6-4d57-8082-fd9e12b2f65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Together">
+      <UniqueIdentifier>{dc593e12-f4c7-4dfc-a384-5d57d4db523f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +154,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="TogetherMenuBackground.cpp">
-      <Filter>ContentsObject\Play\Together</Filter>
+      <Filter>ContentsObject\Together</Filter>
     </ClCompile>
     <ClCompile Include="TrainingPlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
@@ -159,14 +162,14 @@
     <ClCompile Include="PlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverText.cpp">
+    <ClCompile Include="GameEndText.cpp">
       <Filter>ContentsObject\Play\Text</Filter>
     </ClCompile>
     <ClCompile Include="PuyoWarn.cpp">
       <Filter>ContentsObject\Play\Actor</Filter>
     </ClCompile>
     <ClCompile Include="SoloMenuBackground.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="PuyoAIController.cpp">
       <Filter>ContentsObject\Play\Actor\Controller\AI</Filter>
@@ -196,7 +199,7 @@
       <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
     </ClCompile>
     <ClCompile Include="TogetherMenu.cpp">
-      <Filter>ContentsObject\Play\Together</Filter>
+      <Filter>ContentsObject\Together</Filter>
     </ClCompile>
     <ClCompile Include="PuyoText.cpp">
       <Filter>ContentsObject\Global</Filter>
@@ -208,7 +211,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="CharacterFrame.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
       <Filter>ContentsObject\Global</Filter>
@@ -226,16 +229,16 @@
       <Filter>ContentsObject\Option</Filter>
     </ClCompile>
     <ClCompile Include="Tower.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="EnemySelect.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="SoloText.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="EnemySelector.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="BottomBackground.cpp">
       <Filter>ContentsObject\Play\Background</Filter>
@@ -268,13 +271,25 @@
       <Filter>ContentsObject\Play\Enemies\LV1</Filter>
     </ClCompile>
     <ClCompile Include="VSMenuMap.cpp">
-      <Filter>ContentsObject\Play\Together</Filter>
+      <Filter>ContentsObject\Together</Filter>
     </ClCompile>
     <ClCompile Include="ResultFrame.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClCompile>
     <ClCompile Include="ResultUI.cpp">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverBackground.cpp">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="PuzzleGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverPuyoText.cpp">
+      <Filter>ContentsObject\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -357,7 +372,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="TogetherMenuBackground.h">
-      <Filter>ContentsObject\Play\Together</Filter>
+      <Filter>ContentsObject\Together</Filter>
     </ClInclude>
     <ClInclude Include="TrainingPlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
@@ -365,14 +380,14 @@
     <ClInclude Include="PlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverText.h">
+    <ClInclude Include="GameEndText.h">
       <Filter>ContentsObject\Play\Text</Filter>
     </ClInclude>
     <ClInclude Include="PuyoWarn.h">
       <Filter>ContentsObject\Play\Actor</Filter>
     </ClInclude>
     <ClInclude Include="SoloMenuBackground.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="PuyoAIController.h">
       <Filter>ContentsObject\Play\Actor\Controller\AI</Filter>
@@ -402,7 +417,7 @@
       <Filter>ContentsObject\Play\Background\ToBeDeleted</Filter>
     </ClInclude>
     <ClInclude Include="TogetherMenu.h">
-      <Filter>ContentsObject\Play\Together</Filter>
+      <Filter>ContentsObject\Together</Filter>
     </ClInclude>
     <ClInclude Include="PuyoText.h">
       <Filter>ContentsObject\Global</Filter>
@@ -414,7 +429,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="CharacterFrame.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
       <Filter>ContentsObject\Global</Filter>
@@ -432,16 +447,16 @@
       <Filter>ContentsObject\Option</Filter>
     </ClInclude>
     <ClInclude Include="Tower.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="EnemySelect.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="SoloText.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="EnemySelector.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="BottomBackground.h">
       <Filter>ContentsObject\Play\Background</Filter>
@@ -474,13 +489,25 @@
       <Filter>ContentsObject\Play\Enemies\LV1</Filter>
     </ClInclude>
     <ClInclude Include="VSMenuMap.h">
-      <Filter>ContentsObject\Play\Together</Filter>
+      <Filter>ContentsObject\Together</Filter>
     </ClInclude>
     <ClInclude Include="ResultFrame.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
     </ClInclude>
     <ClInclude Include="ResultUI.h">
-      <Filter>ContentsObject\Play\Solo</Filter>
+      <Filter>ContentsObject\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverBackground.h">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="PuzzleGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverPuyoText.h">
+      <Filter>ContentsObject\Global</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

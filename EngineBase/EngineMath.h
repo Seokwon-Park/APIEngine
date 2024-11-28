@@ -372,6 +372,10 @@ public:
 		return (A <= B ? A : B);
 	}
 
+	static float Exp(float _Value)
+	{
+		return std::expf(_Value);
+	}
 
 };
 

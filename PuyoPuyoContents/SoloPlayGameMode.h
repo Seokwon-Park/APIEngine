@@ -24,7 +24,7 @@ private:
 	float Timer = 0.0f;
 	class APuyoPlayerController* ControllerP1;
 	class APuyoAIController* ControllerP2;
-	class AEnemyImage* Image;
+	class AEnemyImage* EnemyImage;
 	class AResultUI* Result;
 };
 

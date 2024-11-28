@@ -19,13 +19,17 @@ public:
 		return Instance;
 	}
 
-	EPuyoGameMode GameMode;
+	EPuyoGameMode GameMode = EPuyoGameMode::Solo;
 	//1인용
 	int EnemyIndex = 0;
 	int CurLevel = 1;
 	int CurStage = 1;
-	int CurExp = 0;
-	int RestToNextLevel = ScoreToNextLevel[1];
+	//현재까지의 경험치
+	long long CurExp = 0;
+	//다음 레벨 가는데 남은 경험치량
+	long long RestToNextLevel = ScoreToNextLevel[1];
+	//다음 레벨 가는데 필요한 경험치량
+	long long NeedToNextLevel = ScoreToNextLevel[1];
 	std::vector<bool> IsCleared;
 
 	//2인용

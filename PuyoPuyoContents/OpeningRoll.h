@@ -16,17 +16,17 @@ public:
 	AOpeningRoll& operator=(AOpeningRoll&& _Other) noexcept = delete;
 
 	void Init() { 
-		Timer = 0.0f;
-		Sr->SetComponentLocation({ 0,-160 }); 
+		//Timer = 0.0f;
+		//Sr->SetComponentLocation({ 0,-160 }); 
 	}
-	void SetDuration(float _Time) { Duration = _Time; }
+	void SetupRoll(FVector2D _Start, float _TargetY, float _Speed);
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	float Timer = 0.0f;
-	float Duration = 1.0f;
+	float TargetY = 0.0f;
+	float Speed = 1.0f;
 	USpriteRendererComponent* Sr;
 };
 
