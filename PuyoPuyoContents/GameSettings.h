@@ -26,6 +26,7 @@ public:
 	int CurStage = 1;
 	int CurExp = 0;
 	int RestToNextLevel = ScoreToNextLevel[1];
+	std::vector<bool> IsCleared;
 
 	//2ÀÎ¿ë
 	int MapIndex = 0;

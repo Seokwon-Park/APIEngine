@@ -36,6 +36,7 @@ private:
 
 	float SelectTimer = 0.0f;
 	std::vector<AEnemySelect*> EnemyList;
+	std::vector<bool> IsCleared;
 	ACharacterFrame* Frame;
 	UInputComponent* Input;
 	UEngineRandom RandomDevice;

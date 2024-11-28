@@ -19,8 +19,16 @@ void AEnemySelector::SetupSelector(int _Size, int _StartRange, ACharacterFrame* 
 	for (int i = _StartRange; i < _StartRange + Size; i++)
 	{
 		AEnemySelect* Temp = GetWorld()->SpawnActor<AEnemySelect>();
-		Temp->Setup(i);
-		Temp->SetOff();
+		if (GameSettings::GetInstance().IsCleared[i] == true)
+		{
+			Temp->Setup(33);
+			Temp->SetOn();
+		}
+		else
+		{
+			Temp->Setup(i);
+			Temp->SetOff();
+		}
 		Temp->SetActorLocation(GetActorLocation() + FVector2D((i - _StartRange) * 48.0f, 0.0f));
 		EnemyList.push_back(Temp);
 	}
@@ -78,11 +86,15 @@ void AEnemySelector::Tick(float _DeltaTime)
 	if (Timer < 0.0f)
 	{
 		EnemyList[CurIndex]->SetOff();
-		CurIndex++;
+		CurIndex += 1;
 		if (CurIndex >= Size)
 		{
 			CurIndex %= Size;
 			Delay *= 2.0f;
+		}
+		while (EnemyList[CurIndex]->GetIndex() == 33)
+		{
+			CurIndex = (CurIndex + 1) % Size;
 		}
 		Frame->SetFrameStateEnemy("LV" + std::to_string(Level), CurIndex);
 		EnemyList[CurIndex]->SetOn();
@@ -93,11 +105,17 @@ void AEnemySelector::Tick(float _DeltaTime)
 void AEnemySelector::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	while (EnemyList[CurIndex]->GetIndex() == 33)
+	{
+		CurIndex = (CurIndex + 1) % Size;
+	}
 	EnemyList[CurIndex]->SetOn();
 	Level = GameSettings::GetInstance().CurLevel;
 
 	Input = CreateDefaultSubobject<UInputComponent>("");
 	Input->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AEnemySelector::SelectEnemy, this));
 	Input->BindAction(EKey::Space, KeyEvent::Down, std::bind(&AEnemySelector::SelectEnemy, this));
+
+
 }

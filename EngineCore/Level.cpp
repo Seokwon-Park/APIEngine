@@ -83,7 +83,7 @@ ULevel::~ULevel()
 void ULevel::BeginPlay()
 {
 	BindAction(EKey::MouseRight, KeyEvent::Down, std::bind(&EngineDebugHelper::PivotDebugSwitch));
-
+	UAudioManager::PlayBGM();
 	// 이게 안되는 이유는 게임 중간에 스폰하는 액터에 대해서는 BeginPlay실행이 안돼
 	//for (AActor* Actor : AllActors)
 	//{
@@ -97,6 +97,7 @@ void ULevel::BeginPlay()
 void ULevel::EndPlay()
 {
 	UEngineEventSystem::ClearEvents();
+	UAudioManager::StopBGM();
 	//UAudioManager::StopAllSounds();
 
 }

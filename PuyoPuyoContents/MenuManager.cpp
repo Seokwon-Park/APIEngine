@@ -12,8 +12,6 @@ AMenuManager::AMenuManager()
 	LevelNames.push_back("Options");
 
 	Input = CreateDefaultSubobject<UInputComponent>("MenuInput");
-
-
 }
 
 AMenuManager::~AMenuManager()

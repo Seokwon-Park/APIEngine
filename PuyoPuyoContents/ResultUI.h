@@ -1,12 +1,14 @@
 #pragma once
 #include "PuyoText.h"
 #include "NameText.h"
+#include <EngineCore/InputComponent.h>
 
 enum class EResultStep
 {
 	Idle,
 	Show,
 	Adjust,
+	Wait,
 };
 // Ό³Έν :
 class AResultUI : public AActor
@@ -27,6 +29,7 @@ public:
 	void Idle();
 	void ShowText();
 	void AdjustScore();
+	void NextGame();
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
@@ -38,6 +41,12 @@ private:
 	float FlickTimer = 0.0f;
 	float FlickDelay = 0.2f;
 
+	float FlickTimer2 = 0.0f;
+	float FlickDelay2 = 0.1f;
+
+
+	long long DBonus = 0;
+	long long DExp = 0;
 	long long Elapsed = 0;
 	long long Bonus = 0;
 	long long StagePoint = 0;
@@ -51,7 +60,7 @@ private:
 	APuyoText* ElapsedTime;
 	ANameText* SecText;
 	ANameText* BonusText;
-	APuyoText* BonusScore;
+	APuyoText* BonusScoreText;
 	ANameText* PtsText;
 
 	//Right Panel
@@ -67,7 +76,9 @@ private:
 	APuyoText* RestPointText;
 	ANameText* PtsText3;
 
-	APuyoText* LevelUp;
+	APuyoText* LevelUpText;
+
+	UInputComponent* Input;
 
 };
 

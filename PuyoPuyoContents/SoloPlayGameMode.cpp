@@ -41,6 +41,8 @@ void ASoloPlayGameMode::BeginPlay()
 	ControllerP2 = GetWorld()->SpawnActor<APuyoAIController>();
 	ControllerP2->Possess(PuyoBoardP2);
 
+	P1Score->SetScoreAndUpdate(GameSettings::GetInstance().CurExp);
+
 	APuyoText* StageText = GetWorld()->SpawnActor<APuyoText>();
 	StageText->SetupText(10, EPuyoBoardColor::Green);
 	std::string StageStr = "Stage " + std::to_string(GameSettings::GetInstance().CurStage);
@@ -71,18 +73,19 @@ void ASoloPlayGameMode::BeginPlay()
 	Result2->SetActive(false);
 
 	Result = GetWorld()->SpawnActor<AResultUI>();
+	Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
 
-	PuyoBoardP1->PuyoGameWinDelegate += [=]()
-		{
-			Result1->SetActive(true);
-			Result1->OpenFrame();
-			UEngineEventSystem::AddEvent(1.0f, [=]()
-				{
-					Result2->SetActive(true);
-					Result2->OpenFrame();
-					Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
-				});
-		};
+	//PuyoBoardP1->PuyoGameWinDelegate += [=]()
+	//	{
+	//		Result1->SetActive(true);
+	//		Result1->OpenFrame();
+	//		UEngineEventSystem::AddEvent(1.0f, [=]()
+	//			{
+	//				Result2->SetActive(true);
+	//				Result2->OpenFrame();
+	//				Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
+	//			});
+	//	};
 }
 
 void ASoloPlayGameMode::Tick(float _DeltaTime)

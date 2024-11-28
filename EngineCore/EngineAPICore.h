@@ -96,8 +96,6 @@ public:
 	{
 		std::string UpperName = UEngineStringHelper::ToUpper(_LevelName);
 
-
-
 		// 지금 당장 이녀석을 지우면 안된다.
 		if (CurLevel->GetName() != UpperName)
 		{

@@ -72,6 +72,7 @@ void APuyoBoard::SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay)
 
 void APuyoBoard::PauseGame()
 {
+	if (CurStep == EPuyoLogicStep::PuyoIdle) return;
 	IsPaused = !IsPaused;
 	PauseText->SetActive(IsPaused);
 	PauseText->SetRemoveBackground(true);
@@ -278,7 +279,7 @@ void APuyoBoard::PuyoCreateLogic()
 	}
 
 	//더해야될 점수가 있으면 더해
-	ScoreActor->Add(ScoreToAdd);
+	ScoreActor->AddScoreAndUpdate(ScoreToAdd);
 	ScoreToAdd = 0;
 
 	Rensa = 0; // 여기로 오게되면 연쇄는 0
@@ -1039,7 +1040,7 @@ void APuyoBoard::PuyoForceDown()
 		if (PuyoTick % 2 == 0)
 		{
 			DropBonus++;
-			ScoreActor->Add(1);
+			ScoreActor->AddScoreAndUpdate(1);
 		}
 	}
 }

@@ -27,8 +27,11 @@ public:
 	void SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign _TextAlign = ETextAlign::Left);
 	void SetText(std::string _TextValue);
 	void SetText(long long _Value);
-	inline void Add(long long _Value) { Score += _Value; SetText(Score); }
+	inline void AddScoreAndUpdate(long long _Value) { Score += _Value; SetText(Score); }
+	inline void SetScoreAndUpdate(long long _Value) { Score = _Value; SetText(Score); }
+	inline void SetScore(long long _Value) { Score = _Value; }
 	void ClearText();
+	void SwitchColor(EPuyoBoardColor _Color1, EPuyoBoardColor _Color2, std::string _Text);
 	inline long long GetScore() const { return Score; }
 protected:
 	virtual void BeginPlay() override;

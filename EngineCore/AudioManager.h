@@ -21,24 +21,33 @@ public:
 		return Instance;
 	}
 
-	static void ChangeBGM(std::string_view _KeyName)
+	inline static void ChangeBGM(std::string_view _KeyName)
+	{
+		StopBGM();
+		SetBGM(_KeyName);
+		PlayBGM();
+	}
+
+	inline static void SetBGM(std::string_view _KeyName)
+	{
+		GetInstance().BGM = GetInstance().FindSound(_KeyName);
+	}
+
+
+	inline static void PlayBGM()
+	{
+		if (GetInstance().BGM != nullptr)
+		{
+			GetInstance().BGM->Play();
+		}
+	}
+
+	inline static void StopBGM()
 	{
 		if (GetInstance().BGM != nullptr)
 		{
 			GetInstance().BGM->Stop();
 		}
-		GetInstance().BGM = GetInstance().FindSound(_KeyName);
-		GetInstance().BGM->Play();
-	}
-
-	static void PlayBGM()
-	{
-		GetInstance().BGM->Play();
-	}
-
-	static void StopBGM(std::string_view _KeyName)
-	{
-		GetInstance().BGM->Stop();
 	}
 
 	static void SetBGMVolume(float _Value)

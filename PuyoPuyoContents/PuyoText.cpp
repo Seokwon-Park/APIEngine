@@ -112,6 +112,22 @@ void APuyoText::ClearText()
 	}
 }
 
+void APuyoText::SwitchColor(EPuyoBoardColor _Color1, EPuyoBoardColor _Color2, std::string _Text)
+{
+	int Color1 = static_cast<int>(_Color1);
+	int Color2 = static_cast<int>(_Color2);
+	if (Color == Color1)
+	{
+		SetupText(TextLength, _Color2, TextAlign);
+	}
+	else
+	{
+		SetupText(TextLength, _Color1, TextAlign);
+
+	}
+	SetText(_Text);
+}
+
 
 
 

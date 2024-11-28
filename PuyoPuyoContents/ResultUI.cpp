@@ -1,10 +1,15 @@
 #include "aepch.h"
 #include "ResultUI.h"
 
+#include "SoloMenuGameMode.h"
+
 AResultUI::AResultUI()
 {
 	LeftOffset = { 32,32 };
 	RightOffset = { 412,32 };
+
+	Input = CreateDefaultSubobject<UInputComponent>("");
+	Input->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AResultUI::NextGame, this));
 }
 
 AResultUI::~AResultUI()
@@ -41,7 +46,7 @@ void AResultUI::SetupResult(int _ElapsedTime, APuyoText* _PlayerScore)
 	CurStep = EResultStep::Show;
 	Elapsed = _ElapsedTime;
 	Bonus = CalculateBonusScore(_ElapsedTime);
-	StagePoint = _PlayerScore->GetScore();
+	StagePoint = _PlayerScore->GetScore() - GameSettings::GetInstance().CurExp;
 	PlayerScore = _PlayerScore;
 	RestPoint = GameSettings::GetInstance().RestToNextLevel;
 }
@@ -49,7 +54,11 @@ void AResultUI::SetupResult(int _ElapsedTime, APuyoText* _PlayerScore)
 void AResultUI::Idle()
 {
 	if (CheckPoint1 && CheckPoint2 && CheckPoint3)
+	{
+		DBonus = FEngineMath::Max(1LL, static_cast<long long>(Bonus * UEngineAPICore::GetEngineDeltaTime()));
+		StagePoint += Bonus;
 		CurStep = EResultStep::Adjust;
+	}
 }
 
 void AResultUI::ShowText()
@@ -72,15 +81,16 @@ void AResultUI::ShowText()
 		{
 			BonusText->SetActive(true);
 			PtsText->SetActive(true);
-			BonusScore->SetActive(true);
-			BonusScore->SetText(Bonus);
+			BonusScoreText->SetActive(true);
+			BonusScoreText->SetScore(Bonus);
 			StageText1->SetActive(true);
 			StageText2->SetActive(true);
-			StagePointText->SetText(StagePoint);
+			StagePointText->SetScore(StagePoint);
 			PtsText2->SetActive(true);
 			RestText1->SetActive(true);
 			RestText2->SetActive(true);
-			RestPointText->SetText(RestPoint);
+			RestPointText->SetActive(true);
+			RestPointText->SetScore(RestPoint);
 			PtsText3->SetActive(true);
 			CheckPoint3 = true;
 		});
@@ -92,8 +102,66 @@ void AResultUI::AdjustScore()
 {
 	if (Bonus > 0)
 	{
-		
+		Bonus -= DBonus;
+		BonusScoreText->AddScoreAndUpdate(-DBonus);
+		PlayerScore->AddScoreAndUpdate(DBonus);
+		StagePointText->AddScoreAndUpdate(DBonus);
+		if (Bonus <= 0)
+		{
+			GameSettings::GetInstance().CurExp += StagePoint;
+			StagePointText->SetScoreAndUpdate(StagePoint);
+			PlayerScore->SetScoreAndUpdate(GameSettings::GetInstance().CurExp);
+			BonusScoreText->SetScoreAndUpdate(0);
+			DExp = FEngineMath::Max(1LL, static_cast<long long>(StagePoint * UEngineAPICore::GetEngineDeltaTime()));
+		}
+		return;
 	}
+	// 스테이지 포인트 계산
+ 	if (StagePoint > 0)
+	{
+		StagePoint -= DExp;
+		RestPoint -= DExp;
+		StagePointText->AddScoreAndUpdate(-DExp);
+		if (RestPoint > 0)
+		{
+			RestPointText->AddScoreAndUpdate(-DExp);
+		}
+		if (StagePoint <= 0)
+		{
+			RestPointText->AddScoreAndUpdate(-DExp);
+			StagePointText->SetScoreAndUpdate(0);
+		}
+		return;
+	}
+	if (RestPoint < 0)
+	{
+		GameSettings::GetInstance().CurLevel += 1;
+		if (ScoreNeedToLevel[GameSettings::GetInstance().CurLevel] <= GameSettings::GetInstance().CurExp)
+		{
+			GameSettings::GetInstance().RestToNextLevel = 1;
+		}
+		else
+		{
+			GameSettings::GetInstance().RestToNextLevel = ScoreNeedToLevel[GameSettings::GetInstance().CurLevel] - GameSettings::GetInstance().CurExp;
+		}
+		LevelUpText->SetActive(true);
+	}
+	CurStep = EResultStep::Wait;
+}
+
+void AResultUI::NextGame()
+{
+	if (CurStep != EResultStep::Wait)
+	{
+		return;
+	}
+
+	int CurEnemyIndex = GameSettings::GetInstance().EnemyIndex;
+	GameSettings::GetInstance().CurStage += 1;
+	GameSettings::GetInstance().IsCleared[CurEnemyIndex] = true;
+
+	UEngineAPICore::GetCore()->ResetLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
+	UEngineAPICore::GetCore()->OpenLevel("SoloMenu");
 }
 
 void AResultUI::Tick(float _DeltaTime)
@@ -107,8 +175,21 @@ void AResultUI::Tick(float _DeltaTime)
 		{
 			FlickTimer = FlickDelay;
 			YouWin->SetActive(!YouWin->IsActivated());
+
 		}
 	}
+
+	if (RestPoint < 0)
+	{
+		FlickTimer2 -= _DeltaTime;
+		if (FlickTimer2 < 0)
+		{
+			FlickTimer2 = FlickDelay2;
+			RestPointText->SwitchColor(EPuyoBoardColor::Blue, EPuyoBoardColor::Red, "Clear");
+		}
+	}
+
+
 
 	switch (CurStep)
 	{
@@ -120,6 +201,8 @@ void AResultUI::Tick(float _DeltaTime)
 		break;
 	case EResultStep::Adjust:
 		AdjustScore();
+		break;
+	case EResultStep::Wait:
 		break;
 	default:
 		break;
@@ -155,9 +238,9 @@ void AResultUI::BeginPlay()
 	PtsText->SetActorLocation(LeftOffset + FVector2D(128, 224));
 	PtsText->SetText("Pts");
 
-	BonusScore = GetWorld()->SpawnActor<APuyoText>();
-	BonusScore->SetActorLocation(LeftOffset + FVector2D(48, 208));
-	BonusScore->SetupText(5, EPuyoBoardColor::Red, ETextAlign::Right);
+	BonusScoreText = GetWorld()->SpawnActor<APuyoText>();
+	BonusScoreText->SetActorLocation(LeftOffset + FVector2D(48, 208));
+	BonusScoreText->SetupText(5, EPuyoBoardColor::Red, ETextAlign::Right);
 	//BonusScore->SetText(CalculateBonusScore(static_cast<long long>(Timer)));
 
 	StageText1 = GetWorld()->SpawnActor<ANameText>();
@@ -188,15 +271,17 @@ void AResultUI::BeginPlay()
 	RestPointText = GetWorld()->SpawnActor<APuyoText>();
 	RestPointText->SetActorLocation(RightOffset + FVector2D(16, 208));
 	RestPointText->SetupText(7, EPuyoBoardColor::Red, ETextAlign::Right);
+	RestPointText->SetText(RestPoint);
+
 
 	PtsText3 = GetWorld()->SpawnActor<ANameText>();
 	PtsText3->SetActorLocation(RightOffset + FVector2D(128, 224));
 	PtsText3->SetText("Pts");
 
-	LevelUp = GetWorld()->SpawnActor<APuyoText>();
-	LevelUp->SetActorLocation(RightOffset + FVector2D(32, 288));
-	LevelUp->SetupText(8, EPuyoBoardColor::Red, ETextAlign::Right);
-	LevelUp->SetText("Level Up");
+	LevelUpText = GetWorld()->SpawnActor<APuyoText>();
+	LevelUpText->SetActorLocation(RightOffset + FVector2D(32, 288));
+	LevelUpText->SetupText(8, EPuyoBoardColor::Green, ETextAlign::Right);
+	LevelUpText->SetText("Level Up");
 
 
 	YouWin->SetActive(false);
@@ -205,12 +290,13 @@ void AResultUI::BeginPlay()
 	SecText->SetActive(false);
 	BonusText->SetActive(false);
 	PtsText->SetActive(false);
-	BonusScore->SetActive(false);
+	BonusScoreText->SetActive(false);
 	StageText1->SetActive(false);
 	StageText2->SetActive(false);
 	PtsText2->SetActive(false);
 	RestText1->SetActive(false);
 	RestText2->SetActive(false);
+	RestPointText->SetActive(false);
 	PtsText3->SetActive(false);
-	LevelUp->SetActive(false);
+	LevelUpText->SetActive(false);
 }
