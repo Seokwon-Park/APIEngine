@@ -51,7 +51,6 @@ void AEnemySelector::StartPlay()
 	GameSettings::GetInstance().EnemyIndex = EnemyList[CurIndex]->GetIndex();
 	GameSettings::GetInstance().DestroyRule = 4;
 
-	//UAudioManager::SetBGM();
 	UEngineAPICore::GetCore()->ResetLevel<ASoloPlayGameMode, ADummyPawn>("SoloPlay");
 	UEngineAPICore::GetCore()->OpenLevel("SoloPlay");//
 }

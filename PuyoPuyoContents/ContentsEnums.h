@@ -13,12 +13,11 @@ enum class ERenderLayer
 	BottomBackground = -150,
 	BottomCover = -100,
 	Play = 0,
+	TitleSepia = 5,
 	Frame = 100,
 	Text = 105,
-	
-	
-	
 	Warn = 110,
+	TitlePuyo = 115,
 };
 
 //»Ñ¿ä»Ñ¿ä »ö

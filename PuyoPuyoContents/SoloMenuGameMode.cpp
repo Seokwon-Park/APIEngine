@@ -39,6 +39,8 @@ void ASoloMenuGameMode::BeginPlay()
 	AEnemySelector* Selector = GetWorld()->SpawnActor<AEnemySelector>();
 	Selector->SetActorLocation({ 320.0f-24.0f*EnemySize , 384.0f});
 	Selector->SetupSelector(EnemySize, StartRange, EnemyFrame);
+
+	UAudioManager::ChangeBGM("SelectMenu.MID");
 }
 
 void ASoloMenuGameMode::Tick(float _DeltaTime)

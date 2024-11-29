@@ -294,6 +294,16 @@
     <ClCompile Include="OpeningTitle.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="OpeningCompile.cpp" />
+    <ClCompile Include="IntroController.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningParticle.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningStar.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -513,6 +523,16 @@
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
     <ClInclude Include="OpeningTitle.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningCompile.h" />
+    <ClInclude Include="IntroController.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningParticle.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningStar.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
   </ItemGroup>

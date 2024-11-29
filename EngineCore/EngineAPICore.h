@@ -82,6 +82,7 @@ public:
 		}
 
 		ULevel* NewLevel = new ULevel();
+		NewLevel->SetName(UpperName);
 
 		// GameMode = 레벨의 특성을 설정하는 객체
 		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
@@ -99,13 +100,14 @@ public:
 		// 지금 당장 이녀석을 지우면 안된다.
 		if (CurLevel->GetName() != UpperName)
 		{
-			DestroyLevel(_LevelName);
+			DestroyLevel(UpperName);
 			CreateLevel<GameModeType, MainPawnType>(UpperName);
 			return;
 		}
 
 		Levels.erase(UpperName);
 		NextLevel = CreateLevel<GameModeType, MainPawnType>(UpperName);
+		IsCurLevelRemoved = true;
 	}
 
 	void DestroyLevel(std::string_view _LevelName)
@@ -153,6 +155,7 @@ private:
 
 	class ULevel* CurLevel;
 	class ULevel* NextLevel;
+	bool IsCurLevelRemoved = false;;
 
 	std::map<std::string, class ULevel*> Levels;
 };

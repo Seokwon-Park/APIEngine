@@ -198,6 +198,7 @@ public:
 		NONAME = 0xFC, // Reserved
 		PA1 = 0xFD, // PA1 key
 		OEM_CLEAR = 0xFE, // Clear key
+		AnyKey = 0xFF, // Add Event For All Keys;
 		Last
 	};
 };

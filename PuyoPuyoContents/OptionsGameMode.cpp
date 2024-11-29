@@ -46,8 +46,12 @@ void AOptionsGameMode::BeginPlay()
 		Options->SetupItem("OPTMENU", i + 1);
 		if (i == 0)
 		{
-			Options->AddSelectAction(std::bind(&UEngineAPICore::ResetLevel<AIntroGameMode,ADummyPawn>, UEngineAPICore::GetCore(), "Intro"));
-			Options->AddSelectAction(std::bind(&UEngineAPICore::OpenLevel, UEngineAPICore::GetCore(), "Intro"));
+			Options->AddSelectAction([=]() 
+				{
+					UEngineAPICore::GetCore()->ResetLevel<AIntroGameMode, ADummyPawn>("Intro");
+					UEngineAPICore::GetCore()->OpenLevel("Intro");
+					UAudioManager::SetNoBGM();
+				});
 		}
 		if (i == 4)
 		{

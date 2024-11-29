@@ -16,7 +16,10 @@ const int DestroyRule[5] = { 4,2,6,4,4 };
 
 const int ScoreToNextLevel[9] = { 0, 15000,45000,80000,120000,150000 };
 
-const std::vector<std::string> LevelBGM = { "" };
+const std::vector<std::string> LevelBGM = { "", "LV12.MID", "LV12.MID", "LV34.MID", "LV34.MID", "LV5.MID" };
+const std::vector<std::string> RensaSound = { "","ARLE_0.WAV", "ARLE_1.WAV", "ARLE_2.WAV", "ARLE_3.WAV", "ARLE_4.WAV", "ARLE_5.WAV","ARLE_6.WAV" };
+
+
 
 const FIntPoint EnemyRemoveColor[28] = 
 {

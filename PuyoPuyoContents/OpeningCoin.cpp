@@ -10,8 +10,9 @@ AOpeningCoin::AOpeningCoin()
 	Sr->SetComponentScale({ 224,224 });
 	Sr->SetRemoveBackground(true);
 	Sr->SetAnimator(Anim);
+	Sr->SetOrder(ERenderLayer::Text);
 	//Anim->CreateAnimation("Idle", 0,0,
-	Anim->CreateAnimation("Rotate","OPCOIN",{ 2,3,5,6,7, 0, 1, 4, 5, 9, 8, 10}, 0.04f);
+	Anim->CreateAnimation("Rotate","OPCOIN",{ 2,3,5,6,7, 0, 1, 4, 5, 9, 8, 10}, 0.05f);
 	Anim->CreateAnimation("Idle", "OPCOIN", { 10,10 }, 0.05f);
 	Anim->SetAnimationEvent("Rotate", 0, [this]() { Sr->SetComponentScale({ 160,224 }); });
 	Anim->SetAnimationEvent("Rotate", 1, [this]() { Sr->SetComponentScale({ 96,224 }); });

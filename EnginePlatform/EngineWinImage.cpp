@@ -134,6 +134,65 @@ void UEngineWinImage::ChangeToGrayscale()
     delete[] pPixels;
 }
 
+void UEngineWinImage::ChangeToSepia(float _Alpha)
+{
+	// 비트맵 정보 가져오기
+	BITMAP bmp;
+	GetObject(hBitmap, sizeof(BITMAP), &bmp);
+
+	// 비트맵 데이터 저장을 위한 구조체 준비
+	BITMAPINFO bmi = { 0 };
+	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bmi.bmiHeader.biWidth = bmp.bmWidth;
+	bmi.bmiHeader.biHeight = -bmp.bmHeight; // 상하 반전을 위해 음수
+	bmi.bmiHeader.biPlanes = 1;
+	bmi.bmiHeader.biBitCount = bmp.bmBitsPixel; // 24비트(RGB)
+	bmi.bmiHeader.biCompression = BI_RGB;
+
+	// 픽셀 데이터를 저장할 메모리 할당
+	int pixelArraySize = bmp.bmWidthBytes * bmp.bmHeight;
+	BYTE* pPixels = new BYTE[pixelArraySize];
+
+	// 비트맵 데이터를 가져오기
+	if (GetDIBits(ImageDC, hBitmap, 0, bmp.bmHeight, pPixels, &bmi, DIB_RGB_COLORS))
+	{
+		for (int y = 0; y < bmp.bmHeight; ++y)
+		{
+			for (int x = 0; x < bmp.bmWidthBytes; x += 4)
+			{
+				int index = y * bmp.bmWidthBytes + x;
+				float sepiaR = (pPixels[index+2] * 0.393f) + (pPixels[index + 1] * 0.769f) + (pPixels[index] * 0.189f);
+				float sepiaG = (pPixels[index+2] * 0.349f) + (pPixels[index + 1] * 0.686f) + (pPixels[index] * 0.168f);
+				float sepiaB = (pPixels[index+2] * 0.272f) + (pPixels[index + 1] * 0.534f) + (pPixels[index] * 0.131f);
+				pPixels[index] = static_cast<BYTE>((1 - _Alpha) * pPixels[index] + _Alpha * FEngineMath::Min(sepiaB, 255.0f));
+				pPixels[index + 1] = static_cast<BYTE>((1 - _Alpha) * pPixels[index+1] + _Alpha * FEngineMath::Min(sepiaG, 255.0f));
+				pPixels[index + 2] = static_cast<BYTE>((1 - _Alpha) * pPixels[index+2] + _Alpha * FEngineMath::Min(sepiaR, 255.0f));
+				pPixels[index + 3] = 0;
+			}
+		}
+		SetDIBits(ImageDC, hBitmap, 0, bmp.bmHeight, pPixels, &bmi, DIB_RGB_COLORS);
+	}
+
+	// 메모리 해제
+	delete[] pPixels;
+}
+
+void UEngineWinImage::InvertImage()
+{
+	FVector2D Scale = GetImageSize();
+
+	BitBlt(
+		ImageDC,
+		0,
+		0,
+		Scale.iX(),
+		Scale.iY(),
+		ImageDC,
+		0,
+		0,
+		NOTSRCCOPY);
+}
+
 void UEngineWinImage::CopyToTransparent(UEngineWinImage* _TargetImage, const FTransform& _TargetTransform,
 	const FTransform& _CopyTransform, UColor _Color)
 {

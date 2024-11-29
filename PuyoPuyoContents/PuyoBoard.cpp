@@ -720,6 +720,10 @@ void APuyoBoard::PuyoDestroyLogic()
 		{
 			APuyo* CurPuyo = Board[Y][X];
 			CurPuyo->PlayAnimation("Boom");
+			if (IsSinglePlayer == true)
+			{
+				UAudioManager::SoundPlay(RensaSound[FEngineMath::Min(Rensa, 7)]);
+			}
 			if (CurPuyo->GetColor() != EPuyoColor::Garbage)
 			{
 				SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);

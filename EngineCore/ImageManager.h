@@ -25,6 +25,8 @@ public:
 	void ClearSpriteData(std::string_view _SpriteName, UEngineSprite* _Sprite);
 
 	void ImageToGrayScale(std::string_view _NewName, std::string_view _SpriteName);
+	void ImageToSepia(std::string_view _NewName, std::string_view _SpriteName, float _Alpha);
+	void ImageToInvert(std::string_view _NewName, std::string_view _SpriteName);
 	
 	void Load(std::string_view _Path);
 	void Load(std::string_view _KeyName, std::string_view _Path);

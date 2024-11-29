@@ -165,6 +165,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="IntroController.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="OpeningCompile.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EnemyImage.h">
       <SubType>
       </SubType>
@@ -194,6 +202,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="OpeningParticle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="OpeningStar.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -447,6 +463,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="IntroController.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OpeningCompile.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EnemyImage.cpp">
       <SubType>
       </SubType>
@@ -476,6 +500,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OpeningParticle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OpeningStar.cpp">
       <SubType>
       </SubType>
     </ClCompile>

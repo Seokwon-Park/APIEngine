@@ -3,10 +3,11 @@
 
 AThunderBackground::AThunderBackground()
 {
-	YellowSr = CreateDefaultSubobject<USpriteRendererComponent>("ThunderBg");
-	YellowSr->SetSprite("Yellow");
-	YellowSr->SetComponentScale({ 640,480 });
-	YellowSr->SetPivot(EPivotType::TopLeft);
+	ColorSr = CreateDefaultSubobject<USpriteRendererComponent>("ThunderBg");
+	ColorSr->SetSprite("Yellow");
+	ColorSr->SetComponentScale({ 640,480 });
+	ColorSr->SetPivot(EPivotType::TopLeft);
+	ColorSr->SetActive(false);
 
 	Sr = CreateDefaultSubobject<USpriteRendererComponent>("ThunderBg");
 	Sr->SetSprite("OP_Back.CNS.BMP");
@@ -30,17 +31,38 @@ void AThunderBackground::Tick(float _DeltaTime)
 	
 	if (Timer < 0.0f)
 	{
-		if (Temp)
+		if (Counter < 4)
 		{
-			Sr->SetRemoveColor({ 639,479 });
+			if (Counter %2 ==0)
+			{
+				Sr->SetSprite("OP_Back.CNS.BMP");
+				Sr->SetRemoveColor({ 639,479 });
+				ColorSr->SetActive(true);
+			}
+			else
+			{
+				Sr->SetRemoveColor(UColor(255, 0, 0, 0));
+			}
 		}
 		else
 		{
-
-			Sr->SetRemoveColor({ 0,0 });
+			if (Temp)
+			{
+				Sr->SetSprite("OP_Back.CNS.BMP");
+				Sr->SetRemoveColor({ 639,479 });
+				ColorSr->SetActive(true);
+			}
+			else
+			{
+				Sr->SetSprite("OPBackInv");
+				Sr->SetRemoveColor({ 0,0 });
+				ColorSr->SetActive(false);
+			}
+			Counter = 0;
+			Temp = !Temp;
 		}
-		Temp = !Temp;
-		Timer = 0.2f;
+		Counter++;
+		Timer = 0.1f;
 	}
 }
 void AThunderBackground::BeginPlay()

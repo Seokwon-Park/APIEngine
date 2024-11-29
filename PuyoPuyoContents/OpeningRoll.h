@@ -20,13 +20,21 @@ public:
 		//Sr->SetComponentLocation({ 0,-160 }); 
 	}
 	void SetupRoll(FVector2D _Start, float _TargetY, float _Speed);
+	void ToSepia() {
+		SepiaFilter->SetAlphaRate(0.4f);
+		Anim->ChangeAnimation("ToSepia"); 
+	}
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	int Dir = 0;
+	float Amount = 0.0f;
 	float TargetY = 0.0f;
 	float Speed = 1.0f;
+	USpriteRendererComponent* SepiaFilter;
 	USpriteRendererComponent* Sr;
+	UAnimatorComponent* Anim;
 };
 

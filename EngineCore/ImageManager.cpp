@@ -74,6 +74,66 @@ void UImageManager::ImageToGrayScale(std::string_view _NewName, std::string_view
 	Sprites.insert({ NewName, NewSprite });
 }
 
+void UImageManager::ImageToSepia(std::string_view _NewName, std::string_view _SpriteName, float _Alpha)
+{
+	std::string UpperName = UEngineStringHelper::ToUpper(_SpriteName);
+	std::string NewName = UEngineStringHelper::ToUpper(_NewName);
+
+	if (false != Images.contains(_SpriteName.data()))
+	{
+		MSGASSERT(std::string(_SpriteName) + "라는 이름의 이미지가 존재하지 않습니다.");
+	}
+	UEngineWinImage* Image = FindImage(UpperName);
+
+	UEngineWinImage* NewImage = new UEngineWinImage();
+	NewImage->Create(UEngineAPICore::GetWindowBuffer(), Image->GetImageSize());
+	Image->CopyToBit(NewImage, FTransform(Image->GetImageSize().Half(), Image->GetImageSize()));
+	NewImage->ChangeToSepia(_Alpha);
+	NewImage->SetName(NewName);
+	Images.insert({ NewName, NewImage });
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	NewSprite->SetName(NewName);
+
+	FTransform Transform;
+	Transform.Location = { 0,0 };
+	Transform.Scale = NewImage->GetImageSize();
+
+	NewSprite->PushData(NewImage, Transform);
+
+	Sprites.insert({ NewName, NewSprite });
+}
+
+void UImageManager::ImageToInvert(std::string_view _NewName, std::string_view _SpriteName)
+{
+	std::string UpperName = UEngineStringHelper::ToUpper(_SpriteName);
+	std::string NewName = UEngineStringHelper::ToUpper(_NewName);
+
+	if (false != Images.contains(_SpriteName.data()))
+	{
+		MSGASSERT(std::string(_SpriteName) + "라는 이름의 이미지가 존재하지 않습니다.");
+	}
+	UEngineWinImage* Image = FindImage(UpperName);
+
+	UEngineWinImage* NewImage = new UEngineWinImage();
+	NewImage->Create(UEngineAPICore::GetWindowBuffer(), Image->GetImageSize());
+	Image->CopyToBit(NewImage, FTransform(Image->GetImageSize().Half(), Image->GetImageSize()));
+	NewImage->InvertImage();
+	NewImage->SetName(NewName);
+	Images.insert({ NewName, NewImage });
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	NewSprite->SetName(NewName);
+
+	FTransform Transform;
+	Transform.Location = { 0,0 };
+	Transform.Scale = NewImage->GetImageSize();
+
+	NewSprite->PushData(NewImage, Transform);
+
+	Sprites.insert({ NewName, NewSprite });
+}
+
 void UImageManager::Load(std::string_view _Path)
 {
 	UEnginePath Path = UEnginePath(_Path);
@@ -113,7 +173,8 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view _Path)
 	NewImage->SetName(UpperName);
 	NewImage->Load(WindowImage, _Path);
 
-	//NewImage->ChangeToGrayscale();
+	//새로 추가한 기능 테스트용
+	//NewImage->InvertImage();
 
 	Images.insert({ UpperName, NewImage });
 

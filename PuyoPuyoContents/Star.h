@@ -25,8 +25,6 @@ private:
 	USpriteRendererComponent* Sr;
 	FVector2D StartLocation;
 	float Vx, Vy;        // 속도
-	float LifeTime;      // 남은 생명시간
-	bool isAlive;        // 활성 상태
 	UEngineRandom Rnd;
 };
 

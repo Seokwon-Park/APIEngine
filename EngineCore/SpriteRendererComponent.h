@@ -47,7 +47,7 @@ public:
 	//주의: 해당 스프라이트 범위에서 아니라 스프라이트 이미지의 좌표에서 추출하는 것
 	void SetRemoveColor(FIntPoint _Coord);
 	inline void SetRemoveColor(UColor _Color) { RemoveColor = _Color; };
-	inline void SetAnimator(UAnimatorComponent* _Component) { AnimatorComponent = _Component; }
+	void SetAnimator(UAnimatorComponent* _Component);
 	void SetPivot(EPivotType _Type);
 	inline void SetPivot(FVector2D _Pivot) { Pivot = _Pivot; }
 	void UpdatePivot();

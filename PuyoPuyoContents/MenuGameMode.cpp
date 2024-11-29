@@ -27,7 +27,5 @@ void AMenuGameMode::BeginPlay()
 void AMenuGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	////Todo: 임시(계속 이렇게 둘지 모름)
-	//InputDelay -= _DeltaTime;
 }
 

@@ -112,6 +112,12 @@ public:
 	{
 		SetPuyoOnBoard(_XY.X, _XY.Y, _Puyo);
 	}
+
+	inline void SetSinglePlayer()
+	{
+		IsSinglePlayer = true;
+	}
+
 	inline EPuyoLogicStep GetCurStep() const
 	{
 		return CurStep;
@@ -279,6 +285,8 @@ private:
 	float Delay = 0.15f;
 	float Timer = 0.0f;
 
+	//나홀로 모드에서 플레이어 보드인지 알아야함(아르르 효과음 재생용)
+	bool IsSinglePlayer = false;
 	//여기 밑으로는 실험실 변수
 };
 

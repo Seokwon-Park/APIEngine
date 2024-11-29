@@ -20,6 +20,8 @@ void ASoloPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
+	UAudioManager::ChangeBGM(LevelBGM[GameSettings::GetInstance().CurLevel]);
+
 	Frame->SetFrame(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
 	Background->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
 	BotBackgroundL->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
@@ -33,6 +35,8 @@ void ASoloPlayGameMode::BeginPlay()
 
 	NameTextL->SetText("ARLE");
 	NameTextR->SetText(EnemyNameShort[GameSettings::GetInstance().EnemyIndex]);
+
+	PuyoBoardP1->SetSinglePlayer();
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);
@@ -72,6 +76,11 @@ void ASoloPlayGameMode::BeginPlay()
 
 	Result = GetWorld()->SpawnActor<AResultUI>();
 	//Result->SetupResult(static_cast<long long>(std::ref(Timer)), P1Score);
+	UEngineEventSystem::AddEvent(0.5f,
+		[=]() 
+		{
+			UAudioManager::SoundPlay("SoloStart.wav");
+		});
 
 	PuyoBoardP1->PuyoGameWinDelegate += [=]()
 		{
@@ -87,7 +96,7 @@ void ASoloPlayGameMode::BeginPlay()
 
 	PuyoBoardP2->PuyoGameWinDelegate += [=]()
 		{
-			
+
 		};
 }
 

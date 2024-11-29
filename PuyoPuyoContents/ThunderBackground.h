@@ -15,14 +15,16 @@ public:
 	AThunderBackground& operator=(const AThunderBackground& _Other) = delete;
 	AThunderBackground& operator=(AThunderBackground&& _Other) noexcept = delete;
 
+	inline void SetColor(std::string_view _ColorName) { ColorSr->SetSprite(_ColorName); }
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	USpriteRendererComponent* Sr;
-	USpriteRendererComponent* YellowSr;
+	USpriteRendererComponent* ColorSr;
 	bool Temp = false;
 	float Timer = 0.0f;
+	int Counter = 0;
 };
 

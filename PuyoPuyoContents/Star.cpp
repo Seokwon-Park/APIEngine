@@ -21,8 +21,6 @@ void AStar::InitStar()
 	float Speed = 100.0f + rand() % 50;                 // 무작위 속도
 	Vx = cos(Angle) * Speed;
 	Vy = sin(Angle) * Speed;
-	LifeTime = 2.0f;                               // 생명 시간 2초
-	isAlive = true;
 }
 
 void AStar::Tick(float _DeltaTime)

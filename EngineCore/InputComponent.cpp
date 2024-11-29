@@ -27,6 +27,14 @@ void UInputComponent::BeginPlay()
 
 void UInputComponent::BindAction(KeyCode _KeyCode, KeyEvent _EventType, std::function<void()> _Function)
 {
+	if (_KeyCode == EKey::AnyKey)
+	{
+		for (int i = 8; i < 255; i++)
+		{
+			KeyEvents[i].DownEvents.push_back(_Function);
+		}
+		return;
+	}
 	switch (_EventType)
 	{
 	case KeyEvent::Down:

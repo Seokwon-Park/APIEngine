@@ -161,6 +161,12 @@ void UEngineAPICore::Tick()
 
 void UEngineAPICore::CheckLevel()
 {
+	if (IsCurLevelRemoved ==true && CurLevel != nullptr)
+	{
+		delete CurLevel;
+		IsCurLevelRemoved = false;
+		CurLevel = nullptr;
+	}
 	if (nullptr != NextLevel)
 	{
 		if (CurLevel == NextLevel)

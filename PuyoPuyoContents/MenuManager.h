@@ -32,7 +32,6 @@ private:
 	int CurMenuIndex = 0;
 	std::vector<class ACarbuncleMenu*> Menus;
 	std::vector<std::string> LevelNames;
-	std::vector<std::string> BGMNames;
 
 	UInputComponent* Input;
 };

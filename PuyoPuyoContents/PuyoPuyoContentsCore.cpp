@@ -54,7 +54,6 @@ void PuyoPuyoContentsCore::BeginPlay()
 	//Star
 	UImageManager::GetInstance().InsertCustomSpriteData("Star", "PUYO_RY.CNS.BMP", { {384,32 }, { 16, 16 } });
 
-
 	//Intro
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOEYE", "OP_PUYO.CNS.BMP", { {0,0 }, { 144, 144 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPPUYOBOT", "OP_PUYO.CNS.BMP", { {0,240 }, { 640, 240 } });
@@ -91,11 +90,23 @@ void PuyoPuyoContentsCore::BeginPlay()
 	//게임 타이틀
 	UImageManager::GetInstance().InsertCustomSpriteData("PU", "OP_ETC.CNS.BMP", { {224,0 }, { 108, 96 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Yo", "OP_ETC.CNS.BMP", { {332,0 }, { 116, 96 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("Tsu", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Tsu", "OP_ETC.CNS.BMP", { {448,0 }, { 176, 144 } });
+	UImageManager::GetInstance().CuttingSpriteCustom("TitlePuyoG", "OP_ETC.CNS.BMP", { 224,96 }, { 368, 144 }, { 48,48 });
+	UImageManager::GetInstance().CuttingSpriteCustom("TitlePuyoR", "OP_ETC.CNS.BMP", { 224,144 }, { 368, 176 }, { 48,32 });
 	UImageManager::GetInstance().InsertCustomSpriteData("Particle", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Particle", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Particle", "OP_ETC.CNS.BMP", { {332,0 }, { 176, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("Compile", "OP_ETC.CNS.BMP", { {224,176 }, { 416, 32 } });
 
+	//세피아 변환
+	for (int i = 0; i < 6; i++)
+	{
+		UImageManager::GetInstance().ImageToSepia("SepiaRoll" + std::to_string(i) , "OP_ROLL.CNS.bmp", 0.2f * i);
+		UImageManager::GetInstance().InsertCustomSpriteData("SepiaRoll", "SepiaRoll"+std::to_string(i), {{0,0}, {640,640}});
+	}
+
+	// 색상 반전
+	UImageManager::GetInstance().ImageToInvert("OPBackInv", "OP_BACK.CNS.bmp");
 
 	//너랑나랑 뿌요뿌요 메뉴 화면
 	// 너랑나랑뿌요뿌요 메뉴 텍스트
@@ -156,10 +167,12 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 
 	//단색 스프라이트(+페이더용)
-	UImageManager::GetInstance().CreateColorImage("Black");
+	UImageManager::GetInstance().CreateColorImage("Black"); 
 	UImageManager::GetInstance().CreateColorImage("White", { 0,0,0,255 });
 	UImageManager::GetInstance().CreateColorImage("Yellow", { 255, 255, 0, 255 });
+	UImageManager::GetInstance().CreateColorImage("SkyBlue", { 0, 243, 243, 255 });
 	UImageManager::GetInstance().CreateColorImage("GameOverBack", { 0, 0,32, 0 });
+	UImageManager::GetInstance().CreateColorImage("Sepia", {112, 66, 20, 255});
 	//인게임 Text
 	UImageManager::GetInstance().ImageToGrayScale("GrayText", "Puyo_G_.cns.bmp");
 	UImageManager::GetInstance().CuttingSprite("PUYO_BP.CNS.BMP", { 16,32 });
@@ -333,6 +346,13 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UAudioManager::GetInstance().FindSound("PuyoMoveMenu.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PuyoEnemyChange.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PUYOselect.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("PUYOPuyo2.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("SoloStart.wav")->SetLoop(false);
+	for (int i = 0; i < 7; i++)
+	{
+		UAudioManager::GetInstance().FindSound("ARLE_" + std::to_string(i)+".wav")->SetLoop(false);
+
+	}
 
 	// 여기서부터 게임 구성을 만든다.
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 

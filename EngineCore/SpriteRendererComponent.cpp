@@ -183,6 +183,14 @@ void USpriteRendererComponent::SetRemoveColor(FIntPoint _Coord)
 	RemoveColor = CurData.Image->GetPixelColor(_Coord, { 0,0,0,0 });
 }
 
+void USpriteRendererComponent::SetAnimator(UAnimatorComponent* _Component)
+{
+	if (_Component == nullptr)
+	{
+		MSGASSERT("생성되지 않은 컴포넌트를 사용했습니다.");
+	}
+	AnimatorComponent = _Component; 
+}
 void USpriteRendererComponent::SetPivot(EPivotType _Type)
 {
 	PivotType = _Type;

@@ -6,9 +6,11 @@
 #include "OpeningArle.h"
 #include "OpeningCoin.h"
 #include "OpeningTitle.h"
+#include "OpeningCompile.h"
 #include "ThunderBackground.h"
 #include "IntroGameMode.h"
 #include "IntroBackground.h"
+#include "IntroController.h"
 #include "Fader.h"
 #include <EnginePlatform/EngineInputSystem.h>
 #include <EnginePlatform/EngineSound.h>
@@ -27,7 +29,6 @@ AIntroGameMode::~AIntroGameMode()
 void AIntroGameMode::BeginPlay()
 {
 	// Todo : PressAnyKey로 바꿀것
-	GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AIntroGameMode::MoveScene, this));
 	//GetWorld()->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&UEngineSound::Stop, UAudioManager::GetInstance().FindSound("OPTheme.MP3")));
 
 	APublisherLogo* Logo = GetWorld()->SpawnActor<APublisherLogo>();
@@ -39,6 +40,9 @@ void AIntroGameMode::BeginPlay()
 	AOpeningArle* OPArle = GetWorld()->SpawnActor<AOpeningArle>();
 	AOpeningCoin* OPCoin = GetWorld()->SpawnActor<AOpeningCoin>();
 	AOpeningTitle* OPTitle= GetWorld()->SpawnActor<AOpeningTitle>();
+	AOpeningCompile* OPCompile= GetWorld()->SpawnActor<AOpeningCompile>();
+	AIntroController* Controller = GetWorld()->SpawnActor<AIntroController>();
+	OPCompile->SetActorLocation({112, 288});
 	Fader = GetWorld()->SpawnActor<AFader>();
 
 	// 인트로 애니메이션 설정
@@ -65,6 +69,8 @@ void AIntroGameMode::BeginPlay()
 	InitDelegate += std::bind(&AOpeningCar::SetActive, OPCar, false);
 	InitDelegate += std::bind(&AOpeningArle::SetActive, OPArle, false);
 	InitDelegate += std::bind(&AOpeningCoin::SetActive, OPCoin, false);
+	InitDelegate += std::bind(&AOpeningTitle::SetActive, OPTitle, false);
+	InitDelegate += std::bind(&AOpeningCompile::SetActive, OPCompile, false);
 	InitDelegate += std::bind(&APublisherLogo::SetActive, Logo, false);
 
 	UEngineDelegate OPPuyoDelegate;
@@ -104,6 +110,10 @@ void AIntroGameMode::BeginPlay()
 	OPCoinDelegate += std::bind(&AOpeningCoin::SetupCoin, OPCoin, FVector2D(304,504), FVector2D(304, 160));
 	OPCoinDelegate += std::bind(&AOpeningCoin::SetActive, OPCoin, true);
 
+	UEngineDelegate OPTitleDelegate;
+	OPTitleDelegate += std::bind(&AOpeningTitle::SetActive, OPTitle, true);
+	OPTitleDelegate += std::bind(&AOpeningTitle::Init, OPTitle);
+
 	//게임 켰을때 페이드인하고 화면 초기화
 	UEngineEventSystem::AddEvent(0.0f, std::bind(&AFader::FadeIn, Fader, 1.0f));
 	UEngineEventSystem::AddEvent(0.0f, InitDelegate);
@@ -112,6 +122,7 @@ void AIntroGameMode::BeginPlay()
 	UEngineEventSystem::AddEvent(1.5f, FadeOutDelegate);
 
 	//오프닝 뿌요 나옴	
+	UEngineEventSystem::AddEvent(2.0f,std::bind(&AThunderBackground::SetColor, ThunderBackground, "Yellow"));
 	UEngineEventSystem::AddEvent(2.0f, InitDelegate);
 	UEngineEventSystem::AddEvent(2.0f, OPPuyoDelegate);
 	//오프닝 뿌요 화면 종료
@@ -124,6 +135,7 @@ void AIntroGameMode::BeginPlay()
 	UEngineEventSystem::AddEvent(4.5f, FadeOutDelegate);
 
 	//오프닝 카벙클
+	UEngineEventSystem::AddEvent(5.0f, std::bind(&AThunderBackground::SetColor, ThunderBackground, "SkyBlue"));
 	UEngineEventSystem::AddEvent(5.0f, InitDelegate);
 	UEngineEventSystem::AddEvent(5.0f, OPCarDelegate);
 	//오프닝 카벙클 화면 종료
@@ -136,6 +148,7 @@ void AIntroGameMode::BeginPlay()
 	UEngineEventSystem::AddEvent(7.0f, FadeOutDelegate);
 
 	//오프닝 아르르
+	UEngineEventSystem::AddEvent(5.0f, std::bind(&AThunderBackground::SetColor, ThunderBackground, "Yellow"));
 	UEngineEventSystem::AddEvent(7.5f, InitDelegate);
 	UEngineEventSystem::AddEvent(7.5f, OPArleDelegate);
 	//오프닝 아르르 화면 종료
@@ -148,6 +161,14 @@ void AIntroGameMode::BeginPlay()
 	UEngineEventSystem::AddEvent(11.0f, [this]() {Fader->SetOrder(ERenderLayer::BottomBackground); });
 	UEngineEventSystem::AddEvent(11.0f, FadeOutDelegate);
 	UEngineEventSystem::AddEvent(11.0f, OPCoinDelegate);
+	UEngineEventSystem::AddEvent(14.0f, OPTitleDelegate);
+
+	UEngineEventSystem::AddEvent(16.0f, std::bind(&AOpeningRoll::SetupRoll, OPRoll, FVector2D(0.0f, 104.0f), 0.0f, 200.0f));
+	UEngineEventSystem::AddEvent(16.5f, std::bind(&UAudioManager::SoundPlay, "PuyoPuyo2.wav"));
+	UEngineEventSystem::AddEvent(16.5f, std::bind(&AOpeningRoll::ToSepia, OPRoll));
+	UEngineEventSystem::AddEvent(16.5f, std::bind(&AOpeningCompile::SetActive, OPCompile, true));
+
+
 }
 
 
