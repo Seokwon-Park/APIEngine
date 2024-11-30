@@ -52,6 +52,7 @@ void AMiniCarbuncle::BeginPlay()
 	Super::BeginPlay();
 	Anim->SetAnimationEvent("Start", 12, [this]()
 		{
+			UAudioManager::SoundPlay("StartPistol.wav");
 			Anim->ChangeAnimation("Idle");
 			AStarParticle* Particle = GetWorld()->SpawnActor<AStarParticle>();
 			Particle->Init(GetActorLocation());

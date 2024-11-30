@@ -18,7 +18,7 @@ AStar::~AStar()
 void AStar::InitStar()
 {
 	float Angle = (rand() % 360) * (3.14159f / 180.0f); // 무작위 각도 (라디안 단위)
-	float Speed = 100.0f + rand() % 50;                 // 무작위 속도
+	float Speed = 200.0f;                 // 무작위 속도
 	Vx = cos(Angle) * Speed;
 	Vy = sin(Angle) * Speed;
 }

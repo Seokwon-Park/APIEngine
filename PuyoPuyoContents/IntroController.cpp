@@ -22,6 +22,7 @@ void AIntroController::SkipIntro()
 {
 	if (Timer > 2.5f)
 	{
+		UAudioManager::SoundPlay("PuyoSelect.wav");
 		UEngineAPICore::GetCore()->ResetLevel<AMenuGameMode, ADummyPawn>("Menu");
 		UEngineAPICore::GetCore()->OpenLevel("Menu");
 	}

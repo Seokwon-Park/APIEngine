@@ -86,6 +86,7 @@ void ASoloPlayGameMode::BeginPlay()
 		{
 			Result1->SetActive(true);
 			Result1->OpenFrame();
+			UAudioManager::SoundPlay("");
 			UEngineEventSystem::AddEvent(1.0f, [=]()
 				{
 					Result2->SetActive(true);
@@ -96,7 +97,16 @@ void ASoloPlayGameMode::BeginPlay()
 
 	PuyoBoardP2->PuyoGameWinDelegate += [=]()
 		{
-
+			UAudioManager::StopBGM();
+			UAudioManager::SoundPlay("ARLE_Lose.wav");
+			UEngineEventSystem::AddEvent(1.0f, [=]()
+				{
+					GameOverText = GetWorld()->SpawnActor<APuyoText>();
+					GameOverText->SetupText(9, EPuyoBoardColor::Red);
+					GameOverText->SetWave();
+					GameOverText->SetText("Game Over");
+					GameOverText->SetActorLocation({ 64, 480 });
+				});
 		};
 }
 
@@ -105,6 +115,13 @@ void ASoloPlayGameMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	APlayGameMode::Tick(_DeltaTime);
 
+	if (GameOverText != nullptr)
+	{
+		if (GameOverText->GetActorLocation().Y > 128.0f)
+		{
+			GameOverText->AddActorLocation(FVector2D::UP * _DeltaTime * 70.0f);
+		}
+	}
 	if (PuyoBoardP2->GetCurStep() == EPuyoLogicStep::PuyoGameOver)
 	{
 		EnemyImage->SetLose();

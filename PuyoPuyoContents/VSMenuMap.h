@@ -16,6 +16,8 @@ public:
 	AVSMenuMap& operator=(AVSMenuMap&& _Other) noexcept = delete;
 
 	inline void Setup(int _Index) { MapRenderer->SetSprite("VSBG", _Index); }
+	void SetOn();
+	void SetOff();
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
@@ -34,6 +36,7 @@ private:
 	};
 
 	USpriteRendererComponent* MapRenderer;
+	USpriteRendererComponent* BlackRenderer;
 	std::vector<USpriteRendererComponent*> Frame;
 };
 

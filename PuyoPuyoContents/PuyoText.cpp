@@ -55,6 +55,19 @@ void APuyoText::BeginPlay()
 void APuyoText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	Timer += _DeltaTime;
+	if (IsWave == true)
+	{
+		for (int i = 0; i < TextLength; ++i) {
+			TextSpriteRenderers[i]->SetSprite(ColorSprites[(i+TextTick) % 2], TextSpriteRenderers[i]->GetCurIndex());
+			TextSpriteRenderers[i]->SetRemoveBackground(true);
+			float BaseY = TextSpriteRenderers[i]->GetComponentLocation().Y;
+			float y = 15.0f * std::sin(10.0f * Timer + i * 1.5f);
+			TextSpriteRenderers[i]->SetComponentLocation({ TextSpriteRenderers[i]->GetComponentLocation().X, y });
+		}
+		TextTick += 1;
+	}
 }
 
 void APuyoText::SetupText(size_t _TextLength, EPuyoBoardColor _Color, ETextAlign _TextAlign)
@@ -90,7 +103,7 @@ void APuyoText::SetText(std::string _TextValue)
 			TextSpriteRenderers[i]->SetSprite(ColorSprites[Color], ChMap[_TextValue[i]]);
 		}
 	}
-	else if(TextAlign == ETextAlign::Right)
+	else if (TextAlign == ETextAlign::Right)
 	{
 		for (int i = 0; i < _TextValue.size(); i++)
 		{
@@ -127,6 +140,7 @@ void APuyoText::SwitchColor(EPuyoBoardColor _Color1, EPuyoBoardColor _Color2, st
 	}
 	SetText(_Text);
 }
+
 
 
 

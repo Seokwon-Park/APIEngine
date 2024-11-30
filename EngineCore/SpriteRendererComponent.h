@@ -37,6 +37,7 @@ public:
 	void TickComponent(float _DeltaTime) override;
 	void Render();
 	void SetOrder(int _Order);
+	int GetCurIndex() { return CurIndex; }
 	FVector2D SetSpriteScale(float _Ratio, int _Index);
 
 	inline int GetOrder()const { return Order; }

@@ -21,6 +21,9 @@ protected:
 
 private:
 	USpriteRendererComponent* Sr;
+	USpriteRendererComponent* Arle;
+	USpriteRendererComponent* Continue[3];
+	//5*7
 
 };
 

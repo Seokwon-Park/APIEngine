@@ -8,6 +8,8 @@
 #include <set>
 #include <EngineCore/Actor.h>
 #include <EngineCore/InputComponent.h>
+#include <EngineCore/SpriteRendererComponent.h>
+
 
 
 

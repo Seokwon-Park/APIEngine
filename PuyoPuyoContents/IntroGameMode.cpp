@@ -45,6 +45,7 @@ void AIntroGameMode::BeginPlay()
 	OPCompile->SetActorLocation({112, 288});
 	Fader = GetWorld()->SpawnActor<AFader>();
 
+
 	// 인트로 애니메이션 설정
 	// 이렇게 해도 되는지는 모름.
 	// 

@@ -32,6 +32,7 @@ public:
 	inline void SetScore(long long _Value) { Score = _Value; }
 	void ClearText();
 	void SwitchColor(EPuyoBoardColor _Color1, EPuyoBoardColor _Color2, std::string _Text);
+	void SetWave() { IsWave = true; };
 	inline long long GetScore() const { return Score; }
 protected:
 	virtual void BeginPlay() override;
@@ -42,8 +43,11 @@ protected:
 	std::vector<std::string> ColorSprites;
 	ETextAlign TextAlign = ETextAlign::Left;
 	int Color = 0;
+	int TextTick = 0;
 	bool RemoveZero;
+	bool IsWave = false;
 	long long Score = 0;
+	float Timer = 0.0f;
 private:
 	
 };

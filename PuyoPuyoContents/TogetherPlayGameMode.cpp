@@ -19,6 +19,7 @@ void ATogetherPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
+	UAudioManager::ChangeBGM("LV12.MID");
 	GetWorld()->BindAction(EKey::Space, KeyEvent::Down, std::bind(&UEngineAPICore::OpenLevel, UEngineAPICore::GetCore(), "TogetherMenu"));
 
 	Frame->SetFrame(EPuyoGameMode::Versus, GameSettings::GetInstance().MapIndex);
@@ -32,6 +33,7 @@ void ATogetherPlayGameMode::BeginPlay()
 		BotFrameR[i]->SetFrame(EPuyoGameMode::Versus, 12 * (GameSettings::GetInstance().MapIndex) + i + 6);
 	}
 
+	//APuyoText* P1SelectLevel = GetWorld()->SpawnActor<APuyoText>();
 
 	NameTextL->SetText(" P1");
 	NameTextR->SetText(" P2");

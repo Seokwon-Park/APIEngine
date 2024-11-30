@@ -38,6 +38,7 @@ void AEnemySelector::SetupSelector(int _Size, int _StartRange, ACharacterFrame* 
 
 void AEnemySelector::SelectEnemy()
 {
+	if (IsSelectEnd == true) return;
 	UAudioManager::SoundPlay("PuyoSelect.wav");
 	IsSelectEnd = true;
 	Delay = 0.05f;

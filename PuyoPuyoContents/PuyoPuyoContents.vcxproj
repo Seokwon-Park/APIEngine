@@ -165,6 +165,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameOverCounter.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameOverText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="IntroController.h">
       <SubType>
       </SubType>
@@ -194,10 +202,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameOverGameMode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GameOverPuyoText.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -463,6 +467,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameOverCounter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameOverText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="IntroController.cpp">
       <SubType>
       </SubType>
@@ -492,10 +504,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameOverGameMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GameOverPuyoText.cpp">
       <SubType>
       </SubType>
     </ClCompile>

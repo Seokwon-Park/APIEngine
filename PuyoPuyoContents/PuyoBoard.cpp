@@ -70,6 +70,7 @@ void APuyoBoard::SpawnDestroyFX(FVector2D _Loc, EPuyoColor _Color, float _Delay)
 void APuyoBoard::PauseGame()
 {
 	if (CurStep == EPuyoLogicStep::PuyoIdle) return;
+	UAudioManager::SoundPlay("Pause.wav");
 	IsPaused = !IsPaused;
 	PauseText->SetActive(IsPaused);
 	PauseText->SetRemoveBackground(true);
@@ -262,6 +263,7 @@ void APuyoBoard::PuyoCreateLogic()
 	{
 		//AGameOverText* Test = GetWorld()->SpawnActor<AGameOverText>();
 		//Test->SetActorLocation(GetActorLocation());
+		UAudioManager::SoundPlay("GameLose.wav");
 		CurStep = EPuyoLogicStep::PuyoGameOver;
 		CounterBoardActor->CurStep = EPuyoLogicStep::PuyoGameWin;
 		if(CounterBoardActor->PuyoGameWinDelegate.IsBind() == true)

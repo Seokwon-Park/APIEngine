@@ -21,6 +21,9 @@ ATogetherMenu::ATogetherMenu()
 	TextRenderer->SetComponentScale({ 512, 32 });
 	TextRenderer->SetRemoveBackground(true);
 
+
+
+
 	LArrowAnim = CreateDefaultSubobject<UAnimatorComponent>("");
 	LArrowRenderer = CreateDefaultSubobject<USpriteRendererComponent>("");
 	LArrowRenderer->SetSprite("VSMenuLArrow", 0);
@@ -68,15 +71,15 @@ void ATogetherMenu::MoveMenu(int _Dir)
 	TextRenderer->SetActive(false);
 	RArrowRenderer->SetActive(false);
 	LArrowRenderer->SetActive(false);
+	MenuItems[CurIndex]->SetOff();
 	CurIndex += _Dir;
 	if (CurIndex < 0)
 	{
 		CurIndex += 5;
 	}
 	CurIndex %= 5;
-
 	TextRenderer->SetSprite("VSMenuText", CurIndex);
-
+	UAudioManager::SoundPlay("PuyoMoveMenu.wav");
 	MoveAmount = 384;
 	Dir = _Dir;
 	//오른쪽 키 눌렀을 때
@@ -110,6 +113,7 @@ void ATogetherMenu::Tick(float _DeltaTime)
 			TextRenderer->SetActive(true);
 			RArrowRenderer->SetActive(true);
 			LArrowRenderer->SetActive(true);
+			MenuItems[CurIndex]->SetOn();
 		}
 	}
 
@@ -127,6 +131,7 @@ void ATogetherMenu::BeginPlay()
 		MenuItems[i] = GetWorld()->SpawnActor<AVSMenuMap>();
 		MenuItems[i]->SetActorLocation(Locations[i]);
 		MenuItems[i]->Setup(i);
+		MenuItems[i]->SetOff();
 	}
-
+	MenuItems[CurIndex]->SetOn();
 }

@@ -4,7 +4,7 @@
 AGameEndText::AGameEndText()
 {
 	Sr = CreateDefaultSubobject<USpriteRendererComponent>("GameOver");
-	Sr->SetSprite("Gameovertext");
+	Sr->SetSprite("Kwadankyu");
 	Sr->SetComponentScale({ 192, 96 });
 	Sr->SetRemoveBackground(true);
 	Sr->SetPivot(EPivotType::TopLeft);

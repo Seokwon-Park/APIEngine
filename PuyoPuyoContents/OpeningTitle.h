@@ -1,5 +1,7 @@
 #pragma once
 
+#include <EngineCore/SpriteRendererComponent.h>
+
 // 설명 :
 class AOpeningTitle : public AActor
 {
@@ -25,7 +27,7 @@ private:
 	const std::vector<FVector2D> MidPos= { {-20.0f, Height}, {-20.0f, Height}, {500.0f, Height}, {500.0f, Height} }; // 중간 위치
 	const std::vector<FVector2D> TargetPos= { {248.0f, Height}, {356.0f, Height}, {24.0f, Height}, {132.0f, Height} }; // 최종 위치
 	const std::vector<float> Delays = { 0.0f, 0.3f, 0.0f, 0.3f }; // 각 글자의 이동 시작 지연 시간
-	std::vector<bool> IsLocated = { false,false,false,false };
+	bool IsLocated = false;
 	bool IsMoveEnd = false;
 
 	float Duration = 0.5f;

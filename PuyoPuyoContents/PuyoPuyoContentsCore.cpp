@@ -14,6 +14,7 @@
 #include "TrainingPlayGameMode.h"
 
 #include "OptionsGameMode.h"
+#include "GameOverGameMode.h"
 
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
@@ -137,10 +138,14 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 304,208 }, { 304,16 } }); // Down
 	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 560,48 }, { 16,16 } }); // BotRight
 
-	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 512,32 }, { 16,16 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 528,32 }, { 16,16 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 512,48 }, { 16,16 } });
-	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOn", "SEL_0.CNS.BMP", { { 528,48 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 512,32 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 0,192 }, { 304,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 528,32 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 608,0 }, { 8,224 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 616,0 }, { 8,224 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 512,48 }, { 16,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 0,208 }, { 304,16 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("VSMenuFrameOff", "SEL_0.CNS.BMP", { { 528,48 }, { 16,16 } });
 
 	//솔로모드 메뉴 스프라이트
 	UImageManager::GetInstance().CuttingSprite("ARLE", "KAO_ARLE.CNS.BMP", { 160,112 });
@@ -190,7 +195,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	// 상쇄 텍스트
 	UImageManager::GetInstance().InsertCustomSpriteData("OffsetText", "PUYO_RY.CNS.BMP", { { 368,128 }, { 64, 32 } });
 
-	// LV 끝나고 프레임
+	// 게임 끝나고 나서 프레임
 	UImageManager::GetInstance().CuttingSprite("LVFrame", "LV_Waku.cns.bmp", { 16,16 });
 
 	// 게임 플레이 관련
@@ -314,10 +319,23 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("Warning", "PUYO_RY.CNS.BMP", { { 224,128 },{ 32, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("Warning", "PUYO_RY.CNS.BMP", { { 192,128 },{ 32, 32 } });
 
+	//꽈당 큐
+	UImageManager::GetInstance().InsertCustomSpriteData("Kwadankyu", "PUYO_BP.CNS.BMP", { { 448,32 },{ 192, 96 } });
 
-	//GameOver
-	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "PUYO_BP.CNS.BMP", { { 448,32 },{ 192, 96 } });
+	//게임 오버 텍스트 스프라이트(싱글플레이)
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 0,0 },	{ 72, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 72,0 },	{ 56, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 128,0 },{ 88, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 216,0 },{ 56, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 272,0 },{ 64, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 336,0 },{ 56, 64 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverText", "Over.CNS.BMP", { { 392,0 },{ 56, 64 } });
+	//게임오버 장면 아르르
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverArle", "Over.CNS.BMP", { { 208,208 },{ 256, 112 } });
+	// 계속 할까요?
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverContinue", "Over.CNS.BMP", { { 208,320 },{ 432, 32 } });
 
+	
 	//옵션 관련
 	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,0},{ 288, 32 } });
 	UImageManager::GetInstance().InsertCustomSpriteData("OPTMENU", "OPT_STR.CNS.BMP", { { 0,32},{ 256, 32 } });
@@ -348,6 +366,12 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UAudioManager::GetInstance().FindSound("PUYOselect.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PUYOPuyo2.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("SoloStart.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("StartPistol.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("Pause.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("GameLose.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("ARLE_Lose.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("GameOver.MID")->SetLoop(false);
+
 	for (int i = 0; i < 7; i++)
 	{
 		UAudioManager::GetInstance().FindSound("ARLE_" + std::to_string(i)+".wav")->SetLoop(false);
@@ -369,10 +393,10 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<ATrainingPlayGameMode, ADummyPawn>("TrainingPlay");
 	UEngineAPICore::GetCore()->CreateLevel<APuzzleGameMode, ADummyPawn>("PuzzlePlay");
 	UEngineAPICore::GetCore()->CreateLevel<AOptionsGameMode, ADummyPawn>("Options");
-	UEngineAPICore::GetCore()->CreateLevel<AOptionsGameMode, ADummyPawn>("GameOver");
+	UEngineAPICore::GetCore()->CreateLevel<AGameOverGameMode , ADummyPawn>("GameOver");
 	//UEngineAPICore::GetCore()->CreateLevel("End");
 
-	UEngineAPICore::GetCore()->OpenLevel("Intro");
+	UEngineAPICore::GetCore()->OpenLevel("GameOver");
 	//UEngineAPICore::GetCore()->OpenLevel("TogetherPlay");
 }
 

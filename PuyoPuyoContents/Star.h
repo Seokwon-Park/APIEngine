@@ -1,5 +1,6 @@
 #pragma once
-#include "Star.h"
+#include <EngineCore/SpriteRendererComponent.h>
+
 
 // Ό³Έν :
 class AStar : public AActor

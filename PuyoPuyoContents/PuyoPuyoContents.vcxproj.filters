@@ -288,13 +288,9 @@
     <ClCompile Include="PuzzleGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverPuyoText.cpp">
-      <Filter>ContentsObject\Global</Filter>
-    </ClCompile>
     <ClCompile Include="OpeningTitle.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="OpeningCompile.cpp" />
     <ClCompile Include="IntroController.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClCompile>
@@ -303,6 +299,15 @@
     </ClCompile>
     <ClCompile Include="OpeningStar.cpp">
       <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverText.cpp">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningCompile.cpp">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverCounter.cpp">
+      <Filter>ContentsObject\GameOver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -519,13 +524,9 @@
     <ClInclude Include="PuzzleGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverPuyoText.h">
-      <Filter>ContentsObject\Global</Filter>
-    </ClInclude>
     <ClInclude Include="OpeningTitle.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="OpeningCompile.h" />
     <ClInclude Include="IntroController.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
@@ -534,6 +535,15 @@
     </ClInclude>
     <ClInclude Include="OpeningStar.h">
       <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverText.h">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningCompile.h">
+      <Filter>ContentsObject\Intro\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverCounter.h">
+      <Filter>ContentsObject\GameOver</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ void ATrainingPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
+	UAudioManager::ChangeBGM("LV5.MID");
+
 	Frame->SetFrame(EPuyoGameMode::Training, 0);
 	Background->SetBackground(EPuyoGameMode::Training, 0);
 	BotBackgroundL->SetBackground(EPuyoGameMode::Training, 0);

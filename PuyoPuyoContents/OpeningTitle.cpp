@@ -108,12 +108,13 @@ void AOpeningTitle::Tick(float _DeltaTime)
 		else
 		{
 			NewPosition = TargetPos[i]; // 최종 위치에 고정
-			IsLocated[i] = true;
+			if (i == 3)
+				IsLocated = true;
 		}
 		Sr[i]->SetComponentLocation(NewPosition);
 	}
 
-	if (std::count(IsLocated.begin(), IsLocated.end(), true) == 4)
+	if (true == IsLocated)
 	{
 		Timer2 += _DeltaTime;
 		if (Timer2 < Duration2)

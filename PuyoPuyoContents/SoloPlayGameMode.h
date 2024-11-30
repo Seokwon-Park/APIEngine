@@ -26,5 +26,6 @@ private:
 	class APuyoAIController* ControllerP2;
 	class AEnemyImage* EnemyImage;
 	class AResultUI* Result;
+	class APuyoText* GameOverText;
 };
 
