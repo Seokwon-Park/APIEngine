@@ -156,15 +156,15 @@ void PuyoPuyoContentsCore::BeginPlay()
 	// 캐릭터 프레임
 	UImageManager::GetInstance().CuttingSprite("FRAME", "KAO_WAKU.CNS.BMP", { 176,128 });
 	// 탑?같이 생긴거
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 }, {256,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 256,0 }, {224,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 480,0 }, {160,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,80 }, {192,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 192,80 }, {128,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 320,80 }, {96,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { {  416,80  }, {96,16} });//꼭대기
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 },		{256,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 256,0 },	{224,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,80 },	{192,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 480,0 },	{160,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 192,80 },	{128,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 320,80 },	{96,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { {  432,80  },{64,16} });//꼭대기
 	UImageManager::GetInstance().InsertCustomSpriteData("TOWEREdge", "SELECT_T.CNS.BMP", { { 416,80 }, {16,16} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWEREdge", "SELECT_T.CNS.BMP", { { 480,80 }, {16,16} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWEREdge", "SELECT_T.CNS.BMP", { { 496,80 }, {16,16} });
 	// 적 선택 리스트
 	UImageManager::GetInstance().CuttingSprite("EnemySelectOn", "SELECT_L.CNS.BMP", { 48,48 });
 	UImageManager::GetInstance().CuttingSprite("EnemySelectOff", "SELECT_D.CNS.BMP", { 48,48 });
@@ -369,6 +369,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 
 	//////////여기서 부터 오디오 설정
 	UAudioManager::GetInstance().FindSound("PuyoMoveMenu.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("PuyoMoveLR.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PuyoEnemyChange.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PUYOselect.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PUYOPuyo2.wav")->SetLoop(false);
@@ -379,6 +380,10 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UAudioManager::GetInstance().FindSound("ARLE_Lose.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("GameOver.MID")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("PuyoPlace.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("Yaho.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("SoloWin.MID")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("CountingSound.wav")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("Nuisance.wav")->SetLoop(false);
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -389,6 +394,15 @@ void PuyoPuyoContentsCore::BeginPlay()
 	{
 		UAudioManager::GetInstance().FindSound("PuyoDestroy" + std::to_string(i) + ".wav")->SetLoop(false);
 	}
+
+	for (int i = 1; i <= 34; i++)
+	{
+		std::string Temp= std::to_string(i);
+		std::string Index = std::string(2 - Temp.size(), '0') + Temp;
+		GameSettings::GetInstance().PickSound.push_back("VOIC" + Index + "S.wav");
+		UAudioManager::GetInstance().FindSound("VOIC" + Index + "S.wav")->SetLoop(false);
+	}
+
 
 	// 여기서부터 게임 구성을 만든다.
 	// TODO: 인트로(로딩?) 화면, 메인메뉴, 게임플레이(모드별 분리?), 

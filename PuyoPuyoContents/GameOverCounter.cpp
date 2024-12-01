@@ -42,13 +42,21 @@ void AGameOverCounter::Tick(float _DeltaTime)
 
 	if (IsGameOver == true)
 	{
-		if (Text->GetActorLocation().Y < 400.0f)
+		if (Text->GetActorLocation().Y < 416.0f)
 		{
-			Text->AddActorLocation(FVector2D::DOWN * _DeltaTime * 100.0f);
+			Text->AddActorLocation(FVector2D::DOWN * _DeltaTime * 150.0f);
 		}
-		if (GameOverPuyo->GetActorLocation().Y < 264.0f)
+		else
+		{
+			IsGameOverEnd1 = true;
+		}
+		if (GameOverPuyo->GetActorLocation().Y < 272.0f)
 		{
 			GameOverPuyo->AddActorLocation(FVector2D::DOWN * _DeltaTime * 200.0f);
+		}
+		else
+		{
+			IsGameOverEnd2 = true;
 		}
 		return;
 	}

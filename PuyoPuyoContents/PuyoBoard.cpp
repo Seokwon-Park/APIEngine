@@ -178,7 +178,6 @@ void APuyoBoard::Tick(float _DeltaTime)
 	ForceDownTimer -= _DeltaTime;
 	LRMoveTimer -= _DeltaTime;
 
-
 	// Todo : 여기서 시작 애니메이션이 안끝났으면 계속 Return하도록 설정?
 	//UEngineDebugHelper::PushString("X = " + std::to_string(MainPuyoCoord.X) + ", Y = " + std::to_string(MainPuyoCoord.Y));
 	//UEngineDebugHelper::PushString("Timer = " + std::to_string(PuyoDropTimer));
@@ -854,7 +853,10 @@ void APuyoBoard::PuyoGameWinLogic()
 {
 	for (int i = 0; i < 2; i++)
 	{
-		Block[i]->SetActive(false);
+		if (Block[i] != nullptr)
+		{
+			Block[i]->SetActive(false);
+		}
 	}
 	for (int i = 0; i < BoardSize.Y; i++)
 	{
@@ -957,6 +959,7 @@ void APuyoBoard::PuyoMoveLR(FVector2D _Dir)
 		return;
 	}
 
+	UAudioManager::SoundPlay("PuyoMoveLR.wav");
 	MainPuyoCoord.X += _Dir.iX();
 	for (int i = 0; i < 2; i++)
 	{
@@ -1144,7 +1147,7 @@ void APuyoBoard::SpawnNuisancePuyo()
 		}
 		Index++;
 	}
-
+	UEngineEventSystem::AddEvent(0.4f, [=]() {UAudioManager::SoundPlay("Nuisance.wav"); });
 }
 
 

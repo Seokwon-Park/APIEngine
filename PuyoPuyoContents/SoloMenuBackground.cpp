@@ -13,6 +13,7 @@ ASoloMenuBackground::ASoloMenuBackground()
 			BgRenderers[i][j]->SetComponentLocation(FVector2D((j - 1) * 320, (i-1) * 240));
 			BgRenderers[i][j]->SetComponentScale({ 320,240 });
 			BgRenderers[i][j]->SetPivot(EPivotType::TopLeft);
+			BgRenderers[i][j]->SetOrder(ERenderLayer::Background);
 
 		}
 	}

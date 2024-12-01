@@ -25,6 +25,7 @@ public:
 	APuyoAIController& operator=(const APuyoAIController& _Other) = delete;
 	APuyoAIController& operator=(APuyoAIController&& _Other) noexcept = delete;
 
+	inline void SetThinkDelay(float _Delay) { ThinkDelay = _Delay; }
 	void ReceiveBlockColors();
 	void CalculateBoard();
 	void DebugEvaluateBoard();
@@ -43,7 +44,8 @@ private:
 	EPuyoAIState State = EPuyoAIState::Calculation;
 	std::vector<std::vector<int>> BoardState;
 	std::vector<std::vector<std::vector<int>>> EvaluateBoard;
-	float Delay = 0.0f;
+	float ThinkTime = 0.0f;
+	float ThinkDelay = 0.3f;
 	std::vector<int> BlockColors;
 
 

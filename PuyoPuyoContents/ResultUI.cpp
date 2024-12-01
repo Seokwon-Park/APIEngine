@@ -57,6 +57,7 @@ void AResultUI::Idle()
 	{
 		DBonus = FEngineMath::Max(1LL, static_cast<long long>(Bonus * UEngineAPICore::GetEngineDeltaTime()));
 		StagePoint += Bonus;
+		DExp = FEngineMath::Max(1LL, static_cast<long long>(StagePoint * UEngineAPICore::GetEngineDeltaTime()));
 		CurStep = EResultStep::Adjust;
 	}
 }
@@ -90,7 +91,7 @@ void AResultUI::ShowText()
 			RestText1->SetActive(true);
 			RestText2->SetActive(true);
 			RestPointText->SetActive(true);
-			RestPointText->SetScore(RestPoint);
+			RestPointText->SetScoreAndUpdate(GameSettings::GetInstance().RestToNextLevel);
 			PtsText3->SetActive(true);
 			CheckPoint3 = true;
 		});
@@ -112,7 +113,6 @@ void AResultUI::AdjustScore()
 			StagePointText->SetScoreAndUpdate(StagePoint);
 			PlayerScore->SetScoreAndUpdate(GameSettings::GetInstance().CurExp);
 			BonusScoreText->SetScoreAndUpdate(0);
-			DExp = FEngineMath::Max(1LL, static_cast<long long>(StagePoint * UEngineAPICore::GetEngineDeltaTime()));
 		}
 		return;
 	}
@@ -197,7 +197,7 @@ void AResultUI::Tick(float _DeltaTime)
 		}
 	}
 
-
+	CountingTimer -= _DeltaTime;
 
 	switch (CurStep)
 	{
@@ -208,6 +208,12 @@ void AResultUI::Tick(float _DeltaTime)
 		ShowText();
 		break;
 	case EResultStep::Adjust:
+		if (CountingTimer < 0.0f)
+		{
+			UAudioManager::SoundPlay("CountingSound.wav");
+			CountingTimer = 0.05f;
+		}
+
 		AdjustScore();
 		break;
 	case EResultStep::Wait:

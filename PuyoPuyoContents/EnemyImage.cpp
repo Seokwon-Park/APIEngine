@@ -18,14 +18,14 @@ void AEnemyImage::SetLose()
 {
 	Sr->SetSprite("FaceLose", GameSettings::GetInstance().EnemyIndex);
 	Sr->SetRemoveBackground(true);
-	Sr->SetRemoveColor({ 2,2 });
+	Sr->SetRemoveColor({ 639,399 });
 }
 
 void AEnemyImage::SetWin()
 {
 	Sr->SetSprite("FaceWin", GameSettings::GetInstance().EnemyIndex);
 	Sr->SetRemoveBackground(true);
-	Sr->SetRemoveColor({ 2,2 });
+	Sr->SetRemoveColor({ 639,399 });
 }
 
 void AEnemyImage::Tick(float _DeltaTime)
@@ -37,7 +37,5 @@ void AEnemyImage::BeginPlay()
 	Super::BeginPlay();
 	Sr->SetSprite("FaceIdle",GameSettings::GetInstance().EnemyIndex);
 	Sr->SetRemoveBackground(true);
-	Sr->SetRemoveColor({ 2,2 });
-
-
+	Sr->SetRemoveColor({ 639,399 });
 }

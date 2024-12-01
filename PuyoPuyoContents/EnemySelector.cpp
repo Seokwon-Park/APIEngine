@@ -33,6 +33,7 @@ void AEnemySelector::SetupSelector(int _Size, int _StartRange, ACharacterFrame* 
 		EnemyList.push_back(Temp);
 	}
 	Frame = _Frame;
+
 	SelectTimer = RandomDevice.GetRandomFloat(5.0f, 8.0f);
 }
 
@@ -40,6 +41,9 @@ void AEnemySelector::SelectEnemy()
 {
 	if (IsSelectEnd == true) return;
 	UAudioManager::SoundPlay("PuyoSelect.wav");
+	int Level = GameSettings::GetInstance().CurLevel;
+
+	UAudioManager::SoundPlay(GameSettings::GetInstance().PickSound[EnemyList[CurIndex]->GetIndex() + (Level - 1)]);
 	IsSelectEnd = true;
 	Delay = 0.05f;
 	Timer = 0.0f;
@@ -77,7 +81,7 @@ void AEnemySelector::Tick(float _DeltaTime)
 
 		}
 		//페이더 추가
-		UEngineEventSystem::AddEvent(1.0f, std::bind(&AEnemySelector::StartPlay, this));
+		UEngineEventSystem::AddEvent(2.0f, std::bind(&AEnemySelector::StartPlay, this));
 		return;
 	}
 	SelectTimer -= _DeltaTime;

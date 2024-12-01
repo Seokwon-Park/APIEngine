@@ -20,7 +20,7 @@ void ATogetherPlayGameMode::BeginPlay()
 	APlayGameMode::BeginPlay();
 
 	UAudioManager::ChangeBGM("LV12.MID");
-	GetWorld()->BindAction(EKey::Space, KeyEvent::Down, std::bind(&UEngineAPICore::OpenLevel, UEngineAPICore::GetCore(), "TogetherMenu"));
+	//GetWorld()->BindAction(EKey::Space, KeyEvent::Down, std::bind(&UEngineAPICore::OpenLevel, UEngineAPICore::GetCore(), "TogetherMenu"));
 
 	Frame->SetFrame(EPuyoGameMode::Versus, GameSettings::GetInstance().MapIndex);
 	Background->SetBackground(EPuyoGameMode::Versus, GameSettings::GetInstance().MapIndex);

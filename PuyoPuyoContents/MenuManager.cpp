@@ -1,6 +1,12 @@
 #include "aepch.h"
 #include "MenuManager.h"
 
+#include "SoloMenuGameMode.h"
+#include "TogetherMenuGameMode.h"
+#include "TrainingPlayGameMode.h"
+#include "PuzzleGameMode.h"
+#include "OptionsGameMode.h"
+
 #include "CarbuncleMenu.h"
 
 AMenuManager::AMenuManager()
@@ -29,9 +35,9 @@ void AMenuManager::BeginPlay()
 {
 	Super::BeginPlay();
 	//지워야할거
-	Input->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&AMenuManager::MoveToScene, this, "Intro"));
-	Input->BindAction(EKey::Rshift, KeyEvent::Down, std::bind(&AMenuManager::MoveToScene, this, "TogetherPlay"));
-	Input->BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuManager::MoveToScene, this, "SoloPlay"));
+	//Input->BindAction(EKey::Esc, KeyEvent::Down, std::bind(&AMenuManager::MoveToScene, this, "Intro"));
+	//Input->BindAction(EKey::Rshift, KeyEvent::Down, std::bind(&AMenuManager::MoveToScene, this, "TogetherPlay"));
+	//Input->BindAction(EKey::Lshift, KeyEvent::Down, std::bind(&AMenuManager::MoveToScene, this, "SoloPlay"));
 
 	//기능
 	Input->BindAction(EKey::Enter, KeyEvent::Down, std::bind(&AMenuManager::SelectMenu, this));
@@ -68,6 +74,12 @@ void AMenuManager::SelectMenu()
 			LockControl = true;
 		}
 		UAudioManager::SoundPlay("PuyoSelect.wav");
+
+		UEngineAPICore::GetCore()->ResetLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
+		UEngineAPICore::GetCore()->ResetLevel<ATogetherMenuGameMode, ADummyPawn>("TogetherMenu");
+		UEngineAPICore::GetCore()->ResetLevel<ATrainingPlayGameMode, ADummyPawn>("TrainingPlay");
+		UEngineAPICore::GetCore()->ResetLevel<APuzzleGameMode, ADummyPawn>("PuzzlePlay");
+		UEngineAPICore::GetCore()->ResetLevel<AOptionsGameMode, ADummyPawn>("Options");
 		UEngineEventSystem::AddEvent(0.4f, std::bind(&UEngineAPICore::OpenLevel, UEngineAPICore::GetCore(), LevelNames[CurMenuIndex]));
 		InputTimer = 0.0f;
 	}

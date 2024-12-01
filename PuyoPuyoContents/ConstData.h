@@ -16,8 +16,8 @@ const int LevelEnemiesPfsum[9] = { 0,8,14,19,23,25,26,27,28 };
 const int DestroyRule[5] = { 4,2,6,4,4 };
 
 const int ScoreToNextLevel[9] = { 0, 15000,45000,80000,120000,150000 };
-
-const std::vector<std::string> LevelBGM = { "", "LV12.MID", "LV12.MID", "LV34.MID", "LV34.MID", "LV5.MID" };
+//오류 땜에 임시로 늘려놓음
+const std::vector<std::string> LevelBGM = { "", "LV12.MID", "LV12.MID", "LV34.MID", "LV34.MID", "LV5.MID" ,"LV5.MID" ,"LV5.MID","LV5.MID" };
 const std::vector<std::string> RensaSound = { "","ARLE_0.WAV", "ARLE_1.WAV", "ARLE_2.WAV", "ARLE_3.WAV", "ARLE_4.WAV", "ARLE_5.WAV","ARLE_6.WAV" };
 const std::vector<std::string> DestroySound = { "","PuyoDestroy0.WAV", "PuyoDestroy1.WAV", "PuyoDestroy2.WAV", "PuyoDestroy3.WAV", "PuyoDestroy4.WAV", "PuyoDestroy5.WAV","PuyoDestroy6.WAV" };
 

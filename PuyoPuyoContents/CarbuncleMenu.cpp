@@ -79,7 +79,7 @@ ACarbuncleMenu::ACarbuncleMenu()
 	JewelRenderer->SetPivot(EPivotType::TopCenter);
 	JewelRenderer->SetAnimator(JewelAnimator);
 	JewelAnimator->CreateAnimation("CarTwinkle", "CARJEWEL", 0, 3, .05f);
-	JewelAnimator->ChangeAnimation("CarTwinkle");
+	//JewelAnimator->ChangeAnimation("CarTwinkle");
 }
 
 ACarbuncleMenu::~ACarbuncleMenu()

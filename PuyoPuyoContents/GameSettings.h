@@ -19,6 +19,8 @@ public:
 		return Instance;
 	}
 
+	static void Init();
+
 	EPuyoGameMode GameMode = EPuyoGameMode::Solo;
 	//1인용
 	int EnemyIndex = 0;
@@ -35,7 +37,8 @@ public:
 	//2인용
 	int MapIndex = 0;
 	int DestroyRule = 4;
-	std::vector<std::vector<bool>> ClearState;
+
+	std::vector<std::string> PickSound;
 protected:
 
 private:

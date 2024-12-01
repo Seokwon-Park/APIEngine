@@ -35,6 +35,7 @@ APuyo::APuyo()
 		Animator->SetAnimationEvent("CountDown" + std::to_string(i), 15,
 			[=]()
 			{
+				UAudioManager::SoundPlay(DestroySound[i+1]);
 				SetActive(false);
 				Animator->ChangeAnimation("AxisPuyoIdle" + std::to_string(i));
 			});

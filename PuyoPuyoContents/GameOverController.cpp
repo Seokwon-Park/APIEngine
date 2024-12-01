@@ -2,6 +2,7 @@
 #include "GameOverController.h"
 
 #include "SoloMenuGameMode.h"
+#include "IntroGameMode.h"
 
 AGameOverController::AGameOverController()
 {
@@ -27,9 +28,34 @@ void AGameOverController::BeginPlay()
 			}
 			else
 			{
-				//UEngineAPICore::GetCore()->ResetLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
-				//UEngineAPICore::GetCore()->OpenLevel("SoloMenu");
-				//UAudioManager::StopBGM();
+				if (Counter->GetGameOverEnd() == true)
+				{
+					GameSettings::Init();
+					UAudioManager::StopBGM();
+					UAudioManager::SetNoBGM();
+					UEngineAPICore::GetCore()->ResetLevel<AIntroGameMode, ADummyPawn>("Intro");
+					UEngineAPICore::GetCore()->OpenLevel("Intro");
+				}
+			}
+		});
+
+	InputComponent->BindAction(EKey::Enter, KeyEvent::Down, [=]()
+		{
+			if (Counter->GetCount() >= 0)
+			{
+				UEngineAPICore::GetCore()->ResetLevel<ASoloMenuGameMode, ADummyPawn>("SoloMenu");
+				UEngineAPICore::GetCore()->OpenLevel("SoloMenu");
+			}
+			else
+			{
+				if (Counter->GetGameOverEnd() == true)
+				{
+					GameSettings::Init();
+					UAudioManager::StopBGM();
+					UAudioManager::SetNoBGM();
+					UEngineAPICore::GetCore()->ResetLevel<AIntroGameMode, ADummyPawn>("Intro");
+					UEngineAPICore::GetCore()->OpenLevel("Intro");
+				}
 			}
 		});
 

@@ -20,6 +20,16 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	const std::vector<FVector2D> TowerSize =
+	{
+		FVector2D(256,80),
+		FVector2D(224,80),
+		FVector2D(192,80),
+		FVector2D(160,80),
+		FVector2D(128,80),
+		FVector2D(96,80),
+		FVector2D(64,16)
+	};
 	ATowerUnit* Test;
 };
 

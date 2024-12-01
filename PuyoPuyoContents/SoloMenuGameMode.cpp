@@ -6,6 +6,7 @@
 #include "SoloText.h"
 #include "PuyoText.h"
 #include "EnemySelector.h"
+#include "Tower.h"
 
 ASoloMenuGameMode::ASoloMenuGameMode()
 {
@@ -33,12 +34,16 @@ void ASoloMenuGameMode::BeginPlay()
 	APuyoText* Text = GetWorld()->SpawnActor<APuyoText>();
 	Text->SetActorLocation({ 256,128 });
 	Text->SetText("LEVEL " + std::to_string(GameSettings::GetInstance().CurLevel));
+	
 
 	int EnemySize = LevelEnemies[GameSettings::GetInstance().CurLevel];
 	int StartRange = LevelEnemiesPfsum[GameSettings::GetInstance().CurLevel-1];
 	AEnemySelector* Selector = GetWorld()->SpawnActor<AEnemySelector>();
 	Selector->SetActorLocation({ 320.0f-24.0f*EnemySize , 384.0f});
 	Selector->SetupSelector(EnemySize, StartRange, EnemyFrame);
+
+	ATower* Tower = GetWorld()->SpawnActor<ATower>();
+	Tower->SetActorLocation({ 320,448 });
 
 	UAudioManager::ChangeBGM("SelectMenu.MID");
 }

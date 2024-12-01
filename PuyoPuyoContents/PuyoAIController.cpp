@@ -33,21 +33,21 @@ void APuyoAIController::CalculateBoard()
 {
 	if (true == BlockColors.empty())return;
 
-	auto [Rows, Cols] = Board->GetPuyoBoardSize();
+	auto [Cols, Rows] = Board->GetPuyoBoardSize();
 	
-	for (int i = Cols - 1; i >= 0; i--)
+	for (int i = Rows - 1; i >= 0; i--)
 	{
-		for (int j = 0; j < Rows; j++)
+		for (int j = 0; j < Cols; j++)
 		{
-			//낮은곳에 가중치를 부여.
+			//낮은곳에 더 높은 가치를 부여.
 			std::fill(EvaluateBoard[i][j].begin(), EvaluateBoard[i][j].end(), i);
 		}
 	}
 
 	std::vector<int> BottomY(6);
-	for (int i = Cols - 1; i >= 0; i--)
+	for (int i = Rows - 1; i >= 0; i--)
 	{
-		for (int j = 0; j < Rows; j++)
+		for (int j = 0; j < Cols; j++)
 		{
 			//if (BoardState[i][j] == -1)
 			//{
@@ -65,7 +65,6 @@ void APuyoAIController::CalculateBoard()
 					if (ty < 0 || tx < 0 || ty >= 13 || tx >= 6)continue;
 					if (BoardState[ty][tx] != -1)
 					{
-
 						EvaluateBoard[i][j][BoardState[ty][tx]] += CalculateBFS(tx, ty);
 					}
 				}
@@ -73,6 +72,8 @@ void APuyoAIController::CalculateBoard()
 		}
 	}
 
+
+	//세로 모양일때
 	int EvaluateScore = 0;
 	for (int X = 0; X < BoardState[0].size(); X++)
 	{
@@ -93,6 +94,8 @@ void APuyoAIController::CalculateBoard()
 			TargetY = Y;
 			TargetDir = 0;
 		}
+
+		Result = 0;
 		if (Board->IsInBoard(X, Y))
 		{
 			Result += EvaluateBoard[Y][X][BlockColors[1]];
@@ -105,11 +108,12 @@ void APuyoAIController::CalculateBoard()
 		{
 			EvaluateScore = Result;
 			TargetX = X;
-			TargetY = Y;
+			TargetY = Y-1;
 			TargetDir = 2;
 		}
 	}
 
+	//눕혔을 때
 	for (int X = 0; X < 5; X++)
 	{
 		int Result = 0;
@@ -122,6 +126,7 @@ void APuyoAIController::CalculateBoard()
 			TargetY = Y;
 			TargetDir = 3;
 		}
+		Result = 0;
 		Result = EvaluateBoard[Y][X][BlockColors[1]] + EvaluateBoard[BottomY[X + 1]][X][BlockColors[0]];
 		if (Result >= EvaluateScore)
 		{
@@ -231,13 +236,13 @@ void APuyoAIController::Tick(float _DeltaTime)
 	if (Dir != TargetDir)
 	{
 		Board->Rotate(true);
-		Delay = 0.1f;
+		ThinkTime = ThinkDelay;
 	}
-	Delay -= _DeltaTime;
+	ThinkTime -= _DeltaTime;
 	//Do Sth
-	if (Delay > 0.0f) return;
+	if (ThinkTime > 0.0f) return;
 	Board->PuyoForceDown();
-	Delay = 0.1f;
+	ThinkTime = ThinkDelay;
 
 
 	//switch (State)

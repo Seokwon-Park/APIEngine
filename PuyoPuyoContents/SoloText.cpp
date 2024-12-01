@@ -23,8 +23,6 @@ ASoloText::ASoloText()
 		Sr[i+3]->SetComponentLocation({ i * 32, 32 });
 
 	}
-	/*Sr = CreateDefaultSubobject<USpriteRendererComponent>("");
-	Sr->SetSprite("");*/
 }
 
 ASoloText::~ASoloText()

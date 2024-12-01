@@ -25,6 +25,7 @@ public:
     }
 
     inline int GetCount() const { return Count; }
+    inline bool GetGameOverEnd() { return IsGameOverEnd1 && IsGameOverEnd2; }
 
     void SkipTime();
 protected:
@@ -146,6 +147,9 @@ private:
     float Timer = 0.0f;
     int Count = 10;
     bool IsGameOver = false;
+    bool IsGameOverEnd1 = false;
+    bool IsGameOverEnd2 = false;
+
 
 
 };

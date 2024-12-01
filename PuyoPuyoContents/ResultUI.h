@@ -43,6 +43,7 @@ private:
 
 	float FlickTimer2 = 0.0f;
 	float FlickDelay2 = 0.1f;
+	float CountingTimer = 0.0f;
 
 
 	long long DBonus = 0;

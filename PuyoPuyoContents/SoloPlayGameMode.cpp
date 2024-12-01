@@ -20,17 +20,18 @@ void ASoloPlayGameMode::BeginPlay()
 	Super::BeginPlay();
 	APlayGameMode::BeginPlay();
 
-	UAudioManager::ChangeBGM(LevelBGM[GameSettings::GetInstance().CurLevel]);
+	int Level = GameSettings::GetInstance().CurLevel;
 
-	Frame->SetFrame(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
-	Background->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
-	BotBackgroundL->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
-	BotBackgroundR->SetBackground(EPuyoGameMode::Solo, GameSettings::GetInstance().CurLevel - 1);
+	UAudioManager::ChangeBGM(LevelBGM[Level]);
+	Frame->SetFrame(EPuyoGameMode::Solo, Level - 1);
+	Background->SetBackground(EPuyoGameMode::Solo, Level - 1);
+	BotBackgroundL->SetBackground(EPuyoGameMode::Solo, Level - 1);
+	BotBackgroundR->SetBackground(EPuyoGameMode::Solo, Level - 1);
 
 	for (int i = 0; i < 6; i++)
 	{
-		BotFrameL[i]->SetFrame(EPuyoGameMode::Solo, 12 * (GameSettings::GetInstance().CurLevel - 1) + i);
-		BotFrameR[i]->SetFrame(EPuyoGameMode::Solo, 12 * (GameSettings::GetInstance().CurLevel - 1) + i + 6);
+		BotFrameL[i]->SetFrame(EPuyoGameMode::Solo, 12 * (Level - 1) + i);
+		BotFrameR[i]->SetFrame(EPuyoGameMode::Solo, 12 * (Level - 1) + i + 6);
 	}
 
 	NameTextL->SetText("ARLE");
@@ -44,6 +45,7 @@ void ASoloPlayGameMode::BeginPlay()
 
 	ControllerP2 = GetWorld()->SpawnActor<APuyoAIController>();
 	ControllerP2->Possess(PuyoBoardP2);
+	ControllerP2->SetThinkDelay(FEngineMath::Max(0.05f, 0.2f - Level * 0.03f));
 
 	P1Score->SetScoreAndUpdate(GameSettings::GetInstance().CurExp);
 
@@ -86,7 +88,8 @@ void ASoloPlayGameMode::BeginPlay()
 		{
 			Result1->SetActive(true);
 			Result1->OpenFrame();
-			UAudioManager::SoundPlay("");
+			UAudioManager::SoundPlay("Yaho.wav");
+			UAudioManager::ChangeBGM("SoloWin.MID");
 			UEngineEventSystem::AddEvent(1.0f, [=]()
 				{
 					Result2->SetActive(true);
