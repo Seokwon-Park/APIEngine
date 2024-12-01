@@ -101,6 +101,7 @@ void AEnemySelector::Tick(float _DeltaTime)
 		while (EnemyList[CurIndex]->GetIndex() == 33)
 		{
 			CurIndex = (CurIndex + 1) % Size;
+			Delay += 0.05f;
 		}
 		UAudioManager::SoundPlay("PuyoEnemyChange.wav");
 		Frame->SetFrameStateEnemy("LV" + std::to_string(Level), CurIndex);
