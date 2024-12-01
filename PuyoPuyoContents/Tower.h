@@ -1,4 +1,5 @@
 #pragma once
+#include "TowerUnit.h"
 
 // Ό³Έν :
 class ATower : public AActor
@@ -19,6 +20,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
+	ATowerUnit* Test;
 };
 

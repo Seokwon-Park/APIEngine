@@ -15,6 +15,7 @@ public:
 	AGameOverBackground& operator=(const AGameOverBackground& _Other) = delete;
 	AGameOverBackground& operator=(AGameOverBackground&& _Other) noexcept = delete;
 
+	void RemoveText();
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;

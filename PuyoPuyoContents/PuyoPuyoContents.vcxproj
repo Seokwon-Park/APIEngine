@@ -165,7 +165,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameOverController.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameOverCounter.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameOverPuyo.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -230,6 +238,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ResultUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TowerUnit.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -467,7 +479,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameOverController.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameOverCounter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameOverPuyo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -532,6 +552,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ResultUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TowerUnit.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -378,6 +378,7 @@ void APuyoBoard::PuyoMoveLogic()
 		//	CheckOffset = true;
 		//	//SpawnNuisancePuyo();
 		//}
+		UAudioManager::SoundPlay("PuyoPlace.wav");
 		CurStep = EPuyoLogicStep::PuyoPlace;
 		return;
 	}
@@ -726,6 +727,8 @@ void APuyoBoard::PuyoDestroyLogic()
 			{
 				UAudioManager::SoundPlay(RensaSound[FEngineMath::Min(Rensa, 7)]);
 			}
+			UAudioManager::SoundPlay(DestroySound[FEngineMath::Min(Rensa, 7)]);
+
 			if (CurPuyo->GetColor() != EPuyoColor::Garbage)
 			{
 				SpawnDestroyFX(CurPuyo->GetActorLocation(), CurPuyo->GetColor(), 0.05f + ix * 0.1f);
@@ -971,6 +974,7 @@ void APuyoBoard::Rotate(bool _IsClockwise)
 		return;
 	}
 
+	UAudioManager::SoundPlay("PuyoMoveMenu.wav");
 	int PrevDir = BlockDir;
 	if (true == _IsClockwise)
 	{

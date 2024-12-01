@@ -30,6 +30,14 @@ AGameOverBackground::~AGameOverBackground()
 }
 
 
+void AGameOverBackground::RemoveText()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		Continue[i]->SetActive(false);
+	}
+}
+
 void AGameOverBackground::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
@@ -40,7 +48,6 @@ void AGameOverBackground::Tick(float _DeltaTime)
 		{
 			Continue[i]->SetComponentLocation({ 864.0f,432.0f });
 		}
-
 	}
 }
 void AGameOverBackground::BeginPlay()

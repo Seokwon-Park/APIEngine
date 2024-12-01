@@ -309,6 +309,15 @@
     <ClCompile Include="GameOverCounter.cpp">
       <Filter>ContentsObject\GameOver</Filter>
     </ClCompile>
+    <ClCompile Include="TowerUnit.cpp">
+      <Filter>ContentsObject\Solo</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverPuyo.cpp">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverController.cpp">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aepch.h">
@@ -543,6 +552,15 @@
       <Filter>ContentsObject\Intro\Actor</Filter>
     </ClInclude>
     <ClInclude Include="GameOverCounter.h">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerUnit.h">
+      <Filter>ContentsObject\Solo</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverPuyo.h">
+      <Filter>ContentsObject\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverController.h">
       <Filter>ContentsObject\GameOver</Filter>
     </ClInclude>
   </ItemGroup>

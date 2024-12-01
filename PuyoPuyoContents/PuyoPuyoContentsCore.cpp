@@ -160,8 +160,11 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 256,0 }, {224,80} });
 	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 480,0 }, {160,80} });
 	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,80 }, {192,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 }, {128,80} });
-	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 0,0 }, {96,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 192,80 }, {128,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { { 320,80 }, {96,80} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWER", "SELECT_T.CNS.BMP", { {  416,80  }, {96,16} });//꼭대기
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWEREdge", "SELECT_T.CNS.BMP", { { 416,80 }, {16,16} });
+	UImageManager::GetInstance().InsertCustomSpriteData("TOWEREdge", "SELECT_T.CNS.BMP", { { 480,80 }, {16,16} });
 	// 적 선택 리스트
 	UImageManager::GetInstance().CuttingSprite("EnemySelectOn", "SELECT_L.CNS.BMP", { 48,48 });
 	UImageManager::GetInstance().CuttingSprite("EnemySelectOff", "SELECT_D.CNS.BMP", { 48,48 });
@@ -334,6 +337,10 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UImageManager::GetInstance().InsertCustomSpriteData("GameOverArle", "Over.CNS.BMP", { { 208,208 },{ 256, 112 } });
 	// 계속 할까요?
 	UImageManager::GetInstance().InsertCustomSpriteData("GameOverContinue", "Over.CNS.BMP", { { 208,320 },{ 432, 32 } });
+	// 게임오버 장면 뿌요
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverPuyo", "Over.CNS.BMP", { { 0,64 },{ 224, 144 } });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverPuyo", "Over.CNS.BMP", { {224,64 },{ 224, 144} });
+	UImageManager::GetInstance().InsertCustomSpriteData("GameOverPuyo", "Over.CNS.BMP", { { 0,208 },{ 208, 152 } });
 
 	
 	//옵션 관련
@@ -371,11 +378,16 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UAudioManager::GetInstance().FindSound("GameLose.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("ARLE_Lose.wav")->SetLoop(false);
 	UAudioManager::GetInstance().FindSound("GameOver.MID")->SetLoop(false);
+	UAudioManager::GetInstance().FindSound("PuyoPlace.wav")->SetLoop(false);
 
 	for (int i = 0; i < 7; i++)
 	{
 		UAudioManager::GetInstance().FindSound("ARLE_" + std::to_string(i)+".wav")->SetLoop(false);
+	}
 
+	for (int i = 0; i < 7; i++)
+	{
+		UAudioManager::GetInstance().FindSound("PuyoDestroy" + std::to_string(i) + ".wav")->SetLoop(false);
 	}
 
 	// 여기서부터 게임 구성을 만든다.
@@ -396,7 +408,7 @@ void PuyoPuyoContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AGameOverGameMode , ADummyPawn>("GameOver");
 	//UEngineAPICore::GetCore()->CreateLevel("End");
 
-	UEngineAPICore::GetCore()->OpenLevel("GameOver");
+	UEngineAPICore::GetCore()->OpenLevel("Intro");
 	//UEngineAPICore::GetCore()->OpenLevel("TogetherPlay");
 }
 

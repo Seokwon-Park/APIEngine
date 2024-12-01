@@ -1,5 +1,6 @@
 #pragma once
 
+
 //점수계산에 들어가는 상수모음
 
 // Single Player Chain Power Table
@@ -18,8 +19,7 @@ const int ScoreToNextLevel[9] = { 0, 15000,45000,80000,120000,150000 };
 
 const std::vector<std::string> LevelBGM = { "", "LV12.MID", "LV12.MID", "LV34.MID", "LV34.MID", "LV5.MID" };
 const std::vector<std::string> RensaSound = { "","ARLE_0.WAV", "ARLE_1.WAV", "ARLE_2.WAV", "ARLE_3.WAV", "ARLE_4.WAV", "ARLE_5.WAV","ARLE_6.WAV" };
-
-
+const std::vector<std::string> DestroySound = { "","PuyoDestroy0.WAV", "PuyoDestroy1.WAV", "PuyoDestroy2.WAV", "PuyoDestroy3.WAV", "PuyoDestroy4.WAV", "PuyoDestroy5.WAV","PuyoDestroy6.WAV" };
 
 const FIntPoint EnemyRemoveColor[28] = 
 {
@@ -103,3 +103,4 @@ const std::vector<std::string> EnemyNameShort = {
 "Rulu",
 "Sata",
 };
+

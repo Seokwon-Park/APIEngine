@@ -29,8 +29,15 @@ APuyo::APuyo()
 	{
 		Animator->CreateAnimation("PlaceComplete" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0 }, .05f, false);
 		Animator->CreateAnimation("Boom" + std::to_string(i), ColorSprites[i], { 0,16,17,18,20,21,22 }, .05f, false);
+		Animator->CreateAnimation("CountDown" + std::to_string(i), ColorSprites[i], { 0,16,0,17,0,16,0,17,0, 0,16,17,18,20,21,22 }, .05f, false);
 		Animator->SetAnimationEvent("PlaceComplete" + std::to_string(i), 8, std::bind(&APuyo::AnimationEndTrigger, this));
 		Animator->SetAnimationEvent("Boom" + std::to_string(i), 6, std::bind(&APuyo::AnimationEndTrigger, this));
+		Animator->SetAnimationEvent("CountDown" + std::to_string(i), 15,
+			[=]()
+			{
+				SetActive(false);
+				Animator->ChangeAnimation("AxisPuyoIdle" + std::to_string(i));
+			});
 	}
 	Animator->CreateAnimation("PlaceComplete5", "GARBAGE", { 0, 0, 0, 0 }, 0.1f, false);
 	Animator->CreateAnimation("Boom5", "GARBAGE", 0, 3, .05f, false);

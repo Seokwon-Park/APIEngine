@@ -13,6 +13,7 @@ public:
 	AGameOverText(AGameOverText&& _Other) noexcept = delete;
 	AGameOverText& operator=(const AGameOverText& _Other) = delete;
 	AGameOverText& operator=(AGameOverText&& _Other) noexcept = delete;
+	inline void StopWave() { IsWave = false; }
 	virtual void Tick(float _DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
@@ -21,6 +22,7 @@ private:
 	const std::vector<FVector2D> SpriteSize= { FVector2D( 72, 64 ),FVector2D( 56, 64 ),FVector2D( 88, 64 ),
 	FVector2D( 56, 64 ),FVector2D( 64, 64 ),FVector2D( 56, 64 ),FVector2D(56, 64),FVector2D( 56, 64 )};
 
+	bool IsWave = true;
 	float Timer = 0.0f;
 	std::vector<USpriteRendererComponent*> Sr;
 };

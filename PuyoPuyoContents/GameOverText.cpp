@@ -14,6 +14,7 @@ AGameOverText::AGameOverText()
 		Sr[i]->SetComponentLocation({ PosX ,0.0f});
 		PosX += SpriteSize[i].X-4.0f;
 		Sr[i]->SetRemoveBackground(true);
+		Sr[i]->SetOrder(ERenderLayer::Text);
 
 	}
 }
@@ -31,10 +32,21 @@ void AGameOverText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	Timer += _DeltaTime;
-	for (int i = 0; i < 8; ++i) {
-		float BaseY = Sr[i]->GetComponentLocation().Y;
-		float y = 15.0f * std::sin(10.0f * Timer + i * 1.5f);
-		Sr[i]->SetComponentLocation({ Sr[i]->GetComponentLocation().X, y });
+	if (IsWave)
+	{
+		Timer += _DeltaTime;
+		for (int i = 0; i < 8; ++i) {
+			float BaseY = Sr[i]->GetComponentLocation().Y;
+			float y = 15.0f * std::sin(10.0f * Timer + i * 1.5f);
+			Sr[i]->SetComponentLocation({ Sr[i]->GetComponentLocation().X, y });
+		}
 	}
+	else
+	{
+		for (int i = 0; i < 8; ++i) 
+		{
+			Sr[i]->SetComponentLocation({ Sr[i]->GetComponentLocation().X, 0.0f });
+		}
+	}
+	
 }
