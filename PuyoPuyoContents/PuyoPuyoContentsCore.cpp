@@ -33,7 +33,7 @@ PuyoPuyoContentsCore::~PuyoPuyoContentsCore()
 
 void PuyoPuyoContentsCore::BeginPlay()
 {
-	EngineDebugHelper::SetShowFPS(true);
+	EngineDebugHelper::SetShowFPS(false);
 
 	UEngineAPICore::GetCore()->LoadResources();
 
