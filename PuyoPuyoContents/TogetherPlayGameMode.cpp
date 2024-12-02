@@ -57,7 +57,6 @@ void ATogetherPlayGameMode::BeginPlay()
 		});
 	P1Score->SetText("1P SCORE");
 	P2Score->SetText("2P SCORE");
-	P2Score;
 }
 
 void ATogetherPlayGameMode::Tick(float _DeltaTime)
