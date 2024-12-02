@@ -25,11 +25,11 @@ void ATrainingPlayGameMode::BeginPlay()
 	BotBackgroundL->SetBackground(EPuyoGameMode::Training, 0);
 	BotBackgroundR->SetBackground(EPuyoGameMode::Training, 1);
 
-	for (int i = 0; i < 6; i++)
-	{
-		BotFrameL[i]->SetFrame(EPuyoGameMode::Solo, 0);
-		BotFrameR[i]->SetFrame(EPuyoGameMode::Solo, 1);
-	}
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	BotFrameL[i]->SetFrame(EPuyoGameMode::Training, 0);
+	//	BotFrameR[i]->SetFrame(EPuyoGameMode::Training, 0);
+	//}
 
 	ControllerP1 = GetWorld()->SpawnActor<APuyoPlayerController>();
 	ControllerP1->Possess(PuyoBoardP1);

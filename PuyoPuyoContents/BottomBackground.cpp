@@ -31,6 +31,7 @@ void ABottomBackground::SetBackground(EPuyoGameMode _Mode, int _StageIndex, bool
 		break;
 	case EPuyoGameMode::Training:
 		Sr->SetSprite("TRBOTBG", _StageIndex);
+
 		break;
 	default:
 		break;

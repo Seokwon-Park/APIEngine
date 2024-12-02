@@ -25,7 +25,8 @@ void ABottomFrame::SetFrame(EPuyoGameMode _Mode, int _StageIndex)
 		Sr->SetSprite("VSBOTFR", _StageIndex);
 		break;
 	case EPuyoGameMode::Training:
-		Sr->SetSprite("TRBOTFR", _StageIndex);
+		Sr->SetSprite("TRBOTFR1", _StageIndex);
+		Sr->SetSprite("TRBOTFR2", _StageIndex);
 		break;
 	default:
 		break;
